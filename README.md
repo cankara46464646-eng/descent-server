@@ -7,3 +7,7 @@ Descent (Kara Damar) için çok oyunculu oda sunucusu. Bağımlılık yok, sadec
 - `WS /ws?room=KOD` → oda (en fazla 4 oyuncu)
 
 Render'da: New → Blueprint (ya da Web Service) → bu depo → Free.
+
+## Cloudflare (önerilen: ücretsiz, kart yok, uyumaz)
+dash.cloudflare.com → Workers & Pages → Create → Import a repository → bu depo → Deploy.
+`wrangler.toml` her şeyi ayarlar (Durable Object: ROOMS).
