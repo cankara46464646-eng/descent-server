@@ -32,7 +32,10 @@ server.on('upgrade', (req, socket) => {
   socket.setNoDelay(true);
   const room = rooms.get(code) || new Map();
   const peer = crypto.randomBytes(5).toString('base64url').slice(0, 7);
-  const c = { peer, socket, d: null, buf: Buffer.alloc(0), alive: true, cnt: 0, t0: Date.now(), code };
+  const uid = (u.searchParams.get('id') || '').replace(/[^A-Za-z0-9]/g, '').slice(0, 24);
+  const c = { peer, socket, d: null, buf: Buffer.alloc(0), alive: true, cnt: 0, t0: Date.now(), code, uid };
+  // aynı oyuncu yeniden bağlandı (telefon kilitlendi / internet gitti): eski, ölü bağlantısını hemen kapat → yer açılır
+  if (uid) for (const o of [...room.values()]) if (o.uid === uid) close(o);
   if (room.size >= MAX_PLAYERS) { send(c, { t: 'err', code: 'full' }); close(c); return; }
   rooms.set(code, room); room.set(peer, c);
   send(c, { t: 'hello', peer, peers: [...room.values()].filter(o => o !== c).map(o => ({ peer: o.peer, d: o.d })) });
@@ -80,7 +83,7 @@ function drop(c) {
   if (!room.size) rooms.delete(c.code);
   try { c.socket.destroy(); } catch (e) {}
 }
-// kopuk bağlantıları temizle
-setInterval(() => { for (const room of rooms.values()) for (const c of room.values()) { if (!c.alive) { drop(c); continue; } c.alive = false; frame(c, 9, Buffer.alloc(0)); } }, 25000);
+// kopuk bağlantıları temizle (10 sn'de bir ping; cevap vermeyen en geç 20 sn'de düşer)
+setInterval(() => { for (const room of rooms.values()) for (const c of room.values()) { if (!c.alive) { drop(c); continue; } c.alive = false; frame(c, 9, Buffer.alloc(0)); } }, 10000);
 
 server.listen(PORT, () => console.log('Descent sunucusu dinliyor: ' + PORT));
