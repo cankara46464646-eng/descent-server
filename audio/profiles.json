@@ -430,6 +430,22 @@
       0.9,
       1.08
      ]
+    },
+    "fall": {
+     "files": [
+      "stun_fall"
+     ],
+     "vol": [
+      0.9,
+      1.0
+     ],
+     "cooldown": 1.5,
+     "priority": 3,
+     "overlap": true,
+     "pitch": [
+      0.8,
+      0.9
+     ]
     }
    }
   },
@@ -746,6 +762,141 @@
      "cooldown": 40,
      "maxDist": 45,
      "reverb": 0.6
+    }
+   }
+  },
+  "ghost": {
+   "desc": "Sessiz Galeri hayaleti (5. kat): görünmez varlık. Sesler çoğunlukla oyuncunun kendi ekranındaki yerel manifestasyonlardır ve ağdan gönderilmez. Kaynak: Wraith (fısıltı, ağlama, nefes, aura, zincir, inilti, saldırı, çığlık), Wight (inilti, boğulma). Pes edilerek, bol yankıyla.",
+   "base": "audio/creatures/ghost/",
+   "pitch": [
+    0.8,
+    0.9
+   ],
+   "ref": 2.2,
+   "maxDist": 40,
+   "gap": 0.3,
+   "reverb": 0.75,
+   "cats": {
+    "whisper": {
+     "files": [
+      "shh"
+     ],
+     "vol": [
+      0.32,
+      0.45
+     ],
+     "maxDist": 14,
+     "cooldown": 2.5,
+     "overlap": true
+    },
+    "voice": {
+     "files": [
+      "cry",
+      "groan1",
+      "groan2"
+     ],
+     "vol": [
+      0.3,
+      0.42
+     ],
+     "maxDist": 45,
+     "cooldown": 6,
+     "overlap": true,
+     "reverb": 0.9
+    },
+    "breath": {
+     "files": [
+      "gasp"
+     ],
+     "vol": [
+      0.28,
+      0.4
+     ],
+     "maxDist": 7,
+     "cooldown": 1.5,
+     "overlap": true
+    },
+    "drone": {
+     "files": [
+      "aura"
+     ],
+     "vol": [
+      0.22,
+      0.34
+     ],
+     "maxDist": 26,
+     "cooldown": 5,
+     "overlap": true,
+     "pitch": [
+      0.7,
+      0.8
+     ]
+    },
+    "moan": {
+     "files": [
+      "idle"
+     ],
+     "vol": [
+      0.3,
+      0.42
+     ],
+     "maxDist": 30,
+     "cooldown": 5,
+     "overlap": true
+    },
+    "hunt": {
+     "files": [
+      "chains",
+      "groan1",
+      "groan2"
+     ],
+     "vol": [
+      0.5,
+      0.7
+     ],
+     "maxDist": 55,
+     "cooldown": 3,
+     "overlap": true,
+     "reverb": 0.9
+    },
+    "shriek": {
+     "files": [
+      "scream"
+     ],
+     "vol": [
+      0.6,
+      0.75
+     ],
+     "maxDist": 80,
+     "cooldown": 10,
+     "overlap": true,
+     "priority": 3,
+     "reverb": 1.0
+    },
+    "attack": {
+     "files": [
+      "attack1",
+      "attack2"
+     ],
+     "vol": [
+      0.85,
+      1.0
+     ],
+     "cooldown": 1.5,
+     "overlap": true,
+     "priority": 3
+    },
+    "choke": {
+     "files": [
+      "choke"
+     ],
+     "vol": [
+      0.6,
+      0.8
+     ],
+     "cooldown": 1.5,
+     "overlap": true,
+     "priority": 3
     }
    }
   }

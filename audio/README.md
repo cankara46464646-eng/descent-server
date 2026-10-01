@@ -14,6 +14,7 @@ audio/
                          çene şakırtısı, titreşimli çığlık; kazı sesleri; steps.mp3 = 12 bacak tıkırtısı (ayak basışında çalar)
   creatures/hemiplex_yavru/  yavrular                    – tiz, hızlı çırpınan çığlık + minik tıkırtılar
   creatures/ocu/         Öcü (Kök Ormanı)                 – Wraith + Mimic eklem sesleri
+  creatures/ghost/       Sessiz Galeri hayaleti (5. kat)  – Wraith + Wight (yerel, ağdan gönderilmez)
   environment/           göçük, yeraltı suyu              – Rock Golem Landslide, Kelpie Spray/Splash
 audio_source/SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/   orijinal 24/96 dosyalar (oyuna paketlenmez)
 ```
