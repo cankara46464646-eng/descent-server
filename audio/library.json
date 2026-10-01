@@ -1,0 +1,3617 @@
+{
+ "pack": "Epic Stock Media – Evolved Game Creatures 2 (24bit/96k, 166 wav)",
+ "license": "Epic Stock Media EULA (bkz. _END_USER_LICENSE_AGREEMENT.rtf)",
+ "runtimeFormat": "mono MP3 44.1 kHz VBR (~100 kbps), loudnorm -19 LUFS, sessizlik kırpıldı",
+ "files": [
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Attack_1_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Crawler_alt (Gnoll)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 0.91,
+    "rms_db": -16.6,
+    "centroid": 1809,
+    "flatness": 0.161,
+    "voiced": 0.3,
+    "f0": 272
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Attack_2_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Crawler_alt (Gnoll)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 0.97,
+    "rms_db": -15.3,
+    "centroid": 1842,
+    "flatness": 0.091,
+    "voiced": 0.64,
+    "f0": 400
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Attack_3_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Attack",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.74,
+    "rms_db": -15.8,
+    "centroid": 1596,
+    "flatness": 0.096,
+    "voiced": 0.3,
+    "f0": 454
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Attack_4_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Crawler_alt (Gnoll)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 0.95,
+    "rms_db": -20.7,
+    "centroid": 1460,
+    "flatness": 0.06,
+    "voiced": 0.25,
+    "f0": 503
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Death_1_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Crawler_alt (Gnoll)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.44,
+    "rms_db": -18.1,
+    "centroid": 1526,
+    "flatness": 0.172,
+    "voiced": 0.29,
+    "f0": 537
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Death_2_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Crawler_alt (Gnoll)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.58,
+    "rms_db": -15.5,
+    "centroid": 1493,
+    "flatness": 0.173,
+    "voiced": 0.22,
+    "f0": 416
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Death_3_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Crawler_alt (Gnoll)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.01,
+    "rms_db": -20.7,
+    "centroid": 896,
+    "flatness": 0.028,
+    "voiced": 0.7,
+    "f0": 242
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Giggle_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Giggle",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "kıkırdama: komik",
+   "analysis": {
+    "dur": 1.44,
+    "rms_db": -20.1,
+    "centroid": 2299,
+    "flatness": 0.131,
+    "voiced": 0.38,
+    "f0": 441
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Growl_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Growl",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.45,
+    "rms_db": -15.1,
+    "centroid": 801,
+    "flatness": 0.074,
+    "voiced": 0.09,
+    "f0": 94
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Pain_1_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Pain",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.08,
+    "rms_db": -18.5,
+    "centroid": 1366,
+    "flatness": 0.13,
+    "voiced": 0.55,
+    "f0": 284
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Pain_2_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Crawler_alt (Gnoll)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.7,
+    "rms_db": -18.8,
+    "centroid": 3094,
+    "flatness": 0.166,
+    "voiced": 0.3,
+    "f0": 551
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Pain_3_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Crawler_alt (Gnoll)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.25,
+    "rms_db": -23.6,
+    "centroid": 1687,
+    "flatness": 0.155,
+    "voiced": 0.1,
+    "f0": 441
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Sneeze_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Sneeze",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "hapşırma: komik",
+   "analysis": {
+    "dur": 1.78,
+    "rms_db": -24.0,
+    "centroid": 4516,
+    "flatness": 0.359,
+    "voiced": 0.0,
+    "f0": 0
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Sniff_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Sniff",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.29,
+    "rms_db": -19.8,
+    "centroid": 1505,
+    "flatness": 0.122,
+    "voiced": 0.52,
+    "f0": 334
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Snore_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Snore",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 6.66,
+    "rms_db": -24.0,
+    "centroid": 1349,
+    "flatness": 0.154,
+    "voiced": 0.19,
+    "f0": 85
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Whine_Wolf_Hyena_Dog_Creature_.wav",
+   "creature": "Gnoll",
+   "type": "Whine",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.45,
+    "rms_db": -16.0,
+    "centroid": 1216,
+    "flatness": 0.107,
+    "voiced": 0.89,
+    "f0": 194
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Attack_1_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Attack",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.43,
+    "rms_db": -17.6,
+    "centroid": 2489,
+    "flatness": 0.24,
+    "voiced": 0.54,
+    "f0": 469
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Attack_2_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Attack",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Flyer (Harpy)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.52,
+    "rms_db": -14.9,
+    "centroid": 2371,
+    "flatness": 0.224,
+    "voiced": 1.0,
+    "f0": 479
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Attack_3_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Attack",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.57,
+    "rms_db": -17.4,
+    "centroid": 2753,
+    "flatness": 0.199,
+    "voiced": 0.12,
+    "f0": 321
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Aww_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Aww",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "karikatürümsü",
+   "analysis": {
+    "dur": 1.45,
+    "rms_db": -17.6,
+    "centroid": 2531,
+    "flatness": 0.194,
+    "voiced": 0.6,
+    "f0": 479
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Cry_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Cry",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.85,
+    "rms_db": -17.7,
+    "centroid": 2903,
+    "flatness": 0.191,
+    "voiced": 0.48,
+    "f0": 470
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Death_1_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Death",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.15,
+    "rms_db": -17.0,
+    "centroid": 2942,
+    "flatness": 0.264,
+    "voiced": 0.7,
+    "f0": 501
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Death_2_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Death",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.33,
+    "rms_db": -20.3,
+    "centroid": 2602,
+    "flatness": 0.262,
+    "voiced": 0.36,
+    "f0": 351
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Death_3_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Death",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Flyer (Harpy)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.37,
+    "rms_db": -18.1,
+    "centroid": 3001,
+    "flatness": 0.256,
+    "voiced": 0.46,
+    "f0": 435
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Gasp_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Gasp",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Flyer (Harpy)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.57,
+    "rms_db": -19.4,
+    "centroid": 3568,
+    "flatness": 0.352,
+    "voiced": 0.07,
+    "f0": 595
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Laugh_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Laugh",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "cadı kahkahası: fantastik",
+   "analysis": {
+    "dur": 1.44,
+    "rms_db": -20.6,
+    "centroid": 2708,
+    "flatness": 0.215,
+    "voiced": 0.12,
+    "f0": 566
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Pain_1_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Pain",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Flyer (Harpy)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 0.66,
+    "rms_db": -20.3,
+    "centroid": 3054,
+    "flatness": 0.212,
+    "voiced": 0.0,
+    "f0": 0
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Pain_2_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Pain",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Flyer (Harpy)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.07,
+    "rms_db": -18.7,
+    "centroid": 3091,
+    "flatness": 0.276,
+    "voiced": 0.44,
+    "f0": 456
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Pain_3_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Pain",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.56,
+    "rms_db": -17.1,
+    "centroid": 2646,
+    "flatness": 0.163,
+    "voiced": 0.67,
+    "f0": 446
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Swipe_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Swipe",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Flyer (Harpy)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.07,
+    "rms_db": -19.4,
+    "centroid": 4056,
+    "flatness": 0.324,
+    "voiced": 0.43,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Wings_1_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Wings",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Flyer (Harpy)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.84,
+    "rms_db": -20.0,
+    "centroid": 1449,
+    "flatness": 0.176,
+    "voiced": 0.96,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Wings_2_Bird_Dinosaur_Witch_Creature.wav",
+   "creature": "Harpy",
+   "type": "Wings",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Flyer (Harpy)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.34,
+    "rms_db": -20.2,
+    "centroid": 1241,
+    "flatness": 0.182,
+    "voiced": 0.76,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Attack_1_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Attack",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.45,
+    "rms_db": -22.4,
+    "centroid": 1331,
+    "flatness": 0.045,
+    "voiced": 0.64,
+    "f0": 390
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Attack_2_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Attack",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.16,
+    "rms_db": -18.4,
+    "centroid": 1458,
+    "flatness": 0.075,
+    "voiced": 0.6,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Attack_3_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Attack",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.16,
+    "rms_db": -19.4,
+    "centroid": 1399,
+    "flatness": 0.062,
+    "voiced": 0.6,
+    "f0": 374
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Attack_4_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Attack",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.74,
+    "rms_db": -22.3,
+    "centroid": 1440,
+    "flatness": 0.073,
+    "voiced": 0.4,
+    "f0": 321
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Bark_1_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Bark",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Canine (Hell_Hound)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.7,
+    "rms_db": -19.5,
+    "centroid": 1085,
+    "flatness": 0.078,
+    "voiced": 0.67,
+    "f0": 478
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Bark_2_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Bark",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Canine (Hell_Hound)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.56,
+    "rms_db": -20.9,
+    "centroid": 1187,
+    "flatness": 0.052,
+    "voiced": 0.73,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Bite_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Bite",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.46,
+    "rms_db": -17.7,
+    "centroid": 1580,
+    "flatness": 0.146,
+    "voiced": 0.31,
+    "f0": 525
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Death_1_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Death",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.35,
+    "rms_db": -22.0,
+    "centroid": 2307,
+    "flatness": 0.156,
+    "voiced": 0.61,
+    "f0": 424
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Death_2_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Canine (Hell_Hound)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.9,
+    "rms_db": -21.3,
+    "centroid": 2395,
+    "flatness": 0.242,
+    "voiced": 0.3,
+    "f0": 329
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Death_3_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Canine (Hell_Hound)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.04,
+    "rms_db": -20.1,
+    "centroid": 2342,
+    "flatness": 0.266,
+    "voiced": 0.17,
+    "f0": 97
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Growl_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Growl",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.4,
+    "rms_db": -14.8,
+    "centroid": 948,
+    "flatness": 0.112,
+    "voiced": 0.06,
+    "f0": 140
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Howl_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Howl",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 3.83,
+    "rms_db": -10.6,
+    "centroid": 749,
+    "flatness": 0.03,
+    "voiced": 1.0,
+    "f0": 339
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Pain_1_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Pain",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.43,
+    "rms_db": -21.4,
+    "centroid": 2119,
+    "flatness": 0.183,
+    "voiced": 0.44,
+    "f0": 424
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Pain_2_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Pain",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.24,
+    "rms_db": -18.8,
+    "centroid": 1789,
+    "flatness": 0.139,
+    "voiced": 0.4,
+    "f0": 518
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Pain_3_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Pain",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.15,
+    "rms_db": -16.7,
+    "centroid": 1929,
+    "flatness": 0.147,
+    "voiced": 0.56,
+    "f0": 329
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Shake_Dog_Wolf_Creature.wav",
+   "creature": "Hell_Hound",
+   "type": "Shake",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Canine (Hell_Hound)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.98,
+    "rms_db": -31.1,
+    "centroid": 3417,
+    "flatness": 0.318,
+    "voiced": 0.13,
+    "f0": 575
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Attack_1_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.86,
+    "rms_db": -19.2,
+    "centroid": 1502,
+    "flatness": 0.09,
+    "voiced": 0.7,
+    "f0": 315
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Attack_2_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.64,
+    "rms_db": -17.8,
+    "centroid": 1869,
+    "flatness": 0.134,
+    "voiced": 0.25,
+    "f0": 424
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Attack_3_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Attack",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.16,
+    "rms_db": -18.4,
+    "centroid": 1868,
+    "flatness": 0.143,
+    "voiced": 0.67,
+    "f0": 469
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Attack_4_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.48,
+    "rms_db": -19.0,
+    "centroid": 1851,
+    "flatness": 0.106,
+    "voiced": 0.57,
+    "f0": 315
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Call_1_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Call",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.16,
+    "rms_db": -20.0,
+    "centroid": 1471,
+    "flatness": 0.08,
+    "voiced": 0.58,
+    "f0": 469
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Call_2_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Call",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.46,
+    "rms_db": -22.9,
+    "centroid": 1622,
+    "flatness": 0.087,
+    "voiced": 0.38,
+    "f0": 551
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Death_1_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.41,
+    "rms_db": -20.6,
+    "centroid": 908,
+    "flatness": 0.05,
+    "voiced": 0.55,
+    "f0": 172
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Death_2_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.78,
+    "rms_db": -16.6,
+    "centroid": 1157,
+    "flatness": 0.102,
+    "voiced": 0.41,
+    "f0": 147
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Death_3_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.06,
+    "rms_db": -17.8,
+    "centroid": 1411,
+    "flatness": 0.11,
+    "voiced": 0.47,
+    "f0": 512
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Pain_1_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.77,
+    "rms_db": -21.6,
+    "centroid": 863,
+    "flatness": 0.017,
+    "voiced": 0.41,
+    "f0": 190
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Pain_2_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.53,
+    "rms_db": -21.8,
+    "centroid": 940,
+    "flatness": 0.074,
+    "voiced": 0.24,
+    "f0": 389
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Pain_3_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.45,
+    "rms_db": -19.2,
+    "centroid": 1272,
+    "flatness": 0.068,
+    "voiced": 0.36,
+    "f0": 147
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Splash_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Splash",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "environment/water_splash.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 1.49,
+     "note": "su sıçraması"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.81,
+    "rms_db": -20.6,
+    "centroid": 3036,
+    "flatness": 0.335,
+    "voiced": 0.0,
+    "f0": 0
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Spray_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Spray",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "environment/water_spray.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 0.6,
+     "note": "yeraltı suyu fışkırması"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.97,
+    "rms_db": -20.9,
+    "centroid": 2803,
+    "flatness": 0.379,
+    "voiced": 0.08,
+    "f0": 99
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Surprised_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Surprised",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.91,
+    "rms_db": -20.9,
+    "centroid": 2023,
+    "flatness": 0.116,
+    "voiced": 0.56,
+    "f0": 230
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Underwater_Waves_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Underwater_Waves",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Water (Kelpie)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 7.96,
+    "rms_db": -17.6,
+    "centroid": 890,
+    "flatness": 0.051,
+    "voiced": 0.19,
+    "f0": 300
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Whinny_Water_Spirit_Horse_Creature.wav",
+   "creature": "Kelpie",
+   "type": "Whinny",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "at kişnemesi: tanıdık hayvan sesi",
+   "analysis": {
+    "dur": 3.4,
+    "rms_db": -16.6,
+    "centroid": 1744,
+    "flatness": 0.104,
+    "voiced": 0.69,
+    "f0": 367
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Attack_1_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Attack",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.26,
+    "rms_db": -19.7,
+    "centroid": 2898,
+    "flatness": 0.044,
+    "voiced": 0.6,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Attack_2_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Attack",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 2.26,
+    "rms_db": -18.8,
+    "centroid": 2604,
+    "flatness": 0.18,
+    "voiced": 0.15,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Attack_3_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Attack",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.17,
+    "rms_db": -19.3,
+    "centroid": 2627,
+    "flatness": 0.242,
+    "voiced": 0.31,
+    "f0": 441
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Attack_4_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Attack",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.65,
+    "rms_db": -21.1,
+    "centroid": 2083,
+    "flatness": 0.048,
+    "voiced": 0.12,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Chatter_1_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Chatter",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.93,
+    "rms_db": -27.8,
+    "centroid": 1460,
+    "flatness": 0.127,
+    "voiced": 0.0,
+    "f0": 0
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Chatter_2_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Chatter",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 2.12,
+    "rms_db": -19.1,
+    "centroid": 1413,
+    "flatness": 0.183,
+    "voiced": 0.29,
+    "f0": 495
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Creak_1_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Creak",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 2.03,
+    "rms_db": -18.7,
+    "centroid": 1016,
+    "flatness": 0.045,
+    "voiced": 0.59,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Creak_2_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Creak",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 2.1,
+    "rms_db": -18.2,
+    "centroid": 1038,
+    "flatness": 0.094,
+    "voiced": 0.23,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Death_1_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Death",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.85,
+    "rms_db": -20.1,
+    "centroid": 2575,
+    "flatness": 0.22,
+    "voiced": 0.31,
+    "f0": 272
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Death_2_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Death",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.38,
+    "rms_db": -17.6,
+    "centroid": 2691,
+    "flatness": 0.289,
+    "voiced": 0.6,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Death_3_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Death",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 2.05,
+    "rms_db": -17.7,
+    "centroid": 2590,
+    "flatness": 0.226,
+    "voiced": 0.36,
+    "f0": 580
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Opening_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Opening",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 2.01,
+    "rms_db": -25.8,
+    "centroid": 2135,
+    "flatness": 0.193,
+    "voiced": 0.15,
+    "f0": 612
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Pain_1_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Pain",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.22,
+    "rms_db": -23.0,
+    "centroid": 2669,
+    "flatness": 0.315,
+    "voiced": 0.08,
+    "f0": 512
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Pain_2_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Pain",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 0.94,
+    "rms_db": -19.8,
+    "centroid": 1889,
+    "flatness": 0.116,
+    "voiced": 0.31,
+    "f0": 131
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Pain_3_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Pain",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.38,
+    "rms_db": -17.9,
+    "centroid": 2780,
+    "flatness": 0.263,
+    "voiced": 0.29,
+    "f0": 478
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Raspberry_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Raspberry",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 1.69,
+    "rms_db": -25.1,
+    "centroid": 3400,
+    "flatness": 0.302,
+    "voiced": 0.19,
+    "f0": 581
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Mimic/Mimic_Monster_Spilling_Coins_and_Treasure_Robotic_Humanoid_Creature_Mechanical.wav",
+   "creature": "Mimic",
+   "type": "Spilling_Coins_and_Treasure",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "robotik-mekanik ve karikatürümsü; gerçekçi madenle uyuşmuyor",
+   "analysis": {
+    "dur": 2.83,
+    "rms_db": -25.1,
+    "centroid": 5337,
+    "flatness": 0.383,
+    "voiced": 0.03,
+    "f0": 259
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Attack_1_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.99,
+    "rms_db": -23.1,
+    "centroid": 1805,
+    "flatness": 0.123,
+    "voiced": 0.64,
+    "f0": 324
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Attack_2_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.43,
+    "rms_db": -19.6,
+    "centroid": 1450,
+    "flatness": 0.085,
+    "voiced": 0.38,
+    "f0": 324
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Attack_3_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.86,
+    "rms_db": -20.7,
+    "centroid": 1775,
+    "flatness": 0.165,
+    "voiced": 0.27,
+    "f0": 272
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Attack_4_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.87,
+    "rms_db": -15.8,
+    "centroid": 1685,
+    "flatness": 0.102,
+    "voiced": 0.78,
+    "f0": 312
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Breath_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Breath",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/idle_breath.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 3.53,
+     "note": "insanımsı ağır nefes"
+    },
+    {
+     "runtime": "creatures/stalker/breath_short.mp3",
+     "trim": [
+      0,
+      2.4
+     ],
+     "dur": 2.19,
+     "note": "kısa nefes"
+    },
+    {
+     "runtime": "creatures/stalker/chase_breath.mp3",
+     "trim": [
+      2.4,
+      2.4
+     ],
+     "dur": 1.36,
+     "note": "kovalama nefesi"
+    }
+   ],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.79,
+    "rms_db": -20.7,
+    "centroid": 1928,
+    "flatness": 0.261,
+    "voiced": 0.25,
+    "f0": 506
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Chatter_1_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Chatter",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "konuşma benzeri gevezelik: fantastik",
+   "analysis": {
+    "dur": 1.88,
+    "rms_db": -20.1,
+    "centroid": 1789,
+    "flatness": 0.124,
+    "voiced": 0.25,
+    "f0": 437
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Chatter_2_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Chatter",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "konuşma benzeri gevezelik: fantastik",
+   "analysis": {
+    "dur": 1.58,
+    "rms_db": -20.4,
+    "centroid": 1703,
+    "flatness": 0.09,
+    "voiced": 0.62,
+    "f0": 327
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Cough_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Cough",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.41,
+    "rms_db": -18.8,
+    "centroid": 2023,
+    "flatness": 0.125,
+    "voiced": 0.38,
+    "f0": 404
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Death_1_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.12,
+    "rms_db": -19.9,
+    "centroid": 1177,
+    "flatness": 0.07,
+    "voiced": 0.59,
+    "f0": 490
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Death_2_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.5,
+    "rms_db": -18.7,
+    "centroid": 1537,
+    "flatness": 0.089,
+    "voiced": 0.79,
+    "f0": 83
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Death_3_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.92,
+    "rms_db": -16.8,
+    "centroid": 1783,
+    "flatness": 0.133,
+    "voiced": 0.87,
+    "f0": 310
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Groan_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Groan",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.14,
+    "rms_db": -21.6,
+    "centroid": 1455,
+    "flatness": 0.133,
+    "voiced": 0.64,
+    "f0": 386
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Laugh_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Laugh",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "gülme: komik",
+   "analysis": {
+    "dur": 2.04,
+    "rms_db": -19.5,
+    "centroid": 1587,
+    "flatness": 0.119,
+    "voiced": 0.5,
+    "f0": 218
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Pain_1_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.03,
+    "rms_db": -18.1,
+    "centroid": 1205,
+    "flatness": 0.086,
+    "voiced": 0.47,
+    "f0": 232
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Pain_2_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.38,
+    "rms_db": -20.0,
+    "centroid": 1277,
+    "flatness": 0.091,
+    "voiced": 0.41,
+    "f0": 206
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Pain_3_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Humanoid (Orc)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.17,
+    "rms_db": -19.4,
+    "centroid": 1389,
+    "flatness": 0.129,
+    "voiced": 0.28,
+    "f0": 87
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Spit_Humanoid_Troll_Tribal_Creature.wav",
+   "creature": "Orc",
+   "type": "Spit",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "tükürme: komik",
+   "analysis": {
+    "dur": 1.38,
+    "rms_db": -28.0,
+    "centroid": 3773,
+    "flatness": 0.196,
+    "voiced": 0.46,
+    "f0": 359
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Attack_1_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Attack",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.9,
+    "rms_db": -19.0,
+    "centroid": 2261,
+    "flatness": 0.177,
+    "voiced": 0.06,
+    "f0": 180
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Attack_2_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Attack",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.73,
+    "rms_db": -15.2,
+    "centroid": 1589,
+    "flatness": 0.154,
+    "voiced": 0.5,
+    "f0": 367
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Attack_3_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Attack",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.21,
+    "rms_db": -16.1,
+    "centroid": 1667,
+    "flatness": 0.115,
+    "voiced": 0.08,
+    "f0": 364
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Attack_4_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Beast (Owlbear)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.76,
+    "rms_db": -20.2,
+    "centroid": 1689,
+    "flatness": 0.103,
+    "voiced": 0.05,
+    "f0": 479
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Breath_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Breath",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.31,
+    "rms_db": -19.1,
+    "centroid": 1139,
+    "flatness": 0.066,
+    "voiced": 0.42,
+    "f0": 361
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Coo_1_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Coo",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "baykuş öttürmesi: fantastik/tatlı",
+   "analysis": {
+    "dur": 2.21,
+    "rms_db": -16.5,
+    "centroid": 508,
+    "flatness": 0.025,
+    "voiced": 0.54,
+    "f0": 286
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Coo_2_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Coo",
+   "status": "rejected",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": "baykuş öttürmesi: fantastik/tatlı",
+   "analysis": {
+    "dur": 2.49,
+    "rms_db": -13.6,
+    "centroid": 397,
+    "flatness": 0.007,
+    "voiced": 1.0,
+    "f0": 319
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Death_1_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Death",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.77,
+    "rms_db": -13.9,
+    "centroid": 1179,
+    "flatness": 0.114,
+    "voiced": 0.44,
+    "f0": 99
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Death_2_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Beast (Owlbear)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.46,
+    "rms_db": -19.2,
+    "centroid": 2069,
+    "flatness": 0.145,
+    "voiced": 0.07,
+    "f0": 400
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Death_3_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Beast (Owlbear)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.46,
+    "rms_db": -15.6,
+    "centroid": 994,
+    "flatness": 0.044,
+    "voiced": 0.24,
+    "f0": 179
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Eating_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Eating",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 4.13,
+    "rms_db": -21.4,
+    "centroid": 1945,
+    "flatness": 0.156,
+    "voiced": 0.19,
+    "f0": 259
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Growl_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Growl",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.53,
+    "rms_db": -14.8,
+    "centroid": 1230,
+    "flatness": 0.131,
+    "voiced": 0.21,
+    "f0": 282
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Leap_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Leap",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Beast (Owlbear)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.27,
+    "rms_db": -22.8,
+    "centroid": 2744,
+    "flatness": 0.148,
+    "voiced": 0.88,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Pain_1_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Beast (Owlbear)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.39,
+    "rms_db": -17.8,
+    "centroid": 1535,
+    "flatness": 0.11,
+    "voiced": 0.0,
+    "f0": 0
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Pain_2_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Pain",
+   "status": "library",
+   "runtime": [],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.47,
+    "rms_db": -18.1,
+    "centroid": 1345,
+    "flatness": 0.052,
+    "voiced": 0.36,
+    "f0": 212
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Pain_3_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Beast (Owlbear)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.82,
+    "rms_db": -18.2,
+    "centroid": 1097,
+    "flatness": 0.054,
+    "voiced": 0.38,
+    "f0": 302
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Scratch_Bird_Mammal_Creature.wav",
+   "creature": "Owlbear",
+   "type": "Scratch",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Beast (Owlbear)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.16,
+    "rms_db": -21.0,
+    "centroid": 3018,
+    "flatness": 0.141,
+    "voiced": 0.22,
+    "f0": 568
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Attack_1_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.92,
+    "rms_db": -15.2,
+    "centroid": 1143,
+    "flatness": 0.108,
+    "voiced": 0.32,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Attack_2_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.22,
+    "rms_db": -17.6,
+    "centroid": 1036,
+    "flatness": 0.151,
+    "voiced": 0.13,
+    "f0": 162
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Attack_3_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.59,
+    "rms_db": -16.5,
+    "centroid": 1331,
+    "flatness": 0.178,
+    "voiced": 0.18,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Crumble_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Crumble",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.71,
+    "rms_db": -24.8,
+    "centroid": 2031,
+    "flatness": 0.13,
+    "voiced": 0.28,
+    "f0": 612
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Death_1_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.5,
+    "rms_db": -16.9,
+    "centroid": 1225,
+    "flatness": 0.067,
+    "voiced": 0.4,
+    "f0": 180
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Death_2_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.9,
+    "rms_db": -16.6,
+    "centroid": 1316,
+    "flatness": 0.157,
+    "voiced": 0.0,
+    "f0": 0
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Death_3_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.65,
+    "rms_db": -19.2,
+    "centroid": 2657,
+    "flatness": 0.234,
+    "voiced": 0.39,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Hmm_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Hmm",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.48,
+    "rms_db": -16.6,
+    "centroid": 2109,
+    "flatness": 0.214,
+    "voiced": 0.78,
+    "f0": 566
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Idle_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Idle",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.13,
+    "rms_db": -15.4,
+    "centroid": 834,
+    "flatness": 0.091,
+    "voiced": 0.7,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Landslide_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Landslide",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "environment/cavein_landslide.mp3",
+     "trim": [
+      0,
+      5.0
+     ],
+     "dur": 4.57,
+     "note": "tavan göçmesi"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 7.64,
+    "rms_db": -19.9,
+    "centroid": 1979,
+    "flatness": 0.238,
+    "voiced": 0.69,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Pain_1_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.5,
+    "rms_db": -17.0,
+    "centroid": 1176,
+    "flatness": 0.124,
+    "voiced": 0.31,
+    "f0": 386
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Pain_2_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.44,
+    "rms_db": -19.5,
+    "centroid": 1669,
+    "flatness": 0.088,
+    "voiced": 0.8,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Pain_3_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 1.31,
+    "rms_db": -15.2,
+    "centroid": 1684,
+    "flatness": 0.181,
+    "voiced": 0.26,
+    "f0": 115
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Reassemble_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Reassemble",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.61,
+    "rms_db": -25.8,
+    "centroid": 1988,
+    "flatness": 0.235,
+    "voiced": 0.0,
+    "f0": 0
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Rock_Throw_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Rock_Throw",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.2,
+    "rms_db": -18.3,
+    "centroid": 1409,
+    "flatness": 0.096,
+    "voiced": 0.65,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Stomp_Supernatural_Mythical_Creature.wav",
+   "creature": "Rock_Golem",
+   "type": "Stomp",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Heavy (Rock_Golem)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 2.3,
+    "rms_db": -21.9,
+    "centroid": 3351,
+    "flatness": 0.257,
+    "voiced": 0.39,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Attack_1_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Attack",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/attack_a.mp3",
+     "trim": [
+      0,
+      1.5
+     ],
+     "dur": 1.28,
+     "note": "saldırı vokali"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.33,
+    "rms_db": -21.9,
+    "centroid": 2801,
+    "flatness": 0.337,
+    "voiced": 0.07,
+    "f0": 256
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Attack_2_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Attack",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/attack_c.mp3",
+     "trim": [
+      1.0,
+      1.4
+     ],
+     "dur": 1.44,
+     "note": "saldırı vokali (çığlığın zirvesi)"
+    },
+    {
+     "runtime": "creatures/stalker/grab_shriek.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 3.37,
+     "note": "yakalama çığlığı"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 4.46,
+    "rms_db": -18.9,
+    "centroid": 3378,
+    "flatness": 0.347,
+    "voiced": 0.56,
+    "f0": 416
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Attack_3_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Attack",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/detect_hiss.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 0.76,
+     "note": "kısa sert tıslama"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.31,
+    "rms_db": -20.2,
+    "centroid": 2788,
+    "flatness": 0.322,
+    "voiced": 0.33,
+    "f0": 501
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Attack_4_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Attack",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/attack_b.mp3",
+     "trim": [
+      0,
+      1.4
+     ],
+     "dur": 1.12,
+     "note": "saldırı vokali"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.56,
+    "rms_db": -20.6,
+    "centroid": 3529,
+    "flatness": 0.315,
+    "voiced": 0.43,
+    "f0": 424
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Bone_Break_1_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Bone_Break",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/contort_bone_a.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 0.39,
+     "note": "kemik çıtırtısı"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 0.85,
+    "rms_db": -27.3,
+    "centroid": 3760,
+    "flatness": 0.229,
+    "voiced": 0.0,
+    "f0": 0
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Bone_Break_2_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Bone_Break",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/contort_bone_b.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 0.34,
+     "note": "kemik çıtırtısı"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.08,
+    "rms_db": -24.6,
+    "centroid": 2855,
+    "flatness": 0.241,
+    "voiced": 0.43,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Choke_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Choke",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/detect_choke.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 1.36,
+     "note": "boğulur gibi ani ses"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.68,
+    "rms_db": -19.4,
+    "centroid": 3112,
+    "flatness": 0.344,
+    "voiced": 0.15,
+    "f0": 604
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Death_1_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Death",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/death_a.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 1.88,
+     "note": "ölüm"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.93,
+    "rms_db": -23.2,
+    "centroid": 3648,
+    "flatness": 0.356,
+    "voiced": 0.31,
+    "f0": 469
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Death_2_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Death",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/death_b.mp3",
+     "trim": [
+      0,
+      3.2
+     ],
+     "dur": 2.87,
+     "note": "ölüm"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 4.11,
+    "rms_db": -19.4,
+    "centroid": 3717,
+    "flatness": 0.351,
+    "voiced": 0.32,
+    "f0": 404
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Death_3_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Death",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/death_c.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 1.85,
+     "note": "ölüm"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.51,
+    "rms_db": -22.8,
+    "centroid": 3255,
+    "flatness": 0.368,
+    "voiced": 0.53,
+    "f0": 450
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Groan_1_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Groan",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/idle_groan_a.mp3",
+     "trim": [
+      0.3,
+      3.5
+     ],
+     "dur": 3.34,
+     "note": "uzun, boğuk inilti"
+    },
+    {
+     "runtime": "creatures/stalker/chase_groan.mp3",
+     "trim": [
+      2.0,
+      2.2
+     ],
+     "dur": 2.22,
+     "note": "kovalama iniltisi"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 5.63,
+    "rms_db": -18.5,
+    "centroid": 3548,
+    "flatness": 0.34,
+    "voiced": 0.29,
+    "f0": 361
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Groan_2_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Groan",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/idle_groan_b.mp3",
+     "trim": [
+      0,
+      3.2
+     ],
+     "dur": 3.0,
+     "note": "boğuk inilti"
+    },
+    {
+     "runtime": "creatures/stalker/susp_groan.mp3",
+     "trim": [
+      2.4,
+      2.2
+     ],
+     "dur": 1.44,
+     "note": "kısa şüpheli inilti"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 4.65,
+    "rms_db": -17.7,
+    "centroid": 2356,
+    "flatness": 0.226,
+    "voiced": 0.24,
+    "f0": 393
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Gurgle_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Gurgle",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/breath_gurgle.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 1.23,
+     "note": "gırtlaktan hırıltı"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.59,
+    "rms_db": -19.0,
+    "centroid": 3331,
+    "flatness": 0.315,
+    "voiced": 0.32,
+    "f0": 454
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Pain_1_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Pain",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/pain_a.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 0.81,
+     "note": "acı"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.6,
+    "rms_db": -20.1,
+    "centroid": 2936,
+    "flatness": 0.285,
+    "voiced": 0.29,
+    "f0": 297
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Pain_2_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Pain",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/susp_moan.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 0.91,
+     "note": "alçak inleme"
+    },
+    {
+     "runtime": "creatures/stalker/pain_c.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 0.91,
+     "note": "acı"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 1.62,
+    "rms_db": -19.6,
+    "centroid": 1838,
+    "flatness": 0.177,
+    "voiced": 0.42,
+    "f0": 412
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Pain_3_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Pain",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/pain_b.mp3",
+     "trim": [
+      0,
+      2.0
+     ],
+     "dur": 1.59,
+     "note": "acı"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.53,
+    "rms_db": -23.2,
+    "centroid": 3229,
+    "flatness": 0.241,
+    "voiced": 0.3,
+    "f0": 326
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wight/Wight_Monster_Vomit_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wight",
+   "type": "Vomit",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/grab_vomit.mp3",
+     "trim": [
+      0,
+      null
+     ],
+     "dur": 1.8,
+     "note": "yüz yüze iğrenç gırtlak sesi"
+    }
+   ],
+   "candidateProfiles": [],
+   "reason": null,
+   "analysis": {
+    "dur": 2.65,
+    "rms_db": -21.0,
+    "centroid": 2370,
+    "flatness": 0.169,
+    "voiced": 0.65,
+    "f0": 408
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Attack_1_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.11,
+    "rms_db": -20.6,
+    "centroid": 1727,
+    "flatness": 0.074,
+    "voiced": 0.52,
+    "f0": 282
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Attack_2_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.28,
+    "rms_db": -26.4,
+    "centroid": 2624,
+    "flatness": 0.089,
+    "voiced": 0.82,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Attack_3_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 6.44,
+    "rms_db": -18.9,
+    "centroid": 1376,
+    "flatness": 0.071,
+    "voiced": 0.34,
+    "f0": 479
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Attack_4_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Attack",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 5.17,
+    "rms_db": -19.3,
+    "centroid": 1952,
+    "flatness": 0.107,
+    "voiced": 0.04,
+    "f0": 324
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Aura_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Aura",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 7.81,
+    "rms_db": -17.1,
+    "centroid": 306,
+    "flatness": 0.027,
+    "voiced": 0.93,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Chains_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Chains",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.37,
+    "rms_db": -26.3,
+    "centroid": 4843,
+    "flatness": 0.246,
+    "voiced": 0.12,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Crying_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Crying",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/lost_crying.mp3",
+     "trim": [
+      0.4,
+      3.2
+     ],
+     "dur": 3.16,
+     "note": "uzaktan hıçkırık: aramaya devam"
+    }
+   ],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.93,
+    "rms_db": -20.5,
+    "centroid": 1663,
+    "flatness": 0.178,
+    "voiced": 0.87,
+    "f0": 177
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Death_1_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.98,
+    "rms_db": -19.0,
+    "centroid": 2028,
+    "flatness": 0.12,
+    "voiced": 0.04,
+    "f0": 302
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Death_2_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 5.44,
+    "rms_db": -20.1,
+    "centroid": 1274,
+    "flatness": 0.062,
+    "voiced": 0.56,
+    "f0": 612
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Death_3_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Death",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.91,
+    "rms_db": -18.4,
+    "centroid": 1674,
+    "flatness": 0.081,
+    "voiced": 0.58,
+    "f0": 268
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Gasp_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Gasp",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/breath_gasp.mp3",
+     "trim": [
+      0,
+      1.9
+     ],
+     "dur": 1.49,
+     "note": "fısıltılı soluk (yankı kuyruğu kesildi)"
+    }
+   ],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.62,
+    "rms_db": -22.3,
+    "centroid": 2972,
+    "flatness": 0.145,
+    "voiced": 0.0,
+    "f0": 0
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Idle_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Idle",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/lost_idle.mp3",
+     "trim": [
+      0.6,
+      3.0
+     ],
+     "dur": 2.51,
+     "note": "uzakta anlaşılmaz vokal"
+    }
+   ],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 5.93,
+    "rms_db": -18.5,
+    "centroid": 1534,
+    "flatness": 0.129,
+    "voiced": 0.57,
+    "f0": 198
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Pain_1_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.97,
+    "rms_db": -22.9,
+    "centroid": 1973,
+    "flatness": 0.091,
+    "voiced": 0.2,
+    "f0": 437
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Pain_2_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 4.43,
+    "rms_db": -20.1,
+    "centroid": 1610,
+    "flatness": 0.053,
+    "voiced": 0.45,
+    "f0": 490
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Pain_3_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Pain",
+   "status": "candidate",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 5.51,
+    "rms_db": -22.9,
+    "centroid": 2076,
+    "flatness": 0.048,
+    "voiced": 0.08,
+    "f0": 329
+   }
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Scream_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Scream",
+   "status": "active",
+   "runtime": [],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 7.49,
+    "rms_db": -19.9,
+    "centroid": 2762,
+    "flatness": 0.162,
+    "voiced": 0.49,
+    "f0": 339
+   },
+   "usedBy": [
+    "hemiplex (katmanlı/işlenmiş)"
+   ]
+  },
+  {
+   "source": "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Shh_Spirit_Fairy_Ghost_Creature.wav",
+   "creature": "Wraith",
+   "type": "Shh",
+   "status": "active",
+   "runtime": [
+    {
+     "runtime": "creatures/stalker/susp_shh.mp3",
+     "trim": [
+      0,
+      2.0
+     ],
+     "dur": 1.07,
+     "note": "fısıltı \"şşş\""
+    }
+   ],
+   "candidateProfiles": [
+    "CreatureProfile_Spirit (Wraith)"
+   ],
+   "reason": null,
+   "analysis": {
+    "dur": 3.4,
+    "rms_db": -22.6,
+    "centroid": 5694,
+    "flatness": 0.193,
+    "voiced": 0.0,
+    "f0": 0
+   }
+  }
+ ],
+ "candidateProfiles": {
+  "CreatureProfile_Heavy (Rock_Golem)": {
+   "idle": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Hmm_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Idle_Supernatural_Mythical_Creature.wav"
+   ],
+   "attack": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Attack_1_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Attack_2_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Attack_3_Supernatural_Mythical_Creature.wav"
+   ],
+   "pain": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Pain_1_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Pain_2_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Pain_3_Supernatural_Mythical_Creature.wav"
+   ],
+   "death": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Death_1_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Death_2_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Death_3_Supernatural_Mythical_Creature.wav"
+   ],
+   "movement": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Stomp_Supernatural_Mythical_Creature.wav"
+   ],
+   "special": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Crumble_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Reassemble_Supernatural_Mythical_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Rock_Golem/Rock_Golem_Monster_Rock_Throw_Supernatural_Mythical_Creature.wav"
+   ]
+  },
+  "CreatureProfile_Humanoid (Orc)": {
+   "breathing": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Breath_Humanoid_Troll_Tribal_Creature.wav"
+   ],
+   "idle": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Groan_Humanoid_Troll_Tribal_Creature.wav"
+   ],
+   "attack": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Attack_1_Humanoid_Troll_Tribal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Attack_2_Humanoid_Troll_Tribal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Attack_3_Humanoid_Troll_Tribal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Attack_4_Humanoid_Troll_Tribal_Creature.wav"
+   ],
+   "pain": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Pain_1_Humanoid_Troll_Tribal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Pain_2_Humanoid_Troll_Tribal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Pain_3_Humanoid_Troll_Tribal_Creature.wav"
+   ],
+   "death": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Death_1_Humanoid_Troll_Tribal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Death_2_Humanoid_Troll_Tribal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Death_3_Humanoid_Troll_Tribal_Creature.wav"
+   ],
+   "special": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Orc/Orc_Monster_Cough_Humanoid_Troll_Tribal_Creature.wav"
+   ]
+  },
+  "CreatureProfile_Spirit (Wraith)": {
+   "idle": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Aura_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Idle_Spirit_Fairy_Ghost_Creature.wav"
+   ],
+   "attack": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Attack_1_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Attack_2_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Attack_3_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Attack_4_Spirit_Fairy_Ghost_Creature.wav"
+   ],
+   "pain": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Pain_1_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Pain_2_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Pain_3_Spirit_Fairy_Ghost_Creature.wav"
+   ],
+   "death": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Death_1_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Death_2_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Death_3_Spirit_Fairy_Ghost_Creature.wav"
+   ],
+   "scream": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Scream_Spirit_Fairy_Ghost_Creature.wav"
+   ],
+   "special": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Chains_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Crying_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Gasp_Spirit_Fairy_Ghost_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Wraith/Wraith_Monster_Shh_Spirit_Fairy_Ghost_Creature.wav"
+   ]
+  },
+  "CreatureProfile_Canine (Hell_Hound)": {
+   "alert": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Bark_1_Dog_Wolf_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Bark_2_Dog_Wolf_Creature.wav"
+   ],
+   "death": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Death_2_Dog_Wolf_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Death_3_Dog_Wolf_Creature.wav"
+   ],
+   "movement": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Hell_Hound/Hellhound_Monster_Shake_Dog_Wolf_Creature.wav"
+   ]
+  },
+  "CreatureProfile_Crawler_alt (Gnoll)": {
+   "attack": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Attack_1_Wolf_Hyena_Dog_Creature_.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Attack_2_Wolf_Hyena_Dog_Creature_.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Attack_4_Wolf_Hyena_Dog_Creature_.wav"
+   ],
+   "pain": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Pain_2_Wolf_Hyena_Dog_Creature_.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Pain_3_Wolf_Hyena_Dog_Creature_.wav"
+   ],
+   "death": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Death_1_Wolf_Hyena_Dog_Creature_.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Death_2_Wolf_Hyena_Dog_Creature_.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Gnoll/Gnoll_Monster_Death_3_Wolf_Hyena_Dog_Creature_.wav"
+   ]
+  },
+  "CreatureProfile_Beast (Owlbear)": {
+   "attack": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Attack_4_Bird_Mammal_Creature.wav"
+   ],
+   "pain": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Pain_1_Bird_Mammal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Pain_3_Bird_Mammal_Creature.wav"
+   ],
+   "death": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Death_2_Bird_Mammal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Death_3_Bird_Mammal_Creature.wav"
+   ],
+   "movement": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Leap_Bird_Mammal_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Owlbear/Owlbear_Monster_Scratch_Bird_Mammal_Creature.wav"
+   ]
+  },
+  "CreatureProfile_Water (Kelpie)": {
+   "attack": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Attack_1_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Attack_2_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Attack_3_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Attack_4_Water_Spirit_Horse_Creature.wav"
+   ],
+   "alert": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Call_1_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Call_2_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Surprised_Water_Spirit_Horse_Creature.wav"
+   ],
+   "pain": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Pain_1_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Pain_2_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Pain_3_Water_Spirit_Horse_Creature.wav"
+   ],
+   "death": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Death_1_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Death_2_Water_Spirit_Horse_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Death_3_Water_Spirit_Horse_Creature.wav"
+   ],
+   "ambient": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Kelpie/Kelpie_Monster_Underwater_Waves_Water_Spirit_Horse_Creature.wav"
+   ]
+  },
+  "CreatureProfile_Flyer (Harpy)": {
+   "attack": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Attack_2_Bird_Dinosaur_Witch_Creature.wav"
+   ],
+   "pain": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Pain_1_Bird_Dinosaur_Witch_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Pain_2_Bird_Dinosaur_Witch_Creature.wav"
+   ],
+   "death": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Death_3_Bird_Dinosaur_Witch_Creature.wav"
+   ],
+   "movement": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Swipe_Bird_Dinosaur_Witch_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Wings_1_Bird_Dinosaur_Witch_Creature.wav",
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Wings_2_Bird_Dinosaur_Witch_Creature.wav"
+   ],
+   "special": [
+    "SourceLibrary/EpicStockMedia_EvolvedGameCreatures2/Harpy/Harpy_Monster_Gasp_Bird_Dinosaur_Witch_Creature.wav"
+   ]
+  }
+ },
+ "hemiplex": {
+  "about": "Ana yaratık ve yavru sesleri tek tek kaynaktan kesilmedi; birden çok kaynak + sentez katmanlanarak üretildi (bkz. README).",
+  "files": {
+   "audio/creatures/hemiplex/sniff_scan.mp3": "yavaşlayıp hızlanan ekolokasyon tıkları + nefes",
+   "audio/creatures/hemiplex/sniff_double.mp3": "iki hızlı tık patlaması",
+   "audio/creatures/hemiplex/sniff_deep.mp3": "derin tek tıklar + kısa gırtlak hırıltısı",
+   "audio/creatures/hemiplex/idle_tick.mp3": "çift tık + soluk",
+   "audio/creatures/hemiplex/idle_rattle.mp3": "kısa, pes gırtlak tıkırtısı",
+   "audio/creatures/hemiplex/idle_wet.mp3": "ıslak çene şapırtısı",
+   "audio/creatures/hemiplex/idle_exhale.mp3": "hırıltılı nefes verme + tıklar",
+   "audio/creatures/hemiplex/susp_rise.mp3": "hızlanan tıkırtı: \"k..k.k.kkkr!\"",
+   "audio/creatures/hemiplex/susp_rasp.mp3": "kitin sürtme (stridülasyon) + alçak hırıltı",
+   "audio/creatures/hemiplex/susp_click.mp3": "tık patlaması + hırıltı + tıslama",
+   "audio/creatures/hemiplex/susp_low.mp3": "yavaş, derin gırtlak tıkırtısı",
+   "audio/creatures/hemiplex/detect_a.mp3": "hırıltılı nefes → hırıltı → katmanlı böcek çığlığı → çene şakırtısı",
+   "audio/creatures/hemiplex/detect_b.mp3": "tık patlaması → ıslak çığlık → titrek kuyruk",
+   "audio/creatures/hemiplex/detect_c.mp3": "nefes → titreşen çığlık",
+   "audio/creatures/hemiplex/chase_hiss.mp3": "tıslayan kısa çığlık",
+   "audio/creatures/hemiplex/chase_chatter.mp3": "çene şakırtısı + hırıltı",
+   "audio/creatures/hemiplex/chase_snarl.mp3": "hızlı gırtlak hırıltısı + tık",
+   "audio/creatures/hemiplex/chase_shriek.mp3": "nefes → kısa tiz çığlık",
+   "audio/creatures/hemiplex/chase_tss.mp3": "keskin tıslama-tık, tıslama-tık",
+   "audio/creatures/hemiplex/chase_cry.mp3": "çığlık + şakırtı kuyruğu",
+   "audio/creatures/hemiplex/attack_lunge.mp3": "saldırı çığlığı + çene kapanması + çatırtı",
+   "audio/creatures/hemiplex/attack_snap.mp3": "hırıltı → şak! → çığlık + ıslak",
+   "audio/creatures/hemiplex/attack_rattle.mp3": "hızlanan hırıltı → şak → çığlık",
+   "audio/creatures/hemiplex/drag_chew.mp3": "ıslak çiğneme tıkları + alçak hırıltı",
+   "audio/creatures/hemiplex/drag_purr.mp3": "derin, yavaş mırıltı-tıkırtı",
+   "audio/creatures/hemiplex/drag_mandible.mp3": "çene şakırtısı + ıslak",
+   "audio/creatures/hemiplex/drag_breath.mp3": "içe-dışa hırıltılı nefes + tıklar",
+   "audio/creatures/hemiplex/pain_squeal.mp3": "tiz, çırpınan acı çığlığı",
+   "audio/creatures/hemiplex/pain_long.mp3": "uzun acı çığlığı",
+   "audio/creatures/hemiplex/pain_rattle.mp3": "acı çığlığı → hırıltı",
+   "audio/creatures/hemiplex/pain_trill.mp3": "titreyen tiz acı",
+   "audio/creatures/hemiplex/retreat_fade.mp3": "yavaşlayan, uzaklaşan hırıltı",
+   "audio/creatures/hemiplex/retreat_chitter.mp3": "uzaklaşan çene şakırtısı",
+   "audio/creatures/hemiplex/howl_call.mp3": "uzaktan uzun, titreşen çağrı + tıkırtı kuyruğu",
+   "audio/creatures/hemiplex/howl_phrase.mp3": "iki heceli, uğultulu uzak çağrı + tıklar",
+   "audio/creatures/hemiplex/howl_scream.mp3": "hızlanan titreşimli uzun çığlık",
+   "audio/creatures/hemiplex/death_a.mp3": "ölüm çığlığı → yavaşlayan hırıltı → gurultu → seğiren bacaklar",
+   "audio/creatures/hemiplex/death_b.mp3": "kısa ölüm çığlığı → sönen hırıltı",
+   "audio/creatures/hemiplex/sleep_a.mp3": "uykuda: yavaş spiracle nefesi",
+   "audio/creatures/hemiplex/sleep_b.mp3": "uykuda: yavaş spiracle nefesi",
+   "audio/creatures/hemiplex/dig_a.mp3": "pençe/çene kaya yırtıyor",
+   "audio/creatures/hemiplex/dig_b.mp3": "pençe/çene kaya yırtıyor",
+   "audio/creatures/hemiplex/dig_c.mp3": "pençe/çene kaya yırtıyor",
+   "audio/creatures/hemiplex/dig_d.mp3": "pençe/çene kaya yırtıyor",
+   "audio/creatures/hemiplex_yavru/alert_a.mp3": "yavru: cıvıltılı tiz çığlık (anneyi çağırır)",
+   "audio/creatures/hemiplex_yavru/alert_b.mp3": "yavru: cıvıltılı tiz çığlık (anneyi çağırır)",
+   "audio/creatures/hemiplex_yavru/alert_c.mp3": "yavru: cıvıltılı tiz çığlık (anneyi çağırır)",
+   "audio/creatures/hemiplex_yavru/pain_a.mp3": "yavru acı",
+   "audio/creatures/hemiplex_yavru/pain_b.mp3": "yavru acı",
+   "audio/creatures/hemiplex_yavru/death_a.mp3": "yavru ölümü: çığlık + ıslak patlama + seğirme",
+   "audio/creatures/hemiplex_yavru/death_b.mp3": "yavru ölümü: çığlık + ıslak patlama + seğirme",
+   "audio/creatures/hemiplex_yavru/chit_a.mp3": "yavru: minik tıkırtı",
+   "audio/creatures/hemiplex_yavru/chit_b.mp3": "yavru: minik tıkırtı",
+   "audio/creatures/hemiplex_yavru/chit_c.mp3": "yavru: minik tıkırtı",
+   "audio/creatures/hemiplex/steps.mp3": "12 bacak tıkırtısı (her 0.25 s)"
+  }
+ }
+}

@@ -1,0 +1,748 @@
+{
+ "name": "Environment/Forest",
+ "source": "Realistic Forest Pack (FBX + 1K PBR)",
+ "units": "metre, Y-up, pivot: base=gövde tabanı merkezi / box=XZ kutu merkezi, taban y=0",
+ "format": "OldMine ile aynı: mesh.txt KDM3, albedo.jpg (sRGB), normal.jpg, rma.jpg (R=roughness G=metal B=AO), opacity.jpg (yaprak/iğne)",
+ "grade": "Karanlık tema: albedo lineer uzayda koyulaştırıldı (kaya x0.62, ahşap x0.55, yaprak x0.24), doygunluk düşürüldü, soğuk-yeşil ton",
+ "assets": [
+  {
+   "id": "f_boulder_a",
+   "category": "Rocks",
+   "path": "Rocks/f_boulder_a/",
+   "texPath": "Textures/forest_rock_00_mossy/",
+   "source": "Rocks/Forest-Rock_00.fbx",
+   "desc": "Yosunlu iri kaya (kaynak 25 m, küçültülerek kullanılır)",
+   "dims_m": [
+    15.75,
+    11.12,
+    24.81
+   ],
+   "tris": [
+    1730,
+    824,
+    666
+   ],
+   "verts": 1021,
+   "lengthAxis": "z",
+   "collision": "circle",
+   "tags": [
+    "rock",
+    "moss"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 50
+  },
+  {
+   "id": "f_boulder_b",
+   "category": "Rocks",
+   "path": "Rocks/f_boulder_b/",
+   "texPath": "Textures/forest_rock_01_mossy/",
+   "source": "Rocks/Forest-Rock_01.fbx",
+   "desc": "Yosunlu yayvan kaya",
+   "dims_m": [
+    20.37,
+    6.74,
+    14.15
+   ],
+   "tris": [
+    1966,
+    797,
+    797
+   ],
+   "verts": 1190,
+   "lengthAxis": "x",
+   "collision": "circle",
+   "tags": [
+    "rock",
+    "moss"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 56
+  },
+  {
+   "id": "f_boulder_c",
+   "category": "Rocks",
+   "path": "Rocks/f_boulder_c/",
+   "texPath": "Textures/forest_rock_02_mossy/",
+   "source": "Rocks/Forest-Rock_02.fbx",
+   "desc": "Yosunlu sivri kaya",
+   "dims_m": [
+    9.09,
+    6.98,
+    10.31
+   ],
+   "tris": [
+    2358,
+    1013,
+    1013
+   ],
+   "verts": 1329,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "rock",
+    "moss"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 66
+  },
+  {
+   "id": "f_boulder_d",
+   "category": "Rocks",
+   "path": "Rocks/f_boulder_d/",
+   "texPath": "Textures/forest_rock_03_mossy/",
+   "source": "Rocks/Forest-Rock_03.fbx",
+   "desc": "Yosunlu kaya",
+   "dims_m": [
+    16.3,
+    8.07,
+    10.11
+   ],
+   "tris": [
+    1572,
+    736,
+    553
+   ],
+   "verts": 905,
+   "lengthAxis": "x",
+   "collision": "circle",
+   "tags": [
+    "rock",
+    "moss"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 44
+  },
+  {
+   "id": "f_ledge",
+   "category": "Rocks",
+   "path": "Rocks/f_ledge/",
+   "texPath": "Textures/forest_rock_04_mossy/",
+   "source": "Rocks/Forest-Rock_04.fbx",
+   "desc": "Uzun yosunlu kaya çıkıntısı",
+   "dims_m": [
+    41.08,
+    10.37,
+    18.85
+   ],
+   "tris": [
+    2109,
+    880,
+    361
+   ],
+   "verts": 1158,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rock",
+    "moss"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 54
+  },
+  {
+   "id": "f_rock_med_a",
+   "category": "Rocks",
+   "path": "Rocks/f_rock_med_a/",
+   "texPath": "Textures/forest_rock_medium_00_01/",
+   "source": "Rocks/Forest-Rock_Medium_00.fbx",
+   "desc": "Orta kaya",
+   "dims_m": [
+    3.69,
+    2.73,
+    3.63
+   ],
+   "tris": [
+    786,
+    496,
+    496
+   ],
+   "verts": 465,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 25
+  },
+  {
+   "id": "f_rock_med_b",
+   "category": "Rocks",
+   "path": "Rocks/f_rock_med_b/",
+   "texPath": "Textures/forest_rock_medium_00_01/",
+   "source": "Rocks/Forest-Rock_Medium_01.fbx",
+   "desc": "Orta kaya",
+   "dims_m": [
+    3.32,
+    2.63,
+    4.12
+   ],
+   "tris": [
+    786,
+    436,
+    436
+   ],
+   "verts": 473,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 24
+  },
+  {
+   "id": "f_rock_small_a",
+   "category": "Rocks",
+   "path": "Rocks/f_rock_small_a/",
+   "texPath": "Textures/forest_rock_small_00_01_02/",
+   "source": "Rocks/Rock_Small_00.fbx",
+   "desc": "Küçük taş",
+   "dims_m": [
+    0.58,
+    0.4,
+    1.02
+   ],
+   "tris": [
+    196,
+    142,
+    142
+   ],
+   "verts": 126,
+   "lengthAxis": "z",
+   "collision": "none",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 7
+  },
+  {
+   "id": "f_rock_small_b",
+   "category": "Rocks",
+   "path": "Rocks/f_rock_small_b/",
+   "texPath": "Textures/forest_rock_small_00_01_02/",
+   "source": "Rocks/Rock_Small_01.fbx",
+   "desc": "Küçük taş",
+   "dims_m": [
+    0.58,
+    0.56,
+    0.56
+   ],
+   "tris": [
+    156,
+    150,
+    150
+   ],
+   "verts": 101,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 6
+  },
+  {
+   "id": "f_rock_small_c",
+   "category": "Rocks",
+   "path": "Rocks/f_rock_small_c/",
+   "texPath": "Textures/forest_rock_small_00_01_02/",
+   "source": "Rocks/Rock_Small_02.fbx",
+   "desc": "Küçük taş",
+   "dims_m": [
+    1.04,
+    0.53,
+    0.57
+   ],
+   "tris": [
+    136,
+    121,
+    121
+   ],
+   "verts": 87,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 5
+  },
+  {
+   "id": "f_pine_a",
+   "category": "Trees",
+   "path": "Trees/f_pine_a/",
+   "texPath": "Textures/pinetree_00/",
+   "source": "Trees/PineTree_00.fbx",
+   "desc": "Çam (29 m): tavanı delip geçen gövde",
+   "dims_m": [
+    11.64,
+    29.66,
+    11.71
+   ],
+   "tris": [
+    4100,
+    2327,
+    2327
+   ],
+   "verts": 4357,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "tree",
+    "alpha"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 194,
+   "trunkR": 2.038
+  },
+  {
+   "id": "f_pine_b",
+   "category": "Trees",
+   "path": "Trees/f_pine_b/",
+   "texPath": "Textures/pinetree_01/",
+   "source": "Trees/PineTree_01.fbx",
+   "desc": "Çam (31 m): tavanı delip geçen gövde",
+   "dims_m": [
+    10.45,
+    31.59,
+    11.53
+   ],
+   "tris": [
+    4100,
+    1991,
+    1815
+   ],
+   "verts": 2458,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "tree",
+    "alpha"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 120,
+   "trunkR": 1.228
+  },
+  {
+   "id": "f_tree_small",
+   "category": "Trees",
+   "path": "Trees/f_tree_small/",
+   "texPath": "Textures/tree_small_00/",
+   "source": "Trees/Tree-Small_00.fbx",
+   "desc": "Genç ağaç 6.9 m",
+   "dims_m": [
+    5.45,
+    6.87,
+    5.23
+   ],
+   "tris": [
+    1231,
+    699,
+    699
+   ],
+   "verts": 1446,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "tree",
+    "alpha"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 62,
+   "trunkR": 0.241
+  },
+  {
+   "id": "f_tree_tall",
+   "category": "Trees",
+   "path": "Trees/f_tree_tall/",
+   "texPath": "Textures/tree_00/",
+   "source": "Trees/Tree_00.fbx",
+   "desc": "İnce uzun ağaç 27 m",
+   "dims_m": [
+    10.04,
+    28.29,
+    10.77
+   ],
+   "tris": [
+    3397,
+    1665,
+    1170
+   ],
+   "verts": 3197,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "tree",
+    "alpha"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 124,
+   "trunkR": 1.146
+  },
+  {
+   "id": "f_tree_gnarl",
+   "category": "Trees",
+   "path": "Trees/f_tree_gnarl/",
+   "texPath": "Textures/tree_01/",
+   "source": "Trees/Tree_01.fbx",
+   "desc": "Boğumlu yaşlı ağaç 14.5 m",
+   "dims_m": [
+    16.32,
+    14.56,
+    15.97
+   ],
+   "tris": [
+    3806,
+    1908,
+    1908
+   ],
+   "verts": 5203,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "tree",
+    "alpha"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 209,
+   "trunkR": 2.021
+  },
+  {
+   "id": "f_branch_a",
+   "category": "Trunks",
+   "path": "Trunks/f_branch_a/",
+   "texPath": "Textures/branch_00_01/",
+   "source": "Trunks/Branch_00.fbx",
+   "desc": "Kuru dal 6 m",
+   "dims_m": [
+    6.07,
+    0.62,
+    3.11
+   ],
+   "tris": [
+    726,
+    395,
+    395
+   ],
+   "verts": 480,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "wood"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 24
+  },
+  {
+   "id": "f_branch_b",
+   "category": "Trunks",
+   "path": "Trunks/f_branch_b/",
+   "texPath": "Textures/branch_00_01/",
+   "source": "Trunks/Branch_01.fbx",
+   "desc": "Kuru dal 9.4 m",
+   "dims_m": [
+    9.38,
+    0.91,
+    5.41
+   ],
+   "tris": [
+    834,
+    466,
+    466
+   ],
+   "verts": 549,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "wood"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 27
+  },
+  {
+   "id": "f_root",
+   "category": "Trunks",
+   "path": "Trunks/f_root/",
+   "texPath": "Textures/root_00/",
+   "source": "Trunks/Root_00.fbx",
+   "desc": "Yüzeysel kök 6.7 m",
+   "dims_m": [
+    6.71,
+    1.11,
+    0.9
+   ],
+   "tris": [
+    1056,
+    469,
+    266
+   ],
+   "verts": 591,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "wood",
+    "root"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 28
+  },
+  {
+   "id": "f_snag",
+   "category": "Trunks",
+   "path": "Trunks/f_snag/",
+   "texPath": "Textures/tree_trunk_break_00/",
+   "source": "Trunks/Tree_Trunk-Break_00.fbx",
+   "desc": "Kırık ağaç kütüğü 4.8 m",
+   "dims_m": [
+    2.29,
+    4.82,
+    2.2
+   ],
+   "tris": [
+    1052,
+    444,
+    444
+   ],
+   "verts": 638,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "wood"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 31,
+   "trunkR": 1.079
+  },
+  {
+   "id": "f_log",
+   "category": "Trunks",
+   "path": "Trunks/f_log/",
+   "texPath": "Textures/tree_trunk/",
+   "source": "Trunks/Tree_Trunk_00.fbx",
+   "desc": "Devrik gövde 13 m",
+   "dims_m": [
+    13.06,
+    4.22,
+    4.06
+   ],
+   "tris": [
+    1284,
+    620,
+    620
+   ],
+   "verts": 760,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "wood"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 38
+  },
+  {
+   "id": "f_pine_a_bare",
+   "category": "Trees",
+   "path": "Trees/f_pine_a_bare/",
+   "texPath": "Textures/pinetree_00/",
+   "source": "Trees/PineTree_00.fbx",
+   "desc": "Çam gövdesi (iğnesiz, ölü) — kubbeyi delen gövde",
+   "dims_m": [
+    4.09,
+    29.66,
+    4.14
+   ],
+   "tris": [
+    1172,
+    575,
+    395
+   ],
+   "verts": 725,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "tree",
+    "bare"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 34,
+   "trunkR": 2.038
+  },
+  {
+   "id": "f_pine_b_bare",
+   "category": "Trees",
+   "path": "Trees/f_pine_b_bare/",
+   "texPath": "Textures/pinetree_01/",
+   "source": "Trees/PineTree_01.fbx",
+   "desc": "Çam gövdesi (iğnesiz, ölü)",
+   "dims_m": [
+    10.45,
+    31.59,
+    11.53
+   ],
+   "tris": [
+    3260,
+    1515,
+    1048
+   ],
+   "verts": 2098,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "tree",
+    "bare"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 95,
+   "trunkR": 1.228
+  },
+  {
+   "id": "f_tree_tall_bare",
+   "category": "Trees",
+   "path": "Trees/f_tree_tall_bare/",
+   "texPath": "Textures/tree_00/",
+   "source": "Trees/Tree_00.fbx",
+   "desc": "Uzun ağaç gövdesi (yapraksız)",
+   "dims_m": [
+    9.94,
+    28.23,
+    10.77
+   ],
+   "tris": [
+    3042,
+    1418,
+    940
+   ],
+   "verts": 2152,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "tree",
+    "bare"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 93,
+   "trunkR": 1.146
+  }
+ ],
+ "surfaces": [],
+ "decals": [],
+ "totalKB": 3203
+}

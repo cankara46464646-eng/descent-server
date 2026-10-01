@@ -1,0 +1,753 @@
+{
+ "version": 2,
+ "about": "Kara Damar yaratık ses profilleri. Yeni bir yaratık = yeni bir profil; kod değişmez. Dosya adları base + ad + .mp3",
+ "defaults": {
+  "ref": 2.5,
+  "maxDist": 40,
+  "rolloff": 1.25,
+  "pitch": [
+   0.97,
+   1.03
+  ],
+  "vol": [
+   0.85,
+   1.0
+  ],
+  "cooldown": 1.0,
+  "gap": 0.8,
+  "reverb": 0.35,
+  "chance": 1,
+  "priority": 1
+ },
+ "profiles": {
+  "stalker": {
+   "desc": "Long-Limbed Stalker (Derisiz): bozulmuş insanımsı. Kaynak: Wight (ana ses), Orc nefesi, Wraith fısıltıları. Hafif pes edilerek oynatılır.",
+   "base": "audio/creatures/stalker/",
+   "pitch": [
+    0.86,
+    0.95
+   ],
+   "ref": 2.2,
+   "maxDist": 34,
+   "gap": 1.0,
+   "cats": {
+    "idle": {
+     "files": [
+      "idle_groan_a",
+      "idle_groan_b",
+      "idle_breath"
+     ],
+     "vol": [
+      0.2,
+      0.32
+     ],
+     "interval": [
+      22,
+      45
+     ],
+     "maxDist": 20,
+     "cooldown": 16,
+     "chance": 0.7
+    },
+    "breathing": {
+     "files": [
+      "breath_gurgle",
+      "breath_short",
+      "breath_gasp"
+     ],
+     "vol": [
+      0.3,
+      0.42
+     ],
+     "interval": [
+      6,
+      11
+     ],
+     "maxDist": 13,
+     "cooldown": 4
+    },
+    "suspicious": {
+     "files": [
+      "susp_shh",
+      "susp_groan",
+      "susp_moan"
+     ],
+     "vol": [
+      0.45,
+      0.6
+     ],
+     "interval": [
+      9,
+      17
+     ],
+     "maxDist": 16,
+     "cooldown": 7
+    },
+    "detection": {
+     "files": [
+      "detect_choke",
+      "detect_hiss"
+     ],
+     "vol": [
+      0.9,
+      1.0
+     ],
+     "cooldown": 10,
+     "priority": 3
+    },
+    "contort": {
+     "files": [
+      "contort_bone_a",
+      "contort_bone_b"
+     ],
+     "vol": [
+      0.65,
+      0.85
+     ],
+     "pitch": [
+      0.9,
+      1.08
+     ],
+     "cooldown": 0.2,
+     "overlap": true,
+     "maxDist": 18
+    },
+    "chase": {
+     "files": [
+      "chase_groan",
+      "chase_breath"
+     ],
+     "vol": [
+      0.5,
+      0.7
+     ],
+     "interval": [
+      7,
+      13
+     ],
+     "cooldown": 5,
+     "chance": 0.55,
+     "pitch": [
+      0.9,
+      0.98
+     ]
+    },
+    "attack": {
+     "files": [
+      "attack_a",
+      "attack_b",
+      "attack_c"
+     ],
+     "vol": [
+      0.9,
+      1.0
+     ],
+     "cooldown": 0.8,
+     "priority": 3
+    },
+    "grab": {
+     "files": [
+      "grab_shriek"
+     ],
+     "vol": [
+      1.0,
+      1.0
+     ],
+     "priority": 4,
+     "cooldown": 3
+    },
+    "grab_close": {
+     "files": [
+      "grab_vomit"
+     ],
+     "vol": [
+      0.85,
+      0.95
+     ],
+     "priority": 4,
+     "cooldown": 3,
+     "overlap": true
+    },
+    "drag": {
+     "files": [
+      "breath_gurgle",
+      "breath_short"
+     ],
+     "vol": [
+      0.5,
+      0.65
+     ],
+     "interval": [
+      2.5,
+      4.5
+     ],
+     "cooldown": 2
+    },
+    "pain": {
+     "files": [
+      "pain_a",
+      "pain_b",
+      "pain_c"
+     ],
+     "vol": [
+      0.85,
+      1.0
+     ],
+     "cooldown": 1.2,
+     "priority": 3
+    },
+    "death": {
+     "files": [
+      "death_a",
+      "death_b",
+      "death_c"
+     ],
+     "vol": [
+      1.0,
+      1.0
+     ],
+     "priority": 5
+    },
+    "lost": {
+     "files": [
+      "lost_crying",
+      "lost_idle"
+     ],
+     "vol": [
+      0.3,
+      0.45
+     ],
+     "cooldown": 40,
+     "maxDist": 45,
+     "reverb": 0.6
+    }
+   }
+  },
+  "crawler": {
+   "desc": "Ana yaratık Hemiplex (çok bacaklı, gözsüz, eklembacaklı). Ses kimliği: gırtlaktan tıkırtılı hırıltı (death rattle), ekolokasyon tıkları, spiracle tıslaması, çene şakırtısı, titreşimli (AM) böcek çığlığı. Memeli sesi yok. Kaynak: Harpy çığlıkları (pes + çırpınma), Mimic tık/şakırtı, Rock Golem taş tıkları, Wight/Kelpie ıslak sesler, Wraith çığlık (uzak çağrı) + kaynak-süzgeç sentezi. Pes dosyaya işlendi.",
+   "base": "audio/creatures/hemiplex/",
+   "pitch": [
+    0.95,
+    1.04
+   ],
+   "ref": 3.0,
+   "maxDist": 45,
+   "gap": 0.7,
+   "cats": {
+    "sleep": {
+     "files": [
+      "sleep_a",
+      "sleep_b"
+     ],
+     "vol": [
+      0.3,
+      0.4
+     ],
+     "interval": [
+      8,
+      14
+     ],
+     "maxDist": 20,
+     "cooldown": 6,
+     "pitch": [
+      0.94,
+      1.0
+     ]
+    },
+    "sniff": {
+     "files": [
+      "sniff_scan",
+      "sniff_double",
+      "sniff_deep"
+     ],
+     "vol": [
+      0.8,
+      0.95
+     ],
+     "cooldown": 4,
+     "maxDist": 34,
+     "reverb": 0.5
+    },
+    "idle": {
+     "files": [
+      "idle_tick",
+      "idle_rattle",
+      "idle_wet",
+      "idle_exhale"
+     ],
+     "vol": [
+      0.4,
+      0.55
+     ],
+     "cooldown": 6,
+     "maxDist": 24,
+     "chance": 0.75
+    },
+    "suspicious": {
+     "files": [
+      "susp_rise",
+      "susp_rasp",
+      "susp_click",
+      "susp_low"
+     ],
+     "vol": [
+      0.7,
+      0.85
+     ],
+     "cooldown": 3.5,
+     "maxDist": 34
+    },
+    "detection": {
+     "files": [
+      "detect_a",
+      "detect_b",
+      "detect_c"
+     ],
+     "vol": [
+      1.0,
+      1.0
+     ],
+     "cooldown": 4,
+     "priority": 3,
+     "maxDist": 55
+    },
+    "chase": {
+     "files": [
+      "chase_hiss",
+      "chase_chatter",
+      "chase_snarl",
+      "chase_shriek",
+      "chase_tss",
+      "chase_cry"
+     ],
+     "vol": [
+      0.72,
+      0.92
+     ],
+     "cooldown": 1.6,
+     "priority": 2
+    },
+    "attack": {
+     "files": [
+      "attack_lunge",
+      "attack_snap",
+      "attack_rattle"
+     ],
+     "vol": [
+      1.0,
+      1.0
+     ],
+     "cooldown": 1,
+     "priority": 4
+    },
+    "drag": {
+     "files": [
+      "drag_chew",
+      "drag_purr",
+      "drag_mandible",
+      "drag_breath"
+     ],
+     "vol": [
+      0.7,
+      0.85
+     ],
+     "interval": [
+      2.6,
+      4.2
+     ],
+     "cooldown": 2.2
+    },
+    "pain": {
+     "files": [
+      "pain_squeal",
+      "pain_long",
+      "pain_rattle",
+      "pain_trill"
+     ],
+     "vol": [
+      0.9,
+      1.0
+     ],
+     "cooldown": 1,
+     "priority": 3
+    },
+    "retreat": {
+     "files": [
+      "retreat_fade",
+      "retreat_chitter"
+     ],
+     "vol": [
+      0.7,
+      0.85
+     ],
+     "cooldown": 6
+    },
+    "howl": {
+     "files": [
+      "howl_call",
+      "howl_phrase",
+      "howl_scream"
+     ],
+     "vol": [
+      0.85,
+      1.0
+     ],
+     "cooldown": 8,
+     "maxDist": 90,
+     "ref": 8,
+     "pitch": [
+      0.96,
+      1.02
+     ],
+     "reverb": 0.5
+    },
+    "death": {
+     "files": [
+      "death_a",
+      "death_b"
+     ],
+     "vol": [
+      1.0,
+      1.0
+     ],
+     "priority": 5
+    },
+    "dig": {
+     "files": [
+      "dig_a",
+      "dig_b",
+      "dig_c",
+      "dig_d"
+     ],
+     "vol": [
+      0.55,
+      0.75
+     ],
+     "cooldown": 0.35,
+     "overlap": true,
+     "maxDist": 30,
+     "pitch": [
+      0.9,
+      1.08
+     ]
+    }
+   }
+  },
+  "small": {
+   "desc": "Yavrular (küçük Hemiplex): tiz, cıvıltılı, hızlı çırpınan çığlık; minik tıkırtılar. Kaynak: Harpy (pes yukarı + hızlı AM), Mimic/Rock Golem tıkları, Wight ıslak patlama.",
+   "base": "audio/creatures/hemiplex_yavru/",
+   "pitch": [
+    0.95,
+    1.07
+   ],
+   "ref": 1.8,
+   "maxDist": 48,
+   "gap": 0.5,
+   "cats": {
+    "alert": {
+     "files": [
+      "alert_a",
+      "alert_b",
+      "alert_c"
+     ],
+     "vol": [
+      0.85,
+      1.0
+     ],
+     "cooldown": 1.5,
+     "priority": 3
+    },
+    "pain": {
+     "files": [
+      "pain_a",
+      "pain_b"
+     ],
+     "vol": [
+      0.8,
+      0.9
+     ],
+     "cooldown": 0.6
+    },
+    "death": {
+     "files": [
+      "death_a",
+      "death_b"
+     ],
+     "vol": [
+      0.9,
+      1.0
+     ],
+     "priority": 4
+    },
+    "idle": {
+     "files": [
+      "chit_a",
+      "chit_b",
+      "chit_c"
+     ],
+     "vol": [
+      0.3,
+      0.42
+     ],
+     "interval": [
+      9,
+      18
+     ],
+     "maxDist": 13,
+     "cooldown": 5,
+     "chance": 0.6
+    }
+   }
+  },
+  "environment": {
+   "desc": "Çevre: göçük, yeraltı suyu ve kazılan kayanın kırılıp dökülmesi. Kaynak: Rock Golem Landslide/Crumble, Kelpie Spray/Splash.",
+   "base": "audio/environment/",
+   "pitch": [
+    0.9,
+    1.0
+   ],
+   "ref": 4,
+   "maxDist": 70,
+   "gap": 0,
+   "cats": {
+    "cavein": {
+     "files": [
+      "cavein_landslide"
+     ],
+     "vol": [
+      1.0,
+      1.0
+     ],
+     "overlap": true,
+     "cooldown": 0.5
+    },
+    "water_burst": {
+     "files": [
+      "water_spray",
+      "water_splash"
+     ],
+     "vol": [
+      0.8,
+      0.95
+     ],
+     "overlap": true,
+     "cooldown": 0.5
+    },
+    "rock_break": {
+     "files": [
+      "rock_break_a",
+      "rock_break_b",
+      "rock_break_c"
+     ],
+     "vol": [
+      0.8,
+      0.95
+     ],
+     "overlap": true,
+     "cooldown": 0.12
+    }
+   }
+  },
+  "ocu": {
+   "desc": "Öcü (Kök Ormanı yaratığı, Boogeyman modeli): sessiz pusucu. Yaklaşırken neredeyse hiç ses çıkarmaz; sadece çok yakınken soluk nefes ve eklem çıtırtısı. Sıçrayınca çığlık. Kaynak: Wraith (nefes, fısıltı, çığlık, acı, ağlama), Mimic (eklem gıcırtısı/çıtırtısı). Pes edilerek.",
+   "base": "audio/creatures/ocu/",
+   "pitch": [
+    0.9,
+    1.0
+   ],
+   "ref": 1.8,
+   "maxDist": 30,
+   "gap": 1.0,
+   "cats": {
+    "idle": {
+     "files": [
+      "breath_aura"
+     ],
+     "vol": [
+      0.12,
+      0.2
+     ],
+     "interval": [
+      25,
+      50
+     ],
+     "maxDist": 9,
+     "cooldown": 20,
+     "chance": 0.5
+    },
+    "breathing": {
+     "files": [
+      "breath_gasp",
+      "breath_aura"
+     ],
+     "vol": [
+      0.16,
+      0.26
+     ],
+     "interval": [
+      7,
+      13
+     ],
+     "maxDist": 6.5,
+     "cooldown": 5,
+     "chance": 0.6
+    },
+    "creak": {
+     "files": [
+      "creak_a",
+      "creak_b",
+      "click_a",
+      "click_b"
+     ],
+     "vol": [
+      0.14,
+      0.24
+     ],
+     "interval": [
+      5,
+      11
+     ],
+     "maxDist": 11,
+     "cooldown": 3,
+     "chance": 0.5
+    },
+    "suspicious": {
+     "files": [
+      "shh"
+     ],
+     "vol": [
+      0.3,
+      0.42
+     ],
+     "maxDist": 10,
+     "cooldown": 14
+    },
+    "detection": {
+     "files": [
+      "shh",
+      "creak_a"
+     ],
+     "vol": [
+      0.55,
+      0.7
+     ],
+     "cooldown": 8,
+     "priority": 3
+    },
+    "contort": {
+     "files": [
+      "creak_a",
+      "creak_b"
+     ],
+     "vol": [
+      0.5,
+      0.7
+     ],
+     "cooldown": 0.3,
+     "overlap": true,
+     "maxDist": 14
+    },
+    "chase": {
+     "files": [
+      "breath_gasp"
+     ],
+     "vol": [
+      0.2,
+      0.3
+     ],
+     "interval": [
+      6,
+      12
+     ],
+     "maxDist": 8,
+     "cooldown": 5,
+     "chance": 0.4
+    },
+    "attack": {
+     "files": [
+      "attack_a",
+      "attack_b"
+     ],
+     "vol": [
+      0.9,
+      1.0
+     ],
+     "cooldown": 0.8,
+     "priority": 3
+    },
+    "grab": {
+     "files": [
+      "pounce_scream"
+     ],
+     "vol": [
+      1.0,
+      1.0
+     ],
+     "priority": 4,
+     "cooldown": 3
+    },
+    "grab_close": {
+     "files": [
+      "grab_close"
+     ],
+     "vol": [
+      0.85,
+      0.95
+     ],
+     "priority": 4,
+     "cooldown": 3,
+     "overlap": true
+    },
+    "drag": {
+     "files": [
+      "breath_gasp",
+      "click_a"
+     ],
+     "vol": [
+      0.45,
+      0.6
+     ],
+     "interval": [
+      2.5,
+      4.5
+     ],
+     "cooldown": 2
+    },
+    "pain": {
+     "files": [
+      "pain_a",
+      "pain_b"
+     ],
+     "vol": [
+      0.85,
+      1.0
+     ],
+     "cooldown": 1.2,
+     "priority": 3
+    },
+    "death": {
+     "files": [
+      "death_a"
+     ],
+     "vol": [
+      1.0,
+      1.0
+     ],
+     "priority": 5
+    },
+    "lost": {
+     "files": [
+      "lost_crying"
+     ],
+     "vol": [
+      0.22,
+      0.34
+     ],
+     "cooldown": 40,
+     "maxDist": 45,
+     "reverb": 0.6
+    }
+   }
+  }
+ }
+}

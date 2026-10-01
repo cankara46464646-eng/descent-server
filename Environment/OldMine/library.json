@@ -1,0 +1,2274 @@
+{
+ "name": "Environment/OldMine",
+ "source": "Quixel Megascans Old Mine (2K, LOD0 TIER2)",
+ "units": "metre, Y-up, pivot: XZ merkez, taban y=0",
+ "format": "mesh.txt = base64 KDM3 (pos int16 norm (qs/qo), uv u16 norm, normal i8x4, uv f32, tangent i8x4, idx LOD0|LOD1|LOD2); albedo.jpg (sRGB, cavity işlenmiş), normal.jpg (OpenGL +Y), rma.jpg (R=roughness G=metalness B=AO)",
+ "assets": [
+  {
+   "id": "post_a",
+   "category": "Structural",
+   "path": "Structural/post_a/",
+   "source": "tgmrafyfa",
+   "desc": "Kare kesit ahşap dikme 2.56 m",
+   "dims_m": [
+    0.2,
+    2.56,
+    0.19
+   ],
+   "tris": [
+    3116,
+    1148,
+    800
+   ],
+   "verts": 1720,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "support"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 164,
+   "usage": "destek seti dikmesi",
+   "usedInMap": true
+  },
+  {
+   "id": "post_b",
+   "category": "Structural",
+   "path": "Structural/post_b/",
+   "source": "tgmsdc0fa",
+   "desc": "Ahşap dikme 2.50 m, eğri",
+   "dims_m": [
+    0.24,
+    2.5,
+    0.23
+   ],
+   "tris": [
+    2624,
+    823,
+    682
+   ],
+   "verts": 1466,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "support"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 159,
+   "usage": "destek seti dikmesi + oyuncunun koyduğu kereste desteği",
+   "usedInMap": true
+  },
+  {
+   "id": "post_c",
+   "category": "Structural",
+   "path": "Structural/post_c/",
+   "source": "tgnhde0fa",
+   "desc": "Ahşap dikme 2.32 m",
+   "dims_m": [
+    0.26,
+    2.32,
+    0.26
+   ],
+   "tris": [
+    3146,
+    1191,
+    549
+   ],
+   "verts": 1795,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "support"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 143,
+   "usage": "destek seti dikmesi, kapatılmış tünel dikmesi, yatık kırık parça",
+   "usedInMap": true
+  },
+  {
+   "id": "post_stump",
+   "category": "Structural",
+   "path": "Structural/post_stump/",
+   "source": "tgnidj2fa",
+   "desc": "Kırık/kısa dikme 1.61 m",
+   "dims_m": [
+    0.25,
+    1.61,
+    0.25
+   ],
+   "tris": [
+    3276,
+    1388,
+    719
+   ],
+   "verts": 1988,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "support",
+    "broken"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 218,
+   "usage": "kırık/çökmüş setlerde ayakta kalan kütük",
+   "usedInMap": true
+  },
+  {
+   "id": "beam_a",
+   "category": "Structural",
+   "path": "Structural/beam_a/",
+   "source": "udrffjjqx",
+   "desc": "Tavan kirişi 1.98 m",
+   "dims_m": [
+    1.98,
+    0.17,
+    0.29
+   ],
+   "tris": [
+    5424,
+    2137,
+    925
+   ],
+   "verts": 3283,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "beam"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 265,
+   "usage": "set başlık kirişi (oyuncu desteği dahil), çökmüş sette yerdeki kiriş",
+   "usedInMap": true
+  },
+  {
+   "id": "beam_b",
+   "category": "Structural",
+   "path": "Structural/beam_b/",
+   "source": "uebpbd3fa",
+   "desc": "Kiriş/kalas 1.23 m",
+   "dims_m": [
+    1.23,
+    0.11,
+    0.18
+   ],
+   "tris": [
+    4458,
+    1909,
+    699
+   ],
+   "verts": 2479,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "beam",
+    "plank"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 193,
+   "usage": "tavan takozu, kapatılmış tünel tahtası",
+   "usedInMap": true
+  },
+  {
+   "id": "beam_c",
+   "category": "Structural",
+   "path": "Structural/beam_c/",
+   "source": "uebpbetfa",
+   "desc": "Kiriş/kalas 1.69 m",
+   "dims_m": [
+    1.69,
+    0.11,
+    0.16
+   ],
+   "tris": [
+    4490,
+    1957,
+    715
+   ],
+   "verts": 2605,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "beam",
+    "plank"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 213,
+   "usage": "kapatılmış tünel tahtası + çapraz kuşak, kereste istifi",
+   "usedInMap": true
+  },
+  {
+   "id": "beam_d",
+   "category": "Structural",
+   "path": "Structural/beam_d/",
+   "source": "uebpbhcfa",
+   "desc": "Yuvarlak kiriş 1.55 m",
+   "dims_m": [
+    1.55,
+    0.14,
+    0.23
+   ],
+   "tris": [
+    3154,
+    1276,
+    523
+   ],
+   "verts": 1857,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "beam"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 175,
+   "usage": "kereste istifi, acil destek altlığı",
+   "usedInMap": true
+  },
+  {
+   "id": "plank_scrap",
+   "category": "Debris",
+   "path": "Debris/plank_scrap/",
+   "source": "tezvbcuda",
+   "desc": "Kırık tahta parçası 0.32 m",
+   "dims_m": [
+    0.32,
+    0.03,
+    0.08
+   ],
+   "tris": [
+    3684,
+    1390,
+    758
+   ],
+   "verts": 2276,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "debris"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 125,
+   "usage": "yerde kırık tahta",
+   "usedInMap": true
+  },
+  {
+   "id": "jack_tall",
+   "category": "Structural",
+   "path": "Structural/jack_tall/",
+   "source": "ugfmehgfa",
+   "desc": "Hidrolik maden dikmesi 2.55 m",
+   "dims_m": [
+    0.31,
+    2.55,
+    0.25
+   ],
+   "tris": [
+    3534,
+    1565,
+    805
+   ],
+   "verts": 2353,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "support",
+    "metal"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 197,
+   "usage": "acil destek (ayakta) / çökmüş köşede yatık",
+   "usedInMap": true
+  },
+  {
+   "id": "jack_mid",
+   "category": "Structural",
+   "path": "Structural/jack_mid/",
+   "source": "ugfndjqfa",
+   "desc": "Hidrolik maden dikmesi 1.69 m",
+   "dims_m": [
+    0.31,
+    1.69,
+    0.25
+   ],
+   "tris": [
+    4554,
+    1937,
+    1024
+   ],
+   "verts": 3047,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "support",
+    "metal"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 223,
+   "usage": "acil destek",
+   "usedInMap": true
+  },
+  {
+   "id": "jack_short",
+   "category": "Structural",
+   "path": "Structural/jack_short/",
+   "source": "uhcgdblfa",
+   "desc": "Vidalı maden dikmesi 1.60 m",
+   "dims_m": [
+    0.31,
+    1.6,
+    0.22
+   ],
+   "tris": [
+    11282,
+    4288,
+    1774
+   ],
+   "verts": 6803,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "support",
+    "metal"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 388,
+   "usage": "kütüphanede (yerleştirilmedi)",
+   "usedInMap": false
+  },
+  {
+   "id": "lining_arch_a",
+   "category": "Structural",
+   "path": "Structural/lining_arch_a/",
+   "source": "wdpncgrdw",
+   "desc": "Kemerli tünel kaplaması 4.9x3.7x6.0 m",
+   "dims_m": [
+    4.9,
+    3.68,
+    5.95
+   ],
+   "tris": [
+    13630,
+    6035,
+    4110
+   ],
+   "verts": 9870,
+   "lengthAxis": "x",
+   "collision": "walls",
+   "tags": [
+    "lining"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 711,
+   "usage": "aktif/eski kaplı tünel bölümü",
+   "usedInMap": true
+  },
+  {
+   "id": "lining_arch_b",
+   "category": "Structural",
+   "path": "Structural/lining_arch_b/",
+   "source": "wdpnchedw",
+   "desc": "Kemerli tünel kaplaması 3.5x3.8x6.0 m",
+   "dims_m": [
+    3.53,
+    3.77,
+    5.95
+   ],
+   "tris": [
+    13739,
+    5296,
+    3432
+   ],
+   "verts": 9070,
+   "lengthAxis": "x",
+   "collision": "walls",
+   "tags": [
+    "lining"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 677,
+   "usage": "aktif/eski kaplı tünel bölümü",
+   "usedInMap": true
+  },
+  {
+   "id": "lining_arch_c",
+   "category": "Structural",
+   "path": "Structural/lining_arch_c/",
+   "source": "wdpnchtdw",
+   "desc": "Kemerli tünel kaplaması 4.6x3.6x5.9 m",
+   "dims_m": [
+    4.55,
+    3.62,
+    5.88
+   ],
+   "tris": [
+    16256,
+    6846,
+    5026
+   ],
+   "verts": 13890,
+   "lengthAxis": "x",
+   "collision": "walls",
+   "tags": [
+    "lining"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 894,
+   "usage": "kütüphanede (en ağır varyasyon, yerleştirilmedi)",
+   "usedInMap": false
+  },
+  {
+   "id": "lining_arch_d",
+   "category": "Structural",
+   "path": "Structural/lining_arch_d/",
+   "source": "wdpncihdw",
+   "desc": "Kemerli tünel kaplaması (paslı bağlantılı) 4.5x3.7x6.0 m",
+   "dims_m": [
+    4.47,
+    3.65,
+    5.96
+   ],
+   "tris": [
+    9334,
+    3631,
+    2855
+   ],
+   "verts": 7521,
+   "lengthAxis": "x",
+   "collision": "walls",
+   "tags": [
+    "lining"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 639,
+   "usage": "aktif/eski kaplı tünel bölümü",
+   "usedInMap": true
+  },
+  {
+   "id": "lining_box_a",
+   "category": "Structural",
+   "path": "Structural/lining_box_a/",
+   "source": "wcbpdfsdw",
+   "desc": "Düz tavanlı ahşap tünel çerçevesi 3.1x2.4x3.2 m",
+   "dims_m": [
+    3.06,
+    2.37,
+    3.21
+   ],
+   "tris": [
+    6929,
+    3574,
+    3574
+   ],
+   "verts": 5834,
+   "lengthAxis": "x",
+   "collision": "walls",
+   "tags": [
+    "lining"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 558,
+   "usage": "düz tavanlı kaplı tünel bölümü",
+   "usedInMap": true
+  },
+  {
+   "id": "lining_box_b",
+   "category": "Structural",
+   "path": "Structural/lining_box_b/",
+   "source": "wcbpdgcdw",
+   "desc": "Düz tavanlı ahşap tünel çerçevesi 2.8x2.4x3.8 m",
+   "dims_m": [
+    2.81,
+    2.37,
+    3.81
+   ],
+   "tris": [
+    6529,
+    3090,
+    3090
+   ],
+   "verts": 5060,
+   "lengthAxis": "x",
+   "collision": "walls",
+   "tags": [
+    "lining"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 517,
+   "usage": "düz tavanlı kaplı tünel bölümü",
+   "usedInMap": true
+  },
+  {
+   "id": "deck",
+   "category": "Structural",
+   "path": "Structural/deck/",
+   "source": "ufekadxdw",
+   "desc": "Tahta zemin/iskele 5.0x3.2 m",
+   "dims_m": [
+    5.0,
+    0.27,
+    3.21
+   ],
+   "tris": [
+    10113,
+    4270,
+    2320
+   ],
+   "verts": 6023,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "floor"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 471,
+   "usage": "kütüphanede (su basan katta oyuncu ayak seviyesiyle çakıştığı için yerleştirilmedi)",
+   "usedInMap": false
+  },
+  {
+   "id": "trestle",
+   "category": "Props",
+   "path": "Props/trestle/",
+   "source": "ufekab3dw",
+   "desc": "Sehpa + eğik oluk (yükleme rampası)",
+   "dims_m": [
+    1.61,
+    1.33,
+    2.59
+   ],
+   "tris": [
+    11250,
+    5038,
+    1769
+   ],
+   "verts": 6608,
+   "lengthAxis": "z",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 393,
+   "usage": "kütüphanede (duvar şeridine sığmıyor)",
+   "usedInMap": false
+  },
+  {
+   "id": "rail_a",
+   "category": "Rails",
+   "path": "Rails/rail_a/",
+   "source": "ufekaeedw",
+   "desc": "Düz ray + traversler 2.5 m (geniş hat)",
+   "dims_m": [
+    2.5,
+    0.22,
+    2.5
+   ],
+   "tris": [
+    5744,
+    2442,
+    1715
+   ],
+   "verts": 3928,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rail"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 278,
+   "usage": "oyuncunun döşediği raylar (vagonun gerçek rayı)",
+   "usedInMap": true
+  },
+  {
+   "id": "rail_b",
+   "category": "Rails",
+   "path": "Rails/rail_b/",
+   "source": "ufekaevdw",
+   "desc": "Düz ray + traversler 2.5 m, varyasyon",
+   "dims_m": [
+    2.5,
+    0.22,
+    2.44
+   ],
+   "tris": [
+    4586,
+    1822,
+    1496
+   ],
+   "verts": 3402,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rail"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 269,
+   "usage": "oyuncunun döşediği raylar (dönüşümlü)",
+   "usedInMap": true
+  },
+  {
+   "id": "rail_old_a",
+   "category": "Rails",
+   "path": "Rails/rail_old_a/",
+   "source": "wcskfaidw[1]",
+   "desc": "Toprağa gömülü eski ray 2.5 m (dar hat 0.7 m)",
+   "dims_m": [
+    2.5,
+    0.25,
+    1.5
+   ],
+   "tris": [
+    3762,
+    1663,
+    774
+   ],
+   "verts": 2159,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rail",
+    "old"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 212,
+   "usage": "eski gömülü taşıma hattı",
+   "usedInMap": true
+  },
+  {
+   "id": "rail_old_b",
+   "category": "Rails",
+   "path": "Rails/rail_old_b/",
+   "source": "wcskfaidw[2]",
+   "desc": "Toprağa gömülü eski ray 2.5 m, bozuk",
+   "dims_m": [
+    2.5,
+    0.25,
+    1.5
+   ],
+   "tris": [
+    3783,
+    1460,
+    829
+   ],
+   "verts": 2171,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rail",
+    "old"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 211,
+   "usage": "eski gömülü taşıma hattı",
+   "usedInMap": true
+  },
+  {
+   "id": "trackbed",
+   "category": "Rails",
+   "path": "Rails/trackbed/",
+   "source": "wcskfaidw[0]",
+   "desc": "Rayı sökülmüş hat yatağı 2.5 m",
+   "dims_m": [
+    2.5,
+    0.32,
+    1.5
+   ],
+   "tris": [
+    3414,
+    1411,
+    817
+   ],
+   "verts": 2155,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rail",
+    "old",
+    "broken"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 207,
+   "usage": "rayı sökülmüş hat parçası (kırık ray hikâyesi)",
+   "usedInMap": true
+  },
+  {
+   "id": "spike",
+   "category": "Rails",
+   "path": "Rails/spike/",
+   "source": "tkqmdbnhw",
+   "desc": "Ray çivisi",
+   "dims_m": [
+    0.17,
+    0.03,
+    0.03
+   ],
+   "tris": [
+    2022,
+    623,
+    385
+   ],
+   "verts": 1337,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "debris",
+    "metal"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 86,
+   "usage": "hat sonunda saçılmış çivi",
+   "usedInMap": true
+  },
+  {
+   "id": "wedge",
+   "category": "Rails",
+   "path": "Rails/wedge/",
+   "source": "tl2effiva[0]",
+   "desc": "Ray takozu",
+   "dims_m": [
+    0.18,
+    0.03,
+    0.03
+   ],
+   "tris": [
+    2088,
+    863,
+    245
+   ],
+   "verts": 1217,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "debris",
+    "metal"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 93,
+   "usage": "hat sonunda takoz",
+   "usedInMap": true
+  },
+  {
+   "id": "cart_ore",
+   "category": "MineCarts",
+   "path": "MineCarts/cart_ore/",
+   "source": "ueujednfa",
+   "desc": "Cevher dolu maden vagonu 2.06 m",
+   "dims_m": [
+    2.06,
+    1.56,
+    0.95
+   ],
+   "tris": [
+    18054,
+    7225,
+    3743
+   ],
+   "verts": 10721,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "cart",
+    "interactable_candidate"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 708,
+   "usage": "duvar dibinde dolu cevher vagonu",
+   "usedInMap": true
+  },
+  {
+   "id": "cart_empty",
+   "category": "MineCarts",
+   "path": "MineCarts/cart_empty/",
+   "source": "ufmodhpfa",
+   "desc": "Boş devrilir kasalı vagon 1.1 m",
+   "dims_m": [
+    0.77,
+    1.06,
+    1.1
+   ],
+   "tris": [
+    18512,
+    7263,
+    4514
+   ],
+   "verts": 11950,
+   "lengthAxis": "z",
+   "collision": "box",
+   "tags": [
+    "cart",
+    "interactable_candidate"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 832,
+   "usage": "oyuncunun hareketli vagonu + yükleme noktası + devrilmiş vagon",
+   "usedInMap": true
+  },
+  {
+   "id": "cart_logs",
+   "category": "MineCarts",
+   "path": "MineCarts/cart_logs/",
+   "source": "ujzhahdfa",
+   "desc": "Kereste yüklü vagon 2.3 m",
+   "dims_m": [
+    0.83,
+    1.06,
+    2.3
+   ],
+   "tris": [
+    20174,
+    7307,
+    4840
+   ],
+   "verts": 13415,
+   "lengthAxis": "z",
+   "collision": "box",
+   "tags": [
+    "cart"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 843,
+   "usage": "kereste deposu",
+   "usedInMap": true
+  },
+  {
+   "id": "cart_frame",
+   "category": "MineCarts",
+   "path": "MineCarts/cart_frame/",
+   "source": "vcyjedsfa",
+   "desc": "Kasasız taşıma arabası",
+   "dims_m": [
+    0.83,
+    1.06,
+    1.08
+   ],
+   "tris": [
+    13126,
+    5720,
+    3099
+   ],
+   "verts": 9153,
+   "lengthAxis": "z",
+   "collision": "box",
+   "tags": [
+    "cart"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 604,
+   "usage": "kütüphanede",
+   "usedInMap": false
+  },
+  {
+   "id": "cart_bags",
+   "category": "MineCarts",
+   "path": "MineCarts/cart_bags/",
+   "source": "ujzlbgzfa",
+   "desc": "Çuval/torba yüklü vagon (mavi naylon)",
+   "dims_m": [
+    0.77,
+    1.08,
+    1.26
+   ],
+   "tris": [
+    18545,
+    7740,
+    5069
+   ],
+   "verts": 12822,
+   "lengthAxis": "z",
+   "collision": "box",
+   "tags": [
+    "cart"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 790,
+   "usage": "kütüphanede (modern naylon, atmosfere uymuyor)",
+   "usedInMap": false
+  },
+  {
+   "id": "wheelset",
+   "category": "MineCarts",
+   "path": "MineCarts/wheelset/",
+   "source": "ueihabqfa",
+   "desc": "Vagon aks + tekerlek takımı",
+   "dims_m": [
+    0.73,
+    0.33,
+    0.33
+   ],
+   "tris": [
+    3476,
+    1298,
+    1060
+   ],
+   "verts": 2581,
+   "lengthAxis": "x",
+   "collision": "circle",
+   "tags": [
+    "debris",
+    "metal"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 153,
+   "usage": "sökülmüş tekerlek takımı",
+   "usedInMap": true
+  },
+  {
+   "id": "pickaxe_a",
+   "category": "Tools",
+   "path": "Tools/pickaxe_a/",
+   "source": "ucylebxfa",
+   "desc": "Kazma",
+   "dims_m": [
+    0.5,
+    0.87,
+    0.07
+   ],
+   "tris": [
+    4030,
+    1722,
+    696
+   ],
+   "verts": 2396,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "tool"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 131,
+   "usage": "duvara dayalı kazma",
+   "usedInMap": true
+  },
+  {
+   "id": "pickaxe_b",
+   "category": "Tools",
+   "path": "Tools/pickaxe_b/",
+   "source": "uddjeelqx",
+   "desc": "Kazma (uzun sap)",
+   "dims_m": [
+    0.98,
+    0.14,
+    0.22
+   ],
+   "tris": [
+    9520,
+    4178,
+    1598
+   ],
+   "verts": 5612,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "tool"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 278,
+   "usage": "yerde kazma",
+   "usedInMap": true
+  },
+  {
+   "id": "sledge",
+   "category": "Tools",
+   "path": "Tools/sledge/",
+   "source": "uc1mfe1fa",
+   "desc": "Balyoz",
+   "dims_m": [
+    0.49,
+    0.04,
+    0.13
+   ],
+   "tris": [
+    1414,
+    596,
+    308
+   ],
+   "verts": 851,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "tool"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 56,
+   "usage": "yerde balyoz",
+   "usedInMap": true
+  },
+  {
+   "id": "shovel",
+   "category": "Tools",
+   "path": "Tools/shovel/",
+   "source": "uckmaibfa",
+   "desc": "Kürek",
+   "dims_m": [
+    1.68,
+    0.1,
+    0.25
+   ],
+   "tris": [
+    7772,
+    3318,
+    1388
+   ],
+   "verts": 4314,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "tool"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 223,
+   "usage": "yerde kürek",
+   "usedInMap": true
+  },
+  {
+   "id": "helmet",
+   "category": "Tools",
+   "path": "Tools/helmet/",
+   "source": "udklcbuiw",
+   "desc": "Madenci baretı",
+   "dims_m": [
+    0.18,
+    0.09,
+    0.15
+   ],
+   "tris": [
+    3330,
+    1258,
+    831
+   ],
+   "verts": 2088,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "tool"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 118,
+   "usage": "yerde baret",
+   "usedInMap": true
+  },
+  {
+   "id": "lamp",
+   "category": "Props",
+   "path": "Props/lamp/",
+   "source": "vgyidfpaw",
+   "desc": "Kafesli etanj duvar lambası",
+   "dims_m": [
+    0.14,
+    0.21,
+    0.13
+   ],
+   "tris": [
+    7730,
+    3252,
+    2149
+   ],
+   "verts": 5260,
+   "lengthAxis": "z",
+   "collision": "none",
+   "tags": [
+    "light"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 286,
+   "usage": "duvar/dikme lambası (yanan/titreyen/sönük), yerde düşmüş lamba",
+   "usedInMap": true
+  },
+  {
+   "id": "stone",
+   "category": "Rocks",
+   "path": "Rocks/stone/",
+   "source": "wd3efb0",
+   "desc": "Taş (ölçeklenerek kaya/kömür topağı olarak kullanılır)",
+   "dims_m": [
+    0.09,
+    0.07,
+    0.09
+   ],
+   "tris": [
+    1042,
+    598,
+    598
+   ],
+   "verts": 694,
+   "lengthAxis": "y",
+   "collision": "circle",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 284,
+   "usage": "köşe kaya kümeleri (x7-15), kömür topakları (x1.5-3, koyu ton)",
+   "usedInMap": true
+  },
+  {
+   "id": "pile_dirt",
+   "category": "Debris",
+   "path": "Debris/pile_dirt/",
+   "source": "ul4lehiga",
+   "desc": "Kırmızımsı toprak/moloz yığını 3.2 m",
+   "dims_m": [
+    3.22,
+    0.32,
+    1.88
+   ],
+   "tris": [
+    1562,
+    680,
+    401
+   ],
+   "verts": 1016,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "pile"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 305,
+   "usage": "çökmüş bölge toprak yığını",
+   "usedInMap": true
+  },
+  {
+   "id": "pile_gravel",
+   "category": "Debris",
+   "path": "Debris/pile_gravel/",
+   "source": "vmhdagb",
+   "desc": "Çakıl/moloz yığını 2.0 m",
+   "dims_m": [
+    1.97,
+    0.16,
+    1.82
+   ],
+   "tris": [
+    4759,
+    2055,
+    1427
+   ],
+   "verts": 3149,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "pile"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 442,
+   "usage": "çakıl/moloz yığını",
+   "usedInMap": true
+  },
+  {
+   "id": "gravel_patch",
+   "category": "Debris",
+   "path": "Debris/gravel_patch/",
+   "source": "wjfidjgdb",
+   "desc": "Yere yayılmış ince çakıl 2.8 m",
+   "dims_m": [
+    2.77,
+    0.06,
+    2.35
+   ],
+   "tris": [
+    3113,
+    1302,
+    1108
+   ],
+   "verts": 1601,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "pile",
+    "decal_mesh"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 370,
+   "usage": "terk/çökmüş tünellerde zemin çakılı",
+   "usedInMap": true
+  },
+  {
+   "id": "splinter_a",
+   "category": "Debris",
+   "path": "Debris/splinter_a/",
+   "source": "ricaS[0]",
+   "desc": "Ahşap kıymık/kazık",
+   "dims_m": [
+    0.07,
+    0.03,
+    0.65
+   ],
+   "tris": [
+    1442,
+    438,
+    308
+   ],
+   "verts": 808,
+   "lengthAxis": "z",
+   "collision": "none",
+   "tags": [
+    "debris"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 70,
+   "usage": "yerde kıymık",
+   "usedInMap": true
+  },
+  {
+   "id": "splinter_b",
+   "category": "Debris",
+   "path": "Debris/splinter_b/",
+   "source": "ricaS[3]",
+   "desc": "Ahşap kıymık/kazık",
+   "dims_m": [
+    0.06,
+    0.05,
+    0.67
+   ],
+   "tris": [
+    1860,
+    801,
+    314
+   ],
+   "verts": 1022,
+   "lengthAxis": "z",
+   "collision": "none",
+   "tags": [
+    "debris"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 81,
+   "usage": "yerde kıymık",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_a",
+   "category": "Plants",
+   "path": "Plants/grass_a/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarA LOD0-2",
+   "desc": "Ot/çalı: büyük ot öbeği",
+   "dims_m": [
+    0.42,
+    0.63,
+    0.48
+   ],
+   "tris": [
+    678,
+    515,
+    328
+   ],
+   "verts": 2565,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 72,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_f",
+   "category": "Plants",
+   "path": "Plants/grass_f/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarF LOD0-2",
+   "desc": "Ot/çalı: geniş ot öbeği",
+   "dims_m": [
+    0.54,
+    0.47,
+    0.45
+   ],
+   "tris": [
+    770,
+    532,
+    378
+   ],
+   "verts": 2723,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 77,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_h",
+   "category": "Plants",
+   "path": "Plants/grass_h/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarH LOD0-2",
+   "desc": "Ot/çalı: yayvan ot öbeği",
+   "dims_m": [
+    0.42,
+    0.38,
+    0.33
+   ],
+   "tris": [
+    756,
+    583,
+    364
+   ],
+   "verts": 2794,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 79,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_j",
+   "category": "Plants",
+   "path": "Plants/grass_j/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarJ LOD0-2",
+   "desc": "Ot/çalı: orta ot",
+   "dims_m": [
+    0.23,
+    0.24,
+    0.25
+   ],
+   "tris": [
+    549,
+    422,
+    268
+   ],
+   "verts": 1958,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 56,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_k",
+   "category": "Plants",
+   "path": "Plants/grass_k/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarK LOD0-2",
+   "desc": "Ot/çalı: orta ot, seyrek",
+   "dims_m": [
+    0.26,
+    0.22,
+    0.27
+   ],
+   "tris": [
+    636,
+    506,
+    312
+   ],
+   "verts": 2181,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 63,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_i",
+   "category": "Plants",
+   "path": "Plants/grass_i/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarI LOD0-2",
+   "desc": "Ot/çalı: ince uzun ot",
+   "dims_m": [
+    0.24,
+    0.31,
+    0.27
+   ],
+   "tris": [
+    226,
+    173,
+    116
+   ],
+   "verts": 929,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 26,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_b",
+   "category": "Plants",
+   "path": "Plants/grass_b/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarB LOD0-2",
+   "desc": "Ot/çalı: küçük ot",
+   "dims_m": [
+    0.16,
+    0.14,
+    0.15
+   ],
+   "tris": [
+    475,
+    381,
+    224
+   ],
+   "verts": 1630,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 47,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_c",
+   "category": "Plants",
+   "path": "Plants/grass_c/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarC LOD0-2",
+   "desc": "Ot/çalı: küçük ot",
+   "dims_m": [
+    0.13,
+    0.13,
+    0.1
+   ],
+   "tris": [
+    315,
+    222,
+    130
+   ],
+   "verts": 1171,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 33,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  },
+  {
+   "id": "grass_d",
+   "category": "Plants",
+   "path": "Plants/grass_d/",
+   "texPath": "Plants/_grass_tex/",
+   "source": "uddmcgbia VarD LOD0-2",
+   "desc": "Ot/çalı: alçak ot",
+   "dims_m": [
+    0.16,
+    0.07,
+    0.11
+   ],
+   "tris": [
+    688,
+    476,
+    358
+   ],
+   "verts": 2465,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "plant",
+    "alpha",
+    "ownLOD"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 70,
+   "usage": "Kök Ormanı: ışık huzmesi çevresi ve yosunlu zeminler",
+   "usedInMap": true
+  }
+ ],
+ "surfaces": [
+  {
+   "id": "rock_layered",
+   "kind": "wall",
+   "source": "ueknfaclw",
+   "desc": "Katmanlı kahverengi kaya duvarı",
+   "path": "Surfaces/rock_layered/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.0823,
+    0.0679,
+    0.0488
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 717,
+   "used": true
+  },
+  {
+   "id": "rock_grey",
+   "kind": "wall",
+   "source": "uebmddyn",
+   "desc": "Gri-mavi katmanlı kaya",
+   "path": "Surfaces/rock_grey/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.1731,
+    0.1551,
+    0.124
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 615,
+   "used": true
+  },
+  {
+   "id": "rock_brown",
+   "kind": "wall",
+   "source": "ueijag3ew",
+   "desc": "Kahve kaya",
+   "path": "Surfaces/rock_brown/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.1011,
+    0.0801,
+    0.0553
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 737,
+   "used": true
+  },
+  {
+   "id": "rock_drilled",
+   "kind": "wall",
+   "source": "uh1nbhzlw",
+   "desc": "Delik izli (patlatma) maden duvarı",
+   "path": "Surfaces/rock_drilled/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.1624,
+    0.1203,
+    0.0864
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 821,
+   "used": true
+  },
+  {
+   "id": "ground_dark",
+   "kind": "ground",
+   "source": "ud0nfezew",
+   "desc": "Koyu toprak zemin",
+   "path": "Surfaces/ground_dark/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.053,
+    0.0438,
+    0.0333
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 710,
+   "used": true
+  },
+  {
+   "id": "ground_coal",
+   "kind": "ground",
+   "source": "shnnehua",
+   "desc": "Kömür tozlu kara zemin",
+   "path": "Surfaces/ground_coal/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.0077,
+    0.0071,
+    0.0062
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 772,
+   "used": true
+  },
+  {
+   "id": "ground_red",
+   "kind": "ground",
+   "source": "venoehv",
+   "desc": "Kırmızı taşlı moloz zemin",
+   "path": "Surfaces/ground_red/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.2324,
+    0.0826,
+    0.0446
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 755,
+   "used": true
+  },
+  {
+   "id": "concrete",
+   "kind": "wall",
+   "source": "ud4ofc0fw",
+   "desc": "Beton duvar (kullanılmadı: mağaraya uymuyor)",
+   "path": "Surfaces/concrete/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.1271,
+    0.0998,
+    0.0714
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 371,
+   "used": false
+  }
+ ],
+ "decals": [
+  {
+   "id": "coal_scatter_a",
+   "source": "sinqgag",
+   "desc": "Dağılmış kömür parçaları (opak maske)",
+   "path": "Decals/coal_scatter_a/",
+   "tile_m": 2.0,
+   "kb": 100
+  },
+  {
+   "id": "coal_scatter_b",
+   "source": "smnhxxh",
+   "desc": "Dağılmış kömür kırıntısı",
+   "path": "Decals/coal_scatter_b/",
+   "tile_m": 2.0,
+   "kb": 75
+  },
+  {
+   "id": "grit_scatter_a",
+   "source": "smtinfh",
+   "desc": "Taş kırıntısı",
+   "path": "Decals/grit_scatter_a/",
+   "tile_m": 2.0,
+   "kb": 152
+  },
+  {
+   "id": "grit_scatter_b",
+   "source": "smtqzuh",
+   "desc": "Taş kırıntısı, seyrek",
+   "path": "Decals/grit_scatter_b/",
+   "tile_m": 2.0,
+   "kb": 122
+  },
+  {
+   "id": "stain",
+   "source": "tlgmehog",
+   "desc": "Islak leke / birikinti",
+   "path": "Decals/stain/",
+   "tile_m": 2.0,
+   "kb": 40
+  }
+ ],
+ "materials": {
+  "post_a": {
+   "albedo": "Structural/post_a/albedo.jpg",
+   "normal": "Structural/post_a/normal.jpg",
+   "rma": "Structural/post_a/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "post_b": {
+   "albedo": "Structural/post_b/albedo.jpg",
+   "normal": "Structural/post_b/normal.jpg",
+   "rma": "Structural/post_b/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "post_c": {
+   "albedo": "Structural/post_c/albedo.jpg",
+   "normal": "Structural/post_c/normal.jpg",
+   "rma": "Structural/post_c/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "post_stump": {
+   "albedo": "Structural/post_stump/albedo.jpg",
+   "normal": "Structural/post_stump/normal.jpg",
+   "rma": "Structural/post_stump/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "beam_a": {
+   "albedo": "Structural/beam_a/albedo.jpg",
+   "normal": "Structural/beam_a/normal.jpg",
+   "rma": "Structural/beam_a/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "beam_b": {
+   "albedo": "Structural/beam_b/albedo.jpg",
+   "normal": "Structural/beam_b/normal.jpg",
+   "rma": "Structural/beam_b/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "beam_c": {
+   "albedo": "Structural/beam_c/albedo.jpg",
+   "normal": "Structural/beam_c/normal.jpg",
+   "rma": "Structural/beam_c/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "beam_d": {
+   "albedo": "Structural/beam_d/albedo.jpg",
+   "normal": "Structural/beam_d/normal.jpg",
+   "rma": "Structural/beam_d/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "plank_scrap": {
+   "albedo": "Debris/plank_scrap/albedo.jpg",
+   "normal": "Debris/plank_scrap/normal.jpg",
+   "rma": "Debris/plank_scrap/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "jack_tall": {
+   "albedo": "Structural/jack_tall/albedo.jpg",
+   "normal": "Structural/jack_tall/normal.jpg",
+   "rma": "Structural/jack_tall/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "jack_mid": {
+   "albedo": "Structural/jack_mid/albedo.jpg",
+   "normal": "Structural/jack_mid/normal.jpg",
+   "rma": "Structural/jack_mid/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "jack_short": {
+   "albedo": "Structural/jack_short/albedo.jpg",
+   "normal": "Structural/jack_short/normal.jpg",
+   "rma": "Structural/jack_short/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "lining_arch_a": {
+   "albedo": "Structural/lining_arch_a/albedo.jpg",
+   "normal": "Structural/lining_arch_a/normal.jpg",
+   "rma": "Structural/lining_arch_a/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "lining_arch_b": {
+   "albedo": "Structural/lining_arch_b/albedo.jpg",
+   "normal": "Structural/lining_arch_b/normal.jpg",
+   "rma": "Structural/lining_arch_b/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "lining_arch_c": {
+   "albedo": "Structural/lining_arch_c/albedo.jpg",
+   "normal": "Structural/lining_arch_c/normal.jpg",
+   "rma": "Structural/lining_arch_c/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "lining_arch_d": {
+   "albedo": "Structural/lining_arch_d/albedo.jpg",
+   "normal": "Structural/lining_arch_d/normal.jpg",
+   "rma": "Structural/lining_arch_d/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "lining_box_a": {
+   "albedo": "Structural/lining_box_a/albedo.jpg",
+   "normal": "Structural/lining_box_a/normal.jpg",
+   "rma": "Structural/lining_box_a/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "lining_box_b": {
+   "albedo": "Structural/lining_box_b/albedo.jpg",
+   "normal": "Structural/lining_box_b/normal.jpg",
+   "rma": "Structural/lining_box_b/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "deck": {
+   "albedo": "Structural/deck/albedo.jpg",
+   "normal": "Structural/deck/normal.jpg",
+   "rma": "Structural/deck/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "trestle": {
+   "albedo": "Props/trestle/albedo.jpg",
+   "normal": "Props/trestle/normal.jpg",
+   "rma": "Props/trestle/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "rail_a": {
+   "albedo": "Rails/rail_a/albedo.jpg",
+   "normal": "Rails/rail_a/normal.jpg",
+   "rma": "Rails/rail_a/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "rail_b": {
+   "albedo": "Rails/rail_b/albedo.jpg",
+   "normal": "Rails/rail_b/normal.jpg",
+   "rma": "Rails/rail_b/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "rail_old_a": {
+   "albedo": "Rails/rail_old_a/albedo.jpg",
+   "normal": "Rails/rail_old_a/normal.jpg",
+   "rma": "Rails/rail_old_a/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "rail_old_b": {
+   "albedo": "Rails/rail_old_b/albedo.jpg",
+   "normal": "Rails/rail_old_b/normal.jpg",
+   "rma": "Rails/rail_old_b/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "trackbed": {
+   "albedo": "Rails/trackbed/albedo.jpg",
+   "normal": "Rails/trackbed/normal.jpg",
+   "rma": "Rails/trackbed/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "spike": {
+   "albedo": "Rails/spike/albedo.jpg",
+   "normal": "Rails/spike/normal.jpg",
+   "rma": "Rails/spike/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "wedge": {
+   "albedo": "Rails/wedge/albedo.jpg",
+   "normal": "Rails/wedge/normal.jpg",
+   "rma": "Rails/wedge/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "cart_ore": {
+   "albedo": "MineCarts/cart_ore/albedo.jpg",
+   "normal": "MineCarts/cart_ore/normal.jpg",
+   "rma": "MineCarts/cart_ore/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "cart_empty": {
+   "albedo": "MineCarts/cart_empty/albedo.jpg",
+   "normal": "MineCarts/cart_empty/normal.jpg",
+   "rma": "MineCarts/cart_empty/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "cart_logs": {
+   "albedo": "MineCarts/cart_logs/albedo.jpg",
+   "normal": "MineCarts/cart_logs/normal.jpg",
+   "rma": "MineCarts/cart_logs/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "cart_frame": {
+   "albedo": "MineCarts/cart_frame/albedo.jpg",
+   "normal": "MineCarts/cart_frame/normal.jpg",
+   "rma": "MineCarts/cart_frame/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "cart_bags": {
+   "albedo": "MineCarts/cart_bags/albedo.jpg",
+   "normal": "MineCarts/cart_bags/normal.jpg",
+   "rma": "MineCarts/cart_bags/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "wheelset": {
+   "albedo": "MineCarts/wheelset/albedo.jpg",
+   "normal": "MineCarts/wheelset/normal.jpg",
+   "rma": "MineCarts/wheelset/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "pickaxe_a": {
+   "albedo": "Tools/pickaxe_a/albedo.jpg",
+   "normal": "Tools/pickaxe_a/normal.jpg",
+   "rma": "Tools/pickaxe_a/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "pickaxe_b": {
+   "albedo": "Tools/pickaxe_b/albedo.jpg",
+   "normal": "Tools/pickaxe_b/normal.jpg",
+   "rma": "Tools/pickaxe_b/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "sledge": {
+   "albedo": "Tools/sledge/albedo.jpg",
+   "normal": "Tools/sledge/normal.jpg",
+   "rma": "Tools/sledge/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "shovel": {
+   "albedo": "Tools/shovel/albedo.jpg",
+   "normal": "Tools/shovel/normal.jpg",
+   "rma": "Tools/shovel/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "helmet": {
+   "albedo": "Tools/helmet/albedo.jpg",
+   "normal": "Tools/helmet/normal.jpg",
+   "rma": "Tools/helmet/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "lamp": {
+   "albedo": "Props/lamp/albedo.jpg",
+   "normal": "Props/lamp/normal.jpg",
+   "rma": "Props/lamp/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "stone": {
+   "albedo": "Rocks/stone/albedo.jpg",
+   "normal": "Rocks/stone/normal.jpg",
+   "rma": "Rocks/stone/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "pile_dirt": {
+   "albedo": "Debris/pile_dirt/albedo.jpg",
+   "normal": "Debris/pile_dirt/normal.jpg",
+   "rma": "Debris/pile_dirt/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "pile_gravel": {
+   "albedo": "Debris/pile_gravel/albedo.jpg",
+   "normal": "Debris/pile_gravel/normal.jpg",
+   "rma": "Debris/pile_gravel/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "gravel_patch": {
+   "albedo": "Debris/gravel_patch/albedo.jpg",
+   "normal": "Debris/gravel_patch/normal.jpg",
+   "rma": "Debris/gravel_patch/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "splinter_a": {
+   "albedo": "Debris/splinter_a/albedo.jpg",
+   "normal": "Debris/splinter_a/normal.jpg",
+   "rma": "Debris/splinter_a/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  },
+  "splinter_b": {
+   "albedo": "Debris/splinter_b/albedo.jpg",
+   "normal": "Debris/splinter_b/normal.jpg",
+   "rma": "Debris/splinter_b/rma.jpg",
+   "shader": "uMat7 PBR (RMA)"
+  }
+ },
+ "unused": [
+  {
+   "source": "tgnhcaafa",
+   "what": "ahşap dikme (4. varyasyon)",
+   "why": "pakette yalnızca AO dokusu var; renk/normal dokusu eksik olduğu için gri görünür"
+  },
+  {
+   "source": "wcckeezdw, ufekaffdw",
+   "what": "hazır birleşik koleksiyonlar",
+   "why": "içindeki parçalar zaten tek tek kütüphanede (lining_box_a/b, trestle, deck, rail_a/b)"
+  },
+  {
+   "source": "ricaS[1,2,4], tl2effiva[1..4], tkpmbcnjw",
+   "what": "küçük kıymık/çivi varyasyonları",
+   "why": "karanlıkta ayırt edilemeyecek kadar küçük; kütüphaneye 2 temsilci alındı"
+  },
+  {
+   "source": "ud4ofc0fw",
+   "what": "beton duvar yüzeyi",
+   "why": "doğal mağaraya uymuyor; ileride asansör/istasyon odası için"
+  },
+  {
+   "source": "cart_bags (ujzlbgzfa)",
+   "what": "mavi naylon torbalı vagon",
+   "why": "kütüphanede hazır ama modern parlak naylon eski maden havasını bozduğu için haritada kullanılmadı"
+  },
+  {
+   "source": "*_Specular, *_Gloss, *_Bump, *_Translucency, *_Diffuse, Billboard dokuları",
+   "what": "ek dokular",
+   "why": "Roughness/Normal/AO/Cavity/Height ile aynı bilgiyi taşıyor ya da mobil için gereksiz"
+  },
+  {
+   "source": "uddmcgbia Var E, G + LOD3 billboard dokuları",
+   "what": "tek kartlık ot varyasyonları ve uzak billboard",
+   "why": "ekran çözünürlüğünde LOD2 yeterli; billboard gerekmiyor"
+  }
+ ],
+ "totalKB": 21240,
+ "placement": {
+  "determinism": "Giydirme kat tohumundan (G.floorSeed) ayrı bir PRNG ile üretilir; oyunun rnd() dizisine dokunmaz. Aynı tohum = aynı giydirme → statik objeler için ağ senkronu yok.",
+  "regions": {
+   "active": "iniş odası + kuyuya kuş uçuşu yakın bölge: düzenli setler, kaplı tüneller, yanan lambalar (1. katta jeneratörlere bağlı), kereste deposu, yükleme noktası; duvarlar delik izli patlatma kayası",
+   "abandoned": "tünellerin çoğu: karışık sağlam/eğik/kırık setler, eski gömülü raylar, raydan çıkmış vagon, kapatılmış eski tünel, yarım kalmış iş yeri; lambaların çoğu sönük",
+   "collapsed": "her katta 1-2 oda ve çevresi (5. katta 2): kırık/çökmüş setler, toprak ve çakıl yığınları, iri kayalar, devrilmiş hidrolik direk",
+   "deep": "yuva ve 6-7. katların uzak bölgeleri: insan yapımı yapı yok; sadece doğal kaya kümeleri"
+  },
+  "navigation": "Izgara/BFS değişmez. Her obje, hücre merkezlerine ve açık komşu merkezleri arasındaki çizgilere ≥0.42 m (oyuncu yarıçapı) mesafede tutulur. Yeni kazılan hücre bu yolu keserse o objeler kaldırılır.",
+  "collision": "Sadece insanlar (oyuncu + botlar): dikme/direk r=0.14, vagonlar boyunca daire dizisi, iri kaya r=s*0.045, kapatılmış tünel tahtaları, sarkan kiriş ucu. Yaratıklar çarpışmaz. Hareket ancak çakışmayı artırıyorsa engellenir.",
+  "lod": "Ekran boyutuna göre: yarıçap/uzaklık > 0.18 → LOD0, > 0.06 → LOD1, aksi LOD2; 30 m ötesi ve görüş konisi dışı çizilmez; kaplamalar hep LOD0 (ince tahtalar kümeleme LOD’unda delik açıyor).",
+  "rendering": "Asset başına tek instanced çizim (mat4 örnek tamponu), ortak materyal; zemin çıkartmaları tür başına tek mesh."
+ }
+}
