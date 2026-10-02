@@ -5316,6 +5316,6 @@ window.__kd={get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,co
 })();
 </script>
 <script>
-if('serviceWorker'in navigator&&location.protocol.startsWith('http')){window.addEventListener('load',()=>{navigator.serviceWorker.register('service-worker.js').catch(()=>{});});}
+if('serviceWorker'in navigator&&location.protocol.startsWith('http')){window.addEventListener('load',()=>{navigator.serviceWorker.register('service-worker.js',{updateViaCache:'none'}).then(r=>{try{r.update();}catch(e){}}).catch(()=>{});});let rl=false;const had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',()=>{const m=document.getElementById('start');if(!had||rl||!m||m.hidden)return;rl=true;location.reload();});}
 </script>
 </html>
