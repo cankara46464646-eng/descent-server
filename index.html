@@ -5076,66 +5076,95 @@ function loadTick(dt0){if(!LD.on)return;const nw=performance.now();const dt=Math
   if(!LD.fin&&((all&&LD.t>=LD.min)||LD.t>LD.max)){LD.fin=1e-3;$('ldF').style.width='100%';const id=LD.id;
     setTimeout(()=>{if(LD.id!==id)return;sfx('thump',.5);},380);
     setTimeout(()=>{if(LD.id!==id)return;$('load').classList.add('out');setTimeout(()=>{if(LD.id!==id)return;ldFinishNow();},450);},800);}}
-// ==== SURF BEGIN: maden girişi (yüzey) — oyun burada başlar; ekip mağara ağzından içeri girip kafese biner, herkes binince 1. kata inilir ====
-// Ayrı, küçük bir sahne: kendi zemini, dağ yamacı + galeri ağzı, tünel, kafes, arkada çam ormanı (gidilemez), ay ışığı ve kamp ateşi.
-// Koordinatlar: kafes (0,0,0), tünel +z yönünde 10.6 m'ye kadar, açıklık z 10.6–31. Oyuncu z≈27.5'te doğar, dağa (−z) bakar.
-const SF={on:false,mesh:null};
-const SFK={rx:12.5,rz:10.5,cz:20,tw:1.5,tz:10.6};
+// ==== SURF BEGIN: maden girişi — oyun mağaranın içinde, ağzın hemen önünde başlar ====
+// Ekip mağaranın derinindeki kafeste bekler. Ağızdan dışarısı görünür (ay ışığında çam ormanı, kamp ateşi) ama ağız
+// ahşap bariyerle kapalıdır: dışarı çıkılmaz. Herkes kafese binince kafes kuyuya iner, 1. kata varılır.
+// Koordinatlar: kafes (0,0,0), mağara +z yönünde uzanır; kafes odası z −2…9, kıvrımlı galeri 9…26, giriş salonu 26…36, ağız z=36.
+const SF={on:false,mesh:null,cols:[]};
+const SFK={zm:36,bar:33.2};
 function sfHash(i,j){let h=(Math.imul(i,374761393)+Math.imul(j,668265263)+0x2f9a)|0;h=Math.imul(h^(h>>>13),1274126177);h^=h>>>16;return (h>>>0)/4294967296;}
 function sfN(x,y){const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);
   return lerp(lerp(sfHash(xi,yi),sfHash(xi+1,yi),u),lerp(sfHash(xi,yi+1),sfHash(xi+1,yi+1),u),v)*2-1;}
-function sfH(x,z){if(z<SFK.tz)return 0;const s=clamp((Math.abs(x)-2.2)/7,0,1)*clamp((z-11.5)/3,0,1);return s*(.55+sfN(x*.09,z*.09)*.7+sfN(x*.31,z*.31)*.18);}
-function sfCliffZ(x,y){const p=Math.abs(x)<2.6&&y<4.2?1-clamp((Math.max(Math.abs(x)-1.6,y-3.4))/1.2,0,1):0;
-  const z=SFK.tz-.25-y*.42-sfN(x*.13,y*.13)*2.1-sfN(x*.45,y*.45)*.45-Math.max(0,Math.abs(x)-9)*.05;return lerp(z,SFK.tz-.25-y*.05,p);}
-// yürünebilir alan: açıklık (elips) + tünel + kafes (yalnız önden)
-function sfOK(x,z,r){if(z>=SFK.tz-.1){const ex=x/(SFK.rx-r),ez=(z-SFK.cz)/(SFK.rz-r);if(ex*ex+ez*ez<=1&&z>=SFK.tz-.1+r*.0)return true;}
-  if(Math.abs(x)<=SFK.tw-r&&z>=1.05&&z<=SFK.tz+.6)return true;
-  if(Math.abs(x)<=.95-r&&z>=-.95+r&&z<=1.3)return true;return false;}
+const sfSS=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t);};
+// mağara kesiti: merkez x, yarı genişlik, tavan yüksekliği
+function sfCX(z){return z>9&&z<26?1.7*Math.sin((z-9)/17*Math.PI):0;}
+function sfW(z){let w=3.0;w=lerp(w,1.95,sfSS(7,10.5,z));w=lerp(w,3.7,sfSS(24,28,z));w=lerp(w,2.15,sfSS(32.5,35.6,z));return w+sfN(z*.35,7)*.18;}
+function sfHt(z){let h=4.3;h=lerp(h,3.3,sfSS(7,10.5,z));h=lerp(h,5.0,sfSS(24,28,z));h=lerp(h,3.55,sfSS(32.5,35.6,z));return h;}
+// dış zemin (ağzın dışı; yürünemez, sadece görünür)
+function sfH(x,z){if(z<SFK.zm+.5)return 0;const s=clamp((Math.abs(x)-2.2)/7,0,1)*clamp((z-SFK.zm-1.5)/3,0,1);return s*(.55+sfN(x*.09,z*.09)*.7+sfN(x*.31,z*.31)*.18);}
+function sfCliffZ(x,y){const z=SFK.zm-.15-Math.max(0,y-4.4)*.42-sfN(x*.13,y*.13)*1.8-sfN(x*.45,y*.45)*.4-Math.max(0,Math.abs(x)-9)*.05;
+  const near=1-clamp((Math.hypot(x/3.2,y/5.2)-1)/1.2,0,1);return lerp(z,SFK.zm-.1,near);}
+// yürünebilir alan: mağara içi (ağız bariyerinin gerisi) + kafes (yalnız önden)
+function sfOK(x,z,r){if(z<1.3)return Math.abs(x)<=.95-r&&z>=-.95+r&&z<=1.3;
+  if(z>SFK.bar)return false;if(Math.abs(x-sfCX(z))>sfW(z)-.55-r*.4)return false;
+  for(const c of SF.cols)if(Math.hypot(x-c[0],z-c[1])<c[2]+r)return false;return true;}
 function sfInCage(x,z){return Math.abs(x)<.85&&z>-.85&&z<.8;}
-function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),ground:g(),path:g(),wood:g(),wood2:g(),steel:g(),pine:g(),trunk:g(),dark:g(),cart:g()};
+function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:g(),wood:g(),wood2:g(),steel:g(),pine:g(),trunk:g(),dark:g(),cart:g(),cloth:g(),stal:g()};
   const X1=[1,0,0],Y1=[0,1,0],Z1=[0,0,1];const B=(m,c,hx,hy,hz)=>th2Box(m,c,X1,Y1,Z1,hx,hy,hz);
   const tri=(m,a,b,c)=>{const n=v3n(v3x([b[0]-a[0],b[1]-a[1],b[2]-a[2]],[c[0]-a[0],c[1]-a[1],c[2]-a[2]]));m.P.push(...a,...b,...c);for(let k=0;k<3;k++)m.N.push(...n);};
-  // zemin (yüz yukarı)
-  {const st=2;for(let x=-56;x<56;x+=st)for(let z=SFK.tz-.4;z<70;z+=st){const a=[x,sfH(x,z),z],b=[x+st,sfH(x+st,z),z],c=[x+st,sfH(x+st,z+st),z+st],d=[x,sfH(x,z+st),z+st];tri(M.ground,a,d,c);tri(M.ground,a,c,b);}}
-  // patika (zeminden 2 cm yukarı, kenarları düzensiz)
-  for(let z=SFK.tz;z<29;z+=1){const w0=1.15+sfN(3,z*.5)*.25,w1=1.15+sfN(3,(z+1)*.5)*.25;const y=.02;tri(M.path,[-w0,y,z],[-w1,y,z+1],[w1,y,z+1]);tri(M.path,[-w0,y,z],[w1,y,z+1],[w0,y,z]);}
-  // yamaç (dağ yüzü) — galeri ağzı boşluk
-  {const st=2.2;for(let x=-60;x<60;x+=st)for(let y=0;y<38;y+=st){if(Math.abs(x+st/2)<1.9&&y<3.4)continue;
-      const P=(xx,yy)=>[xx,yy,sfCliffZ(xx,yy)];tri(M.rock,P(x,y),P(x+st,y),P(x+st,y+st));tri(M.rock,P(x,y),P(x+st,y+st),P(x,y+st));}}
-  // yamaçtaki kaya çıkıntıları
-  for(let k=0;k<26;k++){const x=(sfHash(k,3)-.5)*70,y=sfHash(k,4)*6,r=.8+sfHash(k,5)*2.2;if(Math.abs(x)<3.4)continue;const z=sfCliffZ(x,y)+r*.35;th2Ell(M.rock,[x,y,z],[1,0,0],[0,1,0],[0,0,1],r*1.3,r*.8,r,7,5,0,.25,k+11);}
-  // tünel: duvarlar, tavan, zemin, ahşap kuşaklar, raylar
-  B(M.rock,[-SFK.tw-.2,1.7,5.8],.2,1.9,5.2);B(M.rock,[SFK.tw+.2,1.7,5.8],.2,1.9,5.2);B(M.rock,[0,3.45,5.8],SFK.tw+.4,.2,5.2);B(M.rock,[0,-.06,5.85],SFK.tw+.2,.06,4.8);
-  // kafes odası (kafesin etrafı) + kuyu (kafesin altı)
-  B(M.rock,[0,1.7,-1.75],1.9,1.9,.2);B(M.rock,[-1.75,1.7,-.3],.2,1.9,1.6);B(M.rock,[1.75,1.7,-.3],.2,1.9,1.6);B(M.rock,[0,3.45,-.2],1.9,.2,1.6);
-  B(M.rock,[0,-.06,1.32],1.6,.06,.27);B(M.rock,[-1.32,-.06,-.2],.27,.06,1.5);B(M.rock,[1.32,-.06,-.2],.27,.06,1.5);B(M.rock,[0,-.06,-1.32],1.6,.06,.27);
+  const quad=(m,a,b,c,d)=>{tri(m,a,b,c);tri(m,a,c,d);};
+  const tan=z=>{const d=(sfCX(z+.3)-sfCX(z-.3))/.6,l=Math.hypot(d,1);return[d/l,1/l];};// galeri yönü (x,z)
+  SF.cols=[];
+  // ---- mağara: kesit halkalarından örülmüş, gürültülü kaya kubbe ----
+  const Z0=-2.2,Z1z=SFK.zm,NS=16,ring=(z,sc=1)=>{const cx=sfCX(z),w=sfW(z)*sc,h=sfHt(z)*(.35+.65*sc),R=[];R.push([cx-w*1.02,-.35,z]);
+      for(let k=0;k<=NS;k++){const a=Math.PI-k/NS*Math.PI,n=1+sfN(z*.55+k*.9,k*.7)*.13+sfN(z*1.7,k*2.1)*.05;R.push([cx+Math.cos(a)*w*n,Math.max(.02,Math.sin(a)*h*n),z]);}R.push([cx+w*1.02,-.35,z]);return R;};
+  // kafesin arkası: kesit daralarak kubbe gibi kapanır (düz kapak yerine)
+  let prev=ring(Z0-1.3,.08);const caps=prev;for(const[dz,sc]of[[-.95,.5],[-.6,.78],[-.3,.93],[0,1]]){const cur=ring(Z0+dz,sc);for(let k=0;k<prev.length-1;k++)quad(M.rock,prev[k],prev[k+1],cur[k+1],cur[k]);prev=cur;}
+  for(let z=Z0+.6;z<=Z1z+.001;z+=.6){const cur=ring(Math.min(z,Z1z));for(let k=0;k<prev.length-1;k++)quad(M.rock,prev[k],prev[k+1],cur[k+1],cur[k]);prev=cur;}
+  {const c=[0,1.2,Z0-1.4];for(let k=0;k<caps.length-1;k++)tri(M.rock,c,caps[k+1],caps[k]);}
+  // taban (kafes boşluğu hariç), hafif tümsekli
+  for(let z=Z0;z<Z1z;z+=.6){for(let k=0;k<8;k++){const P=(zz,kk)=>{const cx=sfCX(zz),w=sfW(zz)*1.02;return[cx-w+2*w*kk/8,.015+sfN(zz*.9,kk*.8)*.02,zz];};
+      const a=P(z,k),b=P(z,k+1),c=P(z+.6,k+1),d=P(z+.6,k);const mx=(a[0]+c[0])/2,mz=(a[2]+c[2])/2;if(Math.abs(mx)<1.15&&Math.abs(mz)<1.15)continue;quad(M.floor,a,d,c,b);}}
+  // kuyu (kafesin altı)
   B(M.dark,[0,-8,-1.2],1.3,8,.15);B(M.dark,[0,-8,1.2],1.3,8,.15);B(M.dark,[-1.2,-8,0],.15,8,1.3);B(M.dark,[1.2,-8,0],.15,8,1.3);
-  for(let z=1.6;z<SFK.tz;z+=1.8){for(const sx of[-1,1])B(M.wood,[sx*1.42,1.55,z],.1,1.55,.1);B(M.wood,[0,3.16,z],1.55,.11,.12);}
-  for(const sx of[-.36,.36])B(M.steel,[sx,.07,10.2],.03,.035,9.0);for(let z=1.4;z<19;z+=.62)B(M.wood2,[0,.03,z],.62,.03,.09);
-  // galeri ağzı: dikmeler, başlık, çaprazlar, çatı tahtaları
-  for(const sx of[-1,1]){B(M.wood,[sx*1.78,1.75,SFK.tz+.05],.16,1.75,.16);th2Box(M.wood,[sx*1.25,3.0,SFK.tz+.12],[Math.cos(.7),-Math.sin(.7)*sx,0].map(v=>v),[Math.sin(.7)*sx,Math.cos(.7),0],Z1,.07,.55,.07);}
-  B(M.wood,[0,3.6,SFK.tz+.05],2.25,.18,.2);for(let k=-4;k<=4;k++)B(M.wood2,[k*.5,3.85,SFK.tz+.25],.24,.04,.5);
-  // sandıklar, varil, tabela direği
-  B(M.wood2,[-2.7,.32,12.4],.32,.32,.32);B(M.wood2,[-3.25,.25,13.1],.25,.25,.25);B(M.wood2,[-2.75,.82,12.45],.2,.18,.2);
-  th2Tube(M.steel,[[3.0,0,12.6],[3.0,.9,12.6]],.3,10);B(M.wood,[2.4,.9,15],.05,.9,.05);B(M.wood2,[2.4,1.55,15.02],.42,.18,.03);
-  // kamp ateşi: kütükler ve oturma kütükleri
-  {const fx=4.2,fz=22.5,fy=sfH(fx,fz);for(let k=0;k<5;k++){const a=k/5*TAU;th2Box(M.trunk,[fx+Math.cos(a)*.22,fy+.08,fz+Math.sin(a)*.22],[Math.cos(a),0,Math.sin(a)],[0,1,0],[-Math.sin(a),0,Math.cos(a)],.32,.06,.06);}
-    for(let k=0;k<8;k++){const a=k/8*TAU;B(M.dark,[fx+Math.cos(a)*.48,fy+.05,fz+Math.sin(a)*.48],.09,.06,.09);}
-    for(const[a,d]of[[.5,1.6],[2.6,1.7]]){const x=fx+Math.cos(a)*d,z=fz+Math.sin(a)*d;th2Tube(M.trunk,[[x-Math.sin(a)*.6,sfH(x,z)+.18,z+Math.cos(a)*.6],[x+Math.sin(a)*.6,sfH(x,z)+.18,z-Math.cos(a)*.6]],.18,8);}}
-  // eski vagon (raylarda)
-  {const cz=16.5;B(M.cart,[0,.62,cz],.55,.32,.85);B(M.cart,[0,.33,cz],.45,.04,.75);for(const sx of[-.45,.45])for(const sz of[-.5,.5])th2Tube(M.steel,[[sx-.04,.2,cz+sz],[sx+.04,.2,cz+sz]],.17,10);}
-  // çam ormanı (açıklığın dışı; gidilemez)
-  let n=0;for(let k=0;k<900&&n<150;k++){const x=(sfHash(k,21)-.5)*104,z=SFK.tz+.8+sfHash(k,22)*56;const ex=x/SFK.rx,ez=(z-SFK.cz)/SFK.rz;if(ex*ex+ez*ez<1.25)continue;if(Math.abs(x)<3&&z<SFK.tz+2)continue;
+  // duvar dibinde kaya parçaları, salonda sarkıtlar
+  for(let k=0;k<46;k++){const z=Z0+1+sfHash(k,51)*(Z1z-Z0-2),sd=sfHash(k,52)<.5?-1:1,w=sfW(z),r=.25+sfHash(k,53)*.55;if(z<1.6&&Math.abs(sfCX(z))<2)continue;const x=sfCX(z)+sd*(w-.15-r*.4);th2Ell(M.rock,[x,r*.35,z],[1,0,0],[0,1,0],[0,0,1],r*1.2,r*.75,r,7,4,0,.3,k+71);}
+  for(let k=0;k<30;k++){const z=24+sfHash(k,61)*9,x=sfCX(z)+(sfHash(k,62)-.5)*sfW(z)*1.3,top=sfHt(z)*(.92-Math.abs(x)/sfW(z)*.25),L=.3+sfHash(k,63)*.9;th2Tube(M.stal,[[x,top+.1,z],[x,top-L,z]],[.07+sfHash(k,64)*.1,.01],6);}
+  for(let k=0;k<12;k++){const z=1+sfHash(k,65)*7,x=(sfHash(k,66)-.5)*4.6,top=sfHt(z)*.88,L=.3+sfHash(k,67)*.6;th2Tube(M.stal,[[x,top+.1,z],[x,top-L,z]],[.08,.01],6);}
+  // ahşap tahkimat (galeri boyunca, kıvrıma göre döndürülmüş) + fener noktaları
+  SF.lanterns=[];let si=0;for(let z=10.2;z<26;z+=2.1,si++){const cx=sfCX(z),w=sfW(z),[tx,tz]=tan(z),rx=[tz,0,-tx],h=sfHt(z)*.86;
+    for(const sd of[-1,1])th2Box(M.wood,[cx+rx[0]*sd*(w-.32),h/2,z+rx[2]*sd*(w-.32)],rx,Y1,[tx,0,tz],.1,h/2,.1);
+    th2Box(M.wood,[cx,h,z],rx,Y1,[tx,0,tz],w-.2,.11,.12);if(si%3===1)SF.lanterns.push([cx+rx[0]*.6,h-.45,z+rx[2]*.6]);}
+  // giriş salonunda kalın dikmeler; kafes odasında kiriş
+  for(const[x,z]of[[-2.6,27.5],[2.6,27.5],[-2.7,31.5],[2.7,31.5]]){B(M.wood,[x,2.3,z],.15,2.3,.15);}B(M.wood,[0,4.45,27.5],2.9,.13,.14);B(M.wood,[0,4.5,31.5],3.0,.13,.14);
+  B(M.wood,[0,3.7,3.6],2.6,.13,.14);for(const sx of[-1,1])B(M.wood,[sx*2.35,1.85,3.6],.13,1.85,.13);
+  // raylar: kafesin önünden ağza kadar galeriyi izler
+  for(let z=1.2;z<SFK.zm-1;z+=.5){const a=[sfCX(z),z],b=[sfCX(z+.5),z+.5];const[tx,tz]=tan(z+.25),rx=[tz,0,-tx];const L=Math.hypot(b[0]-a[0],.5)/2+.01,mid=[(a[0]+b[0])/2,(a[1]+b[1])/2];
+    for(const sd of[-.36,.36])th2Box(M.steel,[mid[0]+rx[0]*sd,.07,mid[1]+rx[2]*sd],rx,Y1,[tx,0,tz],.028,.035,L);th2Box(M.wood2,[mid[0],.03,mid[1]],rx,Y1,[tx,0,tz],.62,.03,.08);}
+  // eski vagon (galeride, raylarda) — çarpışır
+  {const z=25.6,cx=sfCX(z),[tx,tz]=tan(z),rx=[tz,0,-tx];th2Box(M.cart,[cx,.62,z],rx,Y1,[tx,0,tz],.55,.32,.85);th2Box(M.cart,[cx,.33,z],rx,Y1,[tx,0,tz],.45,.04,.75);
+    for(const sx of[-.45,.45])for(const sz of[-.5,.5]){const px=cx+rx[0]*sx+tx*sz,pz=z+rx[2]*sx+tz*sz;th2Tube(M.steel,[[px-rx[0]*.04,.2,pz-rx[2]*.04],[px+rx[0]*.04,.2,pz+rx[2]*.04]],.17,10);}
+    for(let k=0;k<5;k++)th2Ell(M.rock,[cx+(sfHash(k,81)-.5)*.6,.98,z+(sfHash(k,82)-.5)*1.1],[1,0,0],[0,1,0],[0,0,1],.2,.14,.2,6,3,0,.3,k+91);SF.cols.push([cx,z-.45,.62],[cx,z+.45,.62]);}
+  // madenci kampı (giriş salonu): masa, sandıklar, variller, yatak rulosu, kazma askısı
+  {const T=[-2.3,29.6];B(M.wood2,[T[0],.78,T[1]],.55,.04,.38);for(const sx of[-.45,.45])for(const sz of[-.3,.3])B(M.wood2,[T[0]+sx,.38,T[1]+sz],.04,.38,.04);SF.cols.push([T[0],T[1],.75]);SF.lamp=[T[0]+.2,.98,T[1]];
+    B(M.steel,[T[0]+.2,.9,T[1]],.07,.1,.07);
+    for(const[x,z,s]of[[2.65,29.2,.32],[2.85,30.0,.26],[2.55,29.3+0,.0],[-2.85,26.6,.3]]){if(!s)continue;B(M.wood2,[x,s,z],s,s,s);SF.cols.push([x,z,s*1.3]);}
+    B(M.wood2,[2.66,.82,29.2],.2,.18,.2);
+    for(const[x,z]of[[3.0,31.4],[2.55,31.9]]){th2Tube(M.steel,[[x,0,z],[x,.92,z]],.28,10);SF.cols.push([x,z,.4]);}
+    B(M.cloth,[-2.6,.07,32.3],.4,.07,.9);B(M.cloth,[-1.9,.07,24.8],.35,.07,.85);
+    B(M.wood,[3.15,1.1,26.6],.05,1.1,.05);B(M.wood,[3.15,1.1,25.6],.05,1.1,.05);B(M.wood,[3.15,1.7,26.1],.05,.05,.55);
+    for(let k=0;k<3;k++){const z=25.75+k*.35;th2Box(M.wood2,[3.05,.85,z],[Math.cos(.25),Math.sin(.25),0],[-Math.sin(.25),Math.cos(.25),0],Z1,.03,.85,.03);th2Box(M.steel,[2.92,1.68,z],X1,Y1,Z1,.04,.04,.22);}}
+  // ağız: ahşap çerçeve + bariyer (dışarı çıkılmaz)
+  {const z=SFK.zm-.35;for(const sx of[-1,1])B(M.wood,[sx*1.85,1.75,z],.16,1.75,.16);B(M.wood,[0,3.6,z],2.25,.18,.2);
+    const bz=SFK.bar+.55;for(const sx of[-1.75,1.75])B(M.wood,[sx,.7,bz],.1,.7,.1);for(const[y,a]of[[.45,.2],[.95,-.2]])th2Box(M.wood2,[0,y,bz],[Math.cos(a),Math.sin(a),0],[-Math.sin(a),Math.cos(a),0],Z1,1.95,.07,.04);
+    B(M.wood2,[0,1.25,bz+.02],.5,.16,.02);}
+  // dış dünya: yamaç (ağız boşluklu), zemin, kamp ateşi, çam ormanı
+  {const st=2.2;for(let x=-60;x<60;x+=st)for(let y=0;y<38;y+=st){const mx=x+st/2,my=y+st/2;if((mx/2.25)**2+(my/3.75)**2<1)continue;
+      const P=(xx,yy)=>[xx,yy,sfCliffZ(xx,yy)];quad(M.rock,P(x,y),P(x+st,y),P(x+st,y+st),P(x,y+st));}}
+  {const st=2;for(let x=-56;x<56;x+=st)for(let z=SFK.zm-.6;z<80;z+=st){const a=[x,sfH(x,z),z],b=[x+st,sfH(x+st,z),z],c=[x+st,sfH(x+st,z+st),z+st],d=[x,sfH(x,z+st),z+st];tri(M.ground,a,d,c);tri(M.ground,a,c,b);}}
+  {const fx=2.6,fz=42,fy=sfH(fx,fz);SF.fire=[fx,fy,fz];for(let k=0;k<5;k++){const a=k/5*TAU;th2Box(M.trunk,[fx+Math.cos(a)*.22,fy+.08,fz+Math.sin(a)*.22],[Math.cos(a),0,Math.sin(a)],[0,1,0],[-Math.sin(a),0,Math.cos(a)],.32,.06,.06);}
+    for(let k=0;k<8;k++){const a=k/8*TAU;B(M.dark,[fx+Math.cos(a)*.48,fy+.05,fz+Math.sin(a)*.48],.09,.06,.09);}}
+  let n=0;for(let k=0;k<1200&&n<170;k++){const x=(sfHash(k,21)-.5)*110,z=SFK.zm+3+sfHash(k,22)*45;if(Math.abs(x)<5.5&&z<SFK.zm+9)continue;if(Math.hypot(x-2.6,z-42)<3)continue;
     const h=sfH(x,z),H=5+sfHash(k,23)*7,r=.9+sfHash(k,24)*.9;n++;th2Tube(M.trunk,[[x,h-.2,z],[x,h+H*.4,z]],.16+H*.012,6);
     for(let q=0;q<4;q++){const y0=h+H*(.22+q*.18),rr=r*(1.15-q*.22);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.34,z]],[rr,.02],7);}}
-  // yamacın üstünde ve iki yanında da birkaç çam
-  for(let k=0;k<40;k++){const x=(sfHash(k,31)-.5)*110,y=4+sfHash(k,32)*16;if(Math.abs(x)<4)continue;const z=sfCliffZ(x,y)-.3,H=4+sfHash(k,33)*5,r=.8+sfHash(k,34)*.6;th2Tube(M.trunk,[[x,y-.3,z],[x,y+H*.4,z]],.15,6);for(let q=0;q<3;q++){const y0=y+H*(.25+q*.2);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.35,z]],[r*(1.1-q*.25),.02],7);}}
+  for(let k=0;k<40;k++){const x=(sfHash(k,31)-.5)*110,y=5+sfHash(k,32)*16;if(Math.abs(x)<5)continue;const z=sfCliffZ(x,y)-.3,H=4+sfHash(k,33)*5,r=.8+sfHash(k,34)*.6;th2Tube(M.trunk,[[x,y-.3,z],[x,y+H*.4,z]],.15,6);for(let q=0;q<3;q++){const y0=y+H*(.25+q*.2);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.35,z]],[r*(1.1-q*.25),.02],7);}}
   const mk=m=>m.P.length?mesh(m.P,m.N):null;SF.mesh={};for(const k in M)SF.mesh[k]=mk(M[k]);
-  SF.stars=[];for(let k=0;k<70;k++){const a=sfHash(k,41)*TAU,e=.25+sfHash(k,42)*1.15;SF.stars.push([Math.cos(a)*Math.cos(e),Math.sin(e),Math.sin(a)*Math.cos(e),.06+sfHash(k,43)*.1]);}}
+  SF.stars=[];for(let k=0;k<70;k++){const a=sfHash(k,41)*Math.PI*.9+Math.PI*.05,e=.12+sfHash(k,42)*1.2;SF.stars.push([Math.cos(a)*Math.cos(e),Math.sin(e),Math.sin(a)*Math.cos(e),.06+sfHash(k,43)*.1]);}}
 // ---- giriş / çıkış ----
 function sfStart(){if(!SF.mesh)try{sfBuild();}catch(e){console.error('yüzey',e);return false;}
   SF.on=true;SF.t=0;SF.go=null;SF.gate=0;SF.cy=0;SF.save={x:pl.x,z:pl.z,yaw:pl.yaw,pitch:pl.pitch,bots:bots.filter(b=>!b.remote).map(b=>[b,b.x,b.z,b.face,b.st])};
-  pl.x=(Math.random()-.5)*1.6;pl.z=27.2+Math.random()*.8;pl.yaw=0;pl.pitch=-.02;pl.lamp=true;pl.carry=null;
+  // ağzın hemen gerisinde, dışarıya (ormana) bakarak doğ
+  pl.x=-.4+Math.random()*1.4;pl.z=31.4+Math.random()*.8;pl.yaw=Math.PI;pl.pitch=.02;pl.lamp=true;pl.carry=null;
   const spots=[[-.5,-.45],[.5,-.45],[0,-.1]];bots.filter(b=>!b.remote).forEach((b,i)=>{const s=spots[i%3];b.x=s[0];b.z=s[1];b.face=Math.PI;b.st='follow';b.moving=false;b.path=null;});
   G.state='surface';$('hud').classList.add('surf');$('hud').hidden=false;$('touch').hidden=!isTouch;HTL.k='';sfHud(true);sfAmbStart();return true;}
 function sfLeave(){SF.on=false;$('hud').classList.remove('surf');sfAmbStop();const S0=SF.save;if(S0){pl.x=S0.x;pl.z=S0.z;pl.yaw=S0.yaw;pl.pitch=S0.pitch;for(const[b,x,z,f,st]of S0.bots){b.x=x;b.z=z;b.face=f;b.st=st;b.mnY=0;}}
@@ -5149,11 +5178,13 @@ function sfMove(dt){if(SF.go||G.mpPause)return;let mx=0,mz=0;if(keys.KeyW||keys.
   const running=(keys.ShiftLeft||keys.ShiftRight||runToggle)&&moving;const sp=running?5:2.8;const[fx,fz]=fwdXZ(),rx=Math.cos(pl.yaw),rz=-Math.sin(pl.yaw);
   if(moving){const vx=(fx*mz+rx*mx)*sp*dt,vz=(fz*mz+rz*mx)*sp*dt;const r=.35;
     if(sfOK(pl.x+vx,pl.z+vz,r)){pl.x+=vx;pl.z+=vz;}else if(sfOK(pl.x+vx,pl.z,r))pl.x+=vx;else if(sfOK(pl.x,pl.z+vz,r))pl.z+=vz;
-    pl.bob+=dt*sp*2.4;pl.stepT-=dt;if(pl.stepT<=0){pl.stepT=running?.32:.52;sfx('step',running?.5:.26,(Math.random()-.5)*.3);}}}
+    else if(pl.z>SFK.bar-.6&&!SF.barT){SF.barT=1;toast('Dışarı çıkamazsın: ekip seni aşağıda bekliyor.',2.2);}
+    pl.bob+=dt*sp*2.4;pl.stepT-=dt;if(pl.stepT<=0){pl.stepT=running?.32:.52;sfx('step',running?.5:.26,(Math.random()-.5)*.3);}}
+  if(SF.barT&&pl.z<SFK.bar-2)SF.barT=0;}
 function sfInCount(){let n=sfInCage(pl.x,pl.z)?1:0,T=1;if(NET.started)for(const rec of NET.peers.values()){const p=rec.P&&rec.P.p;if(!Array.isArray(p)||!p[13])continue;if(performance.now()-(rec.seenT||0)>4000)continue;T++;if(p[13]===2)n++;}return[n,T];}
 function sfHud(force){SF.hudT=(SF.hudT||0)-1;if(!force&&SF.hudT>0)return;SF.hudT=12;const[n,T]=sfInCount();
   $('depN').textContent='Y';$('nightL').textContent='MADEN GİRİŞİ';$('depP').innerHTML='';$('misP').hidden=true;$('misF').textContent='';$('sqL').innerHTML='';
-  $('objL').textContent=SF.go?'Kafes iniyor...':T>1?`Mağaraya gir, kafese bin. Herkes binince iner (${n}/${T} kafeste).`:'Mağaraya gir, kafese bin. Ekibin seni içeride bekliyor.';}
+  $('objL').textContent=SF.go?'Kafes iniyor...':T>1?`Mağaranın derinindeki kafese in. Herkes binince iner (${n}/${T} kafeste).`:'Mağaranın derinindeki kafese in. Ekibin seni orada bekliyor.';}
 function sfTick(dt){if(!SF.on)return;SF.t+=dt;G.shake=Math.max(0,(G.shake||0)-dt);sfMove(dt);
   if(MN.ready)try{mnUpdateBots(dt);}catch(e){}
   const inC=sfInCage(pl.x,pl.z);
@@ -5162,59 +5193,69 @@ function sfTick(dt){if(!SF.on)return;SF.t+=dt;G.shake=Math.max(0,(G.shake||0)-dt
     else if(NET.host){const[n,T]=sfInCount();if(n>=T&&inC){SF.inT=(SF.inT||0)+dt;if(SF.inT>1)sfGo();}else SF.inT=0;}}
   else{const A=SF.go;A.t+=dt;SF.gate=clamp(A.t/.8,0,1);if(A.t>.9){if(!A.snd){A.snd=1;sfx('liftDown',.8);sfx('liftRide',1);G.shake=.25;}const k=A.t-.9;SF.cy=-(k*k*.9+k*.4);}
     if(A.t>3.6&&!A.done){A.done=1;sfDescendDone();}}
-  // kafesteki botlar / oyuncular kafesle birlikte iner; diğerleri zemin yüksekliğinde
-  for(const b of bots){const y=sfInCage(b.x,b.z)?SF.cy:sfH(b.x,b.z);b.mnY=y-floorY(b.x,b.z);}
+  for(const b of bots){const y=sfInCage(b.x,b.z)?SF.cy:0;b.mnY=y-floorY(b.x,b.z);}
   sfHud(false);sfAmbTick(dt);}
-// ---- ses ortamı: rüzgar + kamp ateşi çıtırtısı + yaprak hışırtısı ----
+// ---- ses: ağızdan giren rüzgar (içeri girdikçe azalır), dışarıdaki ateş, mağara damlaları, yaprak hışırtısı ----
 function sfAmbStart(){if(!AC||!nbuf||SF.amb)return;try{const s=AC.createBufferSource();s.buffer=nbuf;s.loop=true;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=420;const g=AC.createGain();g.gain.value=0;
   s.connect(f).connect(g).connect(master);s.start();g.gain.setTargetAtTime(.10,AC.currentTime,1.5);SF.amb={s,f,g};}catch(e){}}
 function sfAmbStop(){const A=SF.amb;if(!A)return;SF.amb=null;try{A.g.gain.setTargetAtTime(0,AC.currentTime,.4);A.s.stop(AC.currentTime+1.5);}catch(e){}}
-function sfAmbTick(dt){const A=SF.amb;if(A){const w=.07+.05*(sfN(SF.t*.3,1.7)*.5+.5);A.g.gain.setTargetAtTime(SF.go?Math.max(0,w*(1-SF.go.t/2)):w*(1-clamp((SFK.tz-pl.z)/8,0,.7)),AC.currentTime,.3);A.f.frequency.setTargetAtTime(300+260*(sfN(SF.t*.5,4)*.5+.5),AC.currentTime,.3);}
-  SF.crT=(SF.crT||0)-dt;if(SF.crT<=0){SF.crT=.08+Math.random()*.35;const d=Math.hypot(pl.x-4.2,pl.z-22.5);if(d<14&&Math.random()<.6)sfx('plink',.05*(1-d/14),(4.2-pl.x)/8);}
-  SF.ruT=(SF.ruT||0)-dt;if(SF.ruT<=0){SF.ruT=4+Math.random()*7;sfx('rustle',.12,(Math.random()-.5)*1.6);}}
+function sfAmbTick(dt){const A=SF.amb,out=clamp((pl.z-20)/14,0,1);if(A){const w=(.03+.08*out)*(.7+.3*(sfN(SF.t*.3,1.7)*.5+.5));A.g.gain.setTargetAtTime(SF.go?Math.max(0,w*(1-SF.go.t/2)):w,AC.currentTime,.3);A.f.frequency.setTargetAtTime(240+260*out*(sfN(SF.t*.5,4)*.5+.5),AC.currentTime,.3);}
+  SF.crT=(SF.crT||0)-dt;if(SF.crT<=0){SF.crT=.08+Math.random()*.35;if(Math.random()<.6*out)sfx('plink',.035*out,.3);}
+  SF.drT=(SF.drT||0)-dt;if(SF.drT<=0){SF.drT=1.5+Math.random()*4;if(pl.z<27)sfx('drip',.25,(Math.random()-.5)*1.4);}
+  SF.ruT=(SF.ruT||0)-dt;if(SF.ruT<=0){SF.ruT=4+Math.random()*7;if(out>.3)sfx('rustle',.1*out,(Math.random()-.5)*1.6);}}
 // ---- çizim ----
-const SFLK={fd:.026,fog:[.022,.028,.05],hc:[0,0,0],haze:0,ra:[.2,.18,.16],rb:[.3,.27,.23],fa:[.16,.14,.11],fb:[.22,.19,.15],wt:[.8,.85,.9],wet:.1,crack:0,vein:null};
+const SFLK={fd:.026,fog:[.02,.025,.045],hc:[0,0,0],haze:0,ra:[.2,.18,.16],rb:[.3,.27,.23],fa:[.16,.14,.11],fb:[.22,.19,.15],wt:[.8,.85,.9],wet:.15,crack:0,vein:null};
 function sfRender(){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2][SET.gfx]??2)*RS;
   const W=Math.floor(cv.clientWidth*dpr),Hh=Math.floor(cv.clientHeight*dpr);if(cv.width!==W||cv.height!==Hh){cv.width=W;cv.height=Hh;}
-  POST.on=SET.gfx>=2;postBegin(W,Hh);gl.viewport(0,0,W,Hh);gl.clearColor(SFLK.fog[0],SFLK.fog[1],SFLK.fog[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-  const t=SF.t,inC=sfInCage(pl.x,pl.z),gy=inC?SF.cy:sfH(pl.x,pl.z);const sk=(G.shake||0)*.4;
+  POST.on=SET.gfx>=2;postBegin(W,Hh);gl.viewport(0,0,W,Hh);gl.clearColor(.01,.01,.012,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  const t=SF.t,inC=sfInCage(pl.x,pl.z),gy=inC?SF.cy:0;const sk=(G.shake||0)*.4;
   eye=[pl.x+(Math.random()-.5)*sk*.3,gy+1.6+Math.sin(pl.bob)*.035+(Math.random()-.5)*sk*.3,pl.z];const yaw=pl.yaw,pitch=pl.pitch;
   Pm=M4.persp(1.2,W/Hh,.05,70);Vm=X(M4.RX(-pitch),M4.RY(-yaw),M4.T(-eye[0],-eye[1],-eye[2]));VP=M4.mul(Pm,Vm);
   const cp=Math.cos(pitch),fwd=[-Math.sin(yaw)*cp,Math.sin(pitch),-Math.cos(yaw)*cp];AUD.cam.eye=eye;AUD.cam.fwd=fwd;
   if(MN.ready)for(const b of bots)if(b.ap)try{mnPrepare(b,b.ap);}catch(e){}
   const SP=[],SD=[],SC=[];if(pl.lamp){SP.push(eye[0]+Math.cos(yaw)*.12,eye[1]+.1,eye[2]-Math.sin(yaw)*.12,24);SD.push(...fwd,Math.cos(.66));SC.push(.75,.68,.55);}
-  const fl=.75+.25*Math.sin(t*17)*Math.sin(t*7.3+1)+.1*Math.random();const PP=[],PC=[];
-  PP.push(-30,48,70,170);PC.push(.1,.12,.19);                       // ay ışığı
-  PP.push(4.2,sfH(4.2,22.5)+.6,22.5,10);PC.push(1.1*fl,.5*fl,.15*fl);   // kamp ateşi
-  PP.push(0,3.0,SFK.tz+.6,9);PC.push(.55,.36,.14);                     // galeri ağzı lambası
-  PP.push(0,2.9,5.6,7);PC.push(.42,.28,.12);                           // tünel lambası
-  PP.push(.4,SF.cy+2.4,.4,4.5);PC.push(.45,.3,.13);                    // kafes ampulü
+  const fl=.75+.25*Math.sin(t*17)*Math.sin(t*7.3+1)+.1*Math.random(),F=SF.fire;const PP=[],PC=[];
+  PP.push(-30,48,90,190);PC.push(.1,.12,.19);                              // ay (dışarısı)
+  PP.push(0,2.4,SFK.zm-1.2,11);PC.push(.07,.09,.15);                       // ağızdan süzülen ay ışığı
+  PP.push(F[0],F[1]+.6,F[2],11);PC.push(1.1*fl,.5*fl,.15*fl);              // dışarıdaki kamp ateşi
+  const lf=.92+.08*Math.sin(t*9.1);PP.push(SF.lamp[0],SF.lamp[1]+.25,SF.lamp[2],7);PC.push(.4*lf,.26*lf,.1*lf); // kamp masasındaki fener
+  for(const p of SF.lanterns)if(PP.length<32){PP.push(p[0],p[1],p[2],7.5);PC.push(.48,.31,.12);}
+  PP.push(0,3.2,4,8);PC.push(.42,.28,.12);                                // kafes odası lambası
+  PP.push(.4,SF.cy+2.4,.4,4.5);PC.push(.45,.3,.13);                        // kafes ampulü
+  if(PP.length>40)PP.length=40;if(PC.length>30)PC.length=30;
   const amb=.0016*SET.bright*SET.bright;
+  // sis: mağara içinde koyu ve sıcak, ağza yaklaştıkça gece mavisi
+  const ko=clamp((eye[2]-22)/11,0,1),fogC=[lerp(.007,.02,ko),lerp(.006,.025,ko),lerp(.005,.045,ko)];
   gl.useProgram(PR.p);gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);
-  gl.uniformMatrix4fv(U('uVP'),false,VP);gl.uniform3fv(U('uEye'),eye);gl.uniform1f(U('uAmb'),amb);const L=SFLK;gl.uniform1f(U('uFog'),L.fd);gl.uniform3fv(U('uRA'),L.ra);gl.uniform3fv(U('uRB'),L.rb);gl.uniform3fv(U('uFA'),L.fa);gl.uniform3fv(U('uFB'),L.fb);gl.uniform3fv(U('uFogC'),L.fog);
+  gl.uniformMatrix4fv(U('uVP'),false,VP);gl.uniform3fv(U('uEye'),eye);gl.uniform1f(U('uAmb'),amb);const L={...SFLK,fog:fogC};gl.uniform1f(U('uFog'),L.fd);gl.uniform3fv(U('uRA'),L.ra);gl.uniform3fv(U('uRB'),L.rb);gl.uniform3fv(U('uFA'),L.fa);gl.uniform3fv(U('uFB'),L.fb);gl.uniform3fv(U('uFogC'),L.fog);
   gl.uniform3fv(U('uHazeC'),L.hc);gl.uniform1f(U('uHaze'),0);gl.uniform3fv(U('uVein'),Z3);gl.uniform3fv(U('uWetT'),L.wt);gl.uniform1f(U('uWet'),L.wet);gl.uniform1f(U('uCrack'),0);gl.uniform1f(U('uExp'),1.5*SET.bright);gl.uniform1f(U('uTime'),t);gl.uniform1f(U('uTri'),0);
   gl.uniform1i(U('uNS'),SP.length/4);if(SP.length){gl.uniform4fv(U('uSP'),SP);gl.uniform4fv(U('uSD'),SD);gl.uniform3fv(U('uSC'),SC);}gl.uniform1i(U('uNP'),PP.length/4);gl.uniform4fv(U('uPP'),PP);gl.uniform3fv(U('uPC'),PC);SCN={amb,LKs:L,SP,SD,SC,PP,PC};
-  // gökyüzü kubbesi (derinliğe yazmaz)
+  // gökyüzü kubbesi (derinliğe yazmaz) ve uzak sıradağlar
   gl.depthMask(false);draw(MS,X(M4.T(eye[0],eye[1],eye[2]),M4.S(64,64,64)),[0,0,0],[.012,.016,.034],0);gl.depthMask(true);
-  for(const[x,z,s]of[[-45,-30,26],[0,-58,34],[42,-34,24],[-70,10,22],[72,8,26]])draw(MCone,X(M4.T(x,-2,z),M4.S(s,s*.9,s)),[.05,.055,.07],Z3,2);
+  for(const[x,z,s]of[[-48,92,26],[0,104,30],[46,96,24],[-80,70,22],[80,72,26]])draw(MCone,X(M4.T(x,-2,z),M4.S(s,s*.9,s)),[.05,.055,.07],Z3,2);
   const I=M4.id(),m=SF.mesh;
-  if(m.ground)draw(m.ground,I,[.085,.1,.06],Z3,2);if(m.path)draw(m.path,I,[.13,.1,.07],Z3,4);if(m.rock)draw(m.rock,I,[1,1,1],Z3,1);if(m.dark)draw(m.dark,I,[.05,.045,.04],Z3,1);
-  if(m.wood)draw(m.wood,I,[.2,.13,.07],Z3,4);if(m.wood2)draw(m.wood2,I,[.16,.11,.065],Z3,4);if(m.steel)draw(m.steel,I,[.2,.19,.18],Z3,3);if(m.cart)draw(m.cart,I,[.17,.12,.08],Z3,5);
+  if(m.rock)draw(m.rock,I,[1,1,1],Z3,1);if(m.floor)draw(m.floor,I,[1,1,1],Z3,1);if(m.stal)draw(m.stal,I,[1,1,1],Z3,1);if(m.dark)draw(m.dark,I,[.05,.045,.04],Z3,1);
+  if(m.ground)draw(m.ground,I,[.085,.1,.06],Z3,2);
+  if(m.wood)draw(m.wood,I,[.2,.13,.07],Z3,4);if(m.wood2)draw(m.wood2,I,[.16,.11,.065],Z3,4);if(m.steel)draw(m.steel,I,[.2,.19,.18],Z3,3);if(m.cart)draw(m.cart,I,[.17,.12,.08],Z3,5);if(m.cloth)draw(m.cloth,I,[.16,.13,.08],Z3,2);
   if(m.trunk)draw(m.trunk,I,[.09,.065,.045],Z3,4);if(m.pine)draw(m.pine,I,[.03,.055,.035],Z3,2);
-  // ateş
-  {const fx=4.2,fz=22.5,fy=sfH(fx,fz);draw(MCone,X(M4.T(fx,fy+.08,fz),M4.S(.3*fl,.55*fl,.3*fl)),[0,0,0],[2.2*fl,.9*fl,.2*fl],0);}
-  // kafes (önü tünele bakar)
+  draw(MCone,X(M4.T(F[0],F[1]+.08,F[2]),M4.S(.3*fl,.55*fl,.3*fl)),[0,0,0],[2.2*fl,.9*fl,.2*fl],0);
+  for(const p of SF.lanterns)draw(MS,X(M4.T(p[0],p[1],p[2]),M4.S(.07,.1,.07)),[.3,.25,.15],[1.4,.9,.35],3);
+  draw(MS,X(M4.T(SF.lamp[0],SF.lamp[1]+.08,SF.lamp[2]),M4.S(.06,.08,.06)),[.3,.25,.15],[1.5*lf,1*lf,.4*lf],3);
+  // kafes (önü galeriye bakar)
   cageDraw(X(M4.T(0,SF.cy,0),M4.RY(Math.PI)),{lamp:[.1,.9,.2],gate:SF.gate,spin:SF.cy*3,cable:12});
   // ekip (botlar ve diğer oyuncular)
   for(const b of bots){if(b.st==='buried'||b.away||(b.remote&&!b.sf))continue;if(MN.ready&&b.boneM&&b.ap){if(inView(b.x,(b.mnY||0)+floorY(b.x,b.z)+.9,b.z,1.3))drawMinerModel(b);}}
   gl.useProgram(PR.p);
-  // parıltılar: yıldızlar, ay, lambalar, ateş
+  // parıltılar: yıldızlar, ay, fenerler, ateş
   gl.useProgram(PG.p);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE);gl.depthMask(false);gl.bindVertexArray(glowVAO);gl.uniformMatrix4fv(PG.u.uV,false,Vm);gl.uniformMatrix4fv(PG.u.uP,false,Pm);
   const glw=(p,sz,c)=>{gl.uniform3fv(PG.u.uCtr,p);gl.uniform1f(PG.u.uSz,sz);gl.uniform3f(PG.u.uCol,c[0],c[1],c[2]);gl.drawArrays(gl.TRIANGLES,0,6);};
+  // gökyüzü parıltıları yalnızca ağıza yakınken (derinlik testiyle kaya arkasında kalır)
+  gl.enable(gl.DEPTH_TEST);
   for(const s of SF.stars){const tw=.6+.4*Math.sin(t*2.3+s[0]*40);glw([eye[0]+s[0]*58,eye[1]+s[1]*58,eye[2]+s[2]*58],s[3]*1.6,[.5*tw,.55*tw,.7*tw]);}
-  {const mp=[eye[0]-26,eye[1]+40,eye[2]+38];glw(mp,9,[.18,.2,.26]);glw(mp,2.2,[1.4,1.45,1.55]);}
-  glw([0,3.15,SFK.tz+.45],.9,[.9,.6,.25]);glw([0,2.85,5.6],.6,[.7,.45,.18]);glw([4.2,sfH(4.2,22.5)+.5,22.5],1.6*fl,[1.2*fl,.55*fl,.15*fl]);
-  for(let k=0;k<6;k++){const a=(t*1.3+k*1.7)%1;glw([4.2+Math.sin(k*3+t)*.15,sfH(4.2,22.5)+.3+a*1.6,22.5+Math.cos(k*2+t)*.15],.05,[1.6*(1-a),.6*(1-a),.1*(1-a)]);}
+  {const mp=[eye[0]-20,eye[1]+30,eye[2]+44];glw(mp,9,[.18,.2,.26]);glw(mp,2.2,[1.4,1.45,1.55]);}
+  for(const p of SF.lanterns)glw(p,.55,[.7,.45,.18]);glw([SF.lamp[0],SF.lamp[1]+.1,SF.lamp[2]],.5*lf,[.8,.5,.2]);
+  glw([F[0],F[1]+.5,F[2]],1.6*fl,[1.2*fl,.55*fl,.15*fl]);
+  for(let k=0;k<6;k++){const a=(t*1.3+k*1.7)%1;glw([F[0]+Math.sin(k*3+t)*.15,F[1]+.3+a*1.6,F[2]+Math.cos(k*2+t)*.15],.05,[1.6*(1-a),.6*(1-a),.1*(1-a)]);}
   gl.disable(gl.BLEND);gl.depthMask(true);gl.useProgram(PR.p);
   postEnd();}
 // ==== SURF END ====
@@ -5271,7 +5312,7 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;adaptRes((no
 requestAnimationFrame(frame);
 
 window.__kd={get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
-  LD,loadShow,arriveStart,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
+  LD,loadShow,arriveStart,SF,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
 })();
 </script>
 <script>
