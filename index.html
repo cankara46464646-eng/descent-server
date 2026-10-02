@@ -112,6 +112,7 @@ html,body{height:100%;margin:0;overscroll-behavior:none;background:var(--bg);col
 #toast.on{opacity:1}
 #ctx{position:absolute;left:50%;top:58%;transform:translateX(-50%);font-size:12px;letter-spacing:.06em;background:var(--panel);padding:4px 10px;border-radius:3px;border:1px solid var(--line);opacity:0;transition:opacity .15s;white-space:nowrap}
 #ctx.on{opacity:1}
+#hud.surf #hotbar,#hud.surf #bDig,#hud.surf #bChalk,#hud.surf #bCrouch,#hud.surf #bUse,#hud.surf #ctx,#hud.surf #hold,#hud.surf #digb{display:none!important}
 #hud:has(#detP:not([hidden])) #ctx{top:36%}
 #ctx .k{font-family:var(--display);color:var(--lamp);margin-right:6px}
 #hold{position:absolute;left:50%;top:calc(58% + 34px);transform:translateX(-50%);width:130px;height:4px;background:var(--line);border-radius:2px;overflow:hidden;opacity:0}
@@ -239,20 +240,43 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 #tip.on{opacity:1}
 @media (pointer:coarse){#tip{top:calc(16% + env(safe-area-inset-top,0px));max-width:min(520px,52vw)}}
 #tip b{font-family:var(--display);font-weight:500;letter-spacing:.14em;font-size:11px;color:var(--lamp);flex:none}
-#pause{background:rgba(0,0,0,.6);z-index:8}
-.set{width:min(780px,100%);display:flex;flex-direction:column;gap:12px;margin:auto;background:rgba(12,11,10,.95);border:1px solid var(--line);border-radius:6px;padding:20px 22px}
-.set h2{margin:0 0 4px;font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:.04em;color:var(--chalk)}
+#pause{background:rgba(0,0,0,.74);z-index:8}
+.set{width:min(660px,100%);max-height:100%;display:flex;flex-direction:column;gap:10px;margin:auto;background:linear-gradient(170deg,rgba(26,21,15,.97),rgba(10,9,8,.97) 60%);border:1px solid rgba(239,184,67,.22);border-radius:12px;padding:14px 16px;box-shadow:0 20px 50px rgba(0,0,0,.7)}
+.sHead{display:flex;align-items:center;justify-content:space-between}.sHead small{font-family:var(--display);font-size:9.5px;letter-spacing:.3em;color:var(--lamp)}
+.sX{width:34px;height:34px;border-radius:50%;border:1px solid rgba(236,230,217,.2);background:rgba(255,255,255,.03);color:var(--fg);display:grid;place-items:center;cursor:pointer}.sX svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
+.sBody{display:grid;grid-template-columns:128px minmax(0,1fr);gap:14px;min-height:0;flex:1}
+.sTabs{display:flex;flex-direction:column;gap:4px}
+.sTabs button{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;border:1px solid transparent;background:none;color:var(--muted);font-family:var(--display);font-size:12px;letter-spacing:.14em;cursor:pointer;text-align:left}
+.sTabs button svg{width:17px;height:17px;flex:none;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.sTabs button.on{color:var(--lamp);background:rgba(239,184,67,.08);border-color:rgba(239,184,67,.3)}
+.sPanes{min-height:0;overflow:auto;touch-action:pan-y;padding-right:2px}
+.sPanes section{display:none;flex-direction:column;gap:6px}.sPanes section.on{display:flex}
+.sItem{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.025);border:1px solid rgba(236,230,217,.07)}
+.sl{display:flex;flex-direction:column;gap:2px;min-width:0}.sl b{font-weight:500;font-size:13px;color:var(--fg)}.sl small{font-size:10.5px;color:var(--muted);line-height:1.3}
+.seg{display:flex;flex:none;padding:3px;border-radius:8px;background:rgba(0,0,0,.35);border:1px solid rgba(236,230,217,.1)}
+.seg button{border:0;background:none;color:var(--muted);font:inherit;font-size:11.5px;padding:6px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}.seg button.on{background:var(--lamp);color:#1a1206;font-weight:500}
+.rng{display:flex;align-items:center;gap:10px;flex:none;width:min(220px,44%)}.rng output{font-family:var(--display);font-size:12px;color:var(--fg);min-width:38px;text-align:right;font-variant-numeric:tabular-nums}
+.rng input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:22px;background:transparent;touch-action:none;margin:0}
+.rng input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--lamp) var(--p,50%),rgba(236,230,217,.15) var(--p,50%))}
+.rng input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--lamp) var(--p,50%),rgba(236,230,217,.15) var(--p,50%))}
+.rng input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-7px;border-radius:50%;background:#f3e3bd;border:3px solid var(--lamp);box-shadow:0 0 8px rgba(239,184,67,.5)}
+.rng input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#f3e3bd;border:3px solid var(--lamp)}
+.sw{position:relative;flex:none;width:42px;height:24px;cursor:pointer}.sw input{position:absolute;opacity:0;inset:0;margin:0}.sw i{position:absolute;inset:0;border-radius:12px;background:rgba(236,230,217,.15);transition:background .2s}
+.sw i::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#d8d0c2;transition:transform .2s}.sw input:checked+i{background:var(--lamp)}.sw input:checked+i::after{transform:translateX(18px);background:#fff8e6}
+.sw input:focus-visible+i{outline:2px solid var(--lamp);outline-offset:2px}
+.set h2{margin:2px 0 0;font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.06em;color:var(--chalk)}
 .srow{display:grid;grid-template-columns:minmax(0,1fr) 150px 40px;gap:12px;align-items:center;font-size:14px}
 .srow output{font-family:var(--display);color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
 .srow input[type=range]{width:100%;accent-color:var(--lamp);touch-action:auto}
 .srow input[type=checkbox]{width:20px;height:20px;accent-color:var(--lamp);justify-self:start}
-.set .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.set .btnrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.set .btnrow .go{margin:0;font-size:14px;padding:9px 22px;border-radius:7px}
 .go.ghost{background:transparent;color:var(--lamp);border:1px solid var(--lamp)}
 #spec{position:fixed;inset:0;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:calc(22px + env(safe-area-inset-top,0px));gap:4px;text-align:center;z-index:3;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(60,4,2,.55) 100%)}
 #spec b{font-family:var(--display);font-weight:700;font-size:28px;letter-spacing:.06em;color:#f0b4ab;text-shadow:0 2px 12px #000}
 #spec small{color:var(--fg);font-size:14px;text-shadow:0 2px 10px #000}
 #spec button{pointer-events:auto;position:absolute;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));font-family:var(--display);letter-spacing:.1em;font-size:15px;background:rgba(10,10,9,.6);color:var(--fg);border:1px solid var(--line);border-radius:3px;padding:9px 16px;cursor:pointer}
-@media (max-height:460px){.set{padding:12px 16px;gap:7px}.set h2{font-size:22px}}
+@media (max-height:460px){.set{padding:10px 12px;gap:7px}.set h2{font-size:18px}.sItem{padding:7px 10px}.sTabs button{padding:7px 9px}.sl small{display:none}}
+@media (max-width:560px){.sBody{grid-template-columns:minmax(0,1fr)}.sTabs{flex-direction:row;overflow:auto}.sTabs button{font-size:10.5px}}
 .menuScr{background:linear-gradient(90deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.2) 100%)}
 .menu{width:min(900px,100%);display:flex;flex-direction:column;gap:30px;margin:auto 0;padding-left:clamp(0px,4vw,60px)}
 .menu .brand p{max-width:40ch}
@@ -473,18 +497,38 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 
 <div id="pause" class="screen" hidden>
   <div class="set" role="dialog" aria-labelledby="pTitle">
-    <h2 id="pTitle">DURAKLATILDI</h2>
-    <div class="sgrid">
-    <label class="srow"><span>Zorluk</span><select id="sDiff"><option value="0">Kolay</option><option value="1">Normal</option><option value="2">Zor</option></select><output></output></label>
-    <label class="srow"><span>Grafik</span><select id="sGfx"><option value="3">Ultra</option><option value="2">Yüksek</option><option value="1">Orta</option><option value="0">Düşük</option></select><output id="oGfx"></output></label>
-    <label class="srow"><span>Bakış hassasiyeti</span><input type="range" id="sSens" min="0.4" max="2.2" step="0.05"><output id="oSens"></output></label>
-    <label class="srow"><span>Parlaklık</span><input type="range" id="sBright" min="0.7" max="1.8" step="0.05"><output id="oBright"></output></label>
-    <label class="srow"><span>Ses</span><input type="range" id="sVol" min="0" max="1" step="0.05"><output id="oVol"></output></label>
-    <label class="srow"><span>Müzik</span><input type="range" id="sMus" min="0" max="1" step="0.05"><output id="oMus"></output></label>
-    <label class="srow"><span>İpuçlarını göster</span><input type="checkbox" id="sTips"><span></span></label>
-    <label class="srow touchOnly"><span>Buton boyutu</span><input type="range" id="sBtn" min="0.8" max="1.25" step="0.05"><output id="oBtn"></output></label>
-    <label class="srow touchOnly"><span>Buton saydamlığı</span><input type="range" id="sAlpha" min="0.3" max="1" step="0.05"><output id="oAlpha"></output></label>
-    <label class="srow touchOnly"><span>Sol el düzeni</span><input type="checkbox" id="sLefty"><span></span></label>
+    <div class="sHead"><div><small>KARA DAMAR</small><h2 id="pTitle">DURAKLATILDI</h2></div><button class="sX" id="pX" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="sBody">
+      <nav class="sTabs" role="tablist">
+        <button class="on" data-t="oyun" role="tab"><svg viewBox="0 0 24 24"><path d="M4 20 14 10M9.5 5.5c3-2 7-2 10 1-2-1-5-1-7 1M12.5 7.5l4 4"/></svg>OYUN</button>
+        <button data-t="gor" role="tab"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>GÖRÜNTÜ</button>
+        <button data-t="ses" role="tab"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>SES</button>
+        <button data-t="kon" role="tab"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="5"/><path d="M8 10v4M6 12h4M15.5 11h.01M17.5 13h.01"/></svg>KONTROL</button>
+      </nav>
+      <div class="sPanes">
+        <section data-p="oyun" class="on">
+          <div class="sItem"><div class="sl"><b>Zorluk</b><small>Yaratık hızı, duyma mesafesi, pil, sandık şansı</small></div>
+            <div class="seg" data-for="sDiff"><button data-v="0">Kolay</button><button data-v="1">Normal</button><button data-v="2">Zor</button></div>
+            <select id="sDiff" hidden><option value="0">Kolay</option><option value="1">Normal</option><option value="2">Zor</option></select></div>
+          <div class="sItem"><div class="sl"><b>İpuçları</b><small>Oyun içinde kısa yol gösterici notlar</small></div><label class="sw"><input type="checkbox" id="sTips"><i></i></label></div>
+        </section>
+        <section data-p="gor">
+          <div class="sItem"><div class="sl"><b>Grafik kalitesi</b><small>Düşükte pil daha uzun gider</small></div>
+            <div class="seg" data-for="sGfx"><button data-v="0">Düşük</button><button data-v="1">Orta</button><button data-v="2">Yüksek</button><button data-v="3">Ultra</button></div>
+            <select id="sGfx" hidden><option value="3">Ultra</option><option value="2">Yüksek</option><option value="1">Orta</option><option value="0">Düşük</option></select><output id="oGfx" hidden></output></div>
+          <div class="sItem"><div class="sl"><b>Parlaklık</b><small>Karanlıkta zor görüyorsan artır</small></div><div class="rng"><input type="range" id="sBright" min="0.7" max="1.8" step="0.05"><output id="oBright"></output></div></div>
+        </section>
+        <section data-p="ses">
+          <div class="sItem"><div class="sl"><b>Ses efektleri</b><small>Yaratık, kazma, adımlar</small></div><div class="rng"><input type="range" id="sVol" min="0" max="1" step="0.05"><output id="oVol"></output></div></div>
+          <div class="sItem"><div class="sl"><b>Müzik</b><small>Gerilim müziği</small></div><div class="rng"><input type="range" id="sMus" min="0" max="1" step="0.05"><output id="oMus"></output></div></div>
+        </section>
+        <section data-p="kon">
+          <div class="sItem"><div class="sl"><b>Bakış hassasiyeti</b><small>Parmak / fare ile dönme hızı</small></div><div class="rng"><input type="range" id="sSens" min="0.4" max="2.2" step="0.05"><output id="oSens"></output></div></div>
+          <div class="sItem touchOnly"><div class="sl"><b>Buton boyutu</b></div><div class="rng"><input type="range" id="sBtn" min="0.8" max="1.25" step="0.05"><output id="oBtn"></output></div></div>
+          <div class="sItem touchOnly"><div class="sl"><b>Buton saydamlığı</b></div><div class="rng"><input type="range" id="sAlpha" min="0.3" max="1" step="0.05"><output id="oAlpha"></output></div></div>
+          <div class="sItem touchOnly"><div class="sl"><b>Sol el düzeni</b><small>Butonlar sola, joystick sağa</small></div><label class="sw"><input type="checkbox" id="sLefty"><i></i></label></div>
+        </section>
+      </div>
     </div>
     <div class="btnrow"><button class="go" id="pResume">DEVAM</button><button class="go ghost" id="pMenu">ANA MENÜ</button></div>
   </div>
@@ -3948,7 +3992,7 @@ function netAdopt(rec){const u=rec.u;let old=null;for(const[k2,r2]of NET.peers)i
 function netLeave(){if(NET.room){try{NET.room.leave();}catch(e){}}NET.room=null;NET.on=false;NET.started=false;NET.phase='menu';NET.host=false;NET.code='';NET.gameTok=null;NET.seedQ=null;NET.forceSeed=null;NET.peers.clear();for(let i=bots.length-1;i>=0;i--)if(bots[i].remote)bots.splice(i,1);}
 // ---- presence: kendi durumum + olay günlüğüm (+ host ise dünya) ----
 function netMyState(){if(!pl)return null;const st=NET_ST.indexOf(G.state==='dying'||G.state==='end'?'dead':G.state);const gi=pl.carry?gems.indexOf(pl.carry):-1;
-  return[r2(pl.x),r2(pl.z),r2(pl.yaw),r2(pl.pitch),pl.lamp?1:0,st<0?0:st,gi,r2(pl.swing||0),pl.crouch?1:0,pl.struggle|0,RUN.floor,pl.hideIn?1:0,G.genWant>=0?G.genWant+1:0];}
+  return[r2(pl.x),r2(pl.z),r2(pl.yaw),r2(pl.pitch),pl.lamp?1:0,st<0?0:st,gi,r2(pl.swing||0),pl.crouch?1:0,pl.struggle|0,RUN.floor,pl.hideIn?1:0,G.genWant>=0?G.genWant+1:0,SF.on?(sfInCage(pl.x,pl.z)?2:1):0];}
 function netPush(force){if(!NET.room)return;const now=performance.now();if(!force&&now-NET.pushT<(NET.viaServer?60:45))return;NET.pushT=now;
   const P={v:1,u:NET.uid,n:NET.name,c:NET.col,h:NET.host?1:0,hk:NET.host?(NET.hk|0):undefined,ph:NET.phase,df:NET.host?SET.diff:undefined};
   // olay günlüğü: açık bağlantıdan 5 sn önce gönderilmiş olaylar herkese ulaştı → tekrar yollanmaz (mobil veri yarıya iner).
@@ -4013,7 +4057,7 @@ function netRemoteUpdate(rec,P){const p=P.p;if(!Array.isArray(p))return;let e=re
   const held=NET.host&&(cr.victim===e||(pale&&PT===e&&['grab','drag'].includes(pale.st)));const st=NET_ST[p[5]]||'play';const dragged=st==='dragged'||st==='paleGrab'||held;
   // sürüklenirken konumu hostta yaratığın izi belirler (titreme olmasın)
   if(!(NET.host&&dragged)){e.tx=p[0];e.tz=p[1];}
-  e.yaw=p[2];e.pitch=p[3];e.lamp=!!p[4];e.strug=p[9]|0;e.crouchN=!!p[8];e.hid=!!p[11];
+  e.sf=p[13]|0;e.yaw=p[2];e.pitch=p[3];e.lamp=!!p[4];e.strug=p[9]|0;e.crouchN=!!p[8];e.hid=!!p[11];
   if(p[7]>(e.swing||0)+.05)e._swT=G.time;e.swing=p[7];
   e.st=st==='dead'||st==='spectate'?'dead':dragged?'dragged':st==='buried'?'buried':(G.time-(e._swT||-9)<1.2?'dig':'follow');
   const gi=p[6];if(gi>=0&&gems[gi]){if(e.carry!==gems[gi]){e.carry=gems[gi];gems[gi].st='carried';}}else if(e.carry&&e.carry.st==='carried'){e.carry=null;}}
@@ -4028,6 +4072,7 @@ function netApply(rec,a){const k=a[0];const E=rec.e;
   case 'la':{const[,id,x,z,t,n]=a;if(!loot.some(L=>L.nid===id))loot.push({x,z,id:t,n,rot:Math.random()*TAU,nid:id});break;}
   case 'lp':{const[,id]=a;const i=loot.findIndex(L=>(L.nid||L.gid)===id);if(i>=0)loot.splice(i,1);break;}
   case 'k':{const[,ci]=a;const c=crates[ci];if(c&&!c.open){c.open=true;sfxAt('crate',c.x,c.z,.8,30);}break;}
+  case 'sg':{if(SF.on)sfGo();break;}
   case 'gn':{const[,gi,by]=a;const g=G.gens[gi];if(g&&!g.on){g.on=true;if(G.genAct&&G.genAct.gi===gi)G.genAct=null;genDoneFx(g,by,E);}break;}
   case 'th':{const[,kind,x,y,z,vx,vy,vz]=a;projs.push({kind,x,y,z,vx,vy,vz,life:6,hit:false,spin:0});if(kind==='flare')sfxAt('flare',x,z,.9,30);break;}
   case 'dy':{const[,x,z,rot]=a;dyns.push({x,z,fuse:4,hT:0,rot:rot||0});sfxAt('fuse',x,z,1,25);break;}
@@ -4800,13 +4845,21 @@ $('sLefty').checked=!!SET.lefty;$('sLefty').addEventListener('change',()=>{SET.l
 function applyTouch(){const T=$('touch');T.style.setProperty('--bs',SET.btn);T.style.setProperty('--bo',SET.alpha);T.classList.toggle('lefty',!!SET.lefty);}
 applyTouch();if(!isTouch)for(const r of document.querySelectorAll('.touchOnly'))r.hidden=true;
 $('sTips').checked=SET.tips;$('sTips').addEventListener('change',()=>{SET.tips=$('sTips').checked;if(SET.tips){SEEN.clear();try{localStorage.removeItem('kd_tips');}catch(e){}}saveSet();});
-function openPause(fromMenu){if(!fromMenu&&!['play','dragged','buried'].includes(G.state))return;
+function openPause(fromMenu){if(!fromMenu&&!['play','dragged','buried','surface'].includes(G.state))return;
   if(!fromMenu&&NET.started){G.mpPause=true;for(const k in keys)keys[k]=false;joy.vx=joy.vy=0;joy.id=null;look.id=null;$('joyk').style.transform='';useHeld=false;toolHeld=false;mouseDown=false;}
   else if(!fromMenu){G.prevState=G.state;G.state='pause';for(const k in keys)keys[k]=false;joy.vx=joy.vy=0;joy.id=null;look.id=null;$('joyk').style.transform='';useHeld=false;toolHeld=false;mouseDown=false;if(AC)AC.suspend();}
+  segSync();for(const el of document.querySelectorAll('.rng input[type=range]'))rngFill(el);
   $('pTitle').textContent=fromMenu?'AYARLAR':'DURAKLATILDI';$('pResume').textContent=fromMenu?'GERİ':'DEVAM';$('pMenu').hidden=!!fromMenu;$('pause').hidden=false;$('pause').dataset.menu=fromMenu?'1':'';}
 function closePause(){$('pause').hidden=true;if($('pause').dataset.menu)return;if(G.mpPause){G.mpPause=false;return;}G.state=G.prevState||'play';if(AC)AC.resume();
   if(!isTouch){try{const r=cv.requestPointerLock();if(r&&r.catch)r.catch(()=>{});}catch(e){}}}
-$('pResume').addEventListener('click',closePause);
+$('pResume').addEventListener('click',closePause);$('pX').addEventListener('click',closePause);
+// ayar ekranı: sekmeler, bölmeli seçiciler (gizli select'e yazar), kaydırıcı doluluğu
+for(const b of document.querySelectorAll('.sTabs button'))b.addEventListener('click',()=>{for(const x of document.querySelectorAll('.sTabs button'))x.classList.toggle('on',x===b);for(const p of document.querySelectorAll('.sPanes section'))p.classList.toggle('on',p.dataset.p===b.dataset.t);});
+function segSync(){for(const g of document.querySelectorAll('.seg')){const sel=$(g.dataset.for);for(const b of g.children)b.classList.toggle('on',b.dataset.v===String(sel.value));}}
+for(const g of document.querySelectorAll('.seg'))for(const b of g.children)b.addEventListener('click',()=>{const sel=$(g.dataset.for);sel.value=b.dataset.v;sel.dispatchEvent(new Event('change'));segSync();});
+function rngFill(el){const p=(el.value-el.min)/(el.max-el.min)*100;el.style.setProperty('--p',p.toFixed(1)+'%');}
+for(const el of document.querySelectorAll('.rng input[type=range]')){rngFill(el);el.addEventListener('input',()=>rngFill(el));}
+segSync();
 $('pMenu').addEventListener('click',()=>{if(AC)AC.resume();if(NET.on)netLeave();G.mpPause=false;G.state='menu';showMenu();});
 $('openSet').addEventListener('click',()=>openPause(true));
 $('bPause').addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();if(e.pointerType==='touch')return;openPause();});
@@ -4833,7 +4886,7 @@ function updateTips(dt){const T=isTouch;
 
 // ================= girdi =================
 const keys={},joy={id:null,vx:0,vy:0,ox:0,oy:0},look={id:null,x:0,y:0};
-const lookBy=(dx,dy,k)=>{if(G.state!=='play')return;k*=SET.sens;pl.yaw-=dx*k;pl.pitch=clamp(pl.pitch-dy*k,-1.25,1.25);};
+const lookBy=(dx,dy,k)=>{if(G.state!=='play'&&G.state!=='surface')return;k*=SET.sens;pl.yaw-=dx*k;pl.pitch=clamp(pl.pitch-dy*k,-1.25,1.25);};
 addEventListener('keydown',e=>{if(e.code==='Escape'||e.code==='KeyP'){if(G.state==='pause')closePause();else openPause();return;}if(e.repeat&&e.code!=='Space')return;keys[e.code]=true;if(G.state==='ascend'&&e.code==='Space'){e.preventDefault();struggle();return;}if(!['play','dragged','buried'].includes(G.state))return;
   if(e.code==='KeyF')toggleLamp();else if(e.code==='KeyE')useDown();else if(e.code==='KeyC')drawChalk();else if(e.code==='KeyX')toggleCrouch();
   else if(e.code==='KeyQ')selectTool(pl.tool+1);else if(/^Digit[1-6]$/.test(e.code))selectTool(+e.code.slice(5)-1);
@@ -4998,9 +5051,9 @@ function ldSurface(g,cw,ch,Y,L0,R0){const gy=ch*.72-Y;if(gy<=-10)return -1;const
   if(Math.sin(t*4)>0){const rl=g.createRadialGradient(cx,top-30,0,cx,top-30,12);rl.addColorStop(0,'rgba(255,60,40,.9)');rl.addColorStop(1,'rgba(255,60,40,0)');g.globalCompositeOperation='lighter';g.fillStyle=rl;g.fillRect(cx-12,top-42,24,24);g.globalCompositeOperation='source-over';}
   g.fillStyle='#2f2c28';g.fillRect(cx-1,top-30,2,14);
   return top-14;}
-function loadShow(floor,o){o=o||{};const F=FLOORS[floor-1]||FLOORS[0];$('ldK').textContent='KAT -'+floor;$('ldN').textContent=F.ad;$('ldH').textContent=F.hint||'';$('ldT').textContent=LD_TIPS[Math.floor(Math.random()*LD_TIPS.length)];
+function loadShow(floor,o){o=o||{};const F=FLOORS[floor-1]||FLOORS[0];$('ldK').textContent=o.title?o.title[0]:'KAT -'+floor;$('ldN').textContent=o.title?o.title[1]:F.ad;$('ldH').textContent=o.title?o.title[2]:F.hint||'';$('ldT').textContent=LD_TIPS[Math.floor(Math.random()*LD_TIPS.length)];
   let pp='';for(let i=1;i<=FLOORS.length;i++)pp+=`<i class="${i<floor?'d':i===floor?'c':''}"></i>`;$('ldP').innerHTML=pp;
-  Object.assign(LD,{on:true,t:0,t0:performance.now(),tl:0,surf:floor===1&&!!o.surface,hold:floor===1&&o.surface?1.2:0,min:o.min||1.6,max:9,work:o.work,done:o.done,worked:false,floor,d0:ldDepth(floor-1),d1:ldDepth(floor),fin:0,shown:0,bounce:0,
+  Object.assign(LD,{on:true,t:0,t0:performance.now(),tl:0,surf:floor===1&&!!o.surface,hold:floor===1&&o.surface?1e9:0,min:o.min||1.6,max:9,work:o.work,done:o.done,worked:false,floor,d0:o.title?0:ldDepth(floor-1),d1:o.title?0:ldDepth(floor),fin:0,shown:0,bounce:0,
     miners:Math.max(1,Math.min(4,1+((RUN.alive&&RUN.alive.length)||0)+(NET.started?Math.max(0,(NET.humans||1)-1):0)))});
   const el=$('load');el.classList.remove('out');el.hidden=false;$('hud').hidden=true;$('ldF').style.width='0%';$('ldM').textContent=LD.d0+' m';
   try{ldInitCanvas();}catch(e){console.warn('ld canvas',e);}
@@ -5023,11 +5076,157 @@ function loadTick(dt0){if(!LD.on)return;const nw=performance.now();const dt=Math
   if(!LD.fin&&((all&&LD.t>=LD.min)||LD.t>LD.max)){LD.fin=1e-3;$('ldF').style.width='100%';const id=LD.id;
     setTimeout(()=>{if(LD.id!==id)return;sfx('thump',.5);},380);
     setTimeout(()=>{if(LD.id!==id)return;$('load').classList.add('out');setTimeout(()=>{if(LD.id!==id)return;ldFinishNow();},450);},800);}}
+// ==== SURF BEGIN: maden girişi (yüzey) — oyun burada başlar; ekip mağara ağzından içeri girip kafese biner, herkes binince 1. kata inilir ====
+// Ayrı, küçük bir sahne: kendi zemini, dağ yamacı + galeri ağzı, tünel, kafes, arkada çam ormanı (gidilemez), ay ışığı ve kamp ateşi.
+// Koordinatlar: kafes (0,0,0), tünel +z yönünde 10.6 m'ye kadar, açıklık z 10.6–31. Oyuncu z≈27.5'te doğar, dağa (−z) bakar.
+const SF={on:false,mesh:null};
+const SFK={rx:12.5,rz:10.5,cz:20,tw:1.5,tz:10.6};
+function sfHash(i,j){let h=(Math.imul(i,374761393)+Math.imul(j,668265263)+0x2f9a)|0;h=Math.imul(h^(h>>>13),1274126177);h^=h>>>16;return (h>>>0)/4294967296;}
+function sfN(x,y){const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);
+  return lerp(lerp(sfHash(xi,yi),sfHash(xi+1,yi),u),lerp(sfHash(xi,yi+1),sfHash(xi+1,yi+1),u),v)*2-1;}
+function sfH(x,z){if(z<SFK.tz)return 0;const s=clamp((Math.abs(x)-2.2)/7,0,1)*clamp((z-11.5)/3,0,1);return s*(.55+sfN(x*.09,z*.09)*.7+sfN(x*.31,z*.31)*.18);}
+function sfCliffZ(x,y){const p=Math.abs(x)<2.6&&y<4.2?1-clamp((Math.max(Math.abs(x)-1.6,y-3.4))/1.2,0,1):0;
+  const z=SFK.tz-.25-y*.42-sfN(x*.13,y*.13)*2.1-sfN(x*.45,y*.45)*.45-Math.max(0,Math.abs(x)-9)*.05;return lerp(z,SFK.tz-.25-y*.05,p);}
+// yürünebilir alan: açıklık (elips) + tünel + kafes (yalnız önden)
+function sfOK(x,z,r){if(z>=SFK.tz-.1){const ex=x/(SFK.rx-r),ez=(z-SFK.cz)/(SFK.rz-r);if(ex*ex+ez*ez<=1&&z>=SFK.tz-.1+r*.0)return true;}
+  if(Math.abs(x)<=SFK.tw-r&&z>=1.05&&z<=SFK.tz+.6)return true;
+  if(Math.abs(x)<=.95-r&&z>=-.95+r&&z<=1.3)return true;return false;}
+function sfInCage(x,z){return Math.abs(x)<.85&&z>-.85&&z<.8;}
+function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),ground:g(),path:g(),wood:g(),wood2:g(),steel:g(),pine:g(),trunk:g(),dark:g(),cart:g()};
+  const X1=[1,0,0],Y1=[0,1,0],Z1=[0,0,1];const B=(m,c,hx,hy,hz)=>th2Box(m,c,X1,Y1,Z1,hx,hy,hz);
+  const tri=(m,a,b,c)=>{const n=v3n(v3x([b[0]-a[0],b[1]-a[1],b[2]-a[2]],[c[0]-a[0],c[1]-a[1],c[2]-a[2]]));m.P.push(...a,...b,...c);for(let k=0;k<3;k++)m.N.push(...n);};
+  // zemin (yüz yukarı)
+  {const st=2;for(let x=-56;x<56;x+=st)for(let z=SFK.tz-.4;z<70;z+=st){const a=[x,sfH(x,z),z],b=[x+st,sfH(x+st,z),z],c=[x+st,sfH(x+st,z+st),z+st],d=[x,sfH(x,z+st),z+st];tri(M.ground,a,d,c);tri(M.ground,a,c,b);}}
+  // patika (zeminden 2 cm yukarı, kenarları düzensiz)
+  for(let z=SFK.tz;z<29;z+=1){const w0=1.15+sfN(3,z*.5)*.25,w1=1.15+sfN(3,(z+1)*.5)*.25;const y=.02;tri(M.path,[-w0,y,z],[-w1,y,z+1],[w1,y,z+1]);tri(M.path,[-w0,y,z],[w1,y,z+1],[w0,y,z]);}
+  // yamaç (dağ yüzü) — galeri ağzı boşluk
+  {const st=2.2;for(let x=-60;x<60;x+=st)for(let y=0;y<38;y+=st){if(Math.abs(x+st/2)<1.9&&y<3.4)continue;
+      const P=(xx,yy)=>[xx,yy,sfCliffZ(xx,yy)];tri(M.rock,P(x,y),P(x+st,y),P(x+st,y+st));tri(M.rock,P(x,y),P(x+st,y+st),P(x,y+st));}}
+  // yamaçtaki kaya çıkıntıları
+  for(let k=0;k<26;k++){const x=(sfHash(k,3)-.5)*70,y=sfHash(k,4)*6,r=.8+sfHash(k,5)*2.2;if(Math.abs(x)<3.4)continue;const z=sfCliffZ(x,y)+r*.35;th2Ell(M.rock,[x,y,z],[1,0,0],[0,1,0],[0,0,1],r*1.3,r*.8,r,7,5,0,.25,k+11);}
+  // tünel: duvarlar, tavan, zemin, ahşap kuşaklar, raylar
+  B(M.rock,[-SFK.tw-.2,1.7,5.8],.2,1.9,5.2);B(M.rock,[SFK.tw+.2,1.7,5.8],.2,1.9,5.2);B(M.rock,[0,3.45,5.8],SFK.tw+.4,.2,5.2);B(M.rock,[0,-.06,5.85],SFK.tw+.2,.06,4.8);
+  // kafes odası (kafesin etrafı) + kuyu (kafesin altı)
+  B(M.rock,[0,1.7,-1.75],1.9,1.9,.2);B(M.rock,[-1.75,1.7,-.3],.2,1.9,1.6);B(M.rock,[1.75,1.7,-.3],.2,1.9,1.6);B(M.rock,[0,3.45,-.2],1.9,.2,1.6);
+  B(M.rock,[0,-.06,1.32],1.6,.06,.27);B(M.rock,[-1.32,-.06,-.2],.27,.06,1.5);B(M.rock,[1.32,-.06,-.2],.27,.06,1.5);B(M.rock,[0,-.06,-1.32],1.6,.06,.27);
+  B(M.dark,[0,-8,-1.2],1.3,8,.15);B(M.dark,[0,-8,1.2],1.3,8,.15);B(M.dark,[-1.2,-8,0],.15,8,1.3);B(M.dark,[1.2,-8,0],.15,8,1.3);
+  for(let z=1.6;z<SFK.tz;z+=1.8){for(const sx of[-1,1])B(M.wood,[sx*1.42,1.55,z],.1,1.55,.1);B(M.wood,[0,3.16,z],1.55,.11,.12);}
+  for(const sx of[-.36,.36])B(M.steel,[sx,.07,10.2],.03,.035,9.0);for(let z=1.4;z<19;z+=.62)B(M.wood2,[0,.03,z],.62,.03,.09);
+  // galeri ağzı: dikmeler, başlık, çaprazlar, çatı tahtaları
+  for(const sx of[-1,1]){B(M.wood,[sx*1.78,1.75,SFK.tz+.05],.16,1.75,.16);th2Box(M.wood,[sx*1.25,3.0,SFK.tz+.12],[Math.cos(.7),-Math.sin(.7)*sx,0].map(v=>v),[Math.sin(.7)*sx,Math.cos(.7),0],Z1,.07,.55,.07);}
+  B(M.wood,[0,3.6,SFK.tz+.05],2.25,.18,.2);for(let k=-4;k<=4;k++)B(M.wood2,[k*.5,3.85,SFK.tz+.25],.24,.04,.5);
+  // sandıklar, varil, tabela direği
+  B(M.wood2,[-2.7,.32,12.4],.32,.32,.32);B(M.wood2,[-3.25,.25,13.1],.25,.25,.25);B(M.wood2,[-2.75,.82,12.45],.2,.18,.2);
+  th2Tube(M.steel,[[3.0,0,12.6],[3.0,.9,12.6]],.3,10);B(M.wood,[2.4,.9,15],.05,.9,.05);B(M.wood2,[2.4,1.55,15.02],.42,.18,.03);
+  // kamp ateşi: kütükler ve oturma kütükleri
+  {const fx=4.2,fz=22.5,fy=sfH(fx,fz);for(let k=0;k<5;k++){const a=k/5*TAU;th2Box(M.trunk,[fx+Math.cos(a)*.22,fy+.08,fz+Math.sin(a)*.22],[Math.cos(a),0,Math.sin(a)],[0,1,0],[-Math.sin(a),0,Math.cos(a)],.32,.06,.06);}
+    for(let k=0;k<8;k++){const a=k/8*TAU;B(M.dark,[fx+Math.cos(a)*.48,fy+.05,fz+Math.sin(a)*.48],.09,.06,.09);}
+    for(const[a,d]of[[.5,1.6],[2.6,1.7]]){const x=fx+Math.cos(a)*d,z=fz+Math.sin(a)*d;th2Tube(M.trunk,[[x-Math.sin(a)*.6,sfH(x,z)+.18,z+Math.cos(a)*.6],[x+Math.sin(a)*.6,sfH(x,z)+.18,z-Math.cos(a)*.6]],.18,8);}}
+  // eski vagon (raylarda)
+  {const cz=16.5;B(M.cart,[0,.62,cz],.55,.32,.85);B(M.cart,[0,.33,cz],.45,.04,.75);for(const sx of[-.45,.45])for(const sz of[-.5,.5])th2Tube(M.steel,[[sx-.04,.2,cz+sz],[sx+.04,.2,cz+sz]],.17,10);}
+  // çam ormanı (açıklığın dışı; gidilemez)
+  let n=0;for(let k=0;k<900&&n<150;k++){const x=(sfHash(k,21)-.5)*104,z=SFK.tz+.8+sfHash(k,22)*56;const ex=x/SFK.rx,ez=(z-SFK.cz)/SFK.rz;if(ex*ex+ez*ez<1.25)continue;if(Math.abs(x)<3&&z<SFK.tz+2)continue;
+    const h=sfH(x,z),H=5+sfHash(k,23)*7,r=.9+sfHash(k,24)*.9;n++;th2Tube(M.trunk,[[x,h-.2,z],[x,h+H*.4,z]],.16+H*.012,6);
+    for(let q=0;q<4;q++){const y0=h+H*(.22+q*.18),rr=r*(1.15-q*.22);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.34,z]],[rr,.02],7);}}
+  // yamacın üstünde ve iki yanında da birkaç çam
+  for(let k=0;k<40;k++){const x=(sfHash(k,31)-.5)*110,y=4+sfHash(k,32)*16;if(Math.abs(x)<4)continue;const z=sfCliffZ(x,y)-.3,H=4+sfHash(k,33)*5,r=.8+sfHash(k,34)*.6;th2Tube(M.trunk,[[x,y-.3,z],[x,y+H*.4,z]],.15,6);for(let q=0;q<3;q++){const y0=y+H*(.25+q*.2);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.35,z]],[r*(1.1-q*.25),.02],7);}}
+  const mk=m=>m.P.length?mesh(m.P,m.N):null;SF.mesh={};for(const k in M)SF.mesh[k]=mk(M[k]);
+  SF.stars=[];for(let k=0;k<70;k++){const a=sfHash(k,41)*TAU,e=.25+sfHash(k,42)*1.15;SF.stars.push([Math.cos(a)*Math.cos(e),Math.sin(e),Math.sin(a)*Math.cos(e),.06+sfHash(k,43)*.1]);}}
+// ---- giriş / çıkış ----
+function sfStart(){if(!SF.mesh)try{sfBuild();}catch(e){console.error('yüzey',e);return false;}
+  SF.on=true;SF.t=0;SF.go=null;SF.gate=0;SF.cy=0;SF.save={x:pl.x,z:pl.z,yaw:pl.yaw,pitch:pl.pitch,bots:bots.filter(b=>!b.remote).map(b=>[b,b.x,b.z,b.face,b.st])};
+  pl.x=(Math.random()-.5)*1.6;pl.z=27.2+Math.random()*.8;pl.yaw=0;pl.pitch=-.02;pl.lamp=true;pl.carry=null;
+  const spots=[[-.5,-.45],[.5,-.45],[0,-.1]];bots.filter(b=>!b.remote).forEach((b,i)=>{const s=spots[i%3];b.x=s[0];b.z=s[1];b.face=Math.PI;b.st='follow';b.moving=false;b.path=null;});
+  G.state='surface';$('hud').classList.add('surf');$('hud').hidden=false;$('touch').hidden=!isTouch;HTL.k='';sfHud(true);sfAmbStart();return true;}
+function sfLeave(){SF.on=false;$('hud').classList.remove('surf');sfAmbStop();const S0=SF.save;if(S0){pl.x=S0.x;pl.z=S0.z;pl.yaw=S0.yaw;pl.pitch=S0.pitch;for(const[b,x,z,f,st]of S0.bots){b.x=x;b.z=z;b.face=f;b.st=st;b.mnY=0;}}
+  for(const b of bots)b.mnY=0;HTL.k='';}
+// herkes kafeste → kapı kapanır, kafes kuyuya iner, sonra yükleme ve 1. kata varış
+function sfGo(){if(!SF.on||SF.go)return;SF.go={t:0};sfx('liftGate',.9);if(NET.started&&NET.host)netLog('sg');}
+function sfDescendDone(){$('fade').style.opacity=1;setTimeout(()=>{sfLeave();loadShow(RUN.floor,{min:1.8,work:()=>{renderHotbar();},done:()=>arriveStart(()=>showFloorCard())});$('fade').style.opacity=0;},650);}
+// ---- her kare ----
+function sfMove(dt){if(SF.go||G.mpPause)return;let mx=0,mz=0;if(keys.KeyW||keys.ArrowUp)mz+=1;if(keys.KeyS||keys.ArrowDown)mz-=1;if(keys.KeyA||keys.ArrowLeft)mx-=1;if(keys.KeyD||keys.ArrowRight)mx+=1;
+  mx+=joy.vx;mz-=joy.vy;const ml=Math.hypot(mx,mz);if(ml>1){mx/=ml;mz/=ml;}const moving=ml>.2;pl.mv=moving;
+  const running=(keys.ShiftLeft||keys.ShiftRight||runToggle)&&moving;const sp=running?5:2.8;const[fx,fz]=fwdXZ(),rx=Math.cos(pl.yaw),rz=-Math.sin(pl.yaw);
+  if(moving){const vx=(fx*mz+rx*mx)*sp*dt,vz=(fz*mz+rz*mx)*sp*dt;const r=.35;
+    if(sfOK(pl.x+vx,pl.z+vz,r)){pl.x+=vx;pl.z+=vz;}else if(sfOK(pl.x+vx,pl.z,r))pl.x+=vx;else if(sfOK(pl.x,pl.z+vz,r))pl.z+=vz;
+    pl.bob+=dt*sp*2.4;pl.stepT-=dt;if(pl.stepT<=0){pl.stepT=running?.32:.52;sfx('step',running?.5:.26,(Math.random()-.5)*.3);}}}
+function sfInCount(){let n=sfInCage(pl.x,pl.z)?1:0,T=1;if(NET.started)for(const rec of NET.peers.values()){const p=rec.P&&rec.P.p;if(!Array.isArray(p)||!p[13])continue;if(performance.now()-(rec.seenT||0)>4000)continue;T++;if(p[13]===2)n++;}return[n,T];}
+function sfHud(force){SF.hudT=(SF.hudT||0)-1;if(!force&&SF.hudT>0)return;SF.hudT=12;const[n,T]=sfInCount();
+  $('depN').textContent='Y';$('nightL').textContent='MADEN GİRİŞİ';$('depP').innerHTML='';$('misP').hidden=true;$('misF').textContent='';$('sqL').innerHTML='';
+  $('objL').textContent=SF.go?'Kafes iniyor...':T>1?`Mağaraya gir, kafese bin. Herkes binince iner (${n}/${T} kafeste).`:'Mağaraya gir, kafese bin. Ekibin seni içeride bekliyor.';}
+function sfTick(dt){if(!SF.on)return;SF.t+=dt;G.shake=Math.max(0,(G.shake||0)-dt);sfMove(dt);
+  if(MN.ready)try{mnUpdateBots(dt);}catch(e){}
+  const inC=sfInCage(pl.x,pl.z);
+  // karar: tek oyunculuda girer girmez; çok oyunculuda oda sahibi herkes kafesteyken 1 sn sonra
+  if(!SF.go){if(!NET.started){if(inC){SF.inT=(SF.inT||0)+dt;if(SF.inT>.5)sfGo();}else SF.inT=0;}
+    else if(NET.host){const[n,T]=sfInCount();if(n>=T&&inC){SF.inT=(SF.inT||0)+dt;if(SF.inT>1)sfGo();}else SF.inT=0;}}
+  else{const A=SF.go;A.t+=dt;SF.gate=clamp(A.t/.8,0,1);if(A.t>.9){if(!A.snd){A.snd=1;sfx('liftDown',.8);sfx('liftRide',1);G.shake=.25;}const k=A.t-.9;SF.cy=-(k*k*.9+k*.4);}
+    if(A.t>3.6&&!A.done){A.done=1;sfDescendDone();}}
+  // kafesteki botlar / oyuncular kafesle birlikte iner; diğerleri zemin yüksekliğinde
+  for(const b of bots){const y=sfInCage(b.x,b.z)?SF.cy:sfH(b.x,b.z);b.mnY=y-floorY(b.x,b.z);}
+  sfHud(false);sfAmbTick(dt);}
+// ---- ses ortamı: rüzgar + kamp ateşi çıtırtısı + yaprak hışırtısı ----
+function sfAmbStart(){if(!AC||!nbuf||SF.amb)return;try{const s=AC.createBufferSource();s.buffer=nbuf;s.loop=true;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=420;const g=AC.createGain();g.gain.value=0;
+  s.connect(f).connect(g).connect(master);s.start();g.gain.setTargetAtTime(.10,AC.currentTime,1.5);SF.amb={s,f,g};}catch(e){}}
+function sfAmbStop(){const A=SF.amb;if(!A)return;SF.amb=null;try{A.g.gain.setTargetAtTime(0,AC.currentTime,.4);A.s.stop(AC.currentTime+1.5);}catch(e){}}
+function sfAmbTick(dt){const A=SF.amb;if(A){const w=.07+.05*(sfN(SF.t*.3,1.7)*.5+.5);A.g.gain.setTargetAtTime(SF.go?Math.max(0,w*(1-SF.go.t/2)):w*(1-clamp((SFK.tz-pl.z)/8,0,.7)),AC.currentTime,.3);A.f.frequency.setTargetAtTime(300+260*(sfN(SF.t*.5,4)*.5+.5),AC.currentTime,.3);}
+  SF.crT=(SF.crT||0)-dt;if(SF.crT<=0){SF.crT=.08+Math.random()*.35;const d=Math.hypot(pl.x-4.2,pl.z-22.5);if(d<14&&Math.random()<.6)sfx('plink',.05*(1-d/14),(4.2-pl.x)/8);}
+  SF.ruT=(SF.ruT||0)-dt;if(SF.ruT<=0){SF.ruT=4+Math.random()*7;sfx('rustle',.12,(Math.random()-.5)*1.6);}}
+// ---- çizim ----
+const SFLK={fd:.026,fog:[.022,.028,.05],hc:[0,0,0],haze:0,ra:[.2,.18,.16],rb:[.3,.27,.23],fa:[.16,.14,.11],fb:[.22,.19,.15],wt:[.8,.85,.9],wet:.1,crack:0,vein:null};
+function sfRender(){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2][SET.gfx]??2)*RS;
+  const W=Math.floor(cv.clientWidth*dpr),Hh=Math.floor(cv.clientHeight*dpr);if(cv.width!==W||cv.height!==Hh){cv.width=W;cv.height=Hh;}
+  POST.on=SET.gfx>=2;postBegin(W,Hh);gl.viewport(0,0,W,Hh);gl.clearColor(SFLK.fog[0],SFLK.fog[1],SFLK.fog[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  const t=SF.t,inC=sfInCage(pl.x,pl.z),gy=inC?SF.cy:sfH(pl.x,pl.z);const sk=(G.shake||0)*.4;
+  eye=[pl.x+(Math.random()-.5)*sk*.3,gy+1.6+Math.sin(pl.bob)*.035+(Math.random()-.5)*sk*.3,pl.z];const yaw=pl.yaw,pitch=pl.pitch;
+  Pm=M4.persp(1.2,W/Hh,.05,70);Vm=X(M4.RX(-pitch),M4.RY(-yaw),M4.T(-eye[0],-eye[1],-eye[2]));VP=M4.mul(Pm,Vm);
+  const cp=Math.cos(pitch),fwd=[-Math.sin(yaw)*cp,Math.sin(pitch),-Math.cos(yaw)*cp];AUD.cam.eye=eye;AUD.cam.fwd=fwd;
+  if(MN.ready)for(const b of bots)if(b.ap)try{mnPrepare(b,b.ap);}catch(e){}
+  const SP=[],SD=[],SC=[];if(pl.lamp){SP.push(eye[0]+Math.cos(yaw)*.12,eye[1]+.1,eye[2]-Math.sin(yaw)*.12,24);SD.push(...fwd,Math.cos(.66));SC.push(.75,.68,.55);}
+  const fl=.75+.25*Math.sin(t*17)*Math.sin(t*7.3+1)+.1*Math.random();const PP=[],PC=[];
+  PP.push(-30,48,70,170);PC.push(.1,.12,.19);                       // ay ışığı
+  PP.push(4.2,sfH(4.2,22.5)+.6,22.5,10);PC.push(1.1*fl,.5*fl,.15*fl);   // kamp ateşi
+  PP.push(0,3.0,SFK.tz+.6,9);PC.push(.55,.36,.14);                     // galeri ağzı lambası
+  PP.push(0,2.9,5.6,7);PC.push(.42,.28,.12);                           // tünel lambası
+  PP.push(.4,SF.cy+2.4,.4,4.5);PC.push(.45,.3,.13);                    // kafes ampulü
+  const amb=.0016*SET.bright*SET.bright;
+  gl.useProgram(PR.p);gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);
+  gl.uniformMatrix4fv(U('uVP'),false,VP);gl.uniform3fv(U('uEye'),eye);gl.uniform1f(U('uAmb'),amb);const L=SFLK;gl.uniform1f(U('uFog'),L.fd);gl.uniform3fv(U('uRA'),L.ra);gl.uniform3fv(U('uRB'),L.rb);gl.uniform3fv(U('uFA'),L.fa);gl.uniform3fv(U('uFB'),L.fb);gl.uniform3fv(U('uFogC'),L.fog);
+  gl.uniform3fv(U('uHazeC'),L.hc);gl.uniform1f(U('uHaze'),0);gl.uniform3fv(U('uVein'),Z3);gl.uniform3fv(U('uWetT'),L.wt);gl.uniform1f(U('uWet'),L.wet);gl.uniform1f(U('uCrack'),0);gl.uniform1f(U('uExp'),1.5*SET.bright);gl.uniform1f(U('uTime'),t);gl.uniform1f(U('uTri'),0);
+  gl.uniform1i(U('uNS'),SP.length/4);if(SP.length){gl.uniform4fv(U('uSP'),SP);gl.uniform4fv(U('uSD'),SD);gl.uniform3fv(U('uSC'),SC);}gl.uniform1i(U('uNP'),PP.length/4);gl.uniform4fv(U('uPP'),PP);gl.uniform3fv(U('uPC'),PC);SCN={amb,LKs:L,SP,SD,SC,PP,PC};
+  // gökyüzü kubbesi (derinliğe yazmaz)
+  gl.depthMask(false);draw(MS,X(M4.T(eye[0],eye[1],eye[2]),M4.S(64,64,64)),[0,0,0],[.012,.016,.034],0);gl.depthMask(true);
+  for(const[x,z,s]of[[-45,-30,26],[0,-58,34],[42,-34,24],[-70,10,22],[72,8,26]])draw(MCone,X(M4.T(x,-2,z),M4.S(s,s*.9,s)),[.05,.055,.07],Z3,2);
+  const I=M4.id(),m=SF.mesh;
+  if(m.ground)draw(m.ground,I,[.085,.1,.06],Z3,2);if(m.path)draw(m.path,I,[.13,.1,.07],Z3,4);if(m.rock)draw(m.rock,I,[1,1,1],Z3,1);if(m.dark)draw(m.dark,I,[.05,.045,.04],Z3,1);
+  if(m.wood)draw(m.wood,I,[.2,.13,.07],Z3,4);if(m.wood2)draw(m.wood2,I,[.16,.11,.065],Z3,4);if(m.steel)draw(m.steel,I,[.2,.19,.18],Z3,3);if(m.cart)draw(m.cart,I,[.17,.12,.08],Z3,5);
+  if(m.trunk)draw(m.trunk,I,[.09,.065,.045],Z3,4);if(m.pine)draw(m.pine,I,[.03,.055,.035],Z3,2);
+  // ateş
+  {const fx=4.2,fz=22.5,fy=sfH(fx,fz);draw(MCone,X(M4.T(fx,fy+.08,fz),M4.S(.3*fl,.55*fl,.3*fl)),[0,0,0],[2.2*fl,.9*fl,.2*fl],0);}
+  // kafes (önü tünele bakar)
+  cageDraw(X(M4.T(0,SF.cy,0),M4.RY(Math.PI)),{lamp:[.1,.9,.2],gate:SF.gate,spin:SF.cy*3,cable:12});
+  // ekip (botlar ve diğer oyuncular)
+  for(const b of bots){if(b.st==='buried'||b.away||(b.remote&&!b.sf))continue;if(MN.ready&&b.boneM&&b.ap){if(inView(b.x,(b.mnY||0)+floorY(b.x,b.z)+.9,b.z,1.3))drawMinerModel(b);}}
+  gl.useProgram(PR.p);
+  // parıltılar: yıldızlar, ay, lambalar, ateş
+  gl.useProgram(PG.p);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE);gl.depthMask(false);gl.bindVertexArray(glowVAO);gl.uniformMatrix4fv(PG.u.uV,false,Vm);gl.uniformMatrix4fv(PG.u.uP,false,Pm);
+  const glw=(p,sz,c)=>{gl.uniform3fv(PG.u.uCtr,p);gl.uniform1f(PG.u.uSz,sz);gl.uniform3f(PG.u.uCol,c[0],c[1],c[2]);gl.drawArrays(gl.TRIANGLES,0,6);};
+  for(const s of SF.stars){const tw=.6+.4*Math.sin(t*2.3+s[0]*40);glw([eye[0]+s[0]*58,eye[1]+s[1]*58,eye[2]+s[2]*58],s[3]*1.6,[.5*tw,.55*tw,.7*tw]);}
+  {const mp=[eye[0]-26,eye[1]+40,eye[2]+38];glw(mp,9,[.18,.2,.26]);glw(mp,2.2,[1.4,1.45,1.55]);}
+  glw([0,3.15,SFK.tz+.45],.9,[.9,.6,.25]);glw([0,2.85,5.6],.6,[.7,.45,.18]);glw([4.2,sfH(4.2,22.5)+.5,22.5],1.6*fl,[1.2*fl,.55*fl,.15*fl]);
+  for(let k=0;k<6;k++){const a=(t*1.3+k*1.7)%1;glw([4.2+Math.sin(k*3+t)*.15,sfH(4.2,22.5)+.3+a*1.6,22.5+Math.cos(k*2+t)*.15],.05,[1.6*(1-a),.6*(1-a),.1*(1-a)]);}
+  gl.disable(gl.BLEND);gl.depthMask(true);gl.useProgram(PR.p);
+  postEnd();}
+// ==== SURF END ====
+
 function begin(fresh){audioInit();applyAudio();$('how').hidden=$('multi').hidden=$('bye').hidden=true;tipQ=[];tipT=0;$('tip').classList.remove('on');$('ascend').hidden=true;$('hotbar').hidden=false;if(AC&&AC.state==='suspended')AC.resume();
   if(isTouch){try{const r=document.documentElement.requestFullscreen?.();if(r&&r.catch)r.catch(()=>{});}catch(e){}try{screen.orientation?.lock?.('landscape')?.catch?.(()=>{});}catch(e){}}
   $('start').hidden=true;$('end').hidden=true;$('shop').hidden=true;$('hud').hidden=false;$('touch').hidden=!isTouch;$('cross').hidden=false;
   runToggle=false;$('bRun').classList.remove('on');G.airWarn=false;
-  loadShow(RUN.floor,{min:RUN.floor===1?3.2:1.5,sfx:true,surface:true,work:()=>{newGame();if(!NET.started)saveRun();},done:()=>arriveStart(()=>showFloorCard())});}
+  // 1. kat (yeni oyun): önce yüzeydeki maden girişi; ortadan katılan / kayıttan devam eden doğrudan kata iner
+  const hostSurf=NET.started&&[...NET.peers.values()].some(r=>r.P&&r.P.h&&Array.isArray(r.P.p)&&r.P.p[13]>0);
+  const surf=RUN.floor===1&&(!NET.needSnap||hostSurf);
+  loadShow(RUN.floor,{min:surf?2.2:1.5,sfx:!surf,surface:surf,title:surf?['YÜZEY','MADEN GİRİŞİ','Kara Damar madeninin ağzı. Ekip kafeste toplanınca iniş başlar.']:null,work:()=>{newGame();if(!NET.started)saveRun();},done:()=>{if(!(surf&&sfStart()))arriveStart(()=>showFloorCard());}});}
 // ================= ana menü =================
 // Kat başladığında ilerleme kaydedilir; menüde "DEVAM ET" o katın başından açar.
 function saveRun(){try{localStorage.setItem('kd_run',JSON.stringify({snap:RUN.snap,up:RUN.up,time:RUN.time||0}));}catch(e){}}
@@ -5067,12 +5266,12 @@ const START_EL=document.getElementById('start');
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;adaptRes((now-(frame.p||now))/1000);frame.p=now;
   if(LD.on)try{loadTick(dt);}catch(e){console.warn('load',e);}
   try{netTick(dt);}catch(e){console.warn('net',e);}
-  try{if(G.state==='intro'){G.time+=dt;pl.yaw+=dt*.08;}else if(G.state==='ascend'){G.time+=dt;updateAscend(dt);G.shake=Math.max(0,G.shake-dt);updateMusic(dt);}else if(!['shop','end','descend','pause','load'].includes(G.state))update(dt);if(!window.__kdNoDraw&&!LD.on&&START_EL.hidden)render();}catch(err){console.error(err);}
+  try{if(G.state==='intro'){G.time+=dt;pl.yaw+=dt*.08;}else if(G.state==='ascend'){G.time+=dt;updateAscend(dt);G.shake=Math.max(0,G.shake-dt);updateMusic(dt);}else if(G.state==='surface')sfTick(dt);else if(!['shop','end','descend','pause','load'].includes(G.state))update(dt);if(!window.__kdNoDraw&&!LD.on&&START_EL.hidden){if(SF.on&&(G.state==='surface'||G.state==='pause'))sfRender();else render();}}catch(err){console.error(err);}
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
 window.__kd={get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
-  LD,loadShow,arriveStart,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
+  LD,loadShow,arriveStart,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
 })();
 </script>
 <script>
