@@ -314,22 +314,42 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 #touch.lefty .btns{right:auto;left:calc(14px + env(safe-area-inset-left,0px));transform-origin:0 100%;direction:rtl}
 #err{position:fixed;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding-inline:24px;background:#050606;font-size:16px;line-height:1.5}
 
-/* ---- görsel ana menü (Descent) ---- */
-#start{background:#000;padding:0;overflow:hidden;display:block}
-#start .art{position:absolute;left:0;top:50%;width:max(100vw,calc(100vh*1.7382));height:max(100vh,calc(100vw/1.7382));transform:translateY(-50%);background:#000 url(menu/descent_menu.jpg) 0 0/100% 100% no-repeat}
-@media (min-aspect-ratio:1653/951){#start .art{left:50%;transform:translate(-50%,-50%)}}
-#start .hot{position:absolute;inset:0;display:block}
-#start .mb.hs{position:absolute;color:transparent;font-size:0;padding:0;border:0;background:none;outline:none}
-#start .mb.hs::before{left:-2.4%;top:50%;width:14px;height:3px;box-shadow:0 0 10px rgba(255,170,80,.9)}
-#start .mb.hs::after{content:'';position:absolute;inset:-18% -6%;border-radius:40%;background:radial-gradient(ellipse at 45% 50%,rgba(255,214,160,.26),rgba(255,160,90,.07) 55%,transparent 72%);mix-blend-mode:screen;opacity:0;transition:opacity .18s}
-
-#start .lampfx{position:absolute;border-radius:50%;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle,rgba(255,176,96,.5),rgba(255,120,40,.14) 42%,transparent 70%);animation:lampFl 3.4s infinite}
-@keyframes lampFl{0%,100%{opacity:.75}8%{opacity:.95}11%{opacity:.45}13%{opacity:.9}40%{opacity:.8}62%{opacity:1}64%{opacity:.3}66%{opacity:.85}88%{opacity:.7}}
-#start .eyes{position:absolute;pointer-events:none;border-radius:50%;background:radial-gradient(ellipse,rgba(8,5,5,.97) 45%,rgba(8,5,5,.6) 65%,transparent 80%);opacity:0;animation:eyeBl 7.3s infinite}
-@keyframes eyeBl{0%,90%{opacity:0}91.5%,93%{opacity:1}94.5%,100%{opacity:0}}
-#start .contBox{position:absolute;display:flex;flex-direction:column;gap:2px;padding:10px 18px 10px 6px;background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.55));border-left:2px solid var(--lamp)}
-#start .contBox .mb{font-size:clamp(15px,2vw,22px)}#start .contBox .mb.main{font-size:clamp(17px,2.3vw,26px)}
-@media (prefers-reduced-motion:reduce){#start .lampfx,#start .eyes{animation:none}}
+/* ---- ana menü: canlı arka plan + başlık + menü ---- */
+#start{background:transparent;padding:0;overflow:hidden;display:block}
+#start::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.86) 0%,rgba(0,0,0,.55) 34%,rgba(0,0,0,.08) 62%,rgba(0,0,0,0) 100%);pointer-events:none}
+.mVig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 62% 52%,rgba(0,0,0,0) 40%,rgba(0,0,0,.75) 100%)}
+#mFade{position:absolute;inset:0;background:#000;opacity:1;pointer-events:none}
+.mCol{position:absolute;left:max(28px,env(safe-area-inset-left,0px));top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,3.2vh,26px);width:min(380px,46vw)}
+.mHead small{display:block;font-family:var(--display);font-size:11px;letter-spacing:.42em;color:var(--lamp);opacity:0;animation:mIn .8s .2s ease-out forwards}
+.mTitle{position:relative;margin:2px 0 4px;font-family:var(--display);font-weight:700;font-size:clamp(46px,8.4vw,92px);line-height:.92;letter-spacing:.06em;color:#efe6d4;
+  text-shadow:0 0 18px rgba(255,170,80,.25),0 3px 0 rgba(0,0,0,.6);opacity:0;animation:mIn 1.1s .35s ease-out forwards,mFlick 7s 2s infinite}
+.mTitle::after{content:attr(data-t);position:absolute;left:0;top:0;color:transparent;-webkit-text-stroke:1px rgba(239,184,67,.35);transform:translate(3px,3px);pointer-events:none}
+.mHead p{margin:0;font-size:12.5px;color:#a69e8f;letter-spacing:.03em;opacity:0;animation:mIn .8s .6s ease-out forwards}
+.mnav{display:flex;flex-direction:column;gap:3px}
+#start .mb{display:flex;align-items:center;gap:13px;width:100%;padding:7px 12px 7px 10px;border-radius:9px;border:1px solid transparent;background:none;color:var(--fg);text-align:left;cursor:pointer;opacity:0;transform:translateX(-14px);animation:mIn .55s calc(.75s + var(--i,0)*.08s) ease-out forwards;transition:background .18s,border-color .18s}
+#start .mb::before{display:none}
+#start .mb i{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(236,230,217,.18);background:rgba(0,0,0,.35);transition:border-color .18s,background .18s,box-shadow .18s}
+#start .mb i svg{width:16px;height:16px;fill:none;stroke:#d8cfbf;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#start #play i svg{fill:var(--lamp);stroke:none}
+#start .mb span{display:flex;flex-direction:column;gap:1px;min-width:0}
+#start .mb b{font-family:var(--display);font-weight:500;font-size:clamp(16px,2.3vw,21px);letter-spacing:.14em;line-height:1.1;color:#e8dfcf}
+#start .mb small{font-family:var(--ui);font-size:10.5px;letter-spacing:.04em;color:#8f877a}
+#start .mb:empty small,#start .mb small:empty{display:none}
+#start #play b{color:var(--lamp);font-weight:700}
+#start #play i{border-color:rgba(239,184,67,.6);box-shadow:0 0 16px rgba(239,184,67,.25)}
+#start .mb:active{transform:scale(.98)}
+#start .contBox{position:absolute;left:calc(max(28px,env(safe-area-inset-left,0px)) + min(380px,46vw) + 18px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;min-width:220px;padding:14px;border-radius:12px;background:linear-gradient(160deg,rgba(28,22,15,.94),rgba(10,9,8,.94));border:1px solid rgba(239,184,67,.3);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+#start .contBox>small{font-family:var(--display);font-size:10px;letter-spacing:.3em;color:var(--lamp)}
+#start .contBox .mb{animation:none;opacity:1;transform:none;border-color:rgba(236,230,217,.12);background:rgba(255,255,255,.03)}
+#start .contBox .mb.main{background:var(--lamp);border-color:var(--lamp)}#start .contBox .mb.main b{color:#1a1206}#start .contBox .mb.main small{color:#4a3510}
+.mFoot{position:absolute;right:max(18px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));display:flex;gap:16px;align-items:center;font-size:10.5px;letter-spacing:.08em;color:#7d766a;opacity:0;animation:mIn 1s 1.2s ease-out forwards}
+.mFoot span{display:flex;align-items:center;gap:6px}.mFoot svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6}
+@keyframes mIn{to{opacity:1;transform:none}}
+@keyframes mFlick{0%,100%{opacity:1}46%{opacity:1}47%{opacity:.55}48%{opacity:1}49.5%{opacity:.7}50.5%{opacity:1}}
+@media (hover:hover){#start .mb:hover,#start .mb:focus-visible{background:linear-gradient(90deg,rgba(239,184,67,.13),rgba(239,184,67,0));border-color:rgba(239,184,67,.22)}#start .mb:hover i{border-color:var(--lamp);box-shadow:0 0 14px rgba(239,184,67,.3)}}
+#start .mb:focus-visible{outline:none;background:linear-gradient(90deg,rgba(239,184,67,.13),rgba(239,184,67,0));border-color:rgba(239,184,67,.3)}
+@media (max-height:430px){.mCol{gap:8px}.mTitle{font-size:clamp(40px,7vw,64px)}#start .mb{padding:4px 10px 4px 8px}#start .mb i{width:28px;height:28px}#start .mb small{font-size:9.5px}.mHead p{display:none}}
+@media (prefers-reduced-motion:reduce){.mTitle,.mHead small,.mHead p,#start .mb,.mFoot{animation:none;opacity:1;transform:none}}
 
 @media (hover:hover){.go:hover{filter:brightness(1.08)}}
 @media (hover:hover){.mb:hover,.mb:focus-visible{color:var(--chalk)}}
@@ -400,25 +420,24 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
   </div>
 </div>
 <div id="start" class="screen menuScr">
-  <!-- ana menü: verilen konsept görsel birebir; yazılar görselin kendisinde, üstlerinde görünmez tıklama alanları var -->
-  <div class="art" id="menuArt" role="img" aria-label="Descent: raylı, lambalı eski maden tüneli; karanlığın dibinde iki kırmızı göz">
-    <i class="lampfx" style="left:44.65%;top:3.79%;width:14.52%;height:25.24%;animation-delay:-0.0s;animation-duration:3.1s"></i>
-    <i class="lampfx" style="left:80.10%;top:28.39%;width:8.47%;height:14.72%;animation-delay:-1.7s;animation-duration:4.4s"></i>
-    <i class="lampfx" style="left:76.47%;top:38.80%;width:6.29%;height:10.94%;animation-delay:-3.4s;animation-duration:5.7s"></i>
-    <i class="lampfx" style="left:71.63%;top:48.69%;width:4.36%;height:7.57%;animation-delay:-5.1s;animation-duration:7.0s"></i>
-    <i class="eyes" style="left:68.12%;top:53.63%;width:2.66%;height:2.94%"></i>
-    <nav class="mnav hot" aria-label="Ana menü">
-      <button class="mb hs" id="play" style="left:11.2%;top:35.47%;width:14.01%;height:8.55%">OYNA</button>
-      <button class="mb hs" id="mMulti" style="left:11.2%;top:44.83%;width:24.60%;height:8.55%">ÇOK OYUNCULU</button>
-      <button class="mb hs" id="mHow" style="left:11.2%;top:53.66%;width:24.90%;height:8.55%">NASIL OYNANIR</button>
-      <button class="mb hs" id="openSet" style="left:11.2%;top:62.29%;width:17.04%;height:8.55%">AYARLAR</button>
-      <button class="mb hs" id="mQuit" style="left:11.2%;top:71.12%;width:13.11%;height:8.55%">ÇIKIŞ</button>
+  <!-- ana menü: arkada canlı 3B sahne (giriş mağarasında sinematik çekimler), solda başlık ve menü -->
+  <div class="mVig" aria-hidden="true"></div><div id="mFade" aria-hidden="true"></div>
+  <div class="mCol">
+    <header class="mHead"><small>KARA DAMAR MADENİ</small><h1 class="mTitle" data-t="DESCENT">DESCENT</h1><p>Derine in, taşı topla, kafese sağ dön.</p></header>
+    <nav class="mnav" aria-label="Ana menü">
+      <button class="mb" id="play" style="--i:0"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span><b>OYNA</b><small>Botlarla tek başına</small></span></button>
+      <button class="mb" id="mMulti" style="--i:1"><i aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2c3 .3 5.5 2.6 5.5 5.8"/></svg></i><span><b>ÇOK OYUNCULU</b><small>Arkadaşlarınla 4 kişilik oda</small></span></button>
+      <button class="mb" id="mHow" style="--i:2"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/></svg></i><span><b>NASIL OYNANIR</b><small>Kurallar, katlar, kontroller</small></span></button>
+      <button class="mb" id="openSet" style="--i:3"><i aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></i><span><b>AYARLAR</b><small>Görüntü, ses, kontrol</small></span></button>
+      <button class="mb" id="mQuit" style="--i:4"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 4h4v16h-4M10 17l5-5-5-5M15 12H3"/></svg></i><span><b>ÇIKIŞ</b><small></small></span></button>
     </nav>
-    <div id="contBox" class="contBox" hidden style="left:24.20%;top:35.54%">
-      <button class="mb main" id="mCont">DEVAM ET <small id="mContL">KAT -2</small></button>
-      <button class="mb" id="mNew">YENİ OYUN</button>
-    </div>
   </div>
+  <div id="contBox" class="contBox" hidden>
+    <small>KAYITLI OYUN BULUNDU</small>
+    <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
+    <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
+  </div>
+  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v38</span></div>
 </div>
 
 <div id="how" class="screen menuScr" hidden>
@@ -5080,7 +5099,7 @@ function loadTick(dt0){if(!LD.on)return;const nw=performance.now();const dt=Math
 // Ekip mağaranın derinindeki kafeste bekler. Ağızdan dışarısı görünür (ay ışığında çam ormanı, kamp ateşi) ama ağız
 // ahşap bariyerle kapalıdır: dışarı çıkılmaz. Herkes kafese binince kafes kuyuya iner, 1. kata varılır.
 // Koordinatlar: kafes (0,0,0), mağara +z yönünde uzanır; kafes odası z −2…9, kıvrımlı galeri 9…26, giriş salonu 26…36, ağız z=36.
-const SF={on:false,mesh:null,cols:[]};
+const SF={on:false,mesh:null,cols:[],cy:0,gate:0,t:0};
 const SFK={zm:36,bar:33.2};
 function sfHash(i,j){let h=(Math.imul(i,374761393)+Math.imul(j,668265263)+0x2f9a)|0;h=Math.imul(h^(h>>>13),1274126177);h^=h>>>16;return (h>>>0)/4294967296;}
 function sfN(x,y){const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);
@@ -5205,17 +5224,18 @@ function sfAmbTick(dt){const A=SF.amb,out=clamp((pl.z-20)/14,0,1);if(A){const w=
   SF.ruT=(SF.ruT||0)-dt;if(SF.ruT<=0){SF.ruT=4+Math.random()*7;if(out>.3)sfx('rustle',.1*out,(Math.random()-.5)*1.6);}}
 // ---- çizim ----
 const SFLK={fd:.026,fog:[.02,.025,.045],hc:[0,0,0],haze:0,ra:[.2,.18,.16],rb:[.3,.27,.23],fa:[.16,.14,.11],fb:[.22,.19,.15],wt:[.8,.85,.9],wet:.15,crack:0,vein:null};
-function sfRender(){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2][SET.gfx]??2)*RS;
+function sfRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2][SET.gfx]??2)*RS;
   const W=Math.floor(cv.clientWidth*dpr),Hh=Math.floor(cv.clientHeight*dpr);if(cv.width!==W||cv.height!==Hh){cv.width=W;cv.height=Hh;}
   POST.on=SET.gfx>=2;postBegin(W,Hh);gl.viewport(0,0,W,Hh);gl.clearColor(.01,.01,.012,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-  const t=SF.t,inC=sfInCage(pl.x,pl.z),gy=inC?SF.cy:0;const sk=(G.shake||0)*.4;
-  eye=[pl.x+(Math.random()-.5)*sk*.3,gy+1.6+Math.sin(pl.bob)*.035+(Math.random()-.5)*sk*.3,pl.z];const yaw=pl.yaw,pitch=pl.pitch;
+  const t=cam?cam.t:SF.t,inC=!cam&&sfInCage(pl.x,pl.z),gy=inC?SF.cy:0;const sk=cam?0:(G.shake||0)*.4;
+  if(cam)eye=[cam.x,cam.y,cam.z];else eye=[pl.x+(Math.random()-.5)*sk*.3,gy+1.6+Math.sin(pl.bob)*.035+(Math.random()-.5)*sk*.3,pl.z];const yaw=cam?cam.yaw:pl.yaw,pitch=cam?cam.pitch:pl.pitch;
   Pm=M4.persp(1.2,W/Hh,.05,70);Vm=X(M4.RX(-pitch),M4.RY(-yaw),M4.T(-eye[0],-eye[1],-eye[2]));VP=M4.mul(Pm,Vm);
   const cp=Math.cos(pitch),fwd=[-Math.sin(yaw)*cp,Math.sin(pitch),-Math.cos(yaw)*cp];AUD.cam.eye=eye;AUD.cam.fwd=fwd;
-  if(MN.ready)for(const b of bots)if(b.ap)try{mnPrepare(b,b.ap);}catch(e){}
-  const SP=[],SD=[],SC=[];if(pl.lamp){SP.push(eye[0]+Math.cos(yaw)*.12,eye[1]+.1,eye[2]-Math.sin(yaw)*.12,24);SD.push(...fwd,Math.cos(.66));SC.push(.75,.68,.55);}
+  if(MN.ready&&!cam)for(const b of bots)if(b.ap)try{mnPrepare(b,b.ap);}catch(e){}
+  const SP=[],SD=[],SC=[];if(!cam&&pl.lamp){SP.push(eye[0]+Math.cos(yaw)*.12,eye[1]+.1,eye[2]-Math.sin(yaw)*.12,24);SD.push(...fwd,Math.cos(.66));SC.push(.75,.68,.55);}
   const fl=.75+.25*Math.sin(t*17)*Math.sin(t*7.3+1)+.1*Math.random(),F=SF.fire;const PP=[],PC=[];
   PP.push(-30,48,90,190);PC.push(.1,.12,.19);                              // ay (dışarısı)
+  if(cam){PP.push(eye[0],eye[1]+.4,eye[2],7);PC.push(.13,.095,.06);PP.push(0,2.3,1.6,7);PC.push(.5,.33,.14);}        // menü kamerası: hafif dolgu ışığı
   PP.push(0,2.4,SFK.zm-1.2,11);PC.push(.07,.09,.15);                       // ağızdan süzülen ay ışığı
   PP.push(F[0],F[1]+.6,F[2],11);PC.push(1.1*fl,.5*fl,.15*fl);              // dışarıdaki kamp ateşi
   const lf=.92+.08*Math.sin(t*9.1);PP.push(SF.lamp[0],SF.lamp[1]+.25,SF.lamp[2],7);PC.push(.4*lf,.26*lf,.1*lf); // kamp masasındaki fener
@@ -5244,7 +5264,7 @@ function sfRender(){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2][S
   // kafes (önü galeriye bakar)
   cageDraw(X(M4.T(0,SF.cy,0),M4.RY(Math.PI)),{lamp:[.1,.9,.2],gate:SF.gate,spin:SF.cy*3,cable:12});
   // ekip (botlar ve diğer oyuncular)
-  for(const b of bots){if(b.st==='buried'||b.away||(b.remote&&!b.sf))continue;if(MN.ready&&b.boneM&&b.ap){if(inView(b.x,(b.mnY||0)+floorY(b.x,b.z)+.9,b.z,1.3))drawMinerModel(b);}}
+  if(!cam)for(const b of bots){if(b.st==='buried'||b.away||(b.remote&&!b.sf))continue;if(MN.ready&&b.boneM&&b.ap){if(inView(b.x,(b.mnY||0)+floorY(b.x,b.z)+.9,b.z,1.3))drawMinerModel(b);}}
   gl.useProgram(PR.p);
   // parıltılar: yıldızlar, ay, fenerler, ateş
   gl.useProgram(PG.p);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE);gl.depthMask(false);gl.bindVertexArray(glowVAO);gl.uniformMatrix4fv(PG.u.uV,false,Vm);gl.uniformMatrix4fv(PG.u.uP,false,Pm);
@@ -5256,8 +5276,22 @@ function sfRender(){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2][S
   for(const p of SF.lanterns)glw(p,.55,[.7,.45,.18]);glw([SF.lamp[0],SF.lamp[1]+.1,SF.lamp[2]],.5*lf,[.8,.5,.2]);
   glw([F[0],F[1]+.5,F[2]],1.6*fl,[1.2*fl,.55*fl,.15*fl]);
   for(let k=0;k<6;k++){const a=(t*1.3+k*1.7)%1;glw([F[0]+Math.sin(k*3+t)*.15,F[1]+.3+a*1.6,F[2]+Math.cos(k*2+t)*.15],.05,[1.6*(1-a),.6*(1-a),.1*(1-a)]);}
+  if(cam){// menü: havada süzülen toz ve tünelin dibinde arada yanıp sönen kırmızı gözler
+    for(const d of SF.dust){const px=eye[0]+((d[0]+t*.03*d[3])%1-.5)*5,py=eye[1]+((d[1]-t*.02*d[3])%1+1)%1*2.6-1.2,pz=eye[2]+((d[2]+t*.025)%1-.5)*5;glw([px,py,pz],.014+d[3]*.012,[.22,.17,.11]);}
+    if(cam.eyes>0){const e=cam.eyes,E2=cam.eyeP;glw([E2[0]-.11,E2[1],E2[2]],.09,[1.4*e,.08*e,.04*e]);glw([E2[0]+.11,E2[1],E2[2]],.09,[1.4*e,.08*e,.04*e]);glw(E2,.6,[.18*e,0,0]);}}
   gl.disable(gl.BLEND);gl.depthMask(true);gl.useProgram(PR.p);
   postEnd();}
+// ---- ana menü arka planı: giriş mağarasında yavaş sinematik çekimler (ağızdan orman, galeri boyunca iniş, kafes odası) ----
+const SFM={t:0,shot:0,st:0};
+const SF_SHOTS=[
+  {d:15,f:k=>({x:lerp(-.9,.7,k),y:1.75+Math.sin(k*3)*.04,z:lerp(30.2,31.6,k),yaw:Math.PI+lerp(-.32,.18,k),pitch:.04})},
+  {d:15,f:k=>{const z=lerp(24.5,11.5,k);const d=(sfCX(z-.3)-sfCX(z+.3))/.6;return{x:sfCX(z)+Math.sin(k*5)*.08,y:1.8+Math.sin(k*9)*.03,z,yaw:Math.atan2(d,1)*.8+Math.sin(k*2.5)*.07,pitch:-.02,eyes:k>.55&&k<.92?Math.max(0,Math.sin((k-.55)/.37*Math.PI))*(Math.sin(k*90)>-.85?1:0):0,eyeP:[sfCX(4)-.6,1.55,3.2]};}},
+  {d:13,f:k=>({x:lerp(1.1,-.9,k),y:1.75,z:lerp(7.6,5.8,k),yaw:lerp(.16,-.13,k),pitch:-.06})}];
+function sfMenuRender(dt){if(!SF.mesh){try{sfBuild();}catch(e){console.error('menü sahnesi',e);SF.mesh={};}}
+  if(!SF.dust){SF.dust=[];for(let k=0;k<36;k++)SF.dust.push([sfHash(k,101),sfHash(k,102),sfHash(k,103),.3+sfHash(k,104)]);}
+  SFM.t+=dt;SFM.st+=dt;let S=SF_SHOTS[SFM.shot];if(SFM.st>S.d){SFM.st=0;SFM.shot=(SFM.shot+1)%SF_SHOTS.length;S=SF_SHOTS[SFM.shot];}
+  const k=SFM.st/S.d,c=S.f(k*k*(3-2*k)*.35+k*.65);c.t=SFM.t;const f=$('mFade');if(f)f.style.opacity=Math.max(0,1-SFM.st/.9,(SFM.st-(S.d-.9))/.9).toFixed(3);
+  sfRender(c);}
 // ==== SURF END ====
 
 function begin(fresh){audioInit();applyAudio();$('how').hidden=$('multi').hidden=$('bye').hidden=true;tipQ=[];tipT=0;$('tip').classList.remove('on');$('ascend').hidden=true;$('hotbar').hidden=false;if(AC&&AC.state==='suspended')AC.resume();
@@ -5307,12 +5341,12 @@ const START_EL=document.getElementById('start');
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;adaptRes((now-(frame.p||now))/1000);frame.p=now;
   if(LD.on)try{loadTick(dt);}catch(e){console.warn('load',e);}
   try{netTick(dt);}catch(e){console.warn('net',e);}
-  try{if(G.state==='intro'){G.time+=dt;pl.yaw+=dt*.08;}else if(G.state==='ascend'){G.time+=dt;updateAscend(dt);G.shake=Math.max(0,G.shake-dt);updateMusic(dt);}else if(G.state==='surface')sfTick(dt);else if(!['shop','end','descend','pause','load'].includes(G.state))update(dt);if(!window.__kdNoDraw&&!LD.on&&START_EL.hidden){if(SF.on&&(G.state==='surface'||G.state==='pause'))sfRender();else render();}}catch(err){console.error(err);}
+  try{if(G.state==='intro'){G.time+=dt;pl.yaw+=dt*.08;}else if(G.state==='ascend'){G.time+=dt;updateAscend(dt);G.shake=Math.max(0,G.shake-dt);updateMusic(dt);}else if(G.state==='surface')sfTick(dt);else if(!['shop','end','descend','pause','load'].includes(G.state))update(dt);if(!window.__kdNoDraw&&!LD.on){if(G.state==='intro'){try{sfMenuRender(dt);}catch(e){console.warn('menü',e);}}else if(START_EL.hidden){if(SF.on&&(G.state==='surface'||G.state==='pause'))sfRender();else render();}}}catch(err){console.error(err);}
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
 window.__kd={get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
-  LD,loadShow,arriveStart,SF,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
+  LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
 })();
 </script>
 <script>
