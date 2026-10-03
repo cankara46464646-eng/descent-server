@@ -441,6 +441,8 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 #ascend .asc em{background:linear-gradient(90deg,#9c6a18,var(--lamp));box-shadow:0 0 10px rgba(239,184,67,.6)}
 #ascend .asc span{font-size:13px;color:#d9cfc0;max-width:40ch}
 @media (prefers-reduced-motion:reduce){#ascend .aGlow,.dlg,.crate{animation:none;opacity:1;transform:none}}
+#fps{position:fixed;z-index:20;right:calc(60px + env(safe-area-inset-right,0px));top:calc(21px + env(safe-area-inset-top,0px));pointer-events:none;font:600 10px/1 var(--ui);letter-spacing:.06em;color:rgba(236,230,217,.55);font-variant-numeric:tabular-nums;padding:3px 6px;border-radius:5px;background:rgba(0,0,0,.35)}
+#fps.lo{color:#f0b4ab}#fps.mid{color:#f3d48a}
 #story{position:fixed;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;padding:24px max(28px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.72),rgba(0,0,0,.97) 75%);cursor:pointer;animation:stIn .8s ease-out;transition:opacity .6s}
 #story.out{opacity:0}
 .stW{width:min(580px,100%);display:flex;flex-direction:column;gap:14px}
@@ -540,7 +542,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v40</span></div>
+  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v41</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -642,6 +644,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
   </div>
 </div>
 
+<div id="fps" aria-hidden="true">-- FPS</div>
 <div id="story" hidden><div class="stW"><small>KARA DAMAR MADENİ</small><div id="stT"></div><div class="stF"><span>Devam için dokun</span><button id="stSkip">ATLA</button></div></div></div>
 
 <div id="pause" class="screen" hidden>
@@ -665,6 +668,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
           <div class="sItem"><div class="sl"><b>Grafik kalitesi</b><small>Düşükte pil daha uzun gider</small></div>
             <div class="seg" data-for="sGfx"><button data-v="0">Düşük</button><button data-v="1">Orta</button><button data-v="2">Yüksek</button><button data-v="3">Ultra</button></div>
             <select id="sGfx" hidden><option value="3">Ultra</option><option value="2">Yüksek</option><option value="1">Orta</option><option value="0">Düşük</option></select><output id="oGfx" hidden></output></div>
+          <div class="sItem"><div class="sl"><b>FPS göster</b><small>Köşede saniyedeki kare sayısı</small></div><label class="sw"><input type="checkbox" id="sFps"><i></i></label></div>
           <div class="sItem"><div class="sl"><b>Parlaklık</b><small>Karanlıkta zor görüyorsan artır</small></div><div class="rng"><input type="range" id="sBright" min="0.7" max="1.8" step="0.05"><output id="oBright"></output></div></div>
         </section>
         <section data-p="ses">
@@ -869,6 +873,13 @@ loadDerisiz();
 // Aynı paket ağ üzerinden gönderilecek paket: mnPack/mnUnpack (8 bayt). Kemik dönüşleri asla gönderilmez.
 const MN={ready:false,S:.01};
 function b64buf(t){const bs=atob(t.trim());const u=new Uint8Array(bs.length);for(let i=0;i<bs.length;i++)u[i]=bs.charCodeAt(i);return u.buffer;}
+function mnLodIdx(P,uv,nor,idx,groups,cell){const nv=P.length/3,rep=new Int32Array(nv),M=new Map();
+  for(let i=0;i<nv;i++){const kx=Math.floor(P[i*3]/cell)+512,ky=Math.floor(P[i*3+1]/cell)+512,kz=Math.floor(P[i*3+2]/cell)+512;
+    const k=((((kx*1024+ky)*1024+kz)*256+((Math.floor(uv[i*2]*8)&15)*16+(Math.floor(uv[i*2+1]*8)&15)))*8)+(nor[i*4]>0?4:0)+(nor[i*4+1]>0?2:0)+(nor[i*4+2]>0?1:0);
+    const r=M.get(k);if(r===undefined){M.set(k,i);rep[i]=i;}else rep[i]=r;}
+  const out=[],gs=[];for(const g of groups){const s0=out.length,seen=new Set();for(let t=g.start;t<g.start+g.count;t+=3){const a=rep[idx[t]],b=rep[idx[t+1]],c=rep[idx[t+2]];if(a===b||b===c||a===c)continue;
+      const lo=Math.min(a,b,c),hi=Math.max(a,b,c),mi=a+b+c-lo-hi,key=(lo*32768+mi)*32768+hi;if(seen.has(key))continue;seen.add(key);out.push(a,b,c);}gs.push({mat:g.mat,start:s0,count:out.length-s0});}
+  return {idx:out,n:out.length,groups:gs};}
 function kdmParse(buf){const dv=new DataView(buf);const hl=dv.getUint32(4,true);const H=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,8,hl)));let o=8+hl;
   const take=n=>{const a=o;o+=n+((4-n%4)%4);return a;};return {H,take};}
 function kdmVAO(buf,take,H,skinned){const S=H.sizes;const nv=H.nv;
@@ -893,7 +904,12 @@ async function loadMiner(){try{
   const G=H.meshGlobal,p=d.pos,P2=new Float32Array(p.length),N2=new Int8Array(d.nor.length),T2=new Int8Array(d.tan.length);
   for(let i=0;i<H.nv;i++){const x=p[i*3],y=p[i*3+1],z=p[i*3+2];P2[i*3]=G[0]*x+G[4]*y+G[8]*z+G[12];P2[i*3+1]=G[1]*x+G[5]*y+G[9]*z+G[13];P2[i*3+2]=G[2]*x+G[6]*y+G[10]*z+G[14];
     for(const[A,B]of[[d.nor,N2],[d.tan,T2]]){const a=A[i*4],b=A[i*4+1],c=A[i*4+2];B[i*4]=Math.round(G[0]*a+G[4]*b+G[8]*c);B[i*4+1]=Math.round(G[1]*a+G[5]*b+G[9]*c);B[i*4+2]=Math.round(G[2]*a+G[6]*b+G[10]*c);B[i*4+3]=A[i*4+3];}}
-  d.pos=P2;d.nor=N2;d.tan=T2;MN.vao=mkVAO(d);MN.groups=H.groups;MN.idx32=!!H.idx32;
+  d.pos=P2;d.nor=N2;d.tan=T2;
+  // uzak madenciler için yükleme anında LOD: aynı köşeleri paylaşan sadeleştirilmiş üçgen listeleri (kümeleme), tek indeks tamponuna eklenir
+  {const t0=performance.now(),L1=mnLodIdx(P2,d.uv,N2,d.idx,H.groups,2.5),L2=mnLodIdx(P2,d.uv,N2,d.idx,H.groups,6);const ni=d.idx.length;
+    const all=new d.idx.constructor(ni+L1.n+L2.n);all.set(d.idx,0);all.set(L1.idx,ni);all.set(L2.idx,ni+L1.n);d.idx=all;
+    MN.g1=L1.groups.map(g=>({...g,start:g.start+ni}));MN.g2=L2.groups.map(g=>({...g,start:g.start+ni+L1.n}));MN.lodMs=performance.now()-t0;MN.lodN=[ni/3|0,L1.n/3,L2.n/3];}
+  MN.vao=mkVAO(d);MN.groups=H.groups;MN.idx32=!!H.idx32;
   MN.nb=H.nb;MN.par=H.parents;MN.names=H.names;MN.bp=H.bindPos;MN.bi={};H.names.forEach((n,i)=>MN.bi[n]=i);
   const ab=b64buf(at),A=kdmParse(ab),ad=kdmVAO(ab,A.take,A.H,false);MN.axe=mkVAO(ad);MN.axeN=A.H.ni;
   MN.bt=gl.createTexture();gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,MN.bt);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA32F,4,H.nb,0,gl.RGBA,gl.FLOAT,null);
@@ -1138,7 +1154,8 @@ function drawMinerModel(e){const u=skBegin();gl.uniform1f(u.uNoSkin,0);
   gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,MN.bt);gl.texSubImage2D(gl.TEXTURE_2D,0,0,0,4,MN.nb,gl.RGBA,gl.FLOAT,e.boneM);gl.activeTexture(gl.TEXTURE0);
   gl.uniformMatrix4fv(u.uM,false,e.mnE);gl.uniform3fv(u.uCol,e.tint||[1,1,1]);gl.bindVertexArray(MN.vao);
   const it=MN.idx32?gl.UNSIGNED_INT:gl.UNSIGNED_SHORT,bs=MN.idx32?4:2;
-  for(const g of MN.groups){mnSetMat(u,MN.mat[g.mat]);gl.drawElements(gl.TRIANGLES,g.count,it,g.start*bs);}
+  const dd=Math.hypot(e.x-eye[0],e.z-eye[2]),GR=!MN.g1||dd<5.5?MN.groups:dd<13?MN.g1:MN.g2;
+  for(const g of GR){mnSetMat(u,MN.mat[g.mat]);gl.drawElements(gl.TRIANGLES,g.count,it,g.start*bs);}
   // kazma (asset'in kendi AXE modeli): sap birimi metre, baş +Y ucunda
   if(e.mnHold&&e.mnHold!=='carry'){const[hp,hq]=e.handR;let dir,grip,side;
     const palm=v3(hp,qRot(hq,[-7.5,-2.5,.5]));
@@ -4795,7 +4812,13 @@ function postEnd(){if(!POST.active)return;POST.active=false;const w=POST.w,h=POS
   gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,w,h);gl.useProgram(PCP.p);gl.bindTexture(gl.TEXTURE_2D,POST.sT);gl.uniform1i(PCP.u.uT,0);
   gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,POST.aT);gl.uniform1i(PCP.u.uB,1);gl.uniform1f(PCP.u.uK,SET.gfx>=3?.95:.7);gl.drawArrays(gl.TRIANGLES,0,3);
   gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,null);gl.enable(gl.DEPTH_TEST);gl.bindVertexArray(null);}
-function adaptRes(dt){ftAcc+=dt;ftN++;if(ftAcc>1.2){const a=ftAcc/ftN;if(a>1/36)RS=Math.max(SET.gfx>=3?.65:.8,RS-.05);else if(a<1/56&&RS<1)RS=Math.min(1,RS+.05);ftAcc=0;ftN=0;}}
+var GQ={bad:0};
+function adaptRes(dt){ftAcc+=dt;ftN++;if(ftAcc>1.2){const a=ftAcc/ftN,minR=SET.gfx>=3?.65:.7;if(a>1/36)RS=Math.max(minR,RS-.05);else if(a<1/56&&RS<1)RS=Math.min(1,RS+.05);
+    // çözünürlük en altta ve oyun hâlâ ~28 FPS altındaysa (3 ölçüm üst üste) kaliteyi bir kademe düşür; elle seçilmişse dokunma
+    const act=!LD.on&&!document.hidden&&['play','surface','intro','descend','spectate','dragged'].includes(G.state);
+    if(act&&a>1/28&&RS<=minR+.001)GQ.bad++;else GQ.bad=0;
+    if(GQ.bad>=3&&SET.gfxAuto!==false&&SET.gfx>1){SET.gfx--;RS=1;GQ.bad=0;saveSet();try{$('sGfx').value=SET.gfx;segSync();}catch(e){}if(G.state==='play'||G.state==='surface')toast('Akıcılık için grafik kalitesi düşürüldü: '+GFXN[SET.gfx]+'.',2.6);}
+    ftAcc=0;ftN=0;}}
 // duraklatıldığında sahne, durmadan önceki haliyle çizilmeye devam eder
 // görüş konisi testi (küre): kameranın arkasındaki/yanındaki ağır modelleri hiç çizme (madenci modeli ~55 bin üçgen)
 function inView(x,y,z,r){const m=VP;const cx=m[0]*x+m[4]*y+m[8]*z+m[12],cy=m[1]*x+m[5]*y+m[9]*z+m[13],cw=m[3]*x+m[7]*y+m[11]*z+m[15];if(cw<-r)return false;const k=cw+r*2.2;return cx>=-k&&cx<=k&&cy>=-k&&cy<=k;}
@@ -4978,23 +5001,25 @@ function render0(){
 }
 
 // ================= ayarlar =================
-const SET={sens:1,bright:1,vol:.9,mus:.6,tips:true,gfx:3,btn:1,alpha:1,lefty:false,diff:1};
+const SET={fps:true,sens:1,bright:1,vol:.9,mus:.6,tips:true,gfx:3,btn:1,alpha:1,lefty:false,diff:1};
 // zorluk: 0 Kolay · 1 Normal · 2 Zor. Çok oyunculuda oda sahibininki geçerli.
 const DIFFS=[{ad:'Kolay',cr:.82,hear:.75,bat:.6,arrive:1.6,ghHits:1,ghAtk:.6,sok:.3},{ad:'Normal',cr:1,hear:1,bat:1,arrive:1,ghHits:0,ghAtk:1,sok:0},{ad:'Zor',cr:1.12,hear:1.15,bat:1.3,arrive:.75,ghHits:0,ghAtk:1.25,sok:-.06}];
 function DIFF(){try{const d=(NET.started&&!NET.host&&NET.hostDiff!=null)?NET.hostDiff:(SET.diff==null?1:SET.diff);return DIFFS[Math.max(0,Math.min(2,d|0))]||DIFFS[1];}catch(e){return {ad:'Normal',cr:1,hear:1,bat:1,arrive:1,ghHits:0,ghAtk:1,sok:0};}}
 try{Object.assign(SET,JSON.parse(localStorage.getItem('kd_set')||'{}'));}catch(e){}
+// grafik kalitesi: kullanıcı elle seçmediyse otomatik; telefonda Ultra ile başlamaz
+if(SET.gfxAuto==null){SET.gfxAuto=true;if(isTouch&&SET.gfx>2)SET.gfx=2;}
 let SEEN=new Set();try{SEEN=new Set(JSON.parse(localStorage.getItem('kd_tips')||'[]'));}catch(e){}
 function saveSet(){try{localStorage.setItem('kd_set',JSON.stringify(SET));}catch(e){}}
 function applyAudio(){if(!AC)return;master.gain.setTargetAtTime(SET.vol,AC.currentTime,.05);musBus.gain.setTargetAtTime(SET.mus,AC.currentTime,.05);}
 const SL=[['sBtn','oBtn','btn',v=>Math.round(v*100)+'%'],['sAlpha','oAlpha','alpha',v=>Math.round(v*100)+'%'],['sSens','oSens','sens',v=>v.toFixed(2)+'×'],['sBright','oBright','bright',v=>Math.round(v*100)+'%'],['sVol','oVol','vol',v=>Math.round(v*100)],['sMus','oMus','mus',v=>Math.round(v*100)]];
 for(const[id,oid,k,f]of SL){const el=$(id);el.value=SET[k];$(oid).textContent=f(SET[k]);el.addEventListener('input',()=>{SET[k]=+el.value;$(oid).textContent=f(SET[k]);applyAudio();applyTouch();saveSet();});}
 const GFXN=['Düşük','Orta','Yüksek','Ultra'];$('sGfx').value=SET.gfx;$('oGfx').textContent='';
-$('sGfx').addEventListener('change',()=>{SET.gfx=+$('sGfx').value;saveSet();});
+$('sGfx').addEventListener('change',()=>{SET.gfx=+$('sGfx').value;SET.gfxAuto=false;saveSet();});
 $('sDiff').value=SET.diff==null?1:SET.diff;$('sDiff').addEventListener('change',()=>{SET.diff=+$('sDiff').value;saveSet();});
 $('sLefty').checked=!!SET.lefty;$('sLefty').addEventListener('change',()=>{SET.lefty=$('sLefty').checked;applyTouch();saveSet();});
 function applyTouch(){const T=$('touch');T.style.setProperty('--bs',SET.btn);T.style.setProperty('--bo',SET.alpha);T.classList.toggle('lefty',!!SET.lefty);}
 applyTouch();if(!isTouch)for(const r of document.querySelectorAll('.touchOnly'))r.hidden=true;
-$('sTips').checked=SET.tips;$('sTips').addEventListener('change',()=>{SET.tips=$('sTips').checked;if(SET.tips){SEEN.clear();try{localStorage.removeItem('kd_tips');}catch(e){}}saveSet();});
+$('sFps').checked=SET.fps!==false;$('sFps').addEventListener('change',()=>{SET.fps=$('sFps').checked;saveSet();fpsShow();});fpsShow();$('sTips').checked=SET.tips;$('sTips').addEventListener('change',()=>{SET.tips=$('sTips').checked;if(SET.tips){SEEN.clear();try{localStorage.removeItem('kd_tips');}catch(e){}}saveSet();});
 function openPause(fromMenu){if(!fromMenu&&!['play','dragged','buried','surface'].includes(G.state))return;
   if(!fromMenu&&NET.started){G.mpPause=true;for(const k in keys)keys[k]=false;joy.vx=joy.vy=0;joy.id=null;look.id=null;$('joyk').style.transform='';useHeld=false;toolHeld=false;mouseDown=false;}
   else if(!fromMenu){G.prevState=G.state;G.state='pause';for(const k in keys)keys[k]=false;joy.vx=joy.vy=0;joy.id=null;look.id=null;$('joyk').style.transform='';useHeld=false;toolHeld=false;mouseDown=false;if(AC)AC.suspend();}
@@ -5321,10 +5346,11 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:
 // Kütüphane yüklenene kadar yukarıdaki basit şekiller görünür; modeller hazır olunca onların yerini alır.
 function sfTan(z){const d=(sfCX(z+.3)-sfCX(z-.3))/.6,l=Math.hypot(d,1);return[d/l,1/l];}
 const SF_CORE=['lining_arch_b','post_a','post_b','post_stump','beam_a','beam_d','rail_old_a','cart_ore','lamp','jack_tall'],SF_TREE=['f_pine_a','f_pine_b','f_tree_tall'];
-function sfProps(){const P=[];const add=(a,m)=>P.push({a,m,x:m[12],z:m[14],hide:false});
+function sfProps(){const P=[];const SMALL=new Set(['lamp','plank_scrap','splinter_a','stone','sledge','helmet','pickaxe_a','pickaxe_b','shovel','wheelset','grass_a','grass_b','grass_c','grass_f']);
+  const add=(a,m,ml)=>P.push({a,m,x:m[12],z:m[14],hide:false,ml:ml??(SMALL.has(a)?2:1)});
   const TR=(x,y,z,yaw,sx,sy,sz,ex)=>X(M4.T(x,y,z),M4.RY(yaw||0),ex||M4.id(),M4.S(sx,sy==null?sx:sy,sz==null?sx:sz));
   // galeri: kemerli kaplama (kıvrımı izleyerek), arada dikme-kiriş setleri
-  for(const z of[12.9,18.5,24.0]){const[tx,tz]=sfTan(z),w=sfW(z),h=sfHt(z);add('lining_arch_b',TR(sfCX(z),0,z,Math.atan2(-tz,tx),1,Math.min(1.05,(h-.05)/3.77),(2*w-.15)/5.95));}
+  for(const z of[12.9,18.5,24.0]){const[tx,tz]=sfTan(z),w=sfW(z),h=sfHt(z);add('lining_arch_b',TR(sfCX(z),0,z,Math.atan2(-tz,tx),1,Math.min(1.05,(h-.05)/3.77),(2*w-.15)/5.95),1);}
   // raylar (dar hat), kafesin önünden salonun sonuna kadar
   for(let z=1.25;z<SFK.zm-2.5;z+=2.4){const a=[sfCX(z),z],b=[sfCX(z+2.4),z+2.4];const dx=b[0]-a[0],dz=2.4,L=Math.hypot(dx,dz);add(z%4.8<2.4?'rail_old_a':'rail_old_b',TR((a[0]+b[0])/2,-.04,z+1.2,Math.atan2(-dz/L,dx/L),L/2.5,1,1));}
   // salon: kalın dikmeler + tavan kirişleri; kafes odası: hidrolik dikmeler + kiriş
@@ -5353,8 +5379,8 @@ function sfProps(){const P=[];const add=(a,m)=>P.push({a,m,x:m[12],z:m[14],hide:
   // ağız dışında ve içinde ot öbekleri
   for(let k=0;k<26;k++){const x=(sfHash(k,141)-.5)*9,z=SFK.zm-1.2+sfHash(k,142)*7;if(z<SFK.zm-.4&&Math.abs(x)>1.6)continue;const y=sfH(x,z);add(['grass_a','grass_b','grass_c','grass_f'][k%4],TR(x,y,z,sfHash(k,143)*6,1.3+sfHash(k,144)));}
   // orman: gerçek çam ve ağaçlar, kütükler, kayalar
-  SF.treeP=[];let n=0;for(let k=0;k<1200&&n<120;k++){const x=(sfHash(k,21)-.5)*110,z=SFK.zm+3+sfHash(k,22)*45;if(Math.abs(x)<5.5&&z<SFK.zm+9)continue;if(Math.hypot(x-2.6,z-42)<3)continue;n++;
-    const h=sfH(x,z),H=8+sfHash(k,23)*9,kind=sfHash(k,25);const a=kind<.4?'f_pine_a':kind<.75?'f_pine_b':'f_tree_tall',ht=a==='f_tree_tall'?28.3:a==='f_pine_a'?29.7:31.6;add(a,TR(x,h-.3,z,sfHash(k,26)*6,H/ht));}
+  SF.treeP=[];let n=0;for(let k=0;k<1200&&n<85;k++){const x=(sfHash(k,21)-.5)*110,z=SFK.zm+3+sfHash(k,22)*45;if(Math.abs(x)<5.5&&z<SFK.zm+9)continue;if(Math.hypot(x-2.6,z-42)<3)continue;n++;
+    const h=sfH(x,z),H=8+sfHash(k,23)*9,kind=sfHash(k,25);const a=kind<.4?'f_pine_a':kind<.75?'f_pine_b':'f_tree_tall',ht=a==='f_tree_tall'?28.3:a==='f_pine_a'?29.7:31.6;add(a,TR(x,h-.3,z,sfHash(k,26)*6,H/ht),1);}
   for(const[x,z,s,a]of[[-6,42,.95,'f_snag'],[8,47,.8,'f_snag'],[-9.5,40,.32,'f_log'],[5.5,44.5,.6,'f_rock_med_a'],[-4.2,38.6,.45,'f_rock_med_b'],[7,39,.22,'f_boulder_c'],[-12,45,.25,'f_boulder_d'],[3.6,38.2,.9,'f_rock_small_b'],[-2.8,39.4,1,'f_rock_small_c'],[12,52,.3,'f_tree_gnarl'],[-15,50,.9,'f_tree_small']])add(a,TR(x,sfH(x,z)-.1,z,sfHash(x|0,z|0)*6,s));
   SF.pg=new Map();for(const it of P){if(!SF.pg.has(it.a))SF.pg.set(it.a,[]);SF.pg.get(it.a).push(it);}}
 function sfReady(list){if(!ENV.lib)return false;let ok=true;for(const a of list)if(!envAsset(a))ok=false;return ok;}
@@ -5580,14 +5606,16 @@ if(isTouch)$('keysDesk').hidden=true;
 newGame();G.state='intro';pl.lamp=true;showMenu();
 let last=performance.now();
 const START_EL=document.getElementById('start');
-function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;adaptRes((now-(frame.p||now))/1000);frame.p=now;
+var FPSC={n:0,t:0,el:null};function fpsShow(){const e=$('fps');if(e)e.hidden=SET.fps===false;}
+function fpsTick(now){FPSC.n++;if(!FPSC.t)FPSC.t=now;const d=now-FPSC.t;if(d>=500){const f=Math.round(FPSC.n*1000/d);FPSC.n=0;FPSC.t=now;const e=FPSC.el||(FPSC.el=$('fps'));if(e&&!e.hidden){e.textContent=f+' FPS';e.className=f<25?'lo':f<45?'mid':'';}}}
+function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now;adaptRes((now-(frame.p||now))/1000);frame.p=now;
   if(LD.on)try{loadTick(dt);}catch(e){console.warn('load',e);}
   try{netTick(dt);}catch(e){console.warn('net',e);}
   try{if(G.state==='intro'){G.time+=dt;pl.yaw+=dt*.08;}else if(G.state==='ascend'){G.time+=dt;updateAscend(dt);G.shake=Math.max(0,G.shake-dt);updateMusic(dt);}else if(G.state==='surface')sfTick(dt);else if(!['shop','end','descend','pause','load'].includes(G.state))update(dt);if(!window.__kdNoDraw&&!LD.on){if(G.state==='intro'){try{sfMenuRender(dt);}catch(e){console.warn('menü',e);}}else if(START_EL.hidden){if(SF.on&&(G.state==='surface'||G.state==='pause'))sfRender();else render();}}}catch(err){console.error(err);}
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
-window.__kd={UI:{openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
+window.__kd={__sfR:()=>{sfRender();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},__mR:()=>{sfMenuRender(0);gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},UI:{openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
   LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
 })();
 </script>
