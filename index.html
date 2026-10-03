@@ -542,7 +542,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v42</span></div>
+  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v43</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1601,7 +1601,7 @@ const ENV_TINT={rock:()=>{const c=LK().rb,l=(c[0]+c[1]+c[2])/3||.2;return c.map(
 let ENV_BUF=new Float32Array(64*16);
 function envDrawGroup(u,g,list,PL){const a=envAsset(g.a);if(!a)return 0;const e2=eye;const lod=[[],[],[]];
   const low=SET.gfx===0;
-  for(const it of list){if(it.hide||!grid[it.cell])continue;const dx=it.x-e2[0],dz=it.z-e2[2],d2=dx*dx+dz*dz;if(d2>30*30)continue;
+  for(const it of list){if(it.hide||!grid[it.cell])continue;const dx=it.x-e2[0],dz=it.z-e2[2],d2=dx*dx+dz*dz;if(d2>(g.far||30)**2)continue;
     if(it.sz==null){const m=it.m;it.sz=a.r*Math.max(Math.hypot(m[0],m[1],m[2]),Math.hypot(m[4],m[5],m[6]),Math.hypot(m[8],m[9],m[10]));}if(low&&it.sz<.15)continue;const r=it.sz*1.2,y=it.m[13]+(it.lsz?4:1);
     let vis=true;for(const p of PL)if(p[0]*it.x+p[1]*y+p[2]*it.z+p[3]<-r-1){vis=false;break;}if(!vis)continue;
     const q=(it.lsz||it.sz)/Math.sqrt(d2+.01);lod[a.noLod?0:Math.min(2,Math.max(it.ml||0,(q>.18?0:q>.06?1:2)+(low?1:0)))].push(it.m);}
@@ -5276,7 +5276,9 @@ function ldWork(){LD.worked=true;try{if(LD.work)LD.work();}catch(e){console.erro
 function ldFinishNow(){if(!LD.on)return;if(!LD.worked)ldWork();$('load').hidden=true;LD.on=false;LD.cx=null;$('hud').hidden=false;if(G.state==='load')G.state='play';const d=LD.done;LD.done=null;if(d)d();}
 function ldNeeds(){const F=FLOORS[LD.floor-1]||{};const L=[['Mağara kazılıyor',LD.worked],['Madenciler',typeof MN==='undefined'||!!MN.ready],['Yaratık',typeof HX==='undefined'||!!HX.ready]];
   if(F.pale&&!F.roots)L.push(['Derisiz',!!DZ.ready]);if(F.roots)L.push(['Öcü',!!OC.ready]);
-  let au=true;if(AC){if(!AUD.ready)au=false;else{const k=Object.keys(AUD.load);au=!k.length||k.filter(u=>AUD.buf[u]).length>=k.length*.8;}}L.push(['Sesler',au]);return L;}
+  let au=true;if(AC){if(!AUD.ready)au=false;else{const k=Object.keys(AUD.load);au=!k.length||k.filter(u=>AUD.buf[u]).length>=k.length*.8;}}L.push(['Sesler',au]);
+  if(ENV.lib&&ENV.groups&&LD.worked&&!LD.surf){let n=0,r=0;for(const g of ENV.groups.values()){n++;const a=ENV.A[g.a];if(a&&(a.ready||a.bad))r++;}L.push(['Maden donanımı',!n||r>=n||LD.t>14]);}
+  return L;}
 function loadTick(dt0){if(!LD.on)return;const nw=performance.now();const dt=Math.min(.1,(nw-(LD.tl||nw))/1000);LD.tl=nw;LD.t=(nw-LD.t0)/1000;const L=ldNeeds(),ok=L.filter(x=>x[1]).length,all=ok===L.length;
   // hız: kalkışta ivmelen, sonunda yavaşla ve otur
   const vt=LD.fin?0:(LD.t<LD.hold?0:420);LD.v+=(vt-LD.v)*Math.min(1,dt*(LD.fin?4.5:1.8));LD.y+=LD.v*dt;if(LD.fin){LD.fin+=dt;LD.bounce=LD.fin<.6?Math.sin(LD.fin/.6*Math.PI)*3:0;}
@@ -5313,7 +5315,7 @@ function sfOK(x,z,r){if(z<1.3)return Math.abs(x)<=.95-r&&z>=-.95+r&&z<=1.3;
   if(SF.arches)for(const A of SF.arches){const ux=x-A.x,uz=z-A.z,u=ux*A.tx+uz*A.tz;if(Math.abs(u)>A.hl+r)continue;if(Math.abs(-ux*A.tz+uz*A.tx)>A.hw-r)return false;}
   for(const c of SF.cols)if(Math.hypot(x-c[0],z-c[1])<c[2]+r)return false;return true;}
 function sfInCage(x,z){return Math.abs(x)<.85&&z>-.85&&z<.8;}
-function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:g(),wood:g(),wood2:g(),steel:g(),pine:g(),trunk:g(),dark:g(),cart:g(),cloth:g(),stal:g(),fbW:g(),fbS:g(),fbT:g(),fbC:g(),fbR:g()};
+function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:g(),wood:g(),wood2:g(),steel:g(),pine:g(),trunk:g(),dark:g(),cart:g(),cloth:g(),stal:g(),fpine:g(),ftrunk:g(),fbW:g(),fbS:g(),fbT:g(),fbC:g(),fbR:g()};
   const X1=[1,0,0],Y1=[0,1,0],Z1=[0,0,1];const B=(m,c,hx,hy,hz)=>th2Box(m,c,X1,Y1,Z1,hx,hy,hz);
   const tri=(m,a,b,c)=>{const n=v3n(v3x([b[0]-a[0],b[1]-a[1],b[2]-a[2]],[c[0]-a[0],c[1]-a[1],c[2]-a[2]]));m.P.push(...a,...b,...c);for(let k=0;k<3;k++)m.N.push(...n);};
   const quad=(m,a,b,c,d)=>{tri(m,a,b,c);tri(m,a,c,d);};
@@ -5361,7 +5363,7 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:
   // ağız: ahşap çerçeve + bariyer (dışarı çıkılmaz)
   {const z=SFK.zm-.35;for(const sx of[-1,1])B(M.fbW,[sx*1.85,1.75,z],.16,1.75,.16);B(M.fbW,[0,3.6,z],2.25,.18,.2);
     const bz=SFK.bar+.55;for(const sx of[-1.75,1.75])B(M.fbW,[sx,.7,bz],.1,.7,.1);for(const[y,a]of[[.45,.2],[.95,-.2]])th2Box(M.wood2,[0,y,bz],[Math.cos(a),Math.sin(a),0],[-Math.sin(a),Math.cos(a),0],Z1,1.95,.07,.04);
-    B(M.wood2,[0,1.25,bz+.02],.5,.16,.02);}
+  }
   // dış dünya: yamaç (ağız boşluklu), zemin, kamp ateşi, çam ormanı
   {const st=2.2,P=(xx,yy)=>[xx,yy,sfCliffZ(xx,yy)];for(let x=-61.6;x<61;x+=st)for(let y=0;y<38;y+=st){const mx=x+st/2,my=y+st/2;if(Math.abs(mx)<4.4&&my<8.8)continue;
       quad(M.rock,P(x,y),P(x+st,y),P(x+st,y+st),P(x,y+st));}
@@ -5375,9 +5377,11 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:
   {const fx=2.6,fz=42,fy=sfH(fx,fz);SF.fire=[fx,fy,fz];for(let k=0;k<5;k++){const a=k/5*TAU;th2Box(M.trunk,[fx+Math.cos(a)*.22,fy+.08,fz+Math.sin(a)*.22],[Math.cos(a),0,Math.sin(a)],[0,1,0],[-Math.sin(a),0,Math.cos(a)],.32,.06,.06);}
     for(let k=0;k<8;k++){const a=k/8*TAU;B(M.dark,[fx+Math.cos(a)*.48,fy+.05,fz+Math.sin(a)*.48],.09,.06,.09);}}
   let n=0;for(let k=0;k<1200&&n<170;k++){const x=(sfHash(k,21)-.5)*110,z=SFK.zm+3+sfHash(k,22)*45;if(Math.abs(x)<5.5&&z<SFK.zm+9)continue;if(Math.hypot(x-2.6,z-42)<3)continue;
-    const h=sfH(x,z),H=5+sfHash(k,23)*7,r=.9+sfHash(k,24)*.9;n++;th2Tube(M.trunk,[[x,h-.2,z],[x,h+H*.4,z]],.16+H*.012,6);
-    for(let q=0;q<4;q++){const y0=h+H*(.22+q*.18),rr=r*(1.15-q*.22);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.34,z]],[rr,.02],7);}}
-  for(let k=0;k<40;k++){const x=(sfHash(k,31)-.5)*110,y=5+sfHash(k,32)*16;if(Math.abs(x)<5)continue;const z=sfCliffZ(x,y)-.3,H=4+sfHash(k,33)*5,r=.8+sfHash(k,34)*.6;th2Tube(M.trunk,[[x,y-.3,z],[x,y+H*.4,z]],.15,6);for(let q=0;q<3;q++){const y0=y+H*(.25+q*.2);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.35,z]],[r*(1.1-q*.25),.02],7);}}
+    const h=sfH(x,z),H=5+sfHash(k,23)*7,r=.9+sfHash(k,24)*.9;n++;
+    // uzak orman: gerçek ağaç modelleri 30 m ötesinde çizilmez; uzaktakiler hep bu hafif çamlarla durur
+    const far=z>SFK.zm+22,skipNear=n>85&&!far;for(const[TR,PN]of far?[[M.trunk,M.pine],[M.ftrunk,M.fpine]]:skipNear?[]:[[M.trunk,M.pine]]){th2Tube(TR,[[x,h-.2,z],[x,h+H*.4,z]],.16+H*.012,6);
+    for(let q=0;q<4;q++){const y0=h+H*(.22+q*.18),rr=r*(1.15-q*.22);th2Tube(PN,[[x,y0,z],[x,y0+H*.34,z]],[rr,.02],7);}}}
+  for(let k=0;k<40;k++){const x=(sfHash(k,31)-.5)*110,y=5+sfHash(k,32)*16;if(Math.abs(x)<5)continue;const z=sfCliffZ(x,y)-.3,H=4+sfHash(k,33)*5,r=.8+sfHash(k,34)*.6;th2Tube(M.ftrunk,[[x,y-.3,z],[x,y+H*.4,z]],.15,6);for(let q=0;q<3;q++){const y0=y+H*(.25+q*.2);th2Tube(M.fpine,[[x,y0,z],[x,y0+H*.35,z]],[r*(1.1-q*.25),.02],7);}}
   const mk=m=>m.P.length?mesh(m.P,m.N):null;SF.mesh={};for(const k in M)SF.mesh[k]=mk(M[k]);
   try{sfProps();}catch(e){console.warn('giriş modelleri',e);SF.pg=new Map();}
   SF.stars=[];for(let k=0;k<70;k++){const a=sfHash(k,41)*Math.PI*.9+Math.PI*.05,e=.12+sfHash(k,42)*1.2;SF.stars.push([Math.cos(a)*Math.cos(e),Math.sin(e),Math.sin(a)*Math.cos(e),.06+sfHash(k,43)*.1]);}}
@@ -5420,13 +5424,13 @@ function sfProps(){const P=[];const SMALL=new Set(['lamp','plank_scrap','splinte
   // ağız dışında ve içinde ot öbekleri
   for(let k=0;k<26;k++){const x=(sfHash(k,141)-.5)*9,z=SFK.zm-1.2+sfHash(k,142)*7;if(z<SFK.zm-.4&&Math.abs(x)>1.6)continue;const y=sfH(x,z);add(['grass_a','grass_b','grass_c','grass_f'][k%4],TR(x,y,z,sfHash(k,143)*6,1.3+sfHash(k,144)));}
   // orman: gerçek çam ve ağaçlar, kütükler, kayalar
-  SF.treeP=[];let n=0;for(let k=0;k<1200&&n<85;k++){const x=(sfHash(k,21)-.5)*110,z=SFK.zm+3+sfHash(k,22)*45;if(Math.abs(x)<5.5&&z<SFK.zm+9)continue;if(Math.hypot(x-2.6,z-42)<3)continue;n++;
+  SF.treeP=[];let n=0;for(let k=0;k<1200&&n<85;k++){const x=(sfHash(k,21)-.5)*110,z=SFK.zm+3+sfHash(k,22)*45;if(Math.abs(x)<5.5&&z<SFK.zm+9)continue;if(Math.hypot(x-2.6,z-42)<3)continue;n++;if(z>SFK.zm+22)continue;
     const h=sfH(x,z),H=8+sfHash(k,23)*9,kind=sfHash(k,25);const a=kind<.4?'f_pine_a':kind<.75?'f_pine_b':'f_tree_tall',ht=a==='f_tree_tall'?28.3:a==='f_pine_a'?29.7:31.6;add(a,TR(x,h-.3,z,sfHash(k,26)*6,H/ht),1);}
   for(const[x,z,s,a]of[[-6,42,.95,'f_snag'],[8,47,.8,'f_snag'],[-9.5,40,.32,'f_log'],[5.5,44.5,.6,'f_rock_med_a'],[-4.2,38.6,.45,'f_rock_med_b'],[7,39,.22,'f_boulder_c'],[-12,45,.25,'f_boulder_d'],[3.6,38.2,.9,'f_rock_small_b'],[-2.8,39.4,1,'f_rock_small_c'],[12,52,.3,'f_tree_gnarl'],[-15,50,.9,'f_tree_small']])add(a,TR(x,sfH(x,z)-.1,z,sfHash(x|0,z|0)*6,s));
   SF.pg=new Map();for(const it of P){if(!SF.pg.has(it.a))SF.pg.set(it.a,[]);SF.pg.get(it.a).push(it);}}
 function sfReady(list){if(!ENV.lib)return false;let ok=true;for(const a of list)if(!envAsset(a))ok=false;return ok;}
 function sfDrawProps(core,trees){if(!ENV.lib||!SF.pg)return;let oc=SF.okCell;if(!(oc>=0&&grid[oc])){oc=-1;for(let c=0;c<grid.length;c++)if(grid[c]){oc=c;break;}SF.okCell=oc;}if(oc<0)return;
-  const u=envBegin(),PL=envPlanes();for(const[a,list]of SF.pg){const isT=a.startsWith('f_');if(isT?!trees&&SF_TREE.includes(a):!core&&SF_CORE.includes(a))continue;for(const it of list)it.cell=oc;try{envDrawGroup(u,{a,v:''},list,PL);}catch(e){}}
+  const u=envBegin(),PL=envPlanes();for(const[a,list]of SF.pg){const isT=a.startsWith('f_');if(isT?!trees&&SF_TREE.includes(a):!core&&SF_CORE.includes(a))continue;for(const it of list)it.cell=oc;try{envDrawGroup(u,{a,v:'',far:isT?55:30},list,PL);}catch(e){}}
   gl.useProgram(PR.p);gl.bindVertexArray(null);}
 // ---- giriş / çıkış ----
 function sfStart(){if(!SF.mesh)try{sfBuild();}catch(e){console.error('yüzey',e);return false;}
@@ -5511,6 +5515,7 @@ function sfRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2
   if(!core){if(m.fbW)draw(m.fbW,I,[.2,.13,.07],Z3,4);if(m.fbS)draw(m.fbS,I,[.2,.19,.18],Z3,3);if(m.fbT)draw(m.fbT,I,[.16,.11,.065],Z3,4);if(m.fbC)draw(m.fbC,I,[.17,.12,.08],Z3,5);if(m.fbR)draw(m.fbR,I,[.2,.19,.18],Z3,3);}
   if(m.wood)draw(m.wood,I,[.2,.13,.07],Z3,4);if(m.wood2)draw(m.wood2,I,[.16,.11,.065],Z3,4);if(m.steel)draw(m.steel,I,[.2,.19,.18],Z3,3);if(m.cart)draw(m.cart,I,[.17,.12,.08],Z3,5);if(m.cloth)draw(m.cloth,I,[.16,.13,.08],Z3,2);
   if(!trees){if(m.trunk)draw(m.trunk,I,[.09,.065,.045],Z3,4);if(m.pine)draw(m.pine,I,[.03,.055,.035],Z3,2);}
+  else{if(m.ftrunk)draw(m.ftrunk,I,[.09,.065,.045],Z3,4);if(m.fpine)draw(m.fpine,I,[.03,.055,.035],Z3,2);}
   sfDrawProps(core,trees);gl.useProgram(PR.p);
   draw(MCone,X(M4.T(F[0],F[1]+.08,F[2]),M4.S(.3*fl,.55*fl,.3*fl)),[0,0,0],[2.2*fl,.9*fl,.2*fl],0);
   for(const p of SF.lanterns)draw(MS,X(M4.T(p[0],p[1],p[2]),M4.S(.07,.1,.07)),[.3,.25,.15],[1.4,.9,.35],3);
