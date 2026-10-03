@@ -351,6 +351,109 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 @media (max-height:430px){.mCol{gap:8px}.mTitle{font-size:clamp(40px,7vw,64px)}#start .mb{padding:4px 10px 4px 8px}#start .mb i{width:28px;height:28px}#start .mb small{font-size:9.5px}.mHead p{display:none}}
 @media (prefers-reduced-motion:reduce){.mTitle,.mHead small,.mHead p,#start .mb,.mFoot{animation:none;opacity:1;transform:none}}
 
+/* ---- ortak diyalog ekranları (menü/ayar stiliyle aynı) ---- */
+.dScr.menuScr{background:linear-gradient(90deg,rgba(0,0,0,.8),rgba(0,0,0,.5) 60%,rgba(0,0,0,.3))}
+.dlg{animation:dIn .32s ease-out}
+.dlg.dSmall{width:min(420px,100%)}
+.dNote{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.dFoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}.dFoot .sp{flex:1}
+.dScr .go{margin:0;font-size:13px;letter-spacing:.14em;padding:10px 20px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.dScr .go svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.dScr #mStart svg{fill:currentColor;stroke:none}
+.go.dim{background:rgba(255,255,255,.04);color:var(--fg);border:1px solid rgba(236,230,217,.18)}
+@keyframes dIn{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.hCard{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.025);border:1px solid rgba(236,230,217,.07)}
+.hCard>i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(239,184,67,.35);background:rgba(239,184,67,.07)}
+.hCard>i svg{width:15px;height:15px;fill:none;stroke:var(--lamp);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.hCard b{display:block;font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.16em;color:var(--chalk);margin-bottom:2px}
+.hCard span{font-size:11.5px;line-height:1.45;color:#b5ad9f}
+.kHd{font-family:var(--display);font-size:9.5px;letter-spacing:.32em;color:var(--lamp);margin:4px 2px 0}
+.kList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.kList div{display:flex;align-items:center;gap:7px;font-size:11px;color:#b5ad9f;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.025);border:1px solid rgba(236,230,217,.06);min-width:0}
+.kList kbd{flex:none;font-family:var(--display);font-size:10px;letter-spacing:.06em;color:var(--fg);border:1px solid rgba(236,230,217,.25);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:rgba(0,0,0,.3)}
+.muGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;min-height:0;overflow:auto;touch-action:pan-y}
+.muCol{display:flex;flex-direction:column;gap:9px;min-width:0}
+.fld{display:flex;flex-direction:column;gap:5px}.fld small,.lbl{font-family:var(--display);font-size:9.5px;letter-spacing:.32em;color:var(--lamp)}
+.dlg .minp{background:rgba(0,0,0,.4);border:1px solid rgba(236,230,217,.14);border-radius:8px;font-size:14px;padding:9px 12px}
+.fld .minp{flex:none}
+#shop .dHd h1{font-size:clamp(26px,4.6vw,42px)}#shop .dHd p{font-size:12.5px;color:#b5ad9f;max-width:48ch;margin:8px auto 0}
+#end.win #restart{background:var(--lamp);color:#1a1206;border-color:var(--lamp)}
+@media (pointer:coarse){.kD{display:none}}@media (pointer:fine){.kT{display:none}}
+.muJoin{display:flex;flex-direction:column;gap:8px}.muJoin #mCreate{width:100%}
+.or{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted);letter-spacing:.18em}.or::before,.or::after{content:"";flex:1;height:1px;background:rgba(236,230,217,.12)}
+.codeRow{display:flex;gap:8px}.dlg .codeRow .mcodeIn{flex:1 1 auto;font-family:var(--display);font-size:16px}
+.dlg .mcode:empty{display:none}
+.dlg .mcode{padding:9px 12px;border-radius:9px;border:1px dashed rgba(239,184,67,.45);background:rgba(239,184,67,.06);display:flex;align-items:center;justify-content:space-between;gap:10px;letter-spacing:0;font-size:inherit}
+.mcode small{font-family:var(--display);font-size:9.5px;letter-spacing:.3em;color:var(--muted)}.mcode b{font-family:var(--display);font-size:26px;letter-spacing:.3em;color:var(--lamp)}
+.dlg .lobby{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.dlg .seat{flex-direction:row;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;background:rgba(255,255,255,.025);border:1px solid rgba(236,230,217,.08);opacity:1}
+.seat>i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--display);font-size:14px;color:#1a1206;background:#d9cfbd}
+.seat>span{display:flex;flex-direction:column;min-width:0}.dlg .seat b{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dlg .seat.me{border-color:rgba(239,184,67,.4);background:rgba(239,184,67,.06)}.seat.me>i{background:var(--lamp);box-shadow:0 0 12px rgba(239,184,67,.4)}
+.seat.bot>i{background:transparent;border:1px dashed rgba(236,230,217,.3);color:var(--muted)}.dlg .seat.bot b{color:var(--muted)}
+@media (max-width:620px){.muGrid{grid-template-columns:minmax(0,1fr)}}
+.shopScr{background:radial-gradient(ellipse at 50% 30%,rgba(40,30,18,.55),rgba(0,0,0,.94) 70%)}
+.shopW,.endW{width:min(760px,100%);margin:auto;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.dHd small{font-family:var(--display);font-size:10.5px;letter-spacing:.38em;color:var(--lamp)}
+.dScr .dHd h1{margin:4px 0 0;font-family:var(--display);font-weight:700;font-size:clamp(26px,4.6vw,42px);letter-spacing:.06em;line-height:1;color:var(--chalk);text-shadow:0 0 18px rgba(255,170,80,.18)}
+.dScr .dHd p{margin:8px auto 0;color:#b5ad9f;font-size:12.5px;line-height:1.5;max-width:48ch}
+.crates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
+.crate{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 12px 12px;border-radius:12px;cursor:pointer;color:var(--fg);font:inherit;text-align:center;overflow:hidden;
+  background:linear-gradient(170deg,rgba(46,34,20,.96),rgba(14,12,10,.97));border:1px solid rgba(239,184,67,.22);box-shadow:0 14px 30px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(14px);animation:mIn .45s calc(.1s + var(--i,0)*.1s) ease-out forwards;transition:border-color .18s,box-shadow .18s}
+.crate::before{content:"";position:absolute;inset:5px;border-radius:8px;border:1px solid rgba(236,230,217,.05);pointer-events:none;background:repeating-linear-gradient(180deg,transparent 0 26px,rgba(0,0,0,.16) 26px 28px)}
+.crate>*{position:relative}.cTxt{display:flex;flex-direction:column;align-items:inherit;gap:4px}
+.cIco{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;background:rgba(239,184,67,.1);border:1px solid rgba(239,184,67,.4);box-shadow:0 0 18px rgba(239,184,67,.15)}
+.cIco svg{width:22px;height:22px;fill:none;stroke:var(--lamp);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cTag{font-family:var(--display);font-size:9px;letter-spacing:.3em;color:var(--muted)}
+.crate b{font-family:var(--display);font-weight:500;font-size:15px;letter-spacing:.08em;color:var(--chalk)}
+.crate small{font-size:11.5px;line-height:1.4;color:#a69e8f;min-height:2.8em}
+.crate em{margin-top:4px;font-style:normal;font-family:var(--display);font-size:12px;letter-spacing:.22em;color:#1a1206;background:var(--lamp);border-radius:7px;padding:7px 0;width:100%}
+.crate:active{transform:scale(.98)}
+@media (hover:hover){.crate:hover{border-color:var(--lamp);box-shadow:0 14px 30px rgba(0,0,0,.55),0 0 22px rgba(239,184,67,.2)}}
+@media (max-width:600px){.crates{grid-template-columns:minmax(0,1fr)}.crate{flex-direction:row;text-align:left;padding:10px 12px;gap:12px}.cTxt{flex:1;align-items:flex-start}.crate small{min-height:0}.crate em{width:auto;padding:7px 12px;margin:0}}
+.endScr{background:radial-gradient(ellipse at 50% 32%,rgba(64,12,8,.55),rgba(0,0,0,.95) 70%)}
+#end.win{background:radial-gradient(ellipse at 50% 30%,rgba(70,52,22,.6),rgba(0,0,0,.94) 70%)}
+#end .dHd h1{font-size:clamp(32px,6vw,58px);color:#f0b4ab;text-shadow:0 0 26px rgba(212,71,59,.35);animation:mIn .7s ease-out both}
+#end.win .dHd h1{color:#f3e3bd;text-shadow:0 0 26px rgba(239,184,67,.4)}
+#end .dHd small{color:#d96a5e}#end.win .dHd small{color:var(--lamp)}
+#end .dHd p{color:#d9cfc0;font-size:13.5px}
+#end .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;width:min(520px,100%)}
+#end .stats div{align-items:center;gap:2px;padding:9px 8px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(236,230,217,.08)}
+#end .stats i svg{width:16px;height:16px;fill:none;stroke:var(--lamp);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.8}
+#end .stats b{font-size:22px}#end .stats small{font-size:9.5px;letter-spacing:.2em}
+#end .fun{margin:0;font-size:12px;gap:4px;width:min(520px,100%);text-align:left;padding:9px 12px;border-radius:10px;border:1px solid rgba(236,230,217,.07);background:rgba(0,0,0,.28)}#end .fun:empty{display:none}
+#end .endNote{font-size:10.5px;margin:0}#end.win .endNote{display:none}
+#end .dFoot{justify-content:center}
+#spec .spTop{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 22px 11px;border-radius:12px;background:linear-gradient(180deg,rgba(40,6,4,.78),rgba(10,4,3,.55));border:1px solid rgba(212,71,59,.35);box-shadow:0 10px 30px rgba(0,0,0,.5);animation:dIn .4s ease-out}
+#spec .spTop small{display:flex;align-items:center;gap:7px;font-family:var(--display);font-size:9.5px;letter-spacing:.34em;color:#e0675a;text-shadow:none}
+#spec .spTop small::before{content:"";width:7px;height:7px;border-radius:50%;background:#e0473b;box-shadow:0 0 8px #e0473b;animation:stC 1.2s steps(1) infinite}
+#spec .spTop b{font-size:21px}#spec .spTop span{font-size:12px;color:#d9cfc0;max-width:44ch;line-height:1.4}
+#spec button{display:flex;align-items:center;gap:6px;border-radius:9px;font-size:13px;padding:9px 14px 9px 16px;background:rgba(10,9,8,.78);border:1px solid rgba(236,230,217,.22)}
+#spec button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#ascend .aCab{position:absolute;top:0;bottom:0;left:50%;width:min(440px,72vw);transform:translateX(-50%);pointer-events:none;background:linear-gradient(90deg,transparent 0 5%,rgba(130,118,100,.32) 5% 5.6%,transparent 5.6% 94.4%,rgba(130,118,100,.32) 94.4% 95%,transparent 95%)}
+#ascend .aGlow{position:absolute;left:50%;top:-35%;width:140vmax;height:100vmax;margin-left:-70vmax;background:radial-gradient(ellipse at 50% 40%,rgba(239,184,67,.14),rgba(0,0,0,0) 42%);animation:aSw 3.4s ease-in-out infinite alternate;pointer-events:none}
+@keyframes aSw{from{transform:translateX(-2%) rotate(-2deg)}to{transform:translateX(2%) rotate(2deg)}}
+#ascend .asc{top:16%;padding:14px 28px 16px;border-radius:14px;background:rgba(8,7,6,.6);border:1px solid rgba(239,184,67,.2);box-shadow:0 16px 40px rgba(0,0,0,.6)}
+#ascend .asc small{font-size:10.5px;color:var(--lamp)}
+#ascend .asc b{font-size:clamp(46px,8vw,68px);color:#f3e3bd;text-shadow:0 0 22px rgba(239,184,67,.3)}
+#ascend .aU{font-family:var(--display);font-size:9.5px;letter-spacing:.42em;color:var(--muted);margin-top:-6px}
+#ascend .asc i{width:min(280px,60vw);height:6px;background:rgba(236,230,217,.12)}
+#ascend .asc em{background:linear-gradient(90deg,#9c6a18,var(--lamp));box-shadow:0 0 10px rgba(239,184,67,.6)}
+#ascend .asc span{font-size:13px;color:#d9cfc0;max-width:40ch}
+@media (prefers-reduced-motion:reduce){#ascend .aGlow,.dlg,.crate{animation:none;opacity:1;transform:none}}
+#story{position:fixed;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;padding:24px max(28px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.72),rgba(0,0,0,.97) 75%);cursor:pointer;animation:stIn .8s ease-out;transition:opacity .6s}
+#story.out{opacity:0}
+.stW{width:min(580px,100%);display:flex;flex-direction:column;gap:14px}
+.stW>small{font-family:var(--display);font-size:10.5px;letter-spacing:.42em;color:var(--lamp)}
+#stT{display:flex;flex-direction:column;gap:9px;min-height:8.5em}
+#stT p{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(16px,2.5vw,22px);letter-spacing:.03em;line-height:1.35;color:#efe6d4;text-shadow:0 0 14px rgba(255,170,80,.15);transition:color .8s}
+#stT p:last-child::after{content:"▍";color:var(--lamp);margin-left:2px;animation:stC .9s steps(1) infinite}
+#stT p.old{color:#857e72}
+.stF{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px}
+.stF span{font-size:10px;letter-spacing:.24em;color:#6f685d}
+#stSkip{font-family:var(--display);font-size:12px;letter-spacing:.24em;color:var(--fg);background:rgba(255,255,255,.04);border:1px solid rgba(236,230,217,.2);border-radius:8px;padding:8px 16px;cursor:pointer}
+@keyframes stIn{from{opacity:0}}
+@keyframes stC{50%{opacity:.2}}
 @media (hover:hover){.go:hover{filter:brightness(1.08)}}
 @media (hover:hover){.mb:hover,.mb:focus-visible{color:var(--chalk)}}
 @media (hover:hover){.mb:hover::before,.mb:focus-visible::before{transform:scaleX(1)}}
@@ -359,7 +462,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 <canvas id="gl"></canvas>
 <div id="gasv"></div><div id="vig"></div><div id="red"></div><div id="flash"></div><div id="fade"></div>
 <div id="floorCard" aria-live="polite"><small id="fcN">KAT -1</small><b id="fcA">GİRİŞ KATI</b><span id="fcH"></span></div>
-<div id="ascend" hidden><div class="beams"></div><div class="asc"><small>ANA KUYU · YÜZEYE</small><b id="ascD">-7</b><i><em id="ascF"></em></i><span id="ascS">Kafes gıcırdayarak yükseliyor...</span></div></div>
+<div id="ascend" hidden><div class="beams"></div><div class="aCab"></div><div class="aGlow"></div><div class="asc"><small>ANA KUYU · YÜZEYE ÇIKIŞ</small><b id="ascD">-7</b><div class="aU">KAT</div><i><em id="ascF"></em></i><span id="ascS">Kafes gıcırdayarak yükseliyor...</span></div></div>
 <div id="buried" hidden><b>GÖÇÜK ALTINDA KALDIN</b><small id="buriedS">Arkadaşların seni kazıyor...</small></div>
 
 <div id="hud" hidden>
@@ -437,82 +540,109 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v38</span></div>
+  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v39</span></div>
 </div>
 
-<div id="how" class="screen menuScr" hidden>
-  <div class="panel">
-    <h2>NASIL OYNANIR</h2>
-    <div class="rules">
-      <div class="rule"><b>LAMBA</b><span>Açıkken görürsün, o da seni görür. Kapalıyken güvendesin ama kör gibisin.</span></div>
-      <div class="rule"><b>KATLAR</b><span>Her katın bir görevi var (sol üstte yazar). Yerdeki izler görev nesnelerine gider: 1. katta kablolar, sonra borular, fünye kablosu, kökler, ayak izleri... Görev bitince kuyuyu bul (rüzgârı dinle) ve in.</span></div>
-      <div class="rule"><b>KAZ</b><span>Başta sadece kazman var. Kayadan eski madencilerin eşyaları çıkar; tahta ucu görünen duvarın ardında sandık vardır.</span></div>
-      <div class="rule"><b>MANTARLAR</b><span>3. kat parlayan bir mantar mağarası. Mantar ışığı yolu gösterir ama seni de. Havadaki spor bulutları grizu gibi kıvılcımla patlar.</span></div>
-      <div class="rule"><b>HAYALET</b><span>5. katta görünmeyen bir şey var. Ölçer onu sayılarla gösterir; yaklaşınca dolaba saklan. Örnek aldıkça öfkelenir.</span></div>
-      <div class="rule"><b>KÖKLER</b><span>4. kat dağın içindeki bir orman. Tavanı kökler tutuyor: kök sarılı duvarı kazarsan tavan çöker. Kereste koyarak durdurabilirsin.</span></div>
-      <div class="rule"><b>DAMAR</b><span>7. katta Kara Damar Özü'nü al; aldığın an mağara uyanır. Özle birlikte asansöre koş.</span></div>
-      <div class="rule"><b>ŞOK</b><span>Nadir şok cihazı yaratığı ~20 saniye yere serer. Sonra bir süre işlemez.</span></div>
-      <div class="rule"><b>DERİSİZ</b><span>4. kattan itibaren ikinci bir şey var. Işık üstündeyken bakakalır; arkanı dönünce yürür. Yakalarsa sürükler: çırpın.</span></div>
-      <div class="rule"><b>EKİP</b><span>Arkadaşların açıkta gördükleri cevheri kendileri kazıp vagona taşır. Taş taşıyan parlar; onu da görür.</span></div>
-      <div class="rule"><b>ÇIRPIN</b><span>Çırpın! Yeterince çırpınırsan bırakır, kaçar ama geri gelir. Arkadaşını yakalarsa peşinden git, kurtar.</span></div>
-      <div class="keys" id="keysDesk"><kbd>WASD</kbd> yürü · <kbd>Fare</kbd> bak · <kbd>Sol tık</kbd> aleti kullan (basılı tut) · <kbd>1-6</kbd> <kbd>Q</kbd> alet seç · <kbd>F</kbd> lamba · <kbd>Shift</kbd> koş · <kbd>X</kbd> çömel · <kbd>E</kbd> kullan · <kbd>C</kbd> tebeşir · <kbd>Boşluk</kbd> çırpın · <kbd>Esc</kbd> duraklat</div>
-    </div>
-    <div class="mrow"><button class="go" id="mTut">EĞİTİMLE BAŞLA</button><button class="go ghost back">GERİ</button></div>
-  </div>
-</div>
-
-<div id="multi" class="screen menuScr" hidden>
-  <div class="panel">
-    <h2>ÇOK OYUNCULU</h2>
-    <p class="note" id="mNote">Oda kur ve kodu arkadaşlarına ver, ya da onların kodunu gir. En fazla 4 kişi; boş yerlere bot gelir.</p>
-    <div class="mrow"><input id="mName" class="minp" maxlength="14" placeholder="Adın" autocomplete="off" spellcheck="false"></div>
-    <div class="mrow" id="mJoinRow"><button class="go" id="mCreate">ODA KUR</button><input id="mJoinCode" class="minp mcodeIn" maxlength="4" placeholder="KOD" autocomplete="off" spellcheck="false"><button class="go ghost" id="mJoin">KATIL</button></div>
-    <div class="mrow" id="mRejoinRow" hidden><button class="go" id="mRejoin">SON ODAYA DÖN</button></div>
-    <div id="mCode" class="mcode"></div>
-    <div class="lobby" id="mSeats">
-      <div class="seat me"><b>Sen</b><small>HAZIR</small></div>
-      <div class="seat"><b>Ahmet</b><small>BOT</small></div>
-      <div class="seat"><b>Mehmet</b><small>BOT</small></div>
-      <div class="seat"><b>Hasan</b><small>BOT</small></div>
-    </div>
-    <div class="mrow"><button class="go" id="mStart" hidden>BAŞLAT</button><button class="go ghost" id="mLeave" hidden>ODADAN ÇIK</button></div>
-    <div class="mrow"><button class="go ghost" id="mBots">BOTLARLA OYNA</button><button class="go ghost back">GERİ</button></div>
-  </div>
-</div>
-
-<div id="bye" class="screen menuScr" hidden>
-  <div class="panel" style="text-align:center;align-items:center">
-    <h2>MADENDEN ÇIKTIN</h2>
-    <p class="note">Tarayıcıda oyun kendini kapatamıyor; sekmeyi kapatabilirsin. Telefonda tam ekrandan çıkıldı.</p>
-    <button class="go ghost back">MENÜYE DÖN</button>
-  </div>
-</div>
-
-<div id="shop" class="screen" hidden>
-  <div class="card">
-    <div class="brand">
-      <h1 id="shopTitle">TEDARİK<span>BİRİNİ SEÇ</span></h1>
-      <div id="shopReason">Asansör aşağı inerken üç sandık var. Yalnızca birini alabilirsin.</div>
-    </div>
-    <div class="rules"><div class="items" id="shItems"></div></div>
-  </div>
-</div>
-
-<div id="end" class="screen" hidden>
-  <div class="card">
-    <div class="brand"><h1 id="endTitle">YAKALANDIN</h1><div id="endReason"></div></div>
-    <div class="rules">
-      <div class="stats">
-        <div><b id="sNight">-1</b><small id="lNight">KAT</small></div>
-        <div><b id="sGem">0₺</b><small>ELMAS DEĞERİ</small></div>
-        <div><b id="sTime">0:00</b><small>SÜRE</small></div>
+<div id="how" class="screen menuScr dScr" hidden>
+  <div class="set dlg" role="dialog" aria-labelledby="hTitle">
+    <div class="sHead"><div><small>KARA DAMAR · REHBER</small><h2 id="hTitle">NASIL OYNANIR</h2></div><button class="sX back" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="sBody">
+      <nav class="sTabs" role="tablist">
+        <button class="on" data-t="h1" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>TEMEL</button>
+        <button data-t="h2" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>YARATIKLAR</button>
+        <button data-t="h3" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 8l10 5 10-5zM2 12.5l10 5 10-5M2 17l10 5 10-5"/></svg>KATLAR</button>
+        <button data-t="h4" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="5"/><path d="M8 10v4M6 12h4M15.5 11h.01M17.5 13h.01"/></svg>KONTROL</button>
+      </nav>
+      <div class="sPanes">
+        <section data-p="h1" class="on">
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></i><div><b>LAMBA</b><span>Açıkken görürsün, o da seni görür. Kapalıyken güvendesin ama kör gibisin.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 14 10M9.5 5.5c3-2 7-2 10 1-2-1-5-1-7 1M12.5 7.5l4 4"/></svg></i><div><b>KAZ</b><span>Başta sadece kazman var. Kayadan eski madencilerin eşyaları çıkar; tahta ucu görünen duvarın ardında sandık vardır.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2c3 .3 5.5 2.6 5.5 5.8"/></svg></i><div><b>EKİP</b><span>Arkadaşların açıkta gördükleri cevheri kazıp vagona taşır. Taş taşıyan parlar; onu da görür.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></i><div><b>ŞOK</b><span>Nadir şok cihazı yaratığı ~20 saniye yere serer. Sonra bir süre işlemez.</span></div></div>
+        </section>
+        <section data-p="h2">
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4c1 5 3 8 7 10M10 3c0 5 2 8 6 10M15 3c0 4 1 7 4 9M5 20c3-1 6-1 9 1"/></svg></i><div><b>ÖCÜ</b><span>Karanlıkta dolaşır; sesi ve ışığı duyar. Yaklaşırsa lambayı kapat, çömel, kıpırdama.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg></i><div><b>DERİSİZ</b><span>4. kattan itibaren ikinci bir şey var. Işık üstündeyken bakakalır; arkanı dönünce yürür.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0M3 17c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/></svg></i><div><b>ÇIRPIN</b><span>Yakalanırsan çırpın! Yeterince çırpınırsan bırakır, kaçar ama geri gelir. Arkadaşını yakalarsa peşinden git, kurtar.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20V10a6 6 0 0 1 12 0v10l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5z"/><path d="M10 10h.01M14 10h.01"/></svg></i><div><b>HAYALET</b><span>5. katta görünmeyen bir şey var. Ölçer onu sayılarla gösterir; yaklaşınca dolaba saklan. Örnek aldıkça öfkelenir.</span></div></div>
+        </section>
+        <section data-p="h3">
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 8l10 5 10-5zM2 12.5l10 5 10-5M2 17l10 5 10-5"/></svg></i><div><b>KATLAR</b><span>Her katın bir görevi var (sol üstte yazar). 1. katta beş jeneratörü çalıştır; sonraki katlarda yerdeki izler görev nesnelerine gider. Görev bitince kuyuyu bul (rüzgârı dinle) ve in.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a8 6.5 0 0 1 16 0zM10 11v8h4v-8"/></svg></i><div><b>MANTARLAR</b><span>3. kat parlayan bir mantar mağarası. Mantar ışığı yolu gösterir ama seni de. Spor bulutları kıvılcımla patlar.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v8M12 11c-3 2-5 5-6 9M12 11c3 2 5 5 6 9M12 11v9"/></svg></i><div><b>KÖKLER</b><span>4. kat dağın içindeki bir orman. Kök sarılı duvarı kazarsan tavan çöker; kereste koyarak durdurabilirsin.</span></div></div>
+          <div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12l3 5-9 11L3 9zM3 9h18M9.5 4 12 20M14.5 4 12 20"/></svg></i><div><b>DAMAR</b><span>7. katta Kara Damar Özü’nü al; aldığın an mağara uyanır. Özle birlikte asansöre koş.</span></div></div>
+        </section>
+        <section data-p="h4">
+          <div class="kT"><div class="kHd">DOKUNMATİK</div>
+          <div class="kList"><div><kbd>Sol çubuk</kbd>yürü</div><div><kbd>Sağda kaydır</kbd>etrafa bak</div><div><kbd>KAZ</kbd>basılı tut: aleti kullan</div><div><kbd>KULLAN</kbd>kapı, jeneratör, sandık</div><div><kbd>LAMBA</kbd>aç / kapat</div><div><kbd>ÇÖK</kbd>sessiz yürü</div><div><kbd>KOŞ</kbd>hızlı ama gürültülü</div><div><kbd>TEBEŞİR</kbd>duvara ok çiz</div></div></div>
+          <div class="kD"><div class="kHd">KLAVYE</div>
+          <div class="kList" id="keysDesk"><div><kbd>WASD</kbd>yürü</div><div><kbd>Fare</kbd>bak</div><div><kbd>Sol tık</kbd>aleti kullan</div><div><kbd>1-6</kbd><kbd>Q</kbd>alet seç</div><div><kbd>F</kbd>lamba</div><div><kbd>Shift</kbd>koş</div><div><kbd>X</kbd>çömel</div><div><kbd>E</kbd>kullan</div><div><kbd>C</kbd>tebeşir</div><div><kbd>Boşluk</kbd>çırpın</div><div><kbd>Esc</kbd>duraklat</div></div></div>
+        </section>
       </div>
-      <div id="endFun" class="fun"></div>
-      <div class="keys">Kat, o kata girdiğin andaki eşyalarla baştan başlar. Her denemede mağara değişir.</div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="go" id="again">KATI TEKRAR DENE</button><button class="go" id="restart" style="background:transparent;color:var(--lamp);border:1px solid var(--lamp)">BAŞTAN BAŞLA</button><button class="go ghost" id="endMenu">ANA MENÜ</button></div>
     </div>
+    <div class="dFoot"><span class="dNote">İlk kez mi? Kısa eğitim 2 dakika sürer.</span><span class="sp"></span><button class="go" id="mTut">EĞİTİMLE BAŞLA</button></div>
   </div>
 </div>
+
+<div id="multi" class="screen menuScr dScr" hidden>
+  <div class="set dlg" role="dialog" aria-labelledby="muTitle">
+    <div class="sHead"><div><small>4 KİŞİLİK ODA</small><h2 id="muTitle">ÇOK OYUNCULU</h2></div><button class="sX back" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <p class="dNote" id="mNote">Oda kur ve kodu arkadaşlarına ver, ya da onların kodunu gir. En fazla 4 kişi; boş yerlere bot gelir.</p>
+    <div class="muGrid">
+      <div class="muCol">
+        <label class="fld"><small>OYUNCU ADI</small><input id="mName" class="minp" maxlength="14" placeholder="Adın" autocomplete="off" spellcheck="false"></label>
+        <div class="muJoin" id="mJoinRow">
+          <button class="go" id="mCreate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>ODA KUR</button>
+          <div class="or">ya da koda katıl</div>
+          <div class="codeRow"><input id="mJoinCode" class="minp mcodeIn" maxlength="4" placeholder="KOD" autocomplete="off" spellcheck="false"><button class="go ghost" id="mJoin">KATIL</button></div>
+        </div>
+        <div class="mrow" id="mRejoinRow" hidden><button class="go ghost" id="mRejoin">SON ODAYA DÖN</button></div>
+        <div id="mCode" class="mcode"></div>
+      </div>
+      <div class="muCol">
+        <small class="lbl">EKİP</small>
+        <div class="lobby" id="mSeats">
+          <div class="seat me"><i>S</i><span><b>Sen</b><small>HAZIR</small></span></div>
+          <div class="seat bot"><i>B</i><span><b>Ahmet</b><small>BOT</small></span></div>
+          <div class="seat bot"><i>B</i><span><b>Mehmet</b><small>BOT</small></span></div>
+          <div class="seat bot"><i>B</i><span><b>Hasan</b><small>BOT</small></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="dFoot"><button class="go dim" id="mBots">BOTLARLA OYNA</button><span class="sp"></span><button class="go ghost" id="mLeave" hidden>ODADAN ÇIK</button><button class="go" id="mStart" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>BAŞLAT</button></div>
+  </div>
+</div>
+
+<div id="bye" class="screen menuScr dScr" hidden>
+  <div class="set dlg dSmall">
+    <div class="sHead"><div><small>KARA DAMAR</small><h2>MADENDEN ÇIKTIN</h2></div></div>
+    <p class="dNote">Tarayıcıda oyun kendini kapatamıyor; sekmeyi kapatabilirsin. Telefonda tam ekrandan çıkıldı.</p>
+    <div class="dFoot"><button class="go back">MENÜYE DÖN</button></div>
+  </div>
+</div>
+
+<div id="shop" class="screen dScr shopScr" hidden>
+  <div class="shopW">
+    <div class="dHd"><small>ASANSÖR · TEDARİK</small><h1 id="shopTitle">BİR SANDIK SEÇ</h1><p id="shopReason">Kafes aşağı inerken üç sandık var. Yalnızca birini alabilirsin.</p></div>
+    <div class="crates" id="shItems"></div>
+  </div>
+</div>
+
+<div id="end" class="screen dScr endScr" hidden>
+  <div class="endW">
+    <div class="dHd"><small id="endK">SENİ BULDU</small><h1 id="endTitle">YAKALANDIN</h1><p id="endReason"></p></div>
+    <div class="stats">
+      <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v15M6 12l6 6 6-6M4 21h16"/></svg></i><b id="sNight">-1</b><small id="lNight">KAT</small></div>
+      <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12l3 5-9 11L3 9zM3 9h18M9.5 4 12 20M14.5 4 12 20"/></svg></i><b id="sGem">0₺</b><small>ELMAS DEĞERİ</small></div>
+      <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></i><b id="sTime">0:00</b><small>SÜRE</small></div>
+    </div>
+    <div id="endFun" class="fun"></div>
+    <div class="keys endNote">Kat, o kata girdiğin andaki eşyalarla baştan başlar. Her denemede mağara değişir.</div>
+    <div class="dFoot"><button class="go" id="again">KATI TEKRAR DENE</button><button class="go ghost" id="restart">BAŞTAN BAŞLA</button><button class="go dim" id="endMenu">ANA MENÜ</button></div>
+  </div>
+</div>
+
+<div id="story" hidden><div class="stW"><small>KARA DAMAR MADENİ</small><div id="stT"></div><div class="stF"><span>Devam için dokun</span><button id="stSkip">ATLA</button></div></div></div>
 
 <div id="pause" class="screen" hidden>
   <div class="set" role="dialog" aria-labelledby="pTitle">
@@ -552,7 +682,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <div class="btnrow"><button class="go" id="pResume">DEVAM</button><button class="go ghost" id="pMenu">ANA MENÜ</button></div>
   </div>
 </div>
-<div id="spec" hidden><b>SENİ GÖTÜRDÜ</b><small id="specN"></small><button id="specSkip">GEÇ</button></div>
+<div id="spec" hidden><div class="spTop"><small>İZLEYİCİ MODU</small><b>SENİ GÖTÜRDÜ</b><span id="specN"></span></div><button id="specSkip">GEÇ<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l6 6-6 6M13 6l6 6-6 6"/></svg></button></div>
 
 <div id="rotate"><i></i>Telefonu yan çevir</div>
 <div id="err">Bu cihaz WebGL2 desteklemiyor. Güncel bir Chrome veya Safari ile dene.</div>
@@ -2797,7 +2927,7 @@ function sysEvTick(dt){if(NET.started&&!NET.host)return;if(GHO.on||G.state!=='pl
   const dur={power:sysRnd(16,24),hunt:30,cavein:1,gas:1}[k];E.active={k,t:dur};E.last=k;sysEvApply(k,[...args,r2(dur)]);netLog('ev',k,...args,r2(dur));}
 function sysEvApply(k,a,remote){
   if(k==='power'){G.powerOut=a[0]||20;sfx('switch',1);sfx('rumble',.4);toast('Elektrik gitti! Lambalar söndü.',2.6);}
-  else if(k==='cavein'){const c=a[0];if(!remote&&(!NET.started||NET.host))doCollapse(c,true);const[x,z]=ctr(c);sfxAt('collapse',x,z,1,60);toast('Bir yerde tavan çöktü! Bir yol kapanmış olabilir.',3);}
+  else if(k==='cavein'){const c=a[0];if(!remote&&(!NET.started||NET.host)){const x0=c%GW,y0=(c/GW)|0,L=[];for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const q=(y0+dy)*GW+x0+dx;if(q>=0&&grid[q]&&!safe[q]&&!exitA[q]&&(q===c||Math.random()<.35))L.push(q);}if(L.length){netLog('cl',...L);doCollapse(L[0],L);}}const[x,z]=ctr(c);sfxAt('collapse',x,z,1,60);toast('Bir yerde tavan çöktü! Bir yol kapanmış olabilir.',3);}
   else if(k==='gas'){const c=a[0];const i=c%GW,j=(c/GW)|0;for(let dj=-1;dj<=1;dj++)for(let di=-1;di<=1;di++){const q=(j+dj)*GW+i+di;if(grid[q]){gasL[q]=Math.max(gasL[q],.9);gasCells.add(q);}}const[x,z]=ctr(c);sfxAt('hiss',x,z,1.2,40);
     toast(FL().spores?'Spor kaçağı! Bir bölge tehlikeli; kazma ve fişek kullanma.':'Gaz kaçağı! Bir bölge tehlikeli; kazma ve fişek kullanma.',3.2);}
   else if(k==='hunt'){if(!NET.started||NET.host){G.huntPrev=G.anger||0;G.anger=(G.anger||0)+1;G.threat=Math.max(G.threat||0,100);if(cr.st==='away')G.arriveT=Math.min(G.arriveT,2);}crV('howl',()=>sfx('howl',1,0,true),{far:true});toast('Uzaktan bir uluma... Bir şey sizi arıyor.',3);}
@@ -3878,7 +4008,7 @@ function funStats(){const S=STATS,L=[];const e=s=>esc(String(s));
   if(S.digs)L.push(`Kazılan kaya: <b>${S.digs}</b>${S.gems?` · vagona taşınan elmas: <b>${S.gems}</b>`:''}`);
   return L.slice(0,4).map(x=>`<div>${x}</div>`).join('');}
 function endGame(){G.state='end';$('spec').hidden=true;$('floorCard').classList.remove('on');document.exitPointerLock?.();
-  const titles={ocu:'ÖCÜ',derisiz:'DERİSİZ',patlama:'PATLAMA',grizu:FL().spores?'SPORLAR':'GRİZU',gocuk:'GÖÇÜK',kuyu:'DÜŞTÜN'};$('ascend').hidden=true;$('endTitle').textContent=titles[G.cause]||'YAKALANDIN';
+  const titles={ocu:'ÖCÜ',derisiz:'DERİSİZ',patlama:'PATLAMA',grizu:FL().spores?'SPORLAR':'GRİZU',gocuk:'GÖÇÜK',kuyu:'DÜŞTÜN'};$('ascend').hidden=true;$('end').classList.remove('win');$('endK').textContent=G.cause==='kuyu'?'KUYUNUN DİBİ':'SENİ BULDU';$('endTitle').textContent=titles[G.cause]||'YAKALANDIN';
   const reasons={ocu:['Arkanı döndüğün an geldi. Hiç ses çıkarmadan.','Işığını çevirdiğinde oradaydı. Hep oradaydı.'],derisiz:['Işığı ondan çevirdin. Beklediği tek şey buydu.','Karanlıkta çok yakındı. Sen fark etmeden.'],lamba:['Işığın açıktı. O da seni gördü.','Lambayı açık tutmak iyi fikirdi. Ona göre de öyleydi.'],kazma:['Kazmanın sesi mağarada yankılandı.','Tam kazarken arkandaydı.'],kosu:['Koşmak iyi fikir gibi görünüyordu.','Ayak seslerin onu doğrudan sana getirdi.'],
     elmas:['Taş parlıyordu. Sen de onunla birlikte.','Taşı bırakman gerekiyordu.'],temas:['Karanlıkta yanlış yöne yürüdün. Tam onun kucağına.','Sessiz ve karanlıktın. Ama tam önündeydin.'],su:['Suyun şapırtısı seni ele verdi.'],oksuruk:[FL().spores?'Sporların içinde öksürmek seni ele verdi.':'Grizuda öksürmek seni ele verdi.'],vagon:['Vagonun takırtısı onu doğrudan getirdi.'],
     kuyu:['Kafese yetişti. Aşağısı çok derindi.'],kristal:['Kristaller çınladı. O da duydu.','Damar seni ele verdi: her kristal bir çan.'],zar:['Zarın şapırtısı yuvayı uyandırdı.','Yapışkan zemin seni ele verdi.'],pompa:['Pompa bütün mağarayı çağırdı.'],vana:['Vananın gıcırtısı tünellerde yankılandı.'],kese:['Kese patladığında yuva seni duydu.','Yuvayı uyandırdın.'],hayalet:['Görmediğin şey seni buldu.','Ölçer haklıydı.'],patlama:['Patlamadan yeterince uzaklaşamadın.'],sok:['Şokun sesi seni ele verdi.'],spor:['Spor topu patladı, öksürüğün yankılandı.','Mantarlar seni ele verdi.'],koza:['Kozayı keserken çok ses çıkardın.'],patlama:['Fitil kısaydı, sen de çok yakındın.'],grizu:[FL().spores?'Sporlar bir kıvılcım bekliyordu. Sen verdin.':'Grizu bir kıvılcım bekliyordu. Sen verdin.'],gocuk:['Tavanın çatırdamasını duymuştun.']};
@@ -3890,9 +4020,10 @@ const CRATES=[{id:'flare2',ad:'2 Fişek',ac:'Yaratıklar fişeğin ışığında
   {id:'beam3',ad:'3 Kereste',ac:'Çatırdayan tavanı durdurur.',give:{beam:3}},{id:'rocks',ad:'Çakıl kesesi',ac:'5 taş: fırlat, yaratığı başka yöne çek.',give:{rock:5}},
   {id:'lamp',ad:'Güçlü lamba',ac:'Daha uzağı görür, pil uzun gider.',up:'lamp'},{id:'boots',ad:'Sessiz bot',ac:'Ayak sesin yarıya iner.',up:'boots'},
   {id:'pick',ad:'Çelik kazma',ac:'Her kaya bir vuruş daha az ister.',up:'pick'},{id:'miner',ad:'Kayıp madenci',ac:'Yukarıda kalan arkadaşın asansöre yetişir.',miner:true}];
+const CRATE_IC={"flare2": "<path d=\"M12 3c3 4 5 6 5 10a5 5 0 0 1-10 0c0-2 1-4 2-5 0 2 1 3 2 3 0-3-1-5 1-8z\"/>", "dynb": "<rect x=\"6\" y=\"8\" width=\"4.5\" height=\"12\" rx=\"1\"/><rect x=\"13.5\" y=\"8\" width=\"4.5\" height=\"12\" rx=\"1\"/><path d=\"M8.2 8c0-3 3-3 4-5.5M6 13h12\"/>", "beam3": "<path d=\"M3 6h18v3.5H3zM3 11h18v3.5H3zM3 16h18v3.5H3z\"/>", "rocks": "<path d=\"M3 18l3-6 5-1.5 4 2.5 3 1 3 4zM8 9l2.5-3 3.5 1 1 3\"/>", "lamp": "<path d=\"M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z\"/>", "boots": "<path d=\"M7 3h5v9l7 3.2V19H5V3zM5 16h14\"/>", "pick": "<path d=\"M4 20 14 10M9.5 5.5c3-2 7-2 10 1-2-1-5-1-7 1M12.5 7.5l4 4\"/>", "miner": "<circle cx=\"12\" cy=\"8.5\" r=\"3.2\"/><path d=\"M8.5 6.5c0-2.5 7-2.5 7 0M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5\"/>"};
 function openCrates(done){const opts=CRATES.filter(c=>c.up?!RUN.up[c.up]:c.miner?RUN.alive.length<2:true).sort(()=>Math.random()-.5).slice(0,3);
   G.state='shop';document.exitPointerLock?.();useHeld=false;for(const k in keys)keys[k]=false;joy.vx=joy.vy=0;sfx('crate',.7);
-  $('shItems').innerHTML=opts.map((c,i)=>`<div class="item"><div><b>${c.ad}</b><small>${c.ac}</small></div><span class="own"></span><button class="buy" data-i="${i}">AL</button></div>`).join('');
+  $('shItems').innerHTML=opts.map((c,i)=>`<button class="crate" data-i="${i}" style="--i:${i}"><span class="cIco"><svg viewBox="0 0 24 24" aria-hidden="true">${CRATE_IC[c.id]||CRATE_IC.rocks}</svg></span><span class="cTxt"><span class="cTag">${c.up?'KALICI':c.miner?'EKİP':'EŞYA'}</span><b>${c.ad}</b><small>${c.ac}</small></span><em>AL</em></button>`).join('');
   $('shop').hidden=false;$('hud').hidden=true;$('fade').style.opacity=0;
   for(const bt of $('shItems').querySelectorAll('button'))bt.onclick=()=>{const c=opts[+bt.dataset.i];
     if(c.give)for(const k in c.give)RUN.inv[k]=(RUN.inv[k]||0)+c.give[k];if(c.up)RUN.up[c.up]=1;
@@ -3914,7 +4045,7 @@ function updateAscend(dt){const A=G.asc;A.t+=dt;A.cT-=dt;A.hT-=dt;
   $('red').style.opacity=A.atk?.8:danger*.3;
   if(A.t>=A.dur)victory();}
 function victory(){G.state='end';$('floorCard').classList.remove('on');$('ascend').hidden=true;$('hud').hidden=true;$('hotbar').hidden=false;$('bStruggle').hidden=true;sfx('nightDone',1.2);
-  const n=RUN.alive.length+1,v=cartValue();$('endTitle').textContent=n>1?'KURTULDUNUZ':'KURTULDUN';
+  const n=RUN.alive.length+1,v=cartValue();$('end').classList.add('win');$('endK').textContent='GÜN IŞIĞI';$('endTitle').textContent=n>1?'KURTULDUNUZ':'KURTULDUN';
   $('endReason').textContent=(n===4?'Dördünüz de gün ışığına çıktınız. ':n===3?`Sen, ${RUN.alive.join(' ve ')} çıktınız; biri aşağıda kaldı. `:n===2?`Sen ve ${RUN.alive[0]} çıktınız; diğerleri aşağıda kaldı. `:'Yüzeye bir tek sen çıktın. Aşağıdan hâlâ sesler geliyor. ')+(v>0?`Vagonda ${v}₺ değerinde taş var.`:'Elin boş ama hayattasın.');
   $('lNight').textContent='ÇIKAN';$('sNight').textContent=n+' kişi';$('sGem').textContent=v+'₺';const s=Math.floor(RUN.time);$('sTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
   $('again').hidden=true;$('restart').textContent='YENİDEN OYNA';$('endFun').innerHTML=funStats();$('end').hidden=false;clearSave();}
@@ -4057,8 +4188,8 @@ function netPeers(ch){const peers=NET.room?NET.room.peers():[];const seen=new Se
 // ---- lobi ----
 function netLobbyRender(){const L=$('mSeats');if(!L)return;const me={n:NET.name+' (sen)',h:NET.host};const list=[me];
   for(const rec of NET.peers.values())if(rec.P&&rec.P.n)list.push({n:String(rec.P.n).slice(0,14),h:!!rec.P.h});
-  let h='';for(let i=0;i<4;i++){const s=list[i];if(s)h+=`<div class="seat${i===0?' me':''}"><b>${esc(s.n)}</b><small>${s.h?'ODA SAHİBİ':'HAZIR'}</small></div>`;else h+=`<div class="seat"><b>${BOTN[i-list.length]||'Bot'}</b><small>BOT</small></div>`;}
-  L.innerHTML=h;$('mCode').textContent=NET.on&&NET.code?('ODA KODU: '+NET.code):'';$('mStart').hidden=!(NET.on&&NET.host);$('mLeave').hidden=!NET.on;$('mJoinRow').hidden=!!NET.on;$('mName').disabled=!!NET.on;
+  let h='';for(let i=0;i<4;i++){const s=list[i];if(s)h+=`<div class="seat${i===0?' me':' pl'}"><i>${esc((String(s.n).trim()[0]||'?').toLocaleUpperCase('tr'))}</i><span><b>${esc(s.n)}</b><small>${s.h?'ODA SAHİBİ':'HAZIR'}</small></span></div>`;else h+=`<div class="seat bot"><i>B</i><span><b>${BOTN[i-list.length]||'Bot'}</b><small>BOT</small></span></div>`;}
+  L.innerHTML=h;$('mCode').innerHTML=NET.on&&NET.code?('<small>ODA KODU</small><b>'+esc(NET.code)+'</b>'):'';$('mStart').hidden=!(NET.on&&NET.host);$('mLeave').hidden=!NET.on;$('mJoinRow').hidden=!!NET.on;$('mName').disabled=!!NET.on;
   if(NET.on)netMsg(NET.host?'Arkadaşların bu kodla katılsın, sonra BAŞLAT. Boş yerlere bot gelir.':'Oda sahibinin başlatması bekleniyor...');}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 // host: oyunu başlat / yeni kat → g = [kat, tohum, gürültü tohumu, sayaç, insan sayısı]
@@ -4873,7 +5004,7 @@ function closePause(){$('pause').hidden=true;if($('pause').dataset.menu)return;i
   if(!isTouch){try{const r=cv.requestPointerLock();if(r&&r.catch)r.catch(()=>{});}catch(e){}}}
 $('pResume').addEventListener('click',closePause);$('pX').addEventListener('click',closePause);
 // ayar ekranı: sekmeler, bölmeli seçiciler (gizli select'e yazar), kaydırıcı doluluğu
-for(const b of document.querySelectorAll('.sTabs button'))b.addEventListener('click',()=>{for(const x of document.querySelectorAll('.sTabs button'))x.classList.toggle('on',x===b);for(const p of document.querySelectorAll('.sPanes section'))p.classList.toggle('on',p.dataset.p===b.dataset.t);});
+for(const b of document.querySelectorAll('.sTabs button'))b.addEventListener('click',()=>{const D=b.closest('.set');for(const x of D.querySelectorAll('.sTabs button'))x.classList.toggle('on',x===b);for(const p of D.querySelectorAll('.sPanes section'))p.classList.toggle('on',p.dataset.p===b.dataset.t);});
 function segSync(){for(const g of document.querySelectorAll('.seg')){const sel=$(g.dataset.for);for(const b of g.children)b.classList.toggle('on',b.dataset.v===String(sel.value));}}
 for(const g of document.querySelectorAll('.seg'))for(const b of g.children)b.addEventListener('click',()=>{const sel=$(g.dataset.for);sel.value=b.dataset.v;sel.dispatchEvent(new Event('change'));segSync();});
 function rngFill(el){const p=(el.value-el.min)/(el.max-el.min)*100;el.style.setProperty('--p',p.toFixed(1)+'%');}
@@ -5118,18 +5249,18 @@ function sfOK(x,z,r){if(z<1.3)return Math.abs(x)<=.95-r&&z>=-.95+r&&z<=1.3;
   if(z>SFK.bar)return false;if(Math.abs(x-sfCX(z))>sfW(z)-.55-r*.4)return false;
   for(const c of SF.cols)if(Math.hypot(x-c[0],z-c[1])<c[2]+r)return false;return true;}
 function sfInCage(x,z){return Math.abs(x)<.85&&z>-.85&&z<.8;}
-function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:g(),wood:g(),wood2:g(),steel:g(),pine:g(),trunk:g(),dark:g(),cart:g(),cloth:g(),stal:g()};
+function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:g(),wood:g(),wood2:g(),steel:g(),pine:g(),trunk:g(),dark:g(),cart:g(),cloth:g(),stal:g(),fbW:g(),fbS:g(),fbT:g(),fbC:g(),fbR:g()};
   const X1=[1,0,0],Y1=[0,1,0],Z1=[0,0,1];const B=(m,c,hx,hy,hz)=>th2Box(m,c,X1,Y1,Z1,hx,hy,hz);
   const tri=(m,a,b,c)=>{const n=v3n(v3x([b[0]-a[0],b[1]-a[1],b[2]-a[2]],[c[0]-a[0],c[1]-a[1],c[2]-a[2]]));m.P.push(...a,...b,...c);for(let k=0;k<3;k++)m.N.push(...n);};
   const quad=(m,a,b,c,d)=>{tri(m,a,b,c);tri(m,a,c,d);};
   const tan=z=>{const d=(sfCX(z+.3)-sfCX(z-.3))/.6,l=Math.hypot(d,1);return[d/l,1/l];};// galeri yönü (x,z)
   SF.cols=[];
   // ---- mağara: kesit halkalarından örülmüş, gürültülü kaya kubbe ----
-  const Z0=-2.2,Z1z=SFK.zm,NS=16,ring=(z,sc=1)=>{const cx=sfCX(z),w=sfW(z)*sc,h=sfHt(z)*(.35+.65*sc),R=[];R.push([cx-w*1.02,-.35,z]);
-      for(let k=0;k<=NS;k++){const a=Math.PI-k/NS*Math.PI,n=1+sfN(z*.55+k*.9,k*.7)*.13+sfN(z*1.7,k*2.1)*.05;R.push([cx+Math.cos(a)*w*n,Math.max(.02,Math.sin(a)*h*n),z]);}R.push([cx+w*1.02,-.35,z]);return R;};
+  const Z0=-2.2,Z1z=SFK.zm,NS=22,ring=(z,sc=1)=>{const cx=sfCX(z),w=sfW(z)*sc,h=sfHt(z)*(.35+.65*sc),R=[];R.push([cx-w*1.02,-.35,z]);
+      for(let k=0;k<=NS;k++){const a=Math.PI-k/NS*Math.PI,n=1+sfN(z*.55+k*.9,k*.7)*.13+sfN(z*1.7,k*2.1)*.05+sfN(z*3.9,k*3.7)*.025;R.push([cx+Math.cos(a)*w*n,Math.max(.02,Math.sin(a)*h*n),z]);}R.push([cx+w*1.02,-.35,z]);return R;};
   // kafesin arkası: kesit daralarak kubbe gibi kapanır (düz kapak yerine)
   let prev=ring(Z0-1.3,.08);const caps=prev;for(const[dz,sc]of[[-.95,.5],[-.6,.78],[-.3,.93],[0,1]]){const cur=ring(Z0+dz,sc);for(let k=0;k<prev.length-1;k++)quad(M.rock,prev[k],prev[k+1],cur[k+1],cur[k]);prev=cur;}
-  for(let z=Z0+.6;z<=Z1z+.001;z+=.6){const cur=ring(Math.min(z,Z1z));for(let k=0;k<prev.length-1;k++)quad(M.rock,prev[k],prev[k+1],cur[k+1],cur[k]);prev=cur;}
+  for(let z=Z0+.45;z<=Z1z+.001;z+=.45){const cur=ring(Math.min(z,Z1z));for(let k=0;k<prev.length-1;k++)quad(M.rock,prev[k],prev[k+1],cur[k+1],cur[k]);prev=cur;}
   {const c=[0,1.2,Z0-1.4];for(let k=0;k<caps.length-1;k++)tri(M.rock,c,caps[k+1],caps[k]);}
   // taban (kafes boşluğu hariç), hafif tümsekli
   for(let z=Z0;z<Z1z;z+=.6){for(let k=0;k<8;k++){const P=(zz,kk)=>{const cx=sfCX(zz),w=sfW(zz)*1.02;return[cx-w+2*w*kk/8,.015+sfN(zz*.9,kk*.8)*.02,zz];};
@@ -5142,18 +5273,18 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:
   for(let k=0;k<12;k++){const z=1+sfHash(k,65)*7,x=(sfHash(k,66)-.5)*4.6,top=sfHt(z)*.88,L=.3+sfHash(k,67)*.6;th2Tube(M.stal,[[x,top+.1,z],[x,top-L,z]],[.08,.01],6);}
   // ahşap tahkimat (galeri boyunca, kıvrıma göre döndürülmüş) + fener noktaları
   SF.lanterns=[];let si=0;for(let z=10.2;z<26;z+=2.1,si++){const cx=sfCX(z),w=sfW(z),[tx,tz]=tan(z),rx=[tz,0,-tx],h=sfHt(z)*.86;
-    for(const sd of[-1,1])th2Box(M.wood,[cx+rx[0]*sd*(w-.32),h/2,z+rx[2]*sd*(w-.32)],rx,Y1,[tx,0,tz],.1,h/2,.1);
-    th2Box(M.wood,[cx,h,z],rx,Y1,[tx,0,tz],w-.2,.11,.12);if(si%3===1)SF.lanterns.push([cx+rx[0]*.6,h-.45,z+rx[2]*.6]);}
+    for(const sd of[-1,1])th2Box(M.fbW,[cx+rx[0]*sd*(w-.32),h/2,z+rx[2]*sd*(w-.32)],rx,Y1,[tx,0,tz],.1,h/2,.1);
+    th2Box(M.fbW,[cx,h,z],rx,Y1,[tx,0,tz],w-.2,.11,.12);if(si%3===1)SF.lanterns.push([cx+rx[0]*.6,h-.45,z+rx[2]*.6]);}
   // giriş salonunda kalın dikmeler; kafes odasında kiriş
-  for(const[x,z]of[[-2.6,27.5],[2.6,27.5],[-2.7,31.5],[2.7,31.5]]){B(M.wood,[x,2.3,z],.15,2.3,.15);}B(M.wood,[0,4.45,27.5],2.9,.13,.14);B(M.wood,[0,4.5,31.5],3.0,.13,.14);
-  B(M.wood,[0,3.7,3.6],2.6,.13,.14);for(const sx of[-1,1])B(M.wood,[sx*2.35,1.85,3.6],.13,1.85,.13);
+  for(const[x,z]of[[-2.6,27.5],[2.6,27.5],[-2.7,31.5],[2.7,31.5]]){B(M.fbW,[x,2.3,z],.15,2.3,.15);}B(M.fbW,[0,4.45,27.5],2.9,.13,.14);B(M.fbW,[0,4.5,31.5],3.0,.13,.14);
+  B(M.fbW,[0,3.7,3.6],2.6,.13,.14);for(const sx of[-1,1])B(M.fbW,[sx*2.35,1.85,3.6],.13,1.85,.13);
   // raylar: kafesin önünden ağza kadar galeriyi izler
   for(let z=1.2;z<SFK.zm-1;z+=.5){const a=[sfCX(z),z],b=[sfCX(z+.5),z+.5];const[tx,tz]=tan(z+.25),rx=[tz,0,-tx];const L=Math.hypot(b[0]-a[0],.5)/2+.01,mid=[(a[0]+b[0])/2,(a[1]+b[1])/2];
-    for(const sd of[-.36,.36])th2Box(M.steel,[mid[0]+rx[0]*sd,.07,mid[1]+rx[2]*sd],rx,Y1,[tx,0,tz],.028,.035,L);th2Box(M.wood2,[mid[0],.03,mid[1]],rx,Y1,[tx,0,tz],.62,.03,.08);}
+    for(const sd of[-.36,.36])th2Box(M.fbS,[mid[0]+rx[0]*sd,.07,mid[1]+rx[2]*sd],rx,Y1,[tx,0,tz],.028,.035,L);th2Box(M.fbT,[mid[0],.03,mid[1]],rx,Y1,[tx,0,tz],.62,.03,.08);}
   // eski vagon (galeride, raylarda) — çarpışır
-  {const z=25.6,cx=sfCX(z),[tx,tz]=tan(z),rx=[tz,0,-tx];th2Box(M.cart,[cx,.62,z],rx,Y1,[tx,0,tz],.55,.32,.85);th2Box(M.cart,[cx,.33,z],rx,Y1,[tx,0,tz],.45,.04,.75);
-    for(const sx of[-.45,.45])for(const sz of[-.5,.5]){const px=cx+rx[0]*sx+tx*sz,pz=z+rx[2]*sx+tz*sz;th2Tube(M.steel,[[px-rx[0]*.04,.2,pz-rx[2]*.04],[px+rx[0]*.04,.2,pz+rx[2]*.04]],.17,10);}
-    for(let k=0;k<5;k++)th2Ell(M.rock,[cx+(sfHash(k,81)-.5)*.6,.98,z+(sfHash(k,82)-.5)*1.1],[1,0,0],[0,1,0],[0,0,1],.2,.14,.2,6,3,0,.3,k+91);SF.cols.push([cx,z-.45,.62],[cx,z+.45,.62]);}
+  {const z=25.6,cx=sfCX(z),[tx,tz]=tan(z),rx=[tz,0,-tx];th2Box(M.fbC,[cx,.62,z],rx,Y1,[tx,0,tz],.55,.32,.85);th2Box(M.fbC,[cx,.33,z],rx,Y1,[tx,0,tz],.45,.04,.75);
+    for(const sx of[-.45,.45])for(const sz of[-.5,.5]){const px=cx+rx[0]*sx+tx*sz,pz=z+rx[2]*sx+tz*sz;th2Tube(M.fbS,[[px-rx[0]*.04,.2,pz-rx[2]*.04],[px+rx[0]*.04,.2,pz+rx[2]*.04]],.17,10);}
+    for(let k=0;k<5;k++)th2Ell(M.fbR,[cx+(sfHash(k,81)-.5)*.6,.98,z+(sfHash(k,82)-.5)*1.1],[1,0,0],[0,1,0],[0,0,1],.2,.14,.2,6,3,0,.3,k+91);SF.cols.push([cx,z-.45,.62],[cx,z+.45,.62]);}
   // madenci kampı (giriş salonu): masa, sandıklar, variller, yatak rulosu, kazma askısı
   {const T=[-2.3,29.6];B(M.wood2,[T[0],.78,T[1]],.55,.04,.38);for(const sx of[-.45,.45])for(const sz of[-.3,.3])B(M.wood2,[T[0]+sx,.38,T[1]+sz],.04,.38,.04);SF.cols.push([T[0],T[1],.75]);SF.lamp=[T[0]+.2,.98,T[1]];
     B(M.steel,[T[0]+.2,.9,T[1]],.07,.1,.07);
@@ -5164,12 +5295,18 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:
     B(M.wood,[3.15,1.1,26.6],.05,1.1,.05);B(M.wood,[3.15,1.1,25.6],.05,1.1,.05);B(M.wood,[3.15,1.7,26.1],.05,.05,.55);
     for(let k=0;k<3;k++){const z=25.75+k*.35;th2Box(M.wood2,[3.05,.85,z],[Math.cos(.25),Math.sin(.25),0],[-Math.sin(.25),Math.cos(.25),0],Z1,.03,.85,.03);th2Box(M.steel,[2.92,1.68,z],X1,Y1,Z1,.04,.04,.22);}}
   // ağız: ahşap çerçeve + bariyer (dışarı çıkılmaz)
-  {const z=SFK.zm-.35;for(const sx of[-1,1])B(M.wood,[sx*1.85,1.75,z],.16,1.75,.16);B(M.wood,[0,3.6,z],2.25,.18,.2);
-    const bz=SFK.bar+.55;for(const sx of[-1.75,1.75])B(M.wood,[sx,.7,bz],.1,.7,.1);for(const[y,a]of[[.45,.2],[.95,-.2]])th2Box(M.wood2,[0,y,bz],[Math.cos(a),Math.sin(a),0],[-Math.sin(a),Math.cos(a),0],Z1,1.95,.07,.04);
+  {const z=SFK.zm-.35;for(const sx of[-1,1])B(M.fbW,[sx*1.85,1.75,z],.16,1.75,.16);B(M.fbW,[0,3.6,z],2.25,.18,.2);
+    const bz=SFK.bar+.55;for(const sx of[-1.75,1.75])B(M.fbW,[sx,.7,bz],.1,.7,.1);for(const[y,a]of[[.45,.2],[.95,-.2]])th2Box(M.wood2,[0,y,bz],[Math.cos(a),Math.sin(a),0],[-Math.sin(a),Math.cos(a),0],Z1,1.95,.07,.04);
     B(M.wood2,[0,1.25,bz+.02],.5,.16,.02);}
   // dış dünya: yamaç (ağız boşluklu), zemin, kamp ateşi, çam ormanı
-  {const st=2.2;for(let x=-60;x<60;x+=st)for(let y=0;y<38;y+=st){const mx=x+st/2,my=y+st/2;if((mx/2.25)**2+(my/3.75)**2<1)continue;
-      const P=(xx,yy)=>[xx,yy,sfCliffZ(xx,yy)];quad(M.rock,P(x,y),P(x+st,y),P(x+st,y+st),P(x,y+st));}}
+  {const st=2.2,P=(xx,yy)=>[xx,yy,sfCliffZ(xx,yy)];for(let x=-61.6;x<61;x+=st)for(let y=0;y<38;y+=st){const mx=x+st/2,my=y+st/2;if(Math.abs(mx)<4.4&&my<8.8)continue;
+      quad(M.rock,P(x,y),P(x+st,y),P(x+st,y+st),P(x,y+st));}
+    // ağız çevresi: eliptik delikten dikdörtgen çerçeveye kutupsal şerit (merdivensiz pürüzsüz kenar)
+    const tc=Math.atan(1.2),TH=[];for(let k=0;k<=36;k++)TH.push(k/36*Math.PI);TH.push(tc,Math.PI-tc);TH.sort((a,b)=>a-b);
+    const ring=t=>{const dx=2.25*Math.cos(t),dy=3.75*Math.sin(t);const T=Math.min(Math.abs(dx)>1e-6?4.4/Math.abs(dx):1e9,dy>1e-6?8.8/dy:1e9);return[dx,dy,dx*T,dy*T];};
+    for(let k=0;k<TH.length-1;k++){if(TH[k+1]-TH[k]<1e-6)continue;const a=ring(TH[k]),b=ring(TH[k+1]);
+      for(let j=0;j<5;j++){const u0=j/5,u1=(j+1)/5,L=(r,u)=>{const e=.97+u*.03;return P(r[0]*e+(r[2]-r[0])*u,r[1]*e+(r[3]-r[1])*u);};
+        quad(M.rock,L(a,u0),L(a,u1),L(b,u1),L(b,u0));}}}
   {const st=2;for(let x=-56;x<56;x+=st)for(let z=SFK.zm-.6;z<80;z+=st){const a=[x,sfH(x,z),z],b=[x+st,sfH(x+st,z),z],c=[x+st,sfH(x+st,z+st),z+st],d=[x,sfH(x,z+st),z+st];tri(M.ground,a,d,c);tri(M.ground,a,c,b);}}
   {const fx=2.6,fz=42,fy=sfH(fx,fz);SF.fire=[fx,fy,fz];for(let k=0;k<5;k++){const a=k/5*TAU;th2Box(M.trunk,[fx+Math.cos(a)*.22,fy+.08,fz+Math.sin(a)*.22],[Math.cos(a),0,Math.sin(a)],[0,1,0],[-Math.sin(a),0,Math.cos(a)],.32,.06,.06);}
     for(let k=0;k<8;k++){const a=k/8*TAU;B(M.dark,[fx+Math.cos(a)*.48,fy+.05,fz+Math.sin(a)*.48],.09,.06,.09);}}
@@ -5178,7 +5315,52 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={rock:g(),floor:g(),ground:
     for(let q=0;q<4;q++){const y0=h+H*(.22+q*.18),rr=r*(1.15-q*.22);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.34,z]],[rr,.02],7);}}
   for(let k=0;k<40;k++){const x=(sfHash(k,31)-.5)*110,y=5+sfHash(k,32)*16;if(Math.abs(x)<5)continue;const z=sfCliffZ(x,y)-.3,H=4+sfHash(k,33)*5,r=.8+sfHash(k,34)*.6;th2Tube(M.trunk,[[x,y-.3,z],[x,y+H*.4,z]],.15,6);for(let q=0;q<3;q++){const y0=y+H*(.25+q*.2);th2Tube(M.pine,[[x,y0,z],[x,y0+H*.35,z]],[r*(1.1-q*.25),.02],7);}}
   const mk=m=>m.P.length?mesh(m.P,m.N):null;SF.mesh={};for(const k in M)SF.mesh[k]=mk(M[k]);
+  try{sfProps();}catch(e){console.warn('giriş modelleri',e);SF.pg=new Map();}
   SF.stars=[];for(let k=0;k<70;k++){const a=sfHash(k,41)*Math.PI*.9+Math.PI*.05,e=.12+sfHash(k,42)*1.2;SF.stars.push([Math.cos(a)*Math.cos(e),Math.sin(e),Math.sin(a)*Math.cos(e),.06+sfHash(k,43)*.1]);}}
+// ---- gerçek modeller (Environment kütüphanesi): kemerli tünel kaplaması, dikmeler, raylar, cevher vagonu, lambalar, aletler, ağaçlar ----
+// Kütüphane yüklenene kadar yukarıdaki basit şekiller görünür; modeller hazır olunca onların yerini alır.
+function sfTan(z){const d=(sfCX(z+.3)-sfCX(z-.3))/.6,l=Math.hypot(d,1);return[d/l,1/l];}
+const SF_CORE=['lining_arch_b','post_a','post_b','post_stump','beam_a','beam_d','rail_old_a','cart_ore','lamp','jack_tall'],SF_TREE=['f_pine_a','f_pine_b','f_tree_tall'];
+function sfProps(){const P=[];const add=(a,m)=>P.push({a,m,x:m[12],z:m[14],hide:false});
+  const TR=(x,y,z,yaw,sx,sy,sz,ex)=>X(M4.T(x,y,z),M4.RY(yaw||0),ex||M4.id(),M4.S(sx,sy==null?sx:sy,sz==null?sx:sz));
+  // galeri: kemerli kaplama (kıvrımı izleyerek), arada dikme-kiriş setleri
+  for(const z of[12.9,18.5,24.0]){const[tx,tz]=sfTan(z),w=sfW(z),h=sfHt(z);add('lining_arch_b',TR(sfCX(z),0,z,Math.atan2(-tz,tx),1,Math.min(1.05,(h-.05)/3.77),(2*w-.15)/5.95));}
+  // raylar (dar hat), kafesin önünden salonun sonuna kadar
+  for(let z=1.25;z<SFK.zm-2.5;z+=2.4){const a=[sfCX(z),z],b=[sfCX(z+2.4),z+2.4];const dx=b[0]-a[0],dz=2.4,L=Math.hypot(dx,dz);add(z%4.8<2.4?'rail_old_a':'rail_old_b',TR((a[0]+b[0])/2,-.04,z+1.2,Math.atan2(-dz/L,dx/L),L/2.5,1,1));}
+  // salon: kalın dikmeler + tavan kirişleri; kafes odası: hidrolik dikmeler + kiriş
+  for(const[x,z]of[[-2.6,27.5],[2.6,27.5],[-2.7,31.5],[2.7,31.5]])add('post_a',TR(x,0,z,sfHash(x*9|0,z|0)*3,1.25,4.45/2.56,1.25));
+  add('beam_a',TR(0,4.45,27.5,0,5.6/1.98,1.3,1.2));add('beam_a',TR(0,4.5,31.5,0,5.8/1.98,1.3,1.2));
+  for(const sx of[-1,1])add('jack_tall',TR(sx*2.35,0,3.6,0,1.1,3.55/2.55,1.1));add('beam_a',TR(0,3.62,3.6,0,5.2/1.98,1.2,1.2));
+  // cevher vagonu (salonda, rayda) + yanında tekerlek takımı
+  {const z=25.6,[tx,tz]=sfTan(z);add('cart_ore',TR(sfCX(z),.02,z,Math.atan2(-tz,tx),1,1,1));add('wheelset',TR(sfCX(z)+1.1,.16,z+1.4,.6,1,1,1));}
+  // lambalar: galeri fenerleri, ağız, kafes odası
+  for(const p of SF.lanterns)add('lamp',TR(p[0],p[1]-.05,p[2],0,2.2,2.2,2.2));add('lamp',TR(1.55,2.9,SFK.zm-.55,Math.PI,2.2,2.2,2.2));add('lamp',TR(-2.2,2.6,3.75,0,2.2,2.2,2.2));
+  // aletler: masada balyoz ve baret, askıda kazmalar, duvarda kürek
+  add('sledge',TR(-2.25,.84,29.45,.4,1,1,1));add('helmet',TR(-2.6,.84,29.78,1.2,1.15,1.15,1.15));
+  for(let k=0;k<3;k++)add('pickaxe_a',X(M4.T(3.02,0,25.75+k*.35),M4.RZ(.25),M4.S(1.1,1.1,1.1)));
+  add('shovel',X(M4.T(-3.05,.05,26.9),M4.RY(Math.PI/2),M4.RZ(1.25),M4.S(1,1,1)));add('pickaxe_b',TR(1.2,.05,7.6,2.2,1,1,1));
+  // yığınlar, çakıl, kıymıklar, kömür topakları
+  add('pile_gravel',TR(-1.9,0,23.4,.5,.8,1,.8));add('pile_dirt',TR(2.4,0,7.4,-.4,.65,1,.65));add('gravel_patch',TR(.2,.01,3.6,.3,1,1,1));add('gravel_patch',TR(-.3,.01,31.3,1.2,1.1,1,1.1));
+  for(let k=0;k<10;k++){const z=2+sfHash(k,121)*30,x=sfCX(z)+(sfHash(k,122)-.5)*sfW(z)*1.4;add(sfHash(k,123)<.5?'plank_scrap':'splinter_a',TR(x,.02,z,sfHash(k,124)*6,1.2,1.2,1.2));}
+  for(let k=0;k<14;k++){const z=1.5+sfHash(k,131)*31,sd=sfHash(k,132)<.5?-1:1,x=sfCX(z)+sd*(sfW(z)-.5-sfHash(k,133)*.3);add('stone',TR(x,0,z,sfHash(k,134)*6,2+sfHash(k,135)*3));}
+  add('trestle',TR(-3.05,0,31.0,0,1,1,1));SF.cols.push([-3.0,31.0,.75]);
+  // ağız çerçevesi (eğri dikmeler + yuvarlak lento) ve bariyer kütükleri
+  {const z=SFK.zm-.35;for(const sx of[-1,1])add('post_b',TR(sx*1.85,0,z,sx*.4,1.35,3.55/2.5,1.35));add('beam_d',TR(0,3.6,z,0,4.8/1.55,1.4,1.3));
+    for(const sx of[-1.75,1.75])add('post_stump',TR(sx,0,SFK.bar+.55,sx,.8,1.4/1.61,.8));}
+  // salonda kereste vagonu, kafes odasında çuval vagonu
+  add('cart_logs',TR(2.55,0,29.6,.04,1,1,1));SF.cols.push([2.55,29.0,.5],[2.55,30.2,.5]);
+  add('cart_bags',TR(-2.1,0,6.3,.35,1,1,1));SF.cols.push([-2.1,6.3,.6]);
+  // ağız dışında ve içinde ot öbekleri
+  for(let k=0;k<26;k++){const x=(sfHash(k,141)-.5)*9,z=SFK.zm-1.2+sfHash(k,142)*7;if(z<SFK.zm-.4&&Math.abs(x)>1.6)continue;const y=sfH(x,z);add(['grass_a','grass_b','grass_c','grass_f'][k%4],TR(x,y,z,sfHash(k,143)*6,1.3+sfHash(k,144)));}
+  // orman: gerçek çam ve ağaçlar, kütükler, kayalar
+  SF.treeP=[];let n=0;for(let k=0;k<1200&&n<120;k++){const x=(sfHash(k,21)-.5)*110,z=SFK.zm+3+sfHash(k,22)*45;if(Math.abs(x)<5.5&&z<SFK.zm+9)continue;if(Math.hypot(x-2.6,z-42)<3)continue;n++;
+    const h=sfH(x,z),H=8+sfHash(k,23)*9,kind=sfHash(k,25);const a=kind<.4?'f_pine_a':kind<.75?'f_pine_b':'f_tree_tall',ht=a==='f_tree_tall'?28.3:a==='f_pine_a'?29.7:31.6;add(a,TR(x,h-.3,z,sfHash(k,26)*6,H/ht));}
+  for(const[x,z,s,a]of[[-6,42,.95,'f_snag'],[8,47,.8,'f_snag'],[-9.5,40,.32,'f_log'],[5.5,44.5,.6,'f_rock_med_a'],[-4.2,38.6,.45,'f_rock_med_b'],[7,39,.22,'f_boulder_c'],[-12,45,.25,'f_boulder_d'],[3.6,38.2,.9,'f_rock_small_b'],[-2.8,39.4,1,'f_rock_small_c'],[12,52,.3,'f_tree_gnarl'],[-15,50,.9,'f_tree_small']])add(a,TR(x,sfH(x,z)-.1,z,sfHash(x|0,z|0)*6,s));
+  SF.pg=new Map();for(const it of P){if(!SF.pg.has(it.a))SF.pg.set(it.a,[]);SF.pg.get(it.a).push(it);}}
+function sfReady(list){if(!ENV.lib)return false;let ok=true;for(const a of list)if(!envAsset(a))ok=false;return ok;}
+function sfDrawProps(core,trees){if(!ENV.lib||!SF.pg)return;let oc=SF.okCell;if(!(oc>=0&&grid[oc])){oc=-1;for(let c=0;c<grid.length;c++)if(grid[c]){oc=c;break;}SF.okCell=oc;}if(oc<0)return;
+  const u=envBegin(),PL=envPlanes();for(const[a,list]of SF.pg){const isT=a.startsWith('f_');if(isT?!trees&&SF_TREE.includes(a):!core&&SF_CORE.includes(a))continue;for(const it of list)it.cell=oc;try{envDrawGroup(u,{a,v:''},list,PL);}catch(e){}}
+  gl.useProgram(PR.p);gl.bindVertexArray(null);}
 // ---- giriş / çıkış ----
 function sfStart(){if(!SF.mesh)try{sfBuild();}catch(e){console.error('yüzey',e);return false;}
   SF.on=true;SF.t=0;SF.go=null;SF.gate=0;SF.cy=0;SF.save={x:pl.x,z:pl.z,yaw:pl.yaw,pitch:pl.pitch,bots:bots.filter(b=>!b.remote).map(b=>[b,b.x,b.z,b.face,b.st])};
@@ -5254,10 +5436,15 @@ function sfRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2
   gl.depthMask(false);draw(MS,X(M4.T(eye[0],eye[1],eye[2]),M4.S(64,64,64)),[0,0,0],[.012,.016,.034],0);gl.depthMask(true);
   for(const[x,z,s]of[[-48,92,26],[0,104,30],[46,96,24],[-80,70,22],[80,72,26]])draw(MCone,X(M4.T(x,-2,z),M4.S(s,s*.9,s)),[.05,.055,.07],Z3,2);
   const I=M4.id(),m=SF.mesh;
+  let triOn=false;try{triOn=envTriBind();}catch(e){}
   if(m.rock)draw(m.rock,I,[1,1,1],Z3,1);if(m.floor)draw(m.floor,I,[1,1,1],Z3,1);if(m.stal)draw(m.stal,I,[1,1,1],Z3,1);if(m.dark)draw(m.dark,I,[.05,.045,.04],Z3,1);
+  if(triOn)gl.uniform1f(U('uTri'),0);
+  const core=sfReady(SF_CORE),trees=sfReady(SF_TREE);
   if(m.ground)draw(m.ground,I,[.085,.1,.06],Z3,2);
+  if(!core){if(m.fbW)draw(m.fbW,I,[.2,.13,.07],Z3,4);if(m.fbS)draw(m.fbS,I,[.2,.19,.18],Z3,3);if(m.fbT)draw(m.fbT,I,[.16,.11,.065],Z3,4);if(m.fbC)draw(m.fbC,I,[.17,.12,.08],Z3,5);if(m.fbR)draw(m.fbR,I,[.2,.19,.18],Z3,3);}
   if(m.wood)draw(m.wood,I,[.2,.13,.07],Z3,4);if(m.wood2)draw(m.wood2,I,[.16,.11,.065],Z3,4);if(m.steel)draw(m.steel,I,[.2,.19,.18],Z3,3);if(m.cart)draw(m.cart,I,[.17,.12,.08],Z3,5);if(m.cloth)draw(m.cloth,I,[.16,.13,.08],Z3,2);
-  if(m.trunk)draw(m.trunk,I,[.09,.065,.045],Z3,4);if(m.pine)draw(m.pine,I,[.03,.055,.035],Z3,2);
+  if(!trees){if(m.trunk)draw(m.trunk,I,[.09,.065,.045],Z3,4);if(m.pine)draw(m.pine,I,[.03,.055,.035],Z3,2);}
+  sfDrawProps(core,trees);gl.useProgram(PR.p);
   draw(MCone,X(M4.T(F[0],F[1]+.08,F[2]),M4.S(.3*fl,.55*fl,.3*fl)),[0,0,0],[2.2*fl,.9*fl,.2*fl],0);
   for(const p of SF.lanterns)draw(MS,X(M4.T(p[0],p[1],p[2]),M4.S(.07,.1,.07)),[.3,.25,.15],[1.4,.9,.35],3);
   draw(MS,X(M4.T(SF.lamp[0],SF.lamp[1]+.08,SF.lamp[2]),M4.S(.06,.08,.06)),[.3,.25,.15],[1.5*lf,1*lf,.4*lf],3);
@@ -5291,7 +5478,7 @@ function sfMenuRender(dt){if(!SF.mesh){try{sfBuild();}catch(e){console.error('me
   if(!SF.dust){SF.dust=[];for(let k=0;k<36;k++)SF.dust.push([sfHash(k,101),sfHash(k,102),sfHash(k,103),.3+sfHash(k,104)]);}
   SFM.t+=dt;SFM.st+=dt;let S=SF_SHOTS[SFM.shot];if(SFM.st>S.d){SFM.st=0;SFM.shot=(SFM.shot+1)%SF_SHOTS.length;S=SF_SHOTS[SFM.shot];}
   const k=SFM.st/S.d,c=S.f(k*k*(3-2*k)*.35+k*.65);c.t=SFM.t;const f=$('mFade');if(f)f.style.opacity=Math.max(0,1-SFM.st/.9,(SFM.st-(S.d-.9))/.9).toFixed(3);
-  sfRender(c);}
+  sfRender(c);if(typeof menuAudTick==='function')try{menuAudTick(dt);}catch(e){}}
 // ==== SURF END ====
 
 function begin(fresh){audioInit();applyAudio();$('how').hidden=$('multi').hidden=$('bye').hidden=true;tipQ=[];tipT=0;$('tip').classList.remove('on');$('ascend').hidden=true;$('hotbar').hidden=false;if(AC&&AC.state==='suspended')AC.resume();
@@ -5329,7 +5516,43 @@ $('mLeave').addEventListener('click',()=>{netLeave();netLobbyRender();netMsg('Od
 $('mQuit').addEventListener('click',()=>{try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}if(AC)AC.suspend();subMenu('bye');});
 for(const b of document.querySelectorAll('.back'))b.addEventListener('click',()=>{if(AC)AC.resume();if(NET.on&&!NET.started&&b.closest('#multi'))netLeave();showMenu();});
 $('endMenu').addEventListener('click',showMenu);
-$('play').addEventListener('click',()=>{if(loadSave()&&$('contBox').hidden){$('contBox').hidden=false;$('mCont').focus({preventScroll:true});return;}resetRun();clearSave();begin();});$('mNew').addEventListener('click',()=>{resetRun();clearSave();begin();});$('restart').addEventListener('click',()=>{resetRun();begin();});
+// ==== UI: menü ortam sesi, düğme sesleri, ilk OYNA'da kısa hikâye ====
+function uiSnd(k){if(!AC||!sfxBus||AC.state!=='running')return;try{const t=AC.currentTime,g=AC.createGain();g.gain.value=1;g.connect(sfxBus);
+  const nz=(f,q,d,v)=>{const s=AC.createBufferSource();s.buffer=nbuf;const fl=AC.createBiquadFilter();fl.type='bandpass';fl.frequency.value=f;fl.Q.value=q;const e=AC.createGain();e.gain.setValueAtTime(v,t);e.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(fl).connect(e).connect(g);s.start(t,Math.random()*1.5);s.stop(t+d+.05);};
+  const os=(f0,f1,d,v)=>{const o=AC.createOscillator();o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+d);const e=AC.createGain();e.gain.setValueAtTime(v,t);e.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(e).connect(g);o.start(t);o.stop(t+d+.05);};
+  if(k==='hov')os(1900,1600,.05,.02);else if(k==='tick')nz(3000+Math.random()*900,5,.025,.045);else if(k==='back'){nz(900,2,.05,.1);os(320,200,.09,.05);}
+  else{nz(1400,2.5,.045,.14);os(240,170,.08,.07);nz(4200,6,.02,.04);}}catch(e){}}
+const MAU={nodes:null,last:0,dT:2,cT:5,gr:0,hv:null};
+function menuAudTick(dt){MAU.last=performance.now();if(!AC||!nbuf||AC.state!=='running')return;
+  if(!MAU.nodes){try{const s=AC.createBufferSource();s.buffer=nbuf;s.loop=true;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=380;f.Q.value=.6;const g=AC.createGain();g.gain.value=0;s.connect(f).connect(g).connect(master);s.start(0,Math.random());MAU.nodes={s,f,g};}catch(e){return;}}
+  const N=MAU.nodes,sh=SFM.shot,t=SFM.t,now=AC.currentTime;const base=sh===0?.085:sh===1?.03:.022;
+  N.g.gain.setTargetAtTime(base*(.55+.9*(Math.sin(t*.37)*.5+.5)*(Math.sin(t*.13+1)*.5+.5)),now,.5);N.f.frequency.setTargetAtTime(280+300*(Math.sin(t*.21)*.5+.5),now,.6);
+  MAU.dT-=dt;if(MAU.dT<=0){MAU.dT=1.2+Math.random()*3.5;sfx('drip',sh===0?.1:.25,(Math.random()-.5)*1.4);}
+  MAU.cT-=dt;if(MAU.cT<=0){MAU.cT=6+Math.random()*9;const r=Math.random();if(r<.4)sfx('creak',.16,(Math.random()-.5));else if(r<.6)sfx('rumble',.14);else if(sh===0)sfx('rustle',.1,(Math.random()-.5)*1.6);else sfx('plink',.07,(Math.random()-.5));}
+  if(sh===1){if(!MAU.gr&&SFM.st>SF_SHOTS[1].d*.62){MAU.gr=1;sfx('growl',.1,-.5,true);}}else MAU.gr=0;}
+function menuAudStop(){const N=MAU.nodes;if(!N)return;MAU.nodes=null;try{N.g.gain.setTargetAtTime(0,AC.currentTime,.3);N.s.stop(AC.currentTime+1.4);}catch(e){}}
+setInterval(()=>{if(MAU.nodes&&performance.now()-MAU.last>350)menuAudStop();},300);
+function menuWake(){if(G.state!=='intro'||!$('bye').hidden)return;const had=!!AC;audioInit();if(!had&&AC){try{applyAudio();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();}
+addEventListener('pointerdown',menuWake,true);addEventListener('keydown',menuWake,true);
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(!b||b.closest('#touch,#hotbar'))return;if(!b.closest('.screen,#spec,#story'))return;uiSnd(b.classList.contains('back')||b.id==='pX'?'back':'clk');},true);
+document.addEventListener('pointerover',e=>{if(e.pointerType!=='mouse')return;const b=e.target.closest&&e.target.closest('.mb,.crate,.sTabs button,.dScr .go,.seg button');if(b!==MAU.hv){MAU.hv=b;if(b)uiSnd('hov');}});
+const STORY=['Kara Damar Madeni üç gün önce mühürlendi.','Alt katlarda bir göçük oldu. Aşağıda kalanlardan bir daha ses çıkmadı.','Ama telsiz hâlâ cızırdıyor. Ve damarda hâlâ taş var.','Dört kişisiniz. Bir kafes. Yedi kat.','Tek bir kural var: ışığın seni gösterir.'];
+function storyThen(cb){let seen=false;try{seen=localStorage.getItem('kd_story')==='1';localStorage.setItem('kd_story','1');}catch(e){}
+  if(seen||(navigator.webdriver&&!window.__kdStory)){cb();return;}
+  const el=$('story'),T=$('stT');T.innerHTML='';el.classList.remove('out');el.hidden=false;$('start').hidden=true;
+  const S={i:0,c:0,typing:false,done:false,acc:0,wait:0,p:null,raf:0};let lt=performance.now();
+  const fin=()=>{if(S.done)return;S.done=true;cancelAnimationFrame(S.raf);el.classList.add('out');setTimeout(()=>{el.hidden=true;el.classList.remove('out');cb();},600);};
+  const endLine=()=>{const L=STORY[S.i];S.c=L.length;S.p.textContent=L;S.typing=false;S.wait=S.i===STORY.length-1?2.8:1.6;S.i++;};
+  const next=()=>{if(S.i>=STORY.length){fin();return;}if(S.p)S.p.classList.add('old');S.p=document.createElement('p');T.appendChild(S.p);S.c=0;S.acc=-.25;S.typing=true;};
+  const step=now=>{if(S.done)return;const dt=Math.min(.5,(now-lt)/1000);lt=now;
+    if(S.typing){S.acc+=dt;const L=STORY[S.i];while(S.acc>.036&&S.c<L.length){S.acc-=.036;S.c++;if(S.c%2===0&&L[S.c-1]!==' ')uiSnd('tick');}S.p.textContent=L.slice(0,S.c);if(S.c>=L.length)endLine();}
+    else{S.wait-=dt;if(S.wait<=0)next();}
+    S.raf=requestAnimationFrame(step);};
+  el.onclick=e=>{if(e.target.closest('#stSkip'))return;if(S.typing)endLine();else S.wait=0;};
+  $('stSkip').onclick=e=>{e.stopPropagation();fin();};
+  next();S.raf=requestAnimationFrame(step);}
+
+$('play').addEventListener('click',()=>{if(loadSave()&&$('contBox').hidden){$('contBox').hidden=false;$('mCont').focus({preventScroll:true});return;}resetRun();clearSave();storyThen(()=>begin());});$('mNew').addEventListener('click',()=>{resetRun();clearSave();storyThen(()=>begin());});$('restart').addEventListener('click',()=>{resetRun();begin();});
 $('again').addEventListener('click',()=>{const sn=RUN.snap;if(sn){RUN.floor=sn.floor;RUN.inv={...sn.inv};RUN.cartGems=[...sn.cartGems];RUN.alive=[...sn.alive];}begin();});
 
 if(isTouch)$('keysDesk').hidden=true;
@@ -5345,7 +5568,7 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;adaptRes((no
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
-window.__kd={get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
+window.__kd={UI:{openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
   LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
 })();
 </script>
