@@ -542,7 +542,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v43</span></div>
+  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v44</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -873,11 +873,12 @@ loadDerisiz();
 // Aynı paket ağ üzerinden gönderilecek paket: mnPack/mnUnpack (8 bayt). Kemik dönüşleri asla gönderilmez.
 const MN={ready:false,S:.01};
 function b64buf(t){const bs=atob(t.trim());const u=new Uint8Array(bs.length);for(let i=0;i<bs.length;i++)u[i]=bs.charCodeAt(i);return u.buffer;}
-function mnLodIdx(P,uv,nor,idx,groups,cell){const nv=P.length/3,rep=new Int32Array(nv),M=new Map();
-  for(let i=0;i<nv;i++){const kx=Math.floor(P[i*3]/cell)+512,ky=Math.floor(P[i*3+1]/cell)+512,kz=Math.floor(P[i*3+2]/cell)+512;
-    const k=((((kx*1024+ky)*1024+kz)*256+((Math.floor(uv[i*2]*8)&15)*16+(Math.floor(uv[i*2+1]*8)&15)))*8)+(nor[i*4]>0?4:0)+(nor[i*4+1]>0?2:0)+(nor[i*4+2]>0?1:0);
-    const r=M.get(k);if(r===undefined){M.set(k,i);rep[i]=i;}else rep[i]=r;}
-  const out=[],gs=[];for(const g of groups){const s0=out.length,seen=new Set();for(let t=g.start;t<g.start+g.count;t+=3){const a=rep[idx[t]],b=rep[idx[t+1]],c=rep[idx[t+2]];if(a===b||b===c||a===c)continue;
+function mnLodIdx(P,uv,nor,idx,groups,par){const out=[],gs=[];
+  for(const g of groups){const{cell,uq}=par(g),M=new Map(),rep=new Map(),R=i=>{let r=rep.get(i);if(r!==undefined)return r;
+      const kx=Math.floor(P[i*3]/cell)+512,ky=Math.floor(P[i*3+1]/cell)+512,kz=Math.floor(P[i*3+2]/cell)+512;
+      const k=((((kx*1024+ky)*1024+kz)*4096+((Math.floor(uv[i*2]*uq)&63)*64+(Math.floor(uv[i*2+1]*uq)&63)))*8)+(nor[i*4]>0?4:0)+(nor[i*4+1]>0?2:0)+(nor[i*4+2]>0?1:0);
+      r=M.get(k);if(r===undefined){M.set(k,i);r=i;}rep.set(i,r);return r;};
+    const s0=out.length,seen=new Set();for(let t=g.start;t<g.start+g.count;t+=3){const a=R(idx[t]),b=R(idx[t+1]),c=R(idx[t+2]);if(a===b||b===c||a===c)continue;
       const lo=Math.min(a,b,c),hi=Math.max(a,b,c),mi=a+b+c-lo-hi,key=(lo*32768+mi)*32768+hi;if(seen.has(key))continue;seen.add(key);out.push(a,b,c);}gs.push({mat:g.mat,start:s0,count:out.length-s0});}
   return {idx:out,n:out.length,groups:gs};}
 function kdmParse(buf){const dv=new DataView(buf);const hl=dv.getUint32(4,true);const H=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,8,hl)));let o=8+hl;
@@ -906,7 +907,7 @@ async function loadMiner(){try{
     for(const[A,B]of[[d.nor,N2],[d.tan,T2]]){const a=A[i*4],b=A[i*4+1],c=A[i*4+2];B[i*4]=Math.round(G[0]*a+G[4]*b+G[8]*c);B[i*4+1]=Math.round(G[1]*a+G[5]*b+G[9]*c);B[i*4+2]=Math.round(G[2]*a+G[6]*b+G[10]*c);B[i*4+3]=A[i*4+3];}}
   d.pos=P2;d.nor=N2;d.tan=T2;
   // uzak madenciler için yükleme anında LOD: aynı köşeleri paylaşan sadeleştirilmiş üçgen listeleri (kümeleme), tek indeks tamponuna eklenir
-  {const t0=performance.now(),L1=mnLodIdx(P2,d.uv,N2,d.idx,H.groups,2.5),L2=mnLodIdx(P2,d.uv,N2,d.idx,H.groups,6);const ni=d.idx.length;
+  {const t0=performance.now(),hd=g=>g.mat==='Material.014',L1=mnLodIdx(P2,d.uv,N2,d.idx,H.groups,g=>hd(g)?{cell:1.6,uq:32}:{cell:2.5,uq:8}),L2=mnLodIdx(P2,d.uv,N2,d.idx,H.groups,g=>hd(g)?{cell:2.5,uq:32}:{cell:6,uq:8});const ni=d.idx.length;
     const all=new d.idx.constructor(ni+L1.n+L2.n);all.set(d.idx,0);all.set(L1.idx,ni);all.set(L2.idx,ni+L1.n);d.idx=all;
     MN.g1=L1.groups.map(g=>({...g,start:g.start+ni}));MN.g2=L2.groups.map(g=>({...g,start:g.start+ni+L1.n}));MN.lodMs=performance.now()-t0;MN.lodN=[ni/3|0,L1.n/3,L2.n/3];}
   MN.vao=mkVAO(d);MN.groups=H.groups;MN.idx32=!!H.idx32;
@@ -5571,7 +5572,7 @@ function showMenu(){for(const id of['how','multi','bye','end','pause'])$(id).hid
   const sv=loadSave();$('contBox').hidden=true;if(sv)$('mContL').textContent='KAT -'+sv.snap.floor;$('start').hidden=false;$('play').focus({preventScroll:true});}
 function subMenu(id){$('start').hidden=true;$(id).hidden=false;const b=$(id).querySelector('.go:not([disabled])');if(b)b.focus({preventScroll:true});}
 $('mCont').addEventListener('click',()=>{const d=loadSave();if(!d){showMenu();return;}resetRun();const sn=d.snap;RUN.floor=sn.floor;RUN.inv={...sn.inv};RUN.cartGems=[...sn.cartGems];RUN.alive=[...sn.alive];RUN.up={...RUN.up,...d.up};RUN.time=d.time;begin();});
-$('mHow').addEventListener('click',()=>subMenu('how'));$('mMulti').addEventListener('click',()=>{kdWake();subMenu('multi');netRejoinUI();});
+$('mHow').addEventListener('click',()=>subMenu('how'));$('mMulti').addEventListener('click',()=>{kdWake();storyThen(()=>{subMenu('multi');netRejoinUI();});});
 $('mBots').addEventListener('click',()=>{if(NET.on)netLeave();resetRun();clearSave();begin();});
 try{$('mName').value=localStorage.getItem('kd_name')||'';}catch(e){}
 $('mCreate').addEventListener('click',async()=>{netMsg('Oda kuruluyor...');if(await netJoin(netCode(),true))netLobbyRender();});
