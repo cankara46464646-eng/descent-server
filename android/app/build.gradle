@@ -1,0 +1,29 @@
+plugins { id 'com.android.application' }
+def vName = project.findProperty('vName') ?: '1.0'
+def vCode = (project.findProperty('vCode') ?: '1') as Integer
+android {
+    namespace 'com.karadamar.descent'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'com.karadamar.descent'
+        minSdk 24
+        targetSdk 34
+        versionCode vCode
+        versionName vName
+    }
+    signingConfigs {
+        rel {
+            storeFile rootProject.file('descent.jks')
+            storePassword 'karadamar'
+            keyAlias 'descent'
+            keyPassword 'karadamar'
+        }
+    }
+    buildTypes {
+        release { minifyEnabled false; signingConfig signingConfigs.rel }
+    }
+    // "_" ile başlayan klasörler (ör. _grass_tex) varsayılan olarak pakete girmez; hepsini al
+    androidResources { ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~' ; noCompress 'jpg','png','mp3' }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+dependencies { implementation 'androidx.webkit:webkit:1.11.0' }

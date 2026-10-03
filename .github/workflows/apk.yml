@@ -1,0 +1,49 @@
+name: Android APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['android/**', '.github/workflows/apk.yml']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Oyunun güncel hâli (gh-pages)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: web
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Oyunu APK varlıklarına kopyala
+        run: |
+          A=android/app/src/main/assets
+          mkdir -p $A android/app/src/main/res/mipmap
+          rsync -a --exclude .git --exclude .nojekyll web/ $A/
+          rm -f $A/OKU-BENI.txt $A/TELEFONDAN-APK.txt
+          cp web/icons/icon-192.png android/app/src/main/res/mipmap/ic_launcher.png
+          V=$(grep -o 'v[0-9]\+</span></div>' web/index.html | head -1 | grep -o 'v[0-9]\+')
+          echo "V=${V:-v1}" >> $GITHUB_ENV
+      - name: Derle
+        working-directory: android
+        run: gradle assembleRelease --no-daemon -PvName=${V#v} -PvCode=${{ github.run_number }}
+      - name: Dosya adı
+        run: cp android/app/build/outputs/apk/release/app-release.apk Descent-$V.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Descent-apk
+          path: Descent-*.apk
+      - name: İndirme sayfası (Releases)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete apk-$V -y --cleanup-tag || true
+          gh release create apk-$V Descent-$V.apk -t "Descent $V (Android APK)" -n "Telefondan indir ve kur. Kurmak için bilinmeyen kaynaklara izin vermen gerekebilir."
