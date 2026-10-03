@@ -542,7 +542,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v44</span></div>
+  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v45</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -3721,6 +3721,11 @@ function candidates(){const out=[];if(G.state==='play')out.push({e:pl,lamp:pl.la
   for(const b of bots)if(ACTIVE.includes(b.st))out.push({e:b,lamp:b.lamp,carry:b.carry||null});return out;}
 // saklanma: lamba kapalı, elinde taş yok, çömelmiş ya da kıpırdamıyor → yaratık seni görmez, ancak dibine kadar gelirse koklar
 function plHidden(e){if(e===pl)return (G.state==='play'||G.state==='buried')&&!pl.lamp&&!pl.carry&&(pl.crouch||!pl.mv);return !!(e&&e.remote&&!e.lamp&&!e.carry&&(e.crouchN||!e.moving));}
+function crLure(x,z){const c=cr;if(['sleep','away','drag','stunned','recovering','retreat','flee','flare','stagger','stun'].includes(c.st))return;
+  if(Math.hypot(x-c.x,z-c.z)>24)return;if(c.st==='chase'&&c.lost<=0)return;
+  const now=G.time;c.lureN=Math.max(0,(c.lureN||0)-Math.max(0,now-(c.lureAt||-99))/25);c.lureAt=now;
+  const focus=Math.max(1.5,5.5-c.lureN*1.3);c.lureN++;c.st='lure';c.ix=x;c.iz=z;c.path=null;c.lureT=0;c.focusT=focus;c.focusing=false;c.tgt=null;c.hunt=false;
+  if(Math.hypot(pl.x-c.x,pl.z-c.z)<26)tip('rockLure','Taş yaratığın dikkatini dağıttı: oraya gidip birkaç saniye sadece ona odaklanacak. Şimdi uzaklaş! (Art arda atarsan daha az kanar.)');}
 function crSniff(c,t){c.st='listen';c.timer=3.2+Math.random()*2.6;c.path=null;c.moving=false;c.sniff=t||null;c.lost=0;crV('suspicious',()=>sfxAt('growl',c.x,c.z,.55,26));
   if(t===pl&&!G.sniffTip){G.sniffTip=true;tip('sniff','Yaratık hemen yanında ama seni göremiyor. KIPIRDAMA, lambayı yakma. Çömelerek yavaşça uzaklaşabilirsin.');}}
 function perceive(){let best=null;
@@ -3773,9 +3778,10 @@ function updateCreature(dt){{const c=cr;if(G.state==='play'&&c.st!=='sleep'&&c.s
   // vagondan taş çalma
   if(angerEff()>=3&&G.theftCD<=0&&G.cartGems.length&&!isSafe(cartPos[0],cartPos[1])&&Math.hypot(c.x-cartPos[0],c.z-cartPos[1])<2.6&&c.st!=='chase'){
     const g=G.cartGems.pop();RUN.cartGems.pop();G.theftCD=25;crV('suspicious',()=>sfxAt('snarl',c.x,c.z,1,40));sfxAt('gem',cartPos[0],cartPos[1],.8,30);toast(`Yaratık vagondan bir ${GEMT[g.type].ad} kaptı!`,3);c.st='wander';c.path=null;}
-  const p=perceive();
+  const p0=perceive(),p=c.st==='lure'&&p0&&!(p0.cause==='temas'&&p0.d<1.1)?null:p0;
   if(p&&(c.st!=='chase'||p.e===c.tgt||p.d<Math.hypot(c.tgt.x-c.x,c.tgt.z-c.z))){if(c.st!=='chase'){crV('detection',()=>sfxAt('roar',c.x,c.z,1,42));if(p.e===pl)sfx('sting',.9,0,false,musBus);c.path=null;c.grT2=2.2;}c.st='chase';c.tgt=p.e;c.lost=0;c.lk=[p.e.x,p.e.z];if(p.e===pl)G.cause=p.cause;}
   let heard=null;for(const n of noises){const d=Math.hypot(n.x-c.x,n.z-c.z);const see=los(c.x,c.z,n.x,n.z);const r=see?n.r:n.r*.85;if(d<r&&(!heard||r-d>heard.s))heard={n,s:r-d,d,see,r};}
+  if(heard&&c.st==='lure'&&heard.n.cause!=='patlama')heard=null;
   if(heard){const n=heard.n;
     if(c.st==='chase'){if(n.src===c.tgt){c.lost=0;c.lk=[n.x,n.z];}}
     else if(n.src&&heard.see&&heard.d<heard.r*.55&&!isSafe(n.src.x,n.src.z)&&(n.src===pl?G.state==='play':true)){c.st='chase';c.tgt=n.src;c.lost=0;c.lk=[n.x,n.z];c.path=null;if(n.src===pl){G.cause=n.cause;sfx('sting',.9,0,false,musBus);}crV('detection',()=>sfxAt('roar',c.x,c.z,1,42));c.grT2=2.2;}
@@ -3784,6 +3790,12 @@ function updateCreature(dt){{const c=cr;if(G.state==='play'&&c.st!=='sleep'&&c.s
     let tg=G.lastNoise&&!isSafe(G.lastNoise.x,G.lastNoise.z)?G.lastNoise:(!isSafe(pl.x,pl.z)?{x:pl.x,z:pl.z}:null);
     if(tg){emerge(tg);c.st='investigate';c.ix=tg.x;c.iz=tg.z;c.path=null;c.hunt=true;G.threat=30;sfx('rumble',1);toast('Sesinizi duydu. Size doğru kazıyor...',3.5);}else G.threat=92;}
   switch(c.st){
+  case 'lure':{c.lureT+=dt;const d=Math.hypot(c.ix-c.x,c.iz-c.z);
+    if(!c.focusing&&d>1.3&&c.lureT<9){if(!c.path&&!routeTo(c,c.ix,c.iz,40)){c.focusing=true;}else if(c.path&&followPath(c,dt,3.7*DIFF().cr))c.focusing=true;}
+    else{c.focusing=true;c.moving=false;c.path=null;c.face=turnTo(c.face,Math.atan2(-(c.ix-c.x),-(c.iz-c.z)),dt*4);c.focusT-=dt;c.snT=(c.snT||0)-dt;
+      if(c.snT<=0){c.snT=1.3+Math.random();crV('suspicious',()=>sfxAt('growl',c.x,c.z,.45,22));}
+      if(c.focusT<=0){c.st='listen';c.timer=1.5+Math.random();c.focusing=false;}}
+    break;}
   case 'chase':{const t=c.tgt;const valid=t&&(t===pl?(G.state==='play'||G.state==='buried'):ACTIVE.includes(t.st))&&!isSafe(t.x,t.z);
     if(!valid){c.st='listen';c.timer=2;c.path=null;break;}
     if(!(p&&p.e===t))c.lost+=dt;else c.lk=[t.x,t.z];
@@ -4002,7 +4014,7 @@ function updateWorld(dt){
     if(solid(cellOf(p.x),cellOf(nz))){p.vz*=-.3;hitW=true;}else p.z=nz;
     p.y=ny;const fy=floorY(p.x,p.z)+.06;if(p.y>ceilY(p.x,p.z)-.3){p.y=ceilY(p.x,p.z)-.3;p.vy=-Math.abs(p.vy)*.3;hitW=true;}
     let land=false;if(p.y<fy){p.y=fy;if(Math.abs(p.vy)>2.5){p.vy=-p.vy*.25;p.vx*=.5;p.vz*=.5;hitW=true;}else{p.vy=0;p.vx*=.8;p.vz*=.8;if(Math.hypot(p.vx,p.vz)<.4)land=true;}}
-    if(hitW&&p.kind==='rock'&&!p.hit){p.hit=true;sfxAt('rockHit',p.x,p.z,1.2,40);emit(p.x,p.z,15,null,'tas');}
+    if(hitW&&p.kind==='rock'&&!p.hit){p.hit=true;sfxAt('rockHit',p.x,p.z,1.2,40);emit(p.x,p.z,15,null,'tas');if(!NET.started||NET.host)crLure(p.x,p.z);}
     if(hitW&&p.kind==='flare')sfxAt('rockHit',p.x,p.z,.4,20);
     if(p.kind==='flare'&&gasL[cidx(p.x,p.z)]>.2){projs.splice(i,1);explode(p.x,p.z,'grizu');continue;}
     if(land||p.life<=0){projs.splice(i,1);if(p.kind==='flare'){flares.push({x:p.x,y:p.y,z:p.z,t:25,cT:0});}}}
@@ -4319,7 +4331,7 @@ function netVictimTick(dt){if(G.state==='paleGrab'){G.vgT-=dt;G.shake=Math.max(G
   if(tp){pl.x=lerp(pl.x,tp.x,Math.min(1,dt*8));pl.z=lerp(pl.z,tp.z,Math.min(1,dt*8));}pl.struggle=Math.max(0,pl.struggle-dt*2);
   G.plYell-=dt;if(G.plYell<=0){const r=Math.random();G.plYell=r<.7?1.7+Math.random()*.8:3.5+Math.random()*2;sfx(r<.7?'pant':r<.85?'yellLo':'screamLo',r<.7?.9:.75);}}
 // ---- host: dünya durumu ----
-const CR_ST=['away','sleep','listen','wander','investigate','chase','drag','stun','flee','retreat','flare','stagger','stunned','recovering'];
+const CR_ST=['away','sleep','listen','wander','investigate','chase','drag','stun','flee','retreat','flare','stagger','stunned','recovering','lure'];
 const PA_ST=['stalk','reveal','grab','drag','swipe','flee','freeze','hide','pounce','climb','perch','leap'];
 function netWorld(){const w={t:r2(G.time),an:r2(G.anger||0),th:Math.round(G.threat||0)};
   w.cr=[r2(cr.x),r2(cr.z),r2(cr.face),Math.max(0,CR_ST.indexOf(cr.st)),(cr.digging?1:0)|(cr.moving?2:0)|((cr.stand||0)>.5?4:0),cr.victim&&cr.victim.remote?cr.victim.peer:cr.victim===pl?NET.myPeer:0];
@@ -4657,7 +4669,7 @@ function hxLook(c,k){const a=-(c.face+Math.PI),cc=Math.cos(a),ss=Math.sin(a),dx=
 function drawCreature(){const c=cr;c.stand=lerp(c.stand||0,(c.st==='listen'&&!c.digging)?1:0,.04);
   if(HX.ready){const chase=c.st==='chase'||c.st==='flee'||(G.faceT>0&&G.state==='dragged'&&G.dragBy==='cr');const aware=chase||c.st==='listen'||c.st==='investigate';
     drawHemi(c,1,{chase,drag:c.st==='drag',dig:c.digging,stand:c.stand,sleep:c.st==='sleep',stun:c.st==='stun',flare:c.st==='flee'&&c.fleeT<1.2,...hxLook(c,aware&&c.st!=='flee'?1:.25),...(crStunFlags(c)||{})});return;}
-  drawBeast(c,1,PAL_ADULT,{chase:c.st==='chase'||c.st==='flare'||(G.faceT>0&&G.state==='dragged'&&G.dragBy==='cr'),drag:c.st==='drag',dig:c.digging,listen:c.st==='listen'||c.st==='sleep',flare:c.st==='flare'&&c.flare&&Math.hypot(c.flare.x-c.x,c.flare.z-c.z)<1.6});}
+  drawBeast(c,1,PAL_ADULT,{chase:c.st==='chase'||c.st==='flare'||(G.faceT>0&&G.state==='dragged'&&G.dragBy==='cr'),drag:c.st==='drag',dig:c.digging,listen:c.st==='listen'||c.st==='sleep'||(c.st==='lure'&&c.focusing),flare:c.st==='flare'&&c.flare&&Math.hypot(c.flare.x-c.x,c.flare.z-c.z)<1.6});}
 function drawBot(b){const t=G.time;const y=floorY(b.x,b.z);let base;const J=b.jacket,PANTS=[.09,.09,.1],SK=[.58,.42,.32],HELM=[.72,.56,.1],BOOT=[.06,.05,.045],REF=[.8,.78,.45],GLV=[.24,.19,.13],HAIR=[.06,.045,.035],DK=[.08,.08,.08];
   let flail=0;
   if(b.st==='dragged'){base=X(M4.T(b.x,y+.22+Math.abs(Math.sin(t*9))*.08,b.z),M4.RY(b.face+Math.PI),M4.RX(-Math.PI/2+Math.sin(t*7)*.1),M4.RZ(Math.sin(t*5)*.25));flail=1;}
@@ -5664,7 +5676,7 @@ requestAnimationFrame(frame);
 
 window.__kd={__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
   nbuf=C.createBuffer(1,sr*2,sr);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}
-  try{for(const[ty,v,dl]of type)setTimeout(()=>0,0),(dl?(()=>{const t0=C.currentTime;})():0),sfx(ty,v,0);}finally{}const buf=await C.startRendering();[AC,sfxBus,nbuf,master]=sv;return Array.from(buf.getChannelData(0));},__sfR:()=>{sfRender();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},__mR:()=>{sfMenuRender(0);gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},UI:{teamRevive,openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
+  try{for(const[ty,v,dl]of type)setTimeout(()=>0,0),(dl?(()=>{const t0=C.currentTime;})():0),sfx(ty,v,0);}finally{}const buf=await C.startRendering();[AC,sfxBus,nbuf,master]=sv;return Array.from(buf.getChannelData(0));},__sfR:()=>{sfRender();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},__mR:()=>{sfMenuRender(0);gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},UI:{crLure,teamRevive,openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
   LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
 })();
 </script>
