@@ -466,6 +466,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 .ntP p{margin:0;font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive;font-size:16px;line-height:1.55}
 .ntP i{align-self:flex-end;font-family:"Segoe Print","Bradley Hand",cursive;font-size:13px;color:#4a3b26}
 .ntP .go{align-self:center;margin-top:4px;background:#2a2116;color:#e8dcc0;font-size:12px;padding:8px 22px;border-radius:7px}
+#sndHint{color:var(--lamp);animation:stC 2.2s ease-in-out infinite}
 #story{position:fixed;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;padding:24px max(28px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.72),rgba(0,0,0,.97) 75%);cursor:pointer;animation:stIn .8s ease-out;transition:opacity .6s}
 #story.out{opacity:0}
 .stW{width:min(580px,100%);display:flex;flex-direction:column;gap:14px}
@@ -570,7 +571,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v48</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v49</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -3313,18 +3314,18 @@ function sfx(type,vol=1,pan=0,muff=false,bus){if(type==='screamLo'||type==='scre
   switch(type){
     case 'clang':nz(3200,2,.18,.9);os('triangle',2400,1900,.35,.25);os('sine',3700,3300,.25,.12);nz(500,1,.12,.6);break;
     case 'rock':nz(900,1.2,.15,.9);nz(2600,3,.08,.4);nz(180,.8,.12,.5,'lowpass');break;
-    case 'gem':os('sine',2800,2750,.6,.22);os('sine',4200,4100,.5,.12);nz(5000,4,.1,.3);break;
+    case 'gem':nz(3400,7,.03,1.3,'bandpass');nz(1700,5,.05,1,'bandpass',.012);os('sine',2300+Math.random()*500,2250,.22,.12,.001,.004);break;
     case 'step':{const pr=.88+Math.random()*.24;os('sine',95*pr,52*pr,.075,.55,.004);nz(180*pr,.8,.08,.6,'lowpass');
       const n=4+(Math.random()*4|0);for(let k=0;k<n;k++)nz((1300+Math.random()*2600)*pr,1.4+Math.random()*1.4,.01+Math.random()*.018,.12+Math.random()*.2,'bandpass',.008+Math.random()*.085);
       nz(800*pr,1.2,.05,.14,'bandpass',.07+Math.random()*.03);break;}
     case 'whoosh':nz(1200,.5,.2,.25);break;
-    case 'drip':os('sine',1400,500,.12,.25);break;
-    case 'bonk':os('sine',160,70,.25,.9);os('sine',320,900,.35,.35,.05);break;
+    case 'drip':{const f=1100+Math.random()*700;os('sine',f,f*2.1,.035,.24,.001);nz(4200,12,.02,.12,'bandpass',.004);os('sine',f*1.1,f*2.2,.03,.07,.001,.19);break;}
+    case 'bonk':os('sine',95,48,.2,1,.002);nz(650,1.1,.09,.9,'bandpass');nz(2600,2,.03,.35,'bandpass');nz(180,.8,.14,.6,'lowpass',.01);break;
     case 'snap':nz(2500,1,.05,1.2,'highpass');os('square',180,60,.08,.3);break;
     case 'grab':os('sawtooth',120,60,.5,.4);nz(700,1,.4,.8);break;
     case 'thump':os('sine',70,45,.16,.9);break;
     case 'heart':os('sine',62,38,.14,1,.004);nz(120,1,.08,.5,'lowpass');os('sine',55,34,.16,.75,.004,.2);nz(110,1,.09,.35,'lowpass',.2);break;
-    case 'deposit':os('sine',1800,1750,.3,.2);setTimeout(()=>sfx('gem',.6),90);nz(400,1,.2,.4);break;
+    case 'deposit':for(let k=0;k<4;k++)nz(1300+Math.random()*1900,3.5,.04,.55,'bandpass',k*.07+Math.random()*.03);os('sine',172,150,.35,.22,.002,.02);os('sine',465,440,.25,.08,.002,.02);nz(280,.9,.14,.45,'lowpass');break;
     case 'switch':nz(4000,3,.03,.5,'highpass');break;
     case 'scratch':nz(3000,1,.25,.35);break;
     case 'crumble':nz(220,.7,.55,1.1,'lowpass');nz(1100,1,.25,.55);os('sine',60,40,.3,.4);break;
@@ -3335,7 +3336,7 @@ function sfx(type,vol=1,pan=0,muff=false,bus){if(type==='screamLo'||type==='scre
     case 'roar':bugRattle(t,o2,vol*.6,.28,26,48,420,1250);bugShriek(t+.25,o2,vol,1.3,720,470,38,30);nz(300,.6,.9,.5,'lowpass',.25);break;
     case 'sting':[110,116.54,155.56,164.81,233.08,246.94].forEach(f=>{const o=AC.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=(Math.random()-.5)*20;const fl=AC.createBiquadFilter();fl.type='lowpass';fl.frequency.setValueAtTime(4000,t);fl.frequency.exponentialRampToValueAtTime(260,t+2.2);const g=AC.createGain();env(g,t,.012,2.3,.1*vol);o.connect(fl).connect(g).connect(o2);o.start(t);o.stop(t+2.5);});nz(260,.6,.7,.9,'lowpass');break;
     case 'swell':{const sets=[[220,233.08,329.63],[196,207.65,293.66],[174.61,185,261.63],[246.94,261.63,369.99]];const st=pick(sets);st.forEach((f,k)=>{const o=AC.createOscillator();o.type=k?'triangle':'sawtooth';o.frequency.value=f;o.detune.value=(Math.random()-.5)*16;const fl=AC.createBiquadFilter();fl.type='lowpass';fl.frequency.value=900;const g=AC.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+3.5);g.gain.linearRampToValueAtTime(vol*.8,t+5);g.gain.exponentialRampToValueAtTime(.0001,t+10);o.connect(fl).connect(g).connect(o2);o.start(t);o.stop(t+10.2);});break;}
-    case 'plink':{const f=pick([440,466.16,523.25,622.25,659.25,698.46,880,932.33])*(Math.random()<.35?.5:1);os('sine',f,f*.998,2.6,.9,.004);os('sine',f*2.01,f*2,1.2,.25,.004);os('triangle',f*3,f*3,.4,.08,.002);break;}
+    case 'plink':{const f=pick([98,110,116.54,130.81,146.83,155.56]);os('sine',f,f*.997,2.8,.75,.006);os('sine',f*2.76,f*2.75,1.1,.16,.004);os('sine',f*5.4,f*5.38,.5,.05,.003);break;}
     case 'tom':os('sine',70,42,.35,1,.004);nz(90,1,.2,.5,'lowpass');break;
     case 'click':nz(1800,6,.04,.7);break;
     case 'screamLo':voice2(t,o2,vol*.62,.85+Math.random()*.3,190+Math.random()*25,1.55,Math.random()<.5?'a':'o',.6);break;
@@ -3366,13 +3367,13 @@ function sfx(type,vol=1,pan=0,muff=false,bus){if(type==='screamLo'||type==='scre
     case 'flutter':for(let k=0;k<8;k++)nz(1500,1.2,.03,.5,'bandpass',k*.06);os('sine',4200,2800,.2,.3,.004,.1);break;
     case 'gush':nz(600,.5,3,1.3,'lowpass');nz(1800,.7,2.6,.7);for(let k=0;k<10;k++)os('sine',300+Math.random()*500,800+Math.random()*600,.06,.2,.004,Math.random()*2.4);break;
     case 'stream':nz(900,.6,1.1,.6);for(let k=0;k<4;k++)os('sine',400+Math.random()*600,900+Math.random()*500,.05,.15,.004,Math.random()*.9);break;
-    case 'splash':nz(1300,.9,.18,.8);os('sine',500+Math.random()*300,1100,.06,.25,.004,.03);break;
+    case 'splash':nz(1300,.9,.18,.8);nz(480,.7,.26,.55,'lowpass',.02);nz(3200,1.1,.09,.3,'bandpass',.05);break;
     case 'babyScreech':{const o=AC.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(900,t);o.frequency.linearRampToValueAtTime(1900,t+.35);o.frequency.linearRampToValueAtTime(1300,t+1.2);const lf=AC.createOscillator();lf.frequency.value=37;const lg=AC.createGain();lg.gain.value=260;lf.connect(lg).connect(o.frequency);const ws=AC.createWaveShaper();ws.curve=DIST;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=2300;bp.Q.value=2;const g=AC.createGain();env(g,t,.03,1.25,.55*vol);o.connect(ws).connect(bp).connect(g).connect(o2);o.start(t);lf.start(t);o.stop(t+1.4);lf.stop(t+1.4);nz(4000,1,1,.4,'highpass');break;}
     case 'babyDie':beast(t,o2,vol*.7,.6,420,160,true);nz(900,1,.2,.8);break;
     case 'squelch':nz(500,1.2,.3,1.1,'lowpass');os('sine',180,60,.25,.6);nz(1400,2,.12,.5,'bandpass',.08);break;
     case 'snarl':bugRattle(t,o2,vol*.9,.8,32,24,400,1200);nz(3200,1.2,.45,.35);break;
-    case 'coin':os('sine',2400,2400,.25,.3,.002);os('sine',3600,3600,.18,.2,.002,.05);os('sine',3000,3000,.2,.2,.002,.1);break;
-    case 'nightDone':[261.63,329.63,392,523.25].forEach((f,k)=>os('triangle',f,f,1.6,.25,.02,k*.12));break;
+    case 'coin':nz(3000,6,.03,1.1,'bandpass');nz(1500,4,.05,.9,'bandpass',.015);break;
+    case 'nightDone':os('sine',73.42,73.4,4,.5,.8);[146.83,220,369.99,440].forEach((f,k)=>{os('triangle',f,f,3.6,.16,.7+k*.15,k*.25);os('sine',f*1.003,f,3.2,.08,.7,k*.25);});break;
     case 'pullcord':nz(1500,1,.35,.7);os('sawtooth',60,120,.3,.2);for(let k=0;k<4;k++)os('square',40+k*6,30,.05,.35,.002,.12+k*.06);break;
     case 'engineStart':for(let k=0;k<5;k++){os('sawtooth',38+k*3,30,.12,.7,.004,k*.18);nz(300,1,.1,.6,'lowpass',k*.18);}os('sawtooth',48,52,1.4,.6,.2,.9);nz(260,.8,1.4,.8,'lowpass',.9);break;
     case 'engine':os('sawtooth',50,48,.5,.5,.02);os('square',100,98,.5,.12,.02);nz(250,1,.45,.5,'lowpass');break;
@@ -3390,7 +3391,7 @@ function sfx(type,vol=1,pan=0,muff=false,bus){if(type==='screamLo'||type==='scre
       os('sine',60,40,.3,.4,.002,.78);clank(360,.8,.18,.3);for(let k=0;k<8;k++)tick(.42+Math.random()*.6,.15+Math.random()*.2);break;
     case 'liftUp':os('sine',165,112,.09,.45,.001);nz(950,1.8,.05,.4,'bandpass');nz(230,.9,.08,.35,'lowpass');for(let k=0;k<4;k++)tick(.05+Math.random()*.4,.1+Math.random()*.18);break;
     case 'hoist':{hold('sawtooth',38,100,2.2,.08,1.2,.6,0,380);hold('sine',30,50,2.2,.2,1.2,.6);nzh(700,.7,2.2,.12,1,.6,'bandpass',0,900);clank(280,.05,.35,.6);break;}
-    case 'pickup':nz(1800,1.2,.12,.6);os('triangle',900,1300,.09,.25,.004);os('sine',1600,1600,.12,.18,.004,.08);break;
+    case 'pickup':nz(2400,.8,.1,.8,'bandpass');nz(900,1,.08,.75,'bandpass',.04);nz(200,.9,.07,.7,'lowpass',.05);break;
     case 'knock':for(let k=0;k<2;k++){os('sine',210,150,.14,.9,.002,k*.16);nz(700,3,.08,.7,'bandpass',k*.16);}break;
     case 'crate':{const o=AC.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(140,t);o.frequency.linearRampToValueAtTime(240,t+.5);o.frequency.linearRampToValueAtTime(170,t+.8);const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=900;bp.Q.value=6;const g=AC.createGain();env(g,t,.05,.75,.35*vol);o.connect(bp).connect(g).connect(o2);o.start(t);o.stop(t+1);os('sine',120,70,.18,.8,.002,.85);nz(500,1,.25,.6,'lowpass',.85);break;}
     case 'heavy':voice(t,o2,vol*.7,.45,140,1.15,'u');nz(300,1,.2,.5,'lowpass');break;
@@ -5653,7 +5654,7 @@ $('mJoin').addEventListener('click',async()=>{const c=$('mJoinCode').value.trim(
 $('mJoinCode').addEventListener('keydown',e=>{if(e.key==='Enter')$('mJoin').click();});
 $('mStart').addEventListener('click',()=>{if(NET.host&&!NET.started)netHostStart(1);});
 $('mLeave').addEventListener('click',()=>{netLeave();netLobbyRender();netMsg('Odadan çıktın.');});
-$('mQuit').addEventListener('click',()=>{try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}if(AC)AC.suspend();subMenu('bye');});
+$('mQuit').addEventListener('click',()=>{if(/Electron/.test(navigator.userAgent)){window.close();return;}try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}if(AC)AC.suspend();subMenu('bye');});
 for(const b of document.querySelectorAll('.back'))b.addEventListener('click',()=>{if(AC)AC.resume();if(NET.on&&!NET.started&&b.closest('#multi'))netLeave();showMenu();});
 $('endMenu').addEventListener('click',showMenu);
 // ==== XT BEGIN: ekip emirleri, saklanma vagonları, dinleme, yaratık izleri, kayıp madenci notları, sesli sohbet ====
@@ -5804,25 +5805,29 @@ function menuAudTick(dt){MAU.last=performance.now();if(!AC||!nbuf||AC.state!=='r
 // ---- menü gerilim müziği: karanlık akor dolgusu (Lam–Fa–Rem–Mi), seyrek müzik kutusu notaları, alçak uğultu ----
 const MMU={g:null,next:0,ci:0,bt:0,bn:0};
 const MM_CH=[[110,130.81,164.81],[87.31,110,130.81],[73.42,87.31,110],[82.41,103.83,123.47]];
-const MM_BL=[[440,523.25,659.25,493.88],[440,523.25,698.46,659.25],[587.33,698.46,440,523.25],[415.3,493.88,659.25,587.33]];
-function mmPad(ch,t0,d){const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(380,t0);lp.frequency.linearRampToValueAtTime(720,t0+d*.5);lp.frequency.linearRampToValueAtTime(400,t0+d+3);lp.Q.value=.8;
-  const e=AC.createGain();e.gain.setValueAtTime(0,t0);e.gain.linearRampToValueAtTime(1,t0+2.6);e.gain.setValueAtTime(1,t0+d);e.gain.linearRampToValueAtTime(0,t0+d+3.2);lp.connect(e).connect(MMU.g);
+const MM_BL=[[220,261.63,329.63,246.94],[220,261.63,349.23,329.63],[293.66,349.23,220,261.63],[207.65,246.94,329.63,293.66]];
+function mmPad(ch,t0,d,att=2.6){const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(380,t0);lp.frequency.linearRampToValueAtTime(720,t0+d*.5);lp.frequency.linearRampToValueAtTime(400,t0+d+3);lp.Q.value=.8;
+  const e=AC.createGain();e.gain.setValueAtTime(0,t0);e.gain.linearRampToValueAtTime(1,t0+att);e.gain.setValueAtTime(1,t0+d);e.gain.linearRampToValueAtTime(0,t0+d+3.2);lp.connect(e).connect(MMU.g);
   for(const f of ch)for(const dt of[-7,6]){const o=AC.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=dt+(Math.random()-.5)*4;const og=AC.createGain();og.gain.value=.016;o.connect(og).connect(lp);o.start(t0);o.stop(t0+d+3.4);}
   const s=AC.createOscillator();s.type='sine';s.frequency.value=ch[0]/2;const sg=AC.createGain();sg.gain.value=.05;s.connect(sg).connect(lp);s.start(t0);s.stop(t0+d+3.4);}
 function mmBell(f,t0,v,pan){const pn=AC.createStereoPanner?AC.createStereoPanner():null;const e=AC.createGain();e.gain.setValueAtTime(0,t0);e.gain.linearRampToValueAtTime(v,t0+.006);e.gain.exponentialRampToValueAtTime(.0001,t0+2.8);
   if(pn){pn.pan.value=pan;e.connect(pn).connect(MMU.g);}else e.connect(MMU.g);
-  for(const[m,a]of[[1,1],[2.76,.28],[5.4,.08]]){const o=AC.createOscillator();o.type='sine';o.frequency.value=f*m;o.detune.value=(Math.random()-.5)*8;const g=AC.createGain();g.gain.value=a;o.connect(g).connect(e);o.start(t0);o.stop(t0+3);}}
+  for(const[m,a]of[[1,1],[2.01,.22],[2.76,.1],[5.4,.03]]){const o=AC.createOscillator();o.type='sine';o.frequency.value=f*m;o.detune.value=(Math.random()-.5)*8;const g=AC.createGain();g.gain.value=a;o.connect(g).connect(e);o.start(t0);o.stop(t0+3);}}
 function menuMusTick(){if(!AC||!musBus||!mDrone)return;const now=AC.currentTime;
-  if(!MMU.g){MMU.g=AC.createGain();MMU.g.gain.value=0;MMU.g.connect(musBus);MMU.g.gain.setTargetAtTime(1,now,1.2);MMU.next=now+.3;MMU.bt=now+2.5;MMU.ci=0;}
+  if(!MMU.g){MMU.g=AC.createGain();MMU.g.gain.value=0;MMU.g.connect(musBus);MMU.g.gain.setTargetAtTime(1,now,.25);MMU.next=now+.05;MMU.bt=now+.9;MMU.ci=0;MMU.first=true;}
   const late=SFM.shot===1&&SFM.st>SF_SHOTS[1].d*.5;
   mDrone.f.frequency.setTargetAtTime(late?420:200+60*Math.sin(SFM.t*.2),now,.8);mDrone.g.gain.setTargetAtTime(late?.085:.06,now,.8);if(mTrem)mTrem.gain.setTargetAtTime(late?.035:0,now,.8);
-  if(now+.25>MMU.next){const t0=Math.max(now,MMU.next),ci=MMU.ci%4;mmPad(MM_CH[ci],t0,7.2);if(ci===3){sfx('tom',.1,0,false,musBus);sfx('swell',.035,(Math.random()-.5)*.5,false,musBus);}MMU.cur=ci;MMU.ci++;MMU.next=t0+8;}
+  if(now+.25>MMU.next){const t0=Math.max(now,MMU.next),ci=MMU.ci%4;mmPad(MM_CH[ci],t0,7.2,MMU.first?.5:2.6);MMU.first=false;if(ci===3){sfx('tom',.1,0,false,musBus);sfx('swell',.035,(Math.random()-.5)*.5,false,musBus);}MMU.cur=ci;MMU.ci++;MMU.next=t0+8;}
   if(now+.2>MMU.bt){const t0=Math.max(now,MMU.bt);MMU.bt=t0+1.75;MMU.bn++;if(!late&&MMU.cur!=null&&(MMU.bn%4===1||Math.random()<.35)){const L=MM_BL[MMU.cur];mmBell(L[(MMU.bn+(Math.random()*2|0))%4],t0,.035,(Math.random()-.5)*.7);if(Math.random()<.25)mmBell(L[(MMU.bn+2)%4]/2,t0+.9,.02,(Math.random()-.5)*.7);}}}
 function menuMusStop(){if(!MMU.g||!AC)return;const g=MMU.g;MMU.g=null;MMU.cur=null;try{g.gain.setTargetAtTime(0,AC.currentTime,.5);setTimeout(()=>{try{g.disconnect();}catch(e){}},4500);if(mTrem)mTrem.gain.setTargetAtTime(0,AC.currentTime,.4);mDrone.g.gain.setTargetAtTime(.04,AC.currentTime,.8);}catch(e){}}
 function menuAudStop(){menuMusStop();const N=MAU.nodes;if(!N)return;MAU.nodes=null;try{N.g.gain.setTargetAtTime(0,AC.currentTime,.3);N.s.stop(AC.currentTime+1.4);}catch(e){}}
 setInterval(()=>{if(MAU.nodes&&performance.now()-MAU.last>1500)menuAudStop();},400);
-function menuWake(){if(G.state!=='intro'||!$('bye').hidden)return;const had=!!AC;audioInit();if(!had&&AC){try{applyAudio();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();}
-addEventListener('pointerdown',menuWake,true);addEventListener('keydown',menuWake,true);
+// ses kilidi: tarayıcılar ilk dokunuşa kadar sesi açmaz. Her türlü ilk dokunuşta (iOS dahil) aç; açılabiliyorsa hemen aç.
+function menuWake(){if(!$('bye').hidden||G.state==='pause')return;const had=!!AC;audioInit();if(!AC)return;if(!had){try{applyAudio();}catch(e){}}
+  if(AC.state!=='running'){try{AC.resume().catch(()=>{});}catch(e){}try{const b=AC.createBuffer(1,1,22050),s=AC.createBufferSource();s.buffer=b;s.connect(AC.destination);s.start(0);}catch(e){}}}
+for(const ev of['pointerdown','touchstart','touchend','mousedown','click','keydown'])addEventListener(ev,menuWake,{capture:true,passive:true});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&AC&&AC.state!=='running'&&G.state!=='pause'&&$('bye').hidden)try{AC.resume().catch(()=>{});}catch(e){}});
+setTimeout(()=>{try{audioInit();if(AC){applyAudio();if(AC.state!=='running')AC.resume().catch(()=>{});}}catch(e){}},0);
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(!b||b.closest('#touch,#hotbar'))return;if(!b.closest('.screen,#spec,#story'))return;uiSnd(b.classList.contains('back')||b.id==='pX'?'back':'clk');},true);
 document.addEventListener('pointerover',e=>{if(e.pointerType!=='mouse')return;const b=e.target.closest&&e.target.closest('.mb,.crate,.sTabs button,.dScr .go,.seg button');if(b!==MAU.hv){MAU.hv=b;if(b)uiSnd('hov');}});
 const STORY=['Kara Damar Madeni üç gün önce mühürlendi.','Alt katlarda bir göçük oldu. Aşağıda kalanlardan bir daha ses çıkmadı.','Ama telsiz hâlâ cızırdıyor. Ve damarda hâlâ taş var.','Dört kişisiniz. Bir kafes. Yedi kat.','Tek bir kural var: ışığın seni gösterir.'];
@@ -5852,7 +5857,7 @@ let last=performance.now();
 const START_EL=document.getElementById('start');
 var FPSC={n:0,t:0,el:null};function fpsShow(){const e=$('fps');if(e)e.hidden=SET.fps===false;}
 function fpsTick(now){FPSC.n++;if(!FPSC.t)FPSC.t=now;const d=now-FPSC.t;if(d>=500){const f=Math.round(FPSC.n*1000/d);FPSC.n=0;FPSC.t=now;const e=FPSC.el||(FPSC.el=$('fps'));if(e&&!e.hidden){e.textContent=f+' FPS';e.className=f<25?'lo':f<45?'mid':'';}}}
-function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now;try{XT.uiT=(XT.uiT||0)-dt;if(XT.uiT<=0){XT.uiT=.5;vcUI();}vcTick(dt);}catch(e){}adaptRes((now-(frame.p||now))/1000);frame.p=now;
+function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now;try{XT.uiT=(XT.uiT||0)-dt;if(XT.uiT<=0){XT.uiT=.5;vcUI();const sh=$('sndHint');if(sh)sh.hidden=!!(AC&&AC.state==='running');}vcTick(dt);}catch(e){}adaptRes((now-(frame.p||now))/1000);frame.p=now;
   if(LD.on)try{loadTick(dt);}catch(e){console.warn('load',e);}
   try{netTick(dt);}catch(e){console.warn('net',e);}
   try{if(G.state==='intro'){G.time+=dt;pl.yaw+=dt*.08;}else if(G.state==='ascend'){G.time+=dt;updateAscend(dt);G.shake=Math.max(0,G.shake-dt);updateMusic(dt);}else if(G.state==='surface')sfTick(dt);else if(!['shop','end','descend','pause','load'].includes(G.state))update(dt);if(!window.__kdNoDraw&&!LD.on){if(G.state==='intro'){try{sfMenuRender(dt);}catch(e){console.warn('menü',e);}}else if(START_EL.hidden){if(SF.on&&(G.state==='surface'||G.state==='pause'))sfRender();else render();}}}catch(err){console.error(err);}
