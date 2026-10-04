@@ -112,7 +112,7 @@ html,body{height:100%;margin:0;overscroll-behavior:none;background:var(--bg);col
 #toast.on{opacity:1}
 #ctx{position:absolute;left:50%;top:58%;transform:translateX(-50%);font-size:12px;letter-spacing:.06em;background:var(--panel);padding:4px 10px;border-radius:3px;border:1px solid var(--line);opacity:0;transition:opacity .15s;white-space:nowrap}
 #ctx.on{opacity:1}
-#hud.surf #hotbar,#hud.surf #bDig,#hud.surf #bChalk,#hud.surf #bCrouch,#hud.surf #bUse,#hud.surf #ctx,#hud.surf #hold,#hud.surf #digb{display:none!important}
+#hud.surf #bOrd,#hud.surf #bLsn,#hud.surf #hotbar,#hud.surf #bDig,#hud.surf #bChalk,#hud.surf #bCrouch,#hud.surf #bUse,#hud.surf #ctx,#hud.surf #hold,#hud.surf #digb{display:none!important}
 #hud:has(#detP:not([hidden])) #ctx{top:36%}
 #ctx .k{font-family:var(--display);color:var(--lamp);margin-right:6px}
 #hold{position:absolute;left:50%;top:calc(58% + 34px);transform:translateX(-50%);width:130px;height:4px;background:var(--line);border-radius:2px;overflow:hidden;opacity:0}
@@ -569,7 +569,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v46</span></div>
+  <div class="mFoot" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v47</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -5777,7 +5777,7 @@ function vcApply(){if(VC.out)VC.out.gain.value=SET.vcv==null?1:SET.vcv;if(vcMode
 
 // ---------- bağlam / tik / çizim kancaları ----------
 function xtCtx(){return hideCtx()||noteCtx();}
-function xtTick(dt){try{if(G.state==='play'&&!GHO.on)hideTick(dt);lsnTick(dt);trTick(dt);
+function xtTick(dt){try{if(XT.ordFloor!==RUN.floor){XT.ordFloor=RUN.floor;if(XT.ord!=='follow')orderSet('follow',false);}if(G.state==='play'&&!GHO.on)hideTick(dt);lsnTick(dt);trTick(dt);
   const c=cr;if(c&&c.pullHide&&(!pl.hideIn||G.time-c.pullT>20))c.pullHide=null;}catch(e){console.warn('xt',e);}}
 function xtDraw(){if(XT.trDirty)trBuild();const I=M4.id();if(XT.trF)draw(XT.trF,I,[.012,.009,.008],Z3,0);if(XT.trO)draw(XT.trO,I,[.06,.052,.046],Z3,0);
   if(ENV.notes)for(const n of ENV.notes){if(Math.hypot(n.x-eye[0],n.z-eye[2])>18)continue;const y=floorY(n.x,n.z)+.012;const seen=XT.seen.has(n.id);
