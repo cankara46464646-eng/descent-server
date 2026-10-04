@@ -6,6 +6,7 @@
 //   sunucu  → {t:'p', peer, d}                  biri durumunu güncelledi
 //   sunucu  → {t:'join', peer} / {t:'leave', peer}
 //   sunucu  → {t:'err', code}                   'full' | 'bad'
+//   ikili çerçeve (sesli sohbet): istemci → ses verisi; sunucu → [8 bayt gönderen kimliği][ses verisi]
 const http = require('http');
 const crypto = require('crypto');
 
@@ -61,6 +62,14 @@ function onData(c, chunk) {
     if (op === 8) return close(c);                 // kapat
     if (op === 9) { frame(c, 10, payload); continue; } // ping → pong
     if (op === 10) { c.alive = true; continue; }       // pong
+    if (op === 2) {                                    // ikili: sesli sohbet çerçevesi → odadaki diğerlerine, başına gönderenin kimliği eklenir
+      if (payload.length > 2048) continue;
+      const now2 = Date.now(); if (now2 - (c.vt0 || 0) > 1000) { c.vt0 = now2; c.vcnt = 0; } if (++c.vcnt > 40) continue;
+      const room = rooms.get(c.code); if (!room) continue;
+      const data = Buffer.concat([Buffer.from(c.peer.padEnd(8).slice(0, 8)), payload]);
+      for (const o of room.values()) if (o !== c) frame(o, 2, data);
+      continue;
+    }
     if (op !== 1) continue;                            // yalnızca metin
     const now = Date.now(); if (now - c.t0 > 1000) { c.t0 = now; c.cnt = 0; } if (++c.cnt > MAX_RATE) continue;
     let m; try { m = JSON.parse(payload.toString('utf8')); } catch (e) { continue; }

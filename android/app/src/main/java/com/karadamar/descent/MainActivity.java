@@ -1,6 +1,9 @@
 package com.karadamar.descent;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.webkit.PermissionRequest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +25,17 @@ import androidx.webkit.WebViewAssetLoader;
 public class MainActivity extends Activity {
     private WebView web;
     private WebViewAssetLoader loader;
+    private PermissionRequest pendingMic;
+
+    @Override
+    public void onRequestPermissionsResult(int code, String[] perms, int[] res) {
+        super.onRequestPermissionsResult(code, perms, res);
+        if (code == 7 && pendingMic != null) {
+            if (res.length > 0 && res[0] == PackageManager.PERMISSION_GRANTED) pendingMic.grant(new String[]{PermissionRequest.RESOURCE_AUDIO_CAPTURE});
+            else pendingMic.deny();
+            pendingMic = null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle state) {
@@ -68,7 +82,21 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
-        web.setWebChromeClient(new WebChromeClient());
+        web.setWebChromeClient(new WebChromeClient() {
+            // sesli sohbet: oyun mikrofon isteyince Android iznini sor, verilirse sayfaya ilet
+            @Override
+            public void onPermissionRequest(final PermissionRequest req) {
+                boolean mic = false;
+                for (String r : req.getResources()) if (PermissionRequest.RESOURCE_AUDIO_CAPTURE.equals(r)) mic = true;
+                if (!mic) { req.deny(); return; }
+                if (Build.VERSION.SDK_INT < 23 || checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                    req.grant(new String[]{PermissionRequest.RESOURCE_AUDIO_CAPTURE});
+                } else {
+                    pendingMic = req;
+                    requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 7);
+                }
+            }
+        });
         if (state != null) web.restoreState(state);
         else web.loadUrl("https://appassets.androidplatform.net/assets/index.html");
     }
