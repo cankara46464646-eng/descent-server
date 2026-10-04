@@ -1,0 +1,21 @@
+{
+  "name": "descent",
+  "productName": "Descent",
+  "version": "1.0.0",
+  "description": "Descent — Kara Damar Madeni (4 kişilik ortak korku madencilik oyunu)",
+  "author": "Kara Damar",
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "31.7.7",
+    "electron-builder": "24.13.3"
+  },
+  "build": {
+    "appId": "com.karadamar.descent",
+    "productName": "Descent",
+    "asar": false,
+    "files": ["main.js", "icon.png", "app/**/*"],
+    "win": { "target": [{ "target": "portable", "arch": ["x64"] }, { "target": "nsis", "arch": ["x64"] }], "icon": "icon.png" },
+    "portable": { "artifactName": "Descent-${version}-Windows-Tasinabilir.exe" },
+    "nsis": { "artifactName": "Descent-${version}-Windows-Kurulum.exe", "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "shortcutName": "Descent" }
+  }
+}

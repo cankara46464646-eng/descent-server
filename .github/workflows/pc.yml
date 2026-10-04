@@ -1,0 +1,64 @@
+name: PC (Windows)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['desktop/**', '.github/workflows/pc.yml']
+permissions:
+  contents: write
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: web
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Linux'ta açılış testi
+        run: |
+          mkdir -p desktop/app && cp -r web/* desktop/app/ && cp web/icons/icon-512.png desktop/icon.png
+          cd desktop && npm install --no-audit --no-fund electron@31.7.7
+          KD_SMOKE=1 timeout 60 xvfb-run -a npx electron . --no-sandbox 2>&1 | grep -E "KD_SMOKE|KONSOL" | head -30 | tee smoke.txt
+          grep -q '"kd":"object"' smoke.txt
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Oyunun güncel hâli (gh-pages)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: web
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Oyunu uygulamaya kopyala
+        shell: bash
+        run: |
+          mkdir -p desktop/app
+          cp -r web/* desktop/app/
+          rm -f desktop/app/service-worker.js desktop/app/OKU-BENI.txt desktop/app/TELEFONDAN-APK.txt desktop/app/.nojekyll
+          cp web/icons/icon-512.png desktop/icon.png
+          V=$(grep -o 'v[0-9]\+</span></div>' web/index.html | head -1 | grep -o '[0-9]\+')
+          echo "V=${V:-1}" >> $GITHUB_ENV
+      - name: Derle
+        shell: bash
+        working-directory: desktop
+        run: |
+          npm install --no-audit --no-fund
+          npx electron-builder --win --x64 --publish never -c.extraMetadata.version=1.0.$V
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Descent-Windows
+          path: desktop/dist/*.exe
+      - name: İndirme sayfası (Releases)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete pc-v$V -y --cleanup-tag || true
+          gh release create pc-v$V desktop/dist/Descent-*.exe -t "Descent v$V (PC / Windows)" -n "Taşınabilir: indir, çift tıkla, oyna (kurulum yok). Kurulum: Başlat menüsüne ve masaüstüne kısayol ekler. Windows 'bilinmeyen yayıncı' uyarısı verirse: Ek bilgi → Yine de çalıştır."
