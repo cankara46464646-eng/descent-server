@@ -467,6 +467,9 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 .ntP i{align-self:flex-end;font-family:"Segoe Print","Bradley Hand",cursive;font-size:13px;color:#4a3b26}
 .ntP .go{align-self:center;margin-top:4px;background:#2a2116;color:#e8dcc0;font-size:12px;padding:8px 22px;border-radius:7px}
 #sndHint{color:var(--lamp);animation:stC 2.2s ease-in-out infinite}
+#hitF{position:fixed;inset:0;pointer-events:none;z-index:4;opacity:0;background:radial-gradient(ellipse at center,rgba(255,235,220,.35) 0%,rgba(160,8,4,.35) 45%,rgba(90,0,0,.9) 100%)}
+#hitF.on{animation:hitA .9s ease-out}#hitF.on.soft{animation:hitS .5s ease-out}
+@keyframes hitA{0%{opacity:1}12%{opacity:.85}100%{opacity:0}}@keyframes hitS{0%{opacity:.45}100%{opacity:0}}
 #story{position:fixed;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;padding:24px max(28px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.72),rgba(0,0,0,.97) 75%);cursor:pointer;animation:stIn .8s ease-out;transition:opacity .6s}
 #story.out{opacity:0}
 .stW{width:min(580px,100%);display:flex;flex-direction:column;gap:14px}
@@ -571,7 +574,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v49</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v50</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -678,6 +681,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
   </div>
 </div>
 
+<div id="hitF" aria-hidden="true"></div>
 <div id="fps" aria-hidden="true">-- FPS</div>
 <div id="note" class="screen dScr" hidden><div class="ntP"><small id="ntN">NOT</small><p id="ntT"></p><i id="ntS"></i><button class="go" id="ntX">KAPAT</button></div></div>
 <div id="story" hidden><div class="stW"><small>KARA DAMAR MADENİ</small><div id="stT"></div><div class="stF"><span>Devam için dokun</span><button id="stSkip">ATLA</button></div></div></div>
@@ -703,6 +707,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
           <div class="sItem"><div class="sl"><b>Grafik kalitesi</b><small>Düşükte pil daha uzun gider</small></div>
             <div class="seg" data-for="sGfx"><button data-v="0">Düşük</button><button data-v="1">Orta</button><button data-v="2">Yüksek</button><button data-v="3">Ultra</button></div>
             <select id="sGfx" hidden><option value="3">Ultra</option><option value="2">Yüksek</option><option value="1">Orta</option><option value="0">Düşük</option></select><output id="oGfx" hidden></output></div>
+          <div class="sItem"><div class="sl"><b>Titreşim</b><small>Yakalanınca telefon titrer (destekleyen cihazlarda)</small></div><label class="sw"><input type="checkbox" id="sVib"><i></i></label></div>
           <div class="sItem"><div class="sl"><b>FPS göster</b><small>Köşede saniyedeki kare sayısı</small></div><label class="sw"><input type="checkbox" id="sFps"><i></i></label></div>
           <div class="sItem"><div class="sl"><b>Parlaklık</b><small>Karanlıkta zor görüyorsan artır</small></div><div class="rng"><input type="range" id="sBright" min="0.7" max="1.8" step="0.05"><output id="oBright"></output></div></div>
         </section>
@@ -3872,11 +3877,14 @@ function updateCreature(dt){{const c=cr;if(G.state==='play'&&c.st!=='sleep'&&c.s
   if(c.moving&&!HX.ready&&Math.random()<dt*3)sfxAt('click',c.x,c.z,.35,16);
   if(c.st==='chase'||c.st==='investigate'||c.st==='wander'){c.grT2-=dt;if(c.grT2<=0){c.grT2=(c.st==='chase'?1.8+Math.random()*1.5:c.st==='investigate'?4+Math.random()*4:8+Math.random()*8)/(1+angerEff()*.12);crV(c.st==='chase'?'chase':c.st==='investigate'?'suspicious':'idle',()=>sfxAt('growl',c.x,c.z,c.st==='chase'?1:.7,34));}}
 }
+// yakalanma/darbe: güçlü kamera sarsıntısı, kırmızı-beyaz parlama, telefon titreşimi
+function hitFx(k){G.hitK=Math.max(G.hitK||0,k);const r=$('hitF');if(r){r.classList.remove('on','soft');void r.offsetWidth;r.classList.add('on');if(k<.6)r.classList.add('soft');}
+  try{if(SET.vib!==false&&navigator.vibrate)navigator.vibrate(k>.8?[90,40,220]:[70]);}catch(e){}}
 function grab(v){const c=cr;if(v===pl&&pl.hideIn)sysUnhide();c.st='drag';c.victim=v;c.saveHits=0;c.flare=null;const N=rooms[nest];const g=N.cy*GW+N.cx;c.path=bfs(cidx(c.x,c.z),g,true)||pathDig(cidx(c.x,c.z),g);c.pi=0;c.trail=[{x:c.x,z:c.z}];c.bonkT=0;c.dragT=0;c.digT=0;
   sfxAt('grab',c.x,c.z,1);crV('attack');
   if(v===pl){if(G.state==='buried'){const[x,z]=ctr(pl.buryCell);if(!grid[pl.buryCell])openCell(pl.buryCell%GW,(pl.buryCell/GW)|0,null);pl.x=x;pl.z=z;}
     G.state='dragged';G.dragBy='cr';G.faceT=1.6;c.face=Math.atan2(-(pl.x-c.x),-(pl.z-c.z));{const d=Math.hypot(c.x-pl.x,c.z-pl.z)||1,tx=pl.x+(c.x-pl.x)/d*1.9,tz=pl.z+(c.z-pl.z)/d*1.9;if(!hits(tx,tz,.3)){c.x=tx;c.z=tz;}}c.trail=[{x:c.x,z:c.z}];
-    pl.struggle=0;pl.swing=0;if(pl.carry)dropGem(false);G.shake=.6;sfx('thump',1);crV('attack',()=>sfx('roar',1.2,0,false),{force:true});sfx('screamLo',1);G.plYell=2.2;toast('YAKALANDIN!',1.6);setTimeout(()=>{if(G.state==='dragged')toast('Seni sürüklüyor! ÇIRPIN!',2);},1600);}
+    pl.struggle=0;pl.swing=0;if(pl.carry)dropGem(false);G.shake=.6;hitFx(1);sfx('thump',1);crV('attack',()=>sfx('roar',1.2,0,false),{force:true});sfx('screamLo',1);G.plYell=2.2;toast('YAKALANDIN!',1.6);setTimeout(()=>{if(G.state==='dragged')toast('Seni sürüklüyor! ÇIRPIN!',2);},1600);}
   else{if(v.st==='help')releaseGiant();v.st='dragged';v.yellT=0;v.lamp=true;v.escT=!v.remote&&Math.random()<CFG.botEsc.chance?CFG.botEsc.tMin+Math.random()*(CFG.botEsc.tMax-CFG.botEsc.tMin):null;if(v.remote){netLog('vg',v.peer,'cr');STATS.dragged[v.name]=(STATS.dragged[v.name]||0)+1;}toast(`${v.name} yakalandı!`,2.4);}}
 function trailPoint(dist){const tr=cr.trail;let acc=0;for(let i=tr.length-1;i>0;i--){const a=tr[i],b=tr[i-1],d=Math.hypot(a.x-b.x,a.z-b.z);if(acc+d>=dist){const k=(dist-acc)/d;return{x:lerp(a.x,b.x,k),z:lerp(a.z,b.z,k)};}acc+=d;}return{x:tr[0].x,z:tr[0].z};}
 function updateDrag(dt){const c=cr,v=c.victim;
@@ -3887,7 +3895,7 @@ function updateDrag(dt){const c=cr,v=c.victim;
   c.dragT+=dt;if(CRE&&v===pl)audTick(CRE,'drag',dt);else if(CRE&&v)audTick(CRE,'drag',dt);
   if(c.bonkT>0){c.bonkT-=dt;}
   else{const done=followPath(c,dt,2.6);if(c.moving)c.trail.push({x:c.x,z:c.z});if(c.trail.length>300)c.trail.shift();
-    if(c.dragT>1&&Math.random()<dt*.32){c.bonkT=.95;sfxAt('bonk',c.x,c.z,1);if(v!==pl)sfxAt(v.pitch>1?'gruntHi':'grunt',v.x,v.z,1,40);else{G.shake=.3;sfx('grunt',1);}}
+    if(c.dragT>1&&Math.random()<dt*.32){c.bonkT=.95;sfxAt('bonk',c.x,c.z,1);if(v!==pl)sfxAt(v.pitch>1?'gruntHi':'grunt',v.x,v.z,1,40);else{G.shake=.3;hitFx(.45);sfx('grunt',1);}}
     if(done||!c.path){arrive();return;}}
   const tp=trailPoint(2.3);v.x=tp.x;v.z=tp.z;
   if(v===pl){pl.struggle=Math.max(0,pl.struggle-dt*2.2);G.plYell-=dt;if(G.plYell<=0){const r=Math.random();G.plYell=r<.7?1.7+Math.random()*.8:3.5+Math.random()*2;sfx(r<.7?'pant':r<.85?'yellLo':'screamLo',r<.7?.9:.75);}}
@@ -4015,7 +4023,7 @@ function paleGrab(){const p=pale;const T=PT||pl;let dx=p.x-T.x,dz=p.z-T.z,d=Math
   p.face=faceTo(p,T.x,T.z);p.st='grab';p.stT=3.0;dzPlay(p,'E_KillPlayer');p.an.f=0;
   if(T!==pl){T.st='dragged';netLog('vg',T.peer,'pale');STATS.dragged[T.name]=(STATS.dragged[T.name]||0)+1;if(!audPlay(p.em,'grab',{force:true}))sfxAt('babyScreech',p.x,p.z,1.2,40);toast(`${p.nm||'Derisiz'} ${T.name} adlı arkadaşını yakaladı!`,2.4);return;}
   STATS.dragged['Sen']=(STATS.dragged['Sen']||0)+1;
-  G.state='paleGrab';G.dragBy='pale';pl.swing=0;pl.struggle=0;if(pl.carry)dropGem(false);document.exitPointerLock?.();
+  G.state='paleGrab';G.dragBy='pale';hitFx(1);pl.swing=0;pl.struggle=0;if(pl.carry)dropGem(false);document.exitPointerLock?.();
   if(!audPlay(p.em,'grab',{force:true}))sfx('babyScreech',1.2);audLater(p.em,'contort',.9);audLater(p.em,'grab_close',1.7);sfx('screamLo',1);G.shake=.5;G.plYell=2.2;toast(`${(p.nm||'Derisiz').toLocaleUpperCase('tr')} SENİ YAKALADI!`,2.2);STATS.caught++;}
 function paleGrabTick(dt){const p=pale;p.stT-=dt;const T=PT||pl;if(T===pl)G.shake=Math.max(G.shake,.08);
   if(p.stT<=0){// sürüklemeye geç: uzak bir noktaya
@@ -4151,7 +4159,7 @@ function updateAscend(dt){const A=G.asc;A.t+=dt;A.cT-=dt;A.hT-=dt;
   A.rT=(A.rT||0)-dt;if(A.rT<=0){A.rT=3.4;sfx('liftRide',.75);}
   const danger=A.atk?1:clamp((A.t%9)/9,0,1)*.5;if(A.hT<=0){A.hT=lerp(.9,.36,danger);sfx('heart',.5+danger*.6);}
   if(Math.random()<dt*.3)audFlat('crawler',Math.random()<.5?'suspicious':'chase',.55,(Math.random()-.5),true,()=>sfx('growl',.7,(Math.random()-.5),true));
-  if(!A.atk&&A.idx<A.at.length&&A.t>=A.at[A.idx]){A.idx++;A.atk={t:2.8,got:0};audFlat('crawler','attack',1,0,false,()=>sfx('roar',1.2));sfx('sting',.9,0,false,musBus);G.shake=.6;$('ascS').textContent='Kafese tırmandı! TEKMELE!';}
+  if(!A.atk&&A.idx<A.at.length&&A.t>=A.at[A.idx]){A.idx++;A.atk={t:2.8,got:0};hitFx(.8);audFlat('crawler','attack',1,0,false,()=>sfx('roar',1.2));sfx('sting',.9,0,false,musBus);G.shake=.6;$('ascS').textContent='Kafese tırmandı! TEKMELE!';}
   if(A.atk){A.atk.t-=dt;if(A.atk.got>=8){sfx('bonk',1);audFlat('crawler','pain',.9,-.3,true,()=>sfx('snarl',1,-.3,true));$('ascS').textContent='Aşağı düştü... ama yine tırmanıyor.';A.atk=null;}
     else if(A.atk.t<=0){A.atk=null;if(RUN.alive.length){const n=RUN.alive.pop();sfx(n==='Mehmet'?'screamHi':'screamLo',1.2);$('ascS').textContent=`${n} kafesten çekildi!`;}
       else{G.cause='kuyu';$('ascend').hidden=true;$('hotbar').hidden=false;killPlayer(true);return;}}}
@@ -4370,7 +4378,7 @@ function netEnt(peer){if(peer===NET.myPeer)return pl;const rec=NET.peers.get(pee
 function netPlaceBeam(c,ax){if(support[c])return;const[x,z]=ctr(c);support[c]=1;supports.push({c,ax});sfxAt('hammer',x,z,1,30);}
 // ---- kurban (bu istemcinin oyuncusu) ----
 function netVictimGrab(by){if(!['play','buried'].includes(G.state))return;pl.swing=0;pl.struggle=0;if(pl.carry)dropGem(false);document.exitPointerLock?.();G.shake=.6;
-  if(by==='pale'){G.state='paleGrab';G.dragBy='pale';G.vgT=3;NET.paTrail=[];if(pale&&pale.em&&!audPlay(pale.em,'grab',{force:true}))sfx('babyScreech',1.2);sfx('screamLo',1);toast(`${(pale&&pale.nm||'Derisiz').toLocaleUpperCase('tr')} SENİ YAKALADI!`,2.2);}
+  if(by==='pale'){G.state='paleGrab';G.dragBy='pale';hitFx(1);G.vgT=3;NET.paTrail=[];if(pale&&pale.em&&!audPlay(pale.em,'grab',{force:true}))sfx('babyScreech',1.2);sfx('screamLo',1);toast(`${(pale&&pale.nm||'Derisiz').toLocaleUpperCase('tr')} SENİ YAKALADI!`,2.2);}
   else{G.state='dragged';G.dragBy='cr';G.faceT=1.6;NET.crTrail=[{x:cr.x,z:cr.z}];sfx('thump',1);crV('attack',()=>sfx('roar',1.2,0,false),{force:true});sfx('screamLo',1);toast('YAKALANDIN!',1.6);setTimeout(()=>{if(G.state==='dragged')toast('Seni sürüklüyor! ÇIRPIN!',2);},1600);}
   G.plYell=2.2;STATS.caught++;STATS.dragged['Sen']=(STATS.dragged['Sen']||0)+1;}
 function netVictimFree(){if(G.state!=='dragged'&&G.state!=='paleGrab')return;G.state='play';G.dragBy=null;pl.struggle=0;pl.lamp=pl.bat>0;toast('Kurtuldun! Hemen uzaklaş!',2.4);sfx('bonk',.8);STATS.rescued++;}
@@ -4942,8 +4950,10 @@ function render0(){
   else if(G.state==='dragged'||(G.state==='dying'&&cr.victim===pl)){eye=[pl.x,floorY(pl.x,pl.z)+.42+Math.abs(Math.sin(t*9))*.1,pl.z];yaw=Math.atan2(-(cr.x-pl.x),-(cr.z-pl.z));pitch=.42+Math.sin(t*3)*.08;roll=Math.sin(t*7)*.28;}
   else if(G.state==='buried'){eye=[pl.x,floorY(pl.x,pl.z)+.7,pl.z];pitch=-.2;roll=.35;}
   else eye=[pl.x,floorY(pl.x,pl.z)+1.6-(pl.crouchK||0)*.55+Math.sin(pl.bob)*.035+(G.arrive?arriveOff():0),pl.z];
+  if(G.hitK>0){const k=G.hitK*G.hitK,tt=performance.now()/1000;yaw+=(Math.sin(tt*37)*.07+Math.sin(tt*23.3)*.04)*k;pitch+=(Math.sin(tt*31+1)*.06+Math.sin(tt*17+2)*.03)*k;roll+=(Math.sin(tt*29+2)*.14+Math.sin(tt*13)*.06)*k;
+    eye=[eye[0]+Math.sin(tt*41)*.06*k,eye[1]-.1*k+Math.sin(tt*47)*.05*k,eye[2]+Math.sin(tt*43+1)*.06*k];}
   eye=[eye[0]+(Math.random()-.5)*sk,eye[1]+(Math.random()-.5)*sk,eye[2]+(Math.random()-.5)*sk];
-  Pm=M4.persp(1.2,W/Hh,.05,70);Vm=X(M4.RZ(-roll),M4.RX(-pitch),M4.RY(-yaw),M4.T(-eye[0],-eye[1],-eye[2]));VP=M4.mul(Pm,Vm);
+  Pm=M4.persp(1.2-(G.hitK||0)*.12,W/Hh,.05,70);Vm=X(M4.RZ(-roll),M4.RX(-pitch),M4.RY(-yaw),M4.T(-eye[0],-eye[1],-eye[2]));VP=M4.mul(Pm,Vm);
   const cp=Math.cos(pitch),fwd=[-Math.sin(yaw)*cp,Math.sin(pitch),-Math.cos(yaw)*cp];AUD.cam.eye=eye;AUD.cam.fwd=fwd;
   const camW=X(M4.T(eye[0],eye[1],eye[2]),M4.RY(yaw),M4.RX(pitch),M4.RZ(roll));
   const d2=(x,z)=>(x-pl.x)**2+(z-pl.z)**2;
@@ -5122,6 +5132,7 @@ $('sLefty').checked=!!SET.lefty;$('sLefty').addEventListener('change',()=>{SET.l
 function applyTouch(){const T=$('touch');T.style.setProperty('--bs',SET.btn);T.style.setProperty('--bo',SET.alpha);T.classList.toggle('lefty',!!SET.lefty);}
 applyTouch();if(!isTouch)for(const r of document.querySelectorAll('.touchOnly'))r.hidden=true;
 $('sVc').value=SET.vc||'ptt';$('sVc').addEventListener('change',()=>{SET.vc=$('sVc').value;saveSet();vcApply();});$('sVcv').addEventListener('input',()=>vcApply());
+$('sVib').checked=SET.vib!==false;$('sVib').addEventListener('change',()=>{SET.vib=$('sVib').checked;saveSet();});
 $('sFps').checked=SET.fps!==false;$('sFps').addEventListener('change',()=>{SET.fps=$('sFps').checked;saveSet();fpsShow();});fpsShow();$('sTips').checked=SET.tips;$('sTips').addEventListener('change',()=>{SET.tips=$('sTips').checked;if(SET.tips){SEEN.clear();try{localStorage.removeItem('kd_tips');}catch(e){}}saveSet();});
 function openPause(fromMenu){if(!fromMenu&&!['play','dragged','buried','surface'].includes(G.state))return;
   if(!fromMenu&&NET.started){G.mpPause=true;for(const k in keys)keys[k]=false;joy.vx=joy.vy=0;joy.id=null;look.id=null;$('joyk').style.transform='';useHeld=false;toolHeld=false;mouseDown=false;}
@@ -5857,7 +5868,7 @@ let last=performance.now();
 const START_EL=document.getElementById('start');
 var FPSC={n:0,t:0,el:null};function fpsShow(){const e=$('fps');if(e)e.hidden=SET.fps===false;}
 function fpsTick(now){FPSC.n++;if(!FPSC.t)FPSC.t=now;const d=now-FPSC.t;if(d>=500){const f=Math.round(FPSC.n*1000/d);FPSC.n=0;FPSC.t=now;const e=FPSC.el||(FPSC.el=$('fps'));if(e&&!e.hidden){e.textContent=f+' FPS';e.className=f<25?'lo':f<45?'mid':'';}}}
-function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now;try{XT.uiT=(XT.uiT||0)-dt;if(XT.uiT<=0){XT.uiT=.5;vcUI();const sh=$('sndHint');if(sh)sh.hidden=!!(AC&&AC.state==='running');}vcTick(dt);}catch(e){}adaptRes((now-(frame.p||now))/1000);frame.p=now;
+function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now;if(G.hitK>0)G.hitK=Math.max(0,G.hitK-dt*1.2);try{XT.uiT=(XT.uiT||0)-dt;if(XT.uiT<=0){XT.uiT=.5;vcUI();const sh=$('sndHint');if(sh)sh.hidden=!!(AC&&AC.state==='running');}vcTick(dt);}catch(e){}adaptRes((now-(frame.p||now))/1000);frame.p=now;
   if(LD.on)try{loadTick(dt);}catch(e){console.warn('load',e);}
   try{netTick(dt);}catch(e){console.warn('net',e);}
   try{if(G.state==='intro'){G.time+=dt;pl.yaw+=dt*.08;}else if(G.state==='ascend'){G.time+=dt;updateAscend(dt);G.shake=Math.max(0,G.shake-dt);updateMusic(dt);}else if(G.state==='surface')sfTick(dt);else if(!['shop','end','descend','pause','load'].includes(G.state))update(dt);if(!window.__kdNoDraw&&!LD.on){if(G.state==='intro'){try{sfMenuRender(dt);}catch(e){console.warn('menü',e);}}else if(START_EL.hidden){if(SF.on&&(G.state==='surface'||G.state==='pause'))sfRender();else render();}}}catch(err){console.error(err);}
