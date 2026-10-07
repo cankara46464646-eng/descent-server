@@ -25,6 +25,7 @@ jobs:
           def get(u):
               return urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=60).read()
           os.makedirs('ph',exist_ok=True)
+          M=json.loads(get('https://api.polyhaven.com/assets?t=models'));open('ph/_models.json','w').write(json.dumps({k:{'name':v.get('name'),'categories':v.get('categories'),'tags':v.get('tags'),'polycount':v.get('polycount')} for k,v in M.items()},indent=0))
           for aid in [x.strip() for x in os.environ['IDS'].split(',') if x.strip()]:
               d='ph/'+aid;os.makedirs(d,exist_ok=True)
               try:
