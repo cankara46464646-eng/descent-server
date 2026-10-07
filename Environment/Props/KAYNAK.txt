@@ -1,0 +1,2 @@
+Modeller: Poly Haven (polyhaven.com) — CC0: portable_generator, metal_jerrycan, wooden_military_crate, old_military_crate, wooden_crate_02, utility_box_01, wooden_lantern_01.
+Dönüştürücü: /tmp/snd/tools/ph_build.py (glTF -> KDM3 + albedo/normal/rma).

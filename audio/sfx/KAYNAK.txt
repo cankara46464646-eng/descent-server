@@ -3,3 +3,7 @@ Mekanik sesler (kazma, asansör) — hepsi CC0 (kamu malı) kaynaklardan karış
 - OpenGameArt: "old elevator door" (sinny), "chain winch sounds", "generator loop", "Breaking Rock",
   "metal impact sounds" (clink/bong), "100 CC0 metal and wood SFX" (metal_slam) — CC0
 Karışım: /tmp/snd/tools/build_sfx.py (mono 44.1 kHz MP3 96 kbps).
+Su sesleri:
+- wstep_*, drip_5/6: "Water Step Splashes" ve "Ambient Water Drips" — Yo Frankie! (Blender Foundation), OpenGameArt (Lamoot) — CC-BY 3.0
+- wrun_*: C-Dogs SDL "footsteps on different surfaces" (water) — CC-BY 3.0
+- drip_0..4: OpenGameArt "Object Dropping into Water" — CC0

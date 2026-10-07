@@ -1,0 +1,232 @@
+{
+ "name": "Environment/Props",
+ "source": "Poly Haven (CC0) glTF 1k",
+ "units": "metre, Y-up, pivot: XZ merkez, taban y=0",
+ "format": "Environment/OldMine ile aynı (KDM3 + albedo/normal/rma)",
+ "assets": [
+  {
+   "id": "gen_portable_m0",
+   "group": "gen_portable",
+   "category": "Props",
+   "path": "gen_portable_m0/",
+   "source": "polyhaven:portable_generator#portable_generator",
+   "desc": "Taşınabilir jeneratör (çerçeveli)",
+   "dims_m": [
+    0.82,
+    0.58,
+    0.56
+   ],
+   "tris": [
+    26365,
+    11499,
+    3807
+   ],
+   "verts": 24348,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 1270
+  },
+  {
+   "id": "jerrycan",
+   "group": "jerrycan",
+   "category": "Props",
+   "path": "jerrycan/",
+   "source": "polyhaven:metal_jerrycan#metal_jerrycan",
+   "desc": "Metal benzin bidonu 20 L",
+   "dims_m": [
+    0.35,
+    0.46,
+    0.17
+   ],
+   "tris": [
+    20022,
+    8307,
+    3305
+   ],
+   "verts": 11392,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 589
+  },
+  {
+   "id": "mil_crate_open",
+   "group": "mil_crate_open",
+   "category": "Props",
+   "path": "mil_crate_open/",
+   "source": "polyhaven:wooden_military_crate#wooden_military_crate",
+   "desc": "Açık ahşap askeri sandık",
+   "dims_m": [
+    1.24,
+    0.46,
+    0.52
+   ],
+   "tris": [
+    22986,
+    3569,
+    3569
+   ],
+   "verts": 17176,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 755
+  },
+  {
+   "id": "mil_crate_green",
+   "group": "mil_crate_green",
+   "category": "Props",
+   "path": "mil_crate_green/",
+   "source": "polyhaven:old_military_crate#military_crate_m_01",
+   "desc": "Eski yeşil askeri sandık",
+   "dims_m": [
+    1.82,
+    0.3,
+    0.98
+   ],
+   "tris": [
+    20952,
+    6995,
+    3751
+   ],
+   "verts": 16634,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 742
+  },
+  {
+   "id": "crate_wood",
+   "group": "crate_wood",
+   "category": "Props",
+   "path": "crate_wood/",
+   "source": "polyhaven:wooden_crate_02#wooden_crate_02",
+   "desc": "Ahşap sandık (WEC damgalı)",
+   "dims_m": [
+    0.53,
+    0.46,
+    1.17
+   ],
+   "tris": [
+    5176,
+    2299,
+    801
+   ],
+   "verts": 3719,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 260
+  },
+  {
+   "id": "cabinet_metal",
+   "group": "cabinet_metal",
+   "category": "Props",
+   "path": "cabinet_metal/",
+   "source": "polyhaven:utility_box_01#utility_box_01",
+   "desc": "Metal dolap (saklanma dolabı)",
+   "dims_m": [
+    0.52,
+    1.12,
+    0.43
+   ],
+   "tris": [
+    4404,
+    1474,
+    702
+   ],
+   "verts": 3629,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 232
+  },
+  {
+   "id": "lantern_wood_m0",
+   "group": "lantern_wood",
+   "category": "Props",
+   "path": "lantern_wood_m0/",
+   "source": "polyhaven:wooden_lantern_01#wooden_lantern_01",
+   "desc": "Ahşap fener",
+   "dims_m": [
+    0.22,
+    0.53,
+    0.23
+   ],
+   "tris": [
+    8273,
+    3483,
+    1958
+   ],
+   "verts": 6723,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 348
+  }
+ ],
+ "surfaces": [],
+ "decals": [],
+ "totalKB": 4198,
+ "license": "CC0 (Poly Haven, polyhaven.com)"
+}
