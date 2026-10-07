@@ -590,7 +590,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v51</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v52</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -3262,7 +3262,7 @@ function audioInit(){if(AC)return;try{AC=new(window.AudioContext||window.webkitA
   sfxBus=AC.createGain();sfxBus.connect(master);const sS=AC.createGain();sS.gain.value=.38;sfxBus.connect(sS).connect(rev);
   musBus=AC.createGain();musBus.gain.value=.6;musBus.connect(master);const mS=AC.createGain();mS.gain.value=.7;musBus.connect(mS).connect(rev);
   DIST=new Float32Array(1024);for(let i=0;i<1024;i++){const x=i/512-1;DIST[i]=Math.tanh(x*3.2);}
-  nbuf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}
+  nbuf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}smpLoad();
   // ortam uğultusu
   const src=AC.createBufferSource();src.buffer=nbuf;src.loop=true;const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=130;const g=AC.createGain();g.gain.value=.14;src.connect(lp).connect(g).connect(master);src.start();
   // müzik: alçak drone
@@ -3286,6 +3286,27 @@ function audioInit(){if(AC)return;try{AC=new(window.AudioContext||window.webkitA
   cs.connect(bp).connect(trem).connect(crGain);if(crPan){crGain.connect(crPan).connect(sfxBus);}else crGain.connect(sfxBus);cs.start();
  }catch(e){AC=null;}}
 function env(g,t,a,d,peak){g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d);}
+// gerçek kayıtlı mekanik sesler (CC0 — Kenney.nl Impact/RPG Audio, OpenGameArt): kazma vuruşu, asansör kapısı/motoru/varışı.
+// Dosya henüz yüklenmediyse eski sentez sesi yedek olarak çalar.
+const SMP={base:'audio/sfx/',rides:[],def:{
+  dig:{f:['dig_0','dig_1','dig_2','dig_3','dig_4'],g:1.2,r:[.93,1.08],fb:'rock'},
+  digOre:{f:['dig_ore_0','dig_ore_1','dig_ore_2'],g:1.25,r:[.96,1.06],fb:'clang'},
+  digHard:{f:['dig_hard_0','dig_hard_1','dig_hard_2'],g:1.2,r:[.95,1.05],fb:'clang'},
+  rock:{f:['rock_0','rock_1','rock_2'],g:.9,r:[.9,1.12]},
+  liftGate:{f:['lift_gate'],g:1.1,r:[.97,1.03]},
+  liftDown:{f:['lift_down'],g:1.5,r:[.97,1.03]},
+  liftRide:{f:['lift_ride'],g:.75,r:[.98,1.02],ride:1},
+  liftUp:{f:['lift_up_0','lift_up_1','lift_up_2'],g:1.2,r:[.9,1.1]},
+  liftArrive:{f:['lift_arrive'],g:1.5,r:[.97,1.03],stopRide:1},
+  hoist:{f:['hoist'],g:.7,r:[1,1]}}};
+function smpUrl(f){return SMP.base+f+'.mp3';}
+function smpLoad(){if(!AC||SMP.req)return;SMP.req=1;for(const k in SMP.def)for(const f of SMP.def[k].f)audGetBuf(smpUrl(f));}
+function smpRideStop(){if(!AC)return;const t=AC.currentTime;for(const r of SMP.rides){try{r.g.gain.setTargetAtTime(0,t,.12);r.s.stop(t+.7);}catch(e){}}SMP.rides=[];}
+function smpPlay(type,vol,o2){const D=SMP.def[type];if(!D)return false;const B=D.f.map(f=>AUD.buf[smpUrl(f)]).filter(Boolean);if(!B.length){smpLoad();return false;}
+  const t=AC.currentTime;if(D.stopRide)smpRideStop();
+  const s=AC.createBufferSource();s.buffer=B[Math.floor(Math.random()*B.length)];s.playbackRate.value=D.r[0]+Math.random()*(D.r[1]-D.r[0]);
+  const g=AC.createGain();g.gain.value=vol*D.g;s.connect(g).connect(o2);s.start(t);
+  if(D.ride){const r={s,g};SMP.rides.push(r);s.onended=()=>{SMP.rides=SMP.rides.filter(x=>x!==r);};}return true;}
 function out(vol,pan,muff,bus){const g=AC.createGain();let n=g;if(muff){const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=650;n.connect(f);n=f;}
   if(AC.createStereoPanner&&pan){const p=AC.createStereoPanner();p.pan.value=clamp(pan,-1,1);n.connect(p);n=p;}n.connect(bus||sfxBus);return g;}
 // böcek-yaratık sentezi (ses dosyaları yüklenmeden önceki yedek): gırtlak tıkırtısı ve titreşimli çığlık
@@ -3342,6 +3363,7 @@ function whisper(t,o2,vol){const d=1.3+Math.random()*.8;const n=AC.createBufferS
   const o=AC.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(95,t);o.frequency.linearRampToValueAtTime(70,t+d);const of=AC.createBiquadFilter();of.type='bandpass';of.frequency.value=500;of.Q.value=3;const og=AC.createGain();og.gain.value=.25;o.connect(of).connect(og).connect(am);
   n.start(t,Math.random());syl.start(t);o.start(t);[n,syl,o].forEach(x=>x.stop(t+d+.05));}
 function sfx(type,vol=1,pan=0,muff=false,bus){if(type==='screamLo'||type==='screamHi')STATS.screams++;if(!AC||vol<.02)return;const t=AC.currentTime;const o2=out(vol,pan,muff,bus);
+  if(SMP.def[type]){if(smpPlay(type,vol,o2))return;if(SMP.def[type].fb)type=SMP.def[type].fb;}
   const nz=(f,q,d,pk,ty='bandpass',dl=0)=>{const s=AC.createBufferSource();s.buffer=nbuf;s.playbackRate.value=.8+Math.random()*.4;const fl=AC.createBiquadFilter();fl.type=ty;fl.frequency.value=f;fl.Q.value=q;const g=AC.createGain();env(g,t+dl,.002,d,pk*vol);s.connect(fl).connect(g).connect(o2);s.start(t+dl,Math.random());s.stop(t+dl+d+.1);};
   const os=(ty,f0,f1,d,pk,a=.003,dl=0)=>{const o=AC.createOscillator();o.type=ty;o.frequency.setValueAtTime(f0,t+dl);o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+dl+d);const g=AC.createGain();env(g,t+dl,a,d,pk*vol);o.connect(g).connect(o2);o.start(t+dl);o.stop(t+dl+d+.1);};
   // sürekli sesler (asansör motoru, rüzgâr): yükselme–tutma–sönme zarfı
@@ -3648,9 +3670,9 @@ function digImpact(){
   const c=t.j*GW+t.i,isOre=oreAt[c]>=0;
   spark(t.x,ey-.25,t.z,isOre?GEMT[gems[oreAt[c]].type].col:[1,.7,.35],isOre?10:7);G.shake=.1;
   if(exitA[c]){sfx('rock',.7);toast('Giriş tahtalarla kapalı. Geri dönüş yok; yol aşağıda.',2);return;}
-  if(!canDig(t.i,t.j)){sfx('clang',.8);emit(pl.x,pl.z,8,pl,'kazma');toast('Bu kaya kazılamayacak kadar sert.',1.5);return;}
+  if(!canDig(t.i,t.j)){sfx('digHard',.9);emit(pl.x,pl.z,8,pl,'kazma');toast('Bu kaya kazılamayacak kadar sert.',1.5);return;}
   hpA[c]=Math.max(0,hpA[c]-1);const mx=isOre?(gems[oreAt[c]].giant?(RUN.up.pick?5:6):(RUN.up.pick?3:4)):(RUN.up.pick?2:3);G.digInfo={c,hp:hpA[c],max:mx,t:1.6,ore:isOre};
-  sfx(isOre?'clang':'rock');if(isOre)sfx('gem',.4);if(feat[c]===3){sfx('knock',1);if(!G.knockT||G.time>G.knockT){G.knockT=G.time+6;toast('Tok bir tahta sesi... arkasında bir şey var.',2);}}emit(pl.x,pl.z,isOre?15:13,pl,'kazma');
+  sfx(isOre?'digOre':'dig');if(isOre)sfx('gem',.4);if(feat[c]===3){sfx('knock',1);if(!G.knockT||G.time>G.knockT){G.knockT=G.time+6;toast('Tok bir tahta sesi... arkasında bir şey var.',2);}}emit(pl.x,pl.z,isOre?15:13,pl,'kazma');
   if(hpA[c]<=0)openCell(t.i,t.j,pl);}
 function spark(x,y,z,c,n){for(let i=0;i<n;i++)sparks.push({x,y,z,vx:(Math.random()-.5)*3,vy:Math.random()*2.5,vz:(Math.random()-.5)*3,life:.35+Math.random()*.3,c});}
 function eggRage(msg){G.anger+=2;G.threat=130;toast(msg,3);crV('howl',()=>sfx('howl',1,0,true),{far:true});sfx('sting',.8,0,false,musBus);
@@ -3752,7 +3774,7 @@ function updateBots(dt){
       else{b.face=turnTo(b.face,Math.atan2(-(tx-b.x),-(tz-b.z)),dt*6);b.digTick-=dt;
         if(b.digTick<=0){b.digTick=1.15;b.swing=.4;
           if(gasL[cidx(b.x,b.z)]>.3&&Math.random()<.35){explode(lerp(b.x,tx,.5),lerp(b.z,tz,.5),'grizu');break;}
-          const T=GEMT[gems[oreAt[w.c]].type];hpA[w.c]=Math.max(0,hpA[w.c]-1);emit(b.x,b.z,15,b,'kazma');sfxAt('clang',b.x,b.z,.9);sfxAt('gem',b.x,b.z,.3,20);spark(lerp(b.x,tx,.55),1.2,lerp(b.z,tz,.55),T.col,6);
+          const T=GEMT[gems[oreAt[w.c]].type];hpA[w.c]=Math.max(0,hpA[w.c]-1);emit(b.x,b.z,15,b,'kazma');sfxAt('digOre',b.x,b.z,.9);sfxAt('gem',b.x,b.z,.3,20);spark(lerp(b.x,tx,.55),1.2,lerp(b.z,tz,.55),T.col,6);
           if(hpA[w.c]<=0)openCell(w.c%GW,(w.c/GW)|0,b);}}
       break;}
     case 'haul':{const g=b.carry;if(!g){b.st='follow';break;}botLampSync(b,dt);
@@ -3767,7 +3789,7 @@ function updateBots(dt){
       if(d>S*1.15){b.repath-=dt;if(b.repath<=0||!b.path){b.repath=.8;const x=rc%GW,y=(rc/GW)|0;let best=null;for(const[dx,dy]of DIRS){const n=(y+dy)*GW+x+dx;if(grid[n]){const p=bfs(cidx(b.x,b.z),n,false);if(p&&(!best||p.length<best.length))best=p;}}b.path=best;b.pi=best&&best.length>1?1:0;
           if(!best){b.st='follow';toast(`${b.name} sana ulaşamıyor. KAZ!`,2.4);break;}}
         followPath(b,dt,4.2);}
-      else{b.face=turnTo(b.face,Math.atan2(-(tx-b.x),-(tz-b.z)),dt*6);b.digTick-=dt;if(b.digTick<=0){b.digTick=1.1;b.swing=.4;sfxAt('rock',b.x,b.z,.9);emit(b.x,b.z,11,b,'kazma');hpA[rc]=Math.max(0,hpA[rc]-1);if(hpA[rc]<=0)openCell(rc%GW,(rc/GW)|0,b);}}
+      else{b.face=turnTo(b.face,Math.atan2(-(tx-b.x),-(tz-b.z)),dt*6);b.digTick-=dt;if(b.digTick<=0){b.digTick=1.1;b.swing=.4;sfxAt('dig',b.x,b.z,.9);emit(b.x,b.z,11,b,'kazma');hpA[rc]=Math.max(0,hpA[rc]-1);if(hpA[rc]<=0)openCell(rc%GW,(rc/GW)|0,b);}}
       break;}
     case 'flee':{b.lamp=true;b.repath-=dt;if(b.repath<=0){b.repath=.5;pathTo(b,pl.x,pl.z,false);}followPath(b,dt,4.4);
       b.yellT-=dt;if(b.yellT<=0){b.yellT=2.5;if(Math.random()<.5)botSay(b,pick(['KOŞUN!','ARKAMDA!','BEKLEYİN BENİ!']));}
@@ -4208,7 +4230,7 @@ function updateAscend(dt){const A=G.asc;A.t+=dt;A.cT-=dt;A.hT-=dt;
   $('bStruggle').hidden=!A.atk;$('strL').textContent='TEKMELE!';$('strf').style.width=A.atk?(A.atk.got/8*100)+'%':'0%';
   $('red').style.opacity=A.atk?.8:danger*.3;
   if(A.t>=A.dur)victory();}
-function victory(){G.state='end';document.exitPointerLock?.();caughtHide();$('floorCard').classList.remove('on');$('ascend').hidden=true;$('hud').hidden=true;$('hotbar').hidden=false;$('bStruggle').hidden=true;sfx('nightDone',1.2);
+function victory(){G.state='end';smpRideStop();document.exitPointerLock?.();caughtHide();$('floorCard').classList.remove('on');$('ascend').hidden=true;$('hud').hidden=true;$('hotbar').hidden=false;$('bStruggle').hidden=true;sfx('nightDone',1.2);
   const n=RUN.alive.length+1,v=cartValue();$('end').classList.add('win');$('endK').textContent='GÜN IŞIĞI';$('endTitle').textContent=n>1?'KURTULDUNUZ':'KURTULDUN';
   $('endReason').textContent=(n===4?'Dördünüz de gün ışığına çıktınız. ':n===3?`Sen, ${RUN.alive.join(' ve ')} çıktınız; biri aşağıda kaldı. `:n===2?`Sen ve ${RUN.alive[0]} çıktınız; diğerleri aşağıda kaldı. `:'Yüzeye bir tek sen çıktın. Aşağıdan hâlâ sesler geliyor. ')+(v>0?`Vagonda ${v}₺ değerinde taş var.`:'Elin boş ama hayattasın.');
   $('lNight').textContent='ÇIKAN';$('sNight').textContent=n+' kişi';$('sGem').textContent=v+'₺';const s=Math.floor(RUN.time);$('sTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
@@ -4374,7 +4396,7 @@ function netRemoteUpdate(rec,P){const p=P.p;if(!Array.isArray(p))return;let e=re
   // sürüklenirken konumu hostta yaratığın izi belirler (titreme olmasın)
   if(!(NET.host&&dragged)){e.tx=p[0];e.tz=p[1];}
   e.sf=p[13]|0;e.yaw=p[2];e.pitch=p[3];e.lamp=!!p[4];e.strug=p[9]|0;e.crouchN=!!p[8];e.hid=!!p[11];
-  if(p[7]>(e.swing||0)+.05)e._swT=G.time;e.swing=p[7];
+  if(p[7]>(e.swing||0)+.05){e._swT=G.time;sfxAt('dig',e.x,e.z,.75,26);}e.swing=p[7];
   e.st=st==='dead'||st==='spectate'?'dead':dragged?'dragged':st==='buried'?'buried':(G.time-(e._swT||-9)<1.2?'dig':'follow');
   const gi=p[6];if(gi>=0&&gems[gi]){if(e.carry!==gems[gi]){e.carry=gems[gi];gems[gi].st='carried';}}else if(e.carry&&e.carry.st==='carried'){e.carry=null;}}
 function netRemoteTick(dt){for(const e of bots){if(!e.remote||e.tx==null)continue;const dx=e.tx-e.x,dz=e.tz-e.z,d=Math.hypot(dx,dz);
@@ -5920,7 +5942,7 @@ function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
-window.__kd={__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
+window.__kd={__SMP:SMP,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
   nbuf=C.createBuffer(1,sr*2,sr);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}
   try{for(const[ty,v,dl]of type)setTimeout(()=>0,0),(dl?(()=>{const t0=C.currentTime;})():0),sfx(ty,v,0);}finally{}const buf=await C.startRendering();[AC,sfxBus,nbuf,master]=sv;return Array.from(buf.getChannelData(0));},__sfR:()=>{sfRender();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},__mR:()=>{sfMenuRender(0);gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},UI:{VC,XT,vcPress,vcRelease,orderSet,noteOpen,crLure,teamRevive,openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
   LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
