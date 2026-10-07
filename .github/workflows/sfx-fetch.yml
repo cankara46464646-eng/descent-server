@@ -1,0 +1,31 @@
+name: SFX kaynak indir (CC0)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CC0 ses paketlerini indir
+        run: |
+          mkdir -p sfx && cd sfx
+          get(){ curl -fsSL --retry 3 -A "Mozilla/5.0" -o "$1" "$2" && echo "OK $1" || echo "FAIL $1 $2"; }
+          get kenney_impact.zip https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip
+          get kenney_rpg.zip https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip
+          get kenney_scifi.zip https://kenney.nl/media/pages/assets/sci-fi-sounds/6b296f9ecf-1677589334/kenney_sci-fi-sounds.zip
+          get oga_old_elevator_door.mp3 https://opengameart.org/sites/default/files/old_elevator_door.mp3
+          get oga_elevator_door.wav https://opengameart.org/sites/default/files/elevator_door.wav
+          get oga_winch.zip https://opengameart.org/sites/default/files/winch.zip
+          get oga_generator.mp3 https://opengameart.org/sites/default/files/loop_generator_1.mp3
+          get oga_metal_wood.zip https://opengameart.org/sites/default/files/100-CC0-wood-metal-SFX.zip
+          get oga_rock_break.ogg https://opengameart.org/sites/default/files/rock_break_0.ogg
+          for f in bing1.wav bong1.wav clink2.wav clink3.wav thud2.wav thud3.wav; do get oga_$f https://opengameart.org/sites/default/files/$f; done
+          ls -la
+          cd .. && zip -qr sfx-src.zip sfx
+      - name: Yayınla
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete sfx-src -y --cleanup-tag -R ${{ github.repository }} || true
+          gh release create sfx-src sfx-src.zip -t "SFX kaynak (CC0)" -n "Kenney.nl ve OpenGameArt CC0 ses paketleri (ham kaynak)" -R ${{ github.repository }}
