@@ -1,0 +1,49 @@
+name: Poly Haven model indir (CC0)
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: 'virgülle ayrılmış Poly Haven model id listesi'
+        required: true
+      res:
+        description: 'doku çözünürlüğü (1k/2k)'
+        default: '1k'
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: İndir
+        env:
+          IDS: ${{ github.event.inputs.ids }}
+          RES: ${{ github.event.inputs.res }}
+        run: |
+          python3 - <<'PY'
+          import os,json,urllib.request
+          H={'User-Agent':'descent-game-asset-fetch'}
+          def get(u):
+              return urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=60).read()
+          os.makedirs('ph',exist_ok=True)
+          for aid in [x.strip() for x in os.environ['IDS'].split(',') if x.strip()]:
+              d='ph/'+aid;os.makedirs(d,exist_ok=True)
+              try:
+                  info=json.loads(get('https://api.polyhaven.com/info/'+aid));open(d+'/info.json','w').write(json.dumps(info,indent=1))
+                  open(d+'/thumb.png','wb').write(get('https://cdn.polyhaven.com/asset_img/thumbs/%s.png?width=512&height=512'%aid))
+                  F=json.loads(get('https://api.polyhaven.com/files/'+aid))
+                  g=F['gltf'][os.environ.get('RES','1k')]['gltf']
+                  open(d+'/'+g['url'].split('/')[-1],'wb').write(get(g['url']))
+                  for rel,v in g.get('include',{}).items():
+                      p=d+'/'+rel;os.makedirs(os.path.dirname(p),exist_ok=True);open(p,'wb').write(get(v['url']))
+                  print('OK',aid)
+              except Exception as e:
+                  print('FAIL',aid,e)
+          PY
+          find ph -type f | head -100
+          zip -qr ph-src.zip ph
+      - name: Yayınla
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete ph-src -y --cleanup-tag -R ${{ github.repository }} || true
+          gh release create ph-src ph-src.zip -t "Poly Haven kaynak (CC0)" -n "Poly Haven CC0 modelleri (ham kaynak)" -R ${{ github.repository }}
