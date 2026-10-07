@@ -1,0 +1,26 @@
+name: Kaynak dosya indir (CC0/CC-BY)
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: 'boşlukla ayrılmış URL listesi'
+        required: true
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: İndir
+        env:
+          URLS: ${{ github.event.inputs.urls }}
+        run: |
+          mkdir -p src && cd src
+          for u in $URLS; do f=$(basename "$u"); curl -fsSL --retry 3 -A "Mozilla/5.0" -o "$f" "$u" && echo "OK $f" || echo "FAIL $u"; done
+          ls -la; cd .. && zip -qr url-src.zip src
+      - name: Yayınla
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete url-src -y --cleanup-tag -R ${{ github.repository }} || true
+          gh release create url-src url-src.zip -t "Kaynak dosyalar" -n "Ham kaynak (lisanslar KAYNAK.txt içinde)" -R ${{ github.repository }}
