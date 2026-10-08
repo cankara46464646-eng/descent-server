@@ -614,7 +614,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v60</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v61</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1027,7 +1027,10 @@ async function loadMiner(){try{
     MN.g1=L1.groups.map(g=>({...g,start:g.start+ni}));MN.g2=L2.groups.map(g=>({...g,start:g.start+ni+L1.n}));MN.lodMs=performance.now()-t0;MN.lodN=[ni/3|0,L1.n/3,L2.n/3];}
   MN.vao=mkVAO(d);MN.groups=H.groups;MN.idx32=!!H.idx32;
   MN.nb=H.nb;MN.par=H.parents;MN.names=H.names;MN.bp=H.bindPos;MN.bi={};H.names.forEach((n,i)=>MN.bi[n]=i);
-  const ab=b64buf(at),A=kdmParse(ab),ad=kdmVAO(ab,A.take,A.H,false);MN.axe=mkVAO(ad);MN.axeN=A.H.ni;
+  const ab=b64buf(at),A=kdmParse(ab),ad=kdmVAO(ab,A.take,A.H,false);
+  // modelin sapı ~8 cm kalınlığında (gerçekte ~4 cm): sap kesitini inceltir ki eldiven sapı sarabilsin; baş (y>.86 m) olduğu gibi kalır
+  {const q=ad.pos;for(let i=0;i<q.length;i+=3){const y=q[i+1];if(y>=.86)continue;const f=y<.8?.48:.48+(y-.8)/.06*.52;q[i]=-.01+(q[i]+.01)*f;q[i+2]*=f;}}
+  MN.axe=mkVAO(ad);MN.axeN=A.H.ni;
   MN.bt=gl.createTexture();gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,MN.bt);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA32F,4,H.nb,0,gl.RGBA,gl.FLOAT,null);
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);gl.activeTexture(gl.TEXTURE0);
   const L=['body','head','glove','helmet','helmet_n','helmet_rm','axe','axe_n','axe_rm'];const ims=await Promise.all(L.map(n=>loadImg('madenci/'+n+'.jpg')));
@@ -1269,8 +1272,8 @@ function skBegin(){gl.useProgram(PSK.p);const u=PSK.u,sc=SCN;
   gl.uniform3fv(u.uEmi,Z3);gl.uniform1f(u.uMat,7);return u;}
 // ---- birinci şahıs kollar: madenci modelinin gerçek kolları/eldivenleri (gövde, baş, bacak kemikleri göğüs noktasına büzülür) ----
 // FP anahtar pozları (kamera uzayı, cm, göze göre; X sağ, Y yukarı, Z ileri): [u, sağ el xyz, sap yönü xyz, sol el ağırlığı, eller arası]
-const FPK=[[0,14,-16,40,-.12,.56,.81,0,30],[.14,24,-6,36,.05,.95,.25,0,22],[.42,24,8,34,.05,.97,-.15,0,14],[.52,13,-18,42,-.2,.07,.98,0,14],[.62,13,-20,41,-.2,0,.98,0,14],[.8,16,-20,41,-.16,.5,.85,0,24],[1,14,-16,40,-.12,.56,.81,0,30]];
-const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},palm:[-7.5,1,.5],A:[.2,-.26,-.42],k:.62,dy:-10,dz:26,keep:null,ey:null};
+const FPK=[[0,15,-10,40,-.12,.56,.81,0,20],[.14,24,-6,36,.05,.95,.25,0,22],[.42,24,8,34,.05,.97,-.15,0,14],[.52,13,-18,42,-.2,.07,.98,0,14],[.62,13,-20,41,-.2,0,.98,0,14],[.8,16,-15,41,-.16,.5,.85,0,24],[1,15,-10,40,-.12,.56,.81,0,20]];
+const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},palm:[-10.8,-4.7,.6],roll:20,A:[.2,-.26,-.42],k:.72,dy:-10,dz:26,keep:null,ey:null};
 function fpKey(u){let i=0;while(i<FPK.length-2&&u>FPK[i+1][0])i++;const A=FPK[i],B=FPK[i+1];let k=clamp((u-A[0])/(B[0]-A[0]),0,1);
   k=i===2?k*k*k:i===3?1-(1-k)*(1-k):k*k*(3-2*k);return A.map((v,j)=>v+(B[j]-v)*k);}
 function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O=window.__FPA||FPA;
@@ -1279,9 +1282,9 @@ function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O
   if(!FPA.ey){const r0=mnSolve(mnPoseNew(),e.boneM),h0=MN.bi['head.x'];FPA.ey=v3(r0.Pp[h0],qRot(r0.Dq[h0],[0,9,9]));}
   const ey=FPA.ey,dz=O.dz!=null?O.dz:FPA.dz,dy=O.dy!=null?O.dy:FPA.dy,K=O.K||fpKey(u),br=Math.sin(G.time*1.7)*.6;
   const cm=(x,y,z)=>({x:ey[0]-x,y:ey[1]+y-dy,z:ey[2]+z-dz});
-  const P=mnPoseNew();P.look=[0,0];armPose(P,'l',76*DEG,3*DEG,14*DEG,2*DEG);fingers(P,'r',(O.curl||90)*DEG);{const th=O.th||[1,0,0,120];setR(P,'c_thumb1.r',qAx(th[0],th[1],th[2],th[3]*DEG));}fingers(P,'l',lerp(30,72,K[7])*DEG);
+  const P=mnPoseNew();P.look=[0,0];armPose(P,'l',76*DEG,3*DEG,14*DEG,2*DEG);fingers(P,'r',(O.curl||80)*DEG);{const th=O.th||[1,0,0,120];setR(P,'c_thumb1.r',qAx(th[0],th[1],th[2],th[3]*DEG));}fingers(P,'l',lerp(30,72,K[7])*DEG);
   const hd=vnorm([K[4],K[5],K[6]]);const R=cm(K[1],K[2]+br,K[3]);P.arms.r={...R,w:1};
-  const hdm=[-hd[0],hd[1],hd[2]];P.hw={'hand.r':(pe,pw)=>qAlign([0,0,1],[-1,0,0],hdm,vsub(pw,pe))};// el, sapı avucunda kavrar: boğum hattı sap boyunca, parmak kökü ön kol yönünde
+  const hdm=[-hd[0],hd[1],hd[2]];const roll=(O.roll!=null?O.roll:FPA.roll)*DEG;P.hw={'hand.r':(pe,pw)=>qAlign([0,0,1],[-1,0,0],hdm,qRot(qAx(hdm[0],hdm[1],hdm[2],roll),vsub(pw,pe)))};// el, sapı avucunda kavrar: boğum hattı sap boyunca, parmak kökü ön kol yönünde
   P.hold='mine';const r=mnSolve(P,e.boneM);
   const ch=[ey[0],ey[1]-30-dy,ey[2]-30-dz];
   const keep=O.keepRe?MN.names.map(n=>new RegExp(O.keepRe).test(n)):FPA.keep||(FPA.keep=MN.names.map(n=>/^(shoulder|arm_|forearm_|hand\.|c_)/.test(n)));
@@ -3769,21 +3772,21 @@ function drawChalk(){if(G.state!=='play')return;const[fx,fz]=fwdXZ();const x=pl.
 function struggle(){if(G.state==='ascend'){if(G.asc&&G.asc.atk){G.asc.atk.got++;G.shake=.15;sfx('thump',.8);}return;}if(G.state==='buried'){if(bots.some(b=>b.st==='rescue'))return;pl.struggle+=1;G.shake=.1;sfx('rock',.5);emit(pl.x,pl.z,6,pl,'kazma');if(pl.struggle>=24){const c=pl.buryCell;openCell(c%GW,(c/GW)|0,'self');}return;}
   if(G.state!=='dragged'||G.faceT>0)return;if(!G.qte)qteNew();qteHit();}
 // ---- yakalanınca kurtulma: zamanlama oyunu (art arda basmak yetmez) ----
-// İbre yeşil bölgedeyken bas: isabet → yaratık sendeler, ilerleme +1, bölge daralır, ibre hızlanır.
+// İbre yeşil bölgedeyken bas: isabet → yaratık sendeler, ilerleme +1, bölge biraz daralır (hız neredeyse sabit, okunabilir kalır).
 // Iska → ilerleme -1, yaratık sıkar, yarım saniye nefesin kesilir. Gereken isabet katla ve aynı katta her kurtuluşla artar.
 function qteNew(){const f=RUN.floor||1;G.escN=G.escN||0;const need=Math.min(7,3+Math.floor((f-1)/2)+G.escN);
-  G.qte={p:Math.random()*.3,dir:1,sp:.9+f*.07+G.escN*.15,zc:.55+Math.random()*.35,zw:Math.max(.11,.24-f*.012-G.escN*.025),need,got:0,lock:0,fx:0,ok:0,done:false};qteUI(true);}
+  G.qte={p:Math.random()*.3,dir:1,sp:Math.min(.95,.55+f*.04+G.escN*.08),zc:.55+Math.random()*.35,zw:Math.max(.16,.3-f*.01-G.escN*.02),need,got:0,lock:0,fx:0,ok:0,done:false};qteUI(true);}
 function qteTick(dt){const Q=G.qte;const on=G.state==='dragged'&&!(G.faceT>0);
   if(!on){if(Q){G.qte=null;qteUI(false);}return;}
   if(!Q){qteNew();return;}if(Q.done)return;Q.lock=Math.max(0,Q.lock-dt);Q.fx=Math.max(0,Q.fx-dt);
   Q.p+=Q.dir*Q.sp*dt;if(Q.p>1){Q.p=2-Q.p;Q.dir=-1;}if(Q.p<0){Q.p=-Q.p;Q.dir=1;}qteUI(true);}
-function qteIn(Q){return Math.abs(Q.p-Q.zc)<=Q.zw/2;}
+function qteIn(Q){return Math.abs(Q.p-Q.zc)<=Q.zw/2+.025;}// dokunmatik gecikmesi için küçük tolerans
 function qteHit(){const Q=G.qte;if(!Q||Q.done||Q.lock>0)return;
   if(qteIn(Q)){Q.got++;Q.ok=1;Q.fx=.35;G.shake=Math.max(G.shake,.28);sfx('thump',.75);sfx('grunt',.7);try{if(SET.vib!==false&&navigator.vibrate)navigator.vibrate(35);}catch(e){}
     if(G.dragBy!=='pale'&&cr.victim===pl)cr.bonkT=Math.max(cr.bonkT||0,.6);
     if(Q.got>=Q.need){Q.done=true;qteUI(true);qteEscape();return;}
-    Q.zw=Math.max(.085,Q.zw*.86);Q.sp*=1.1;let z;do{z=.12+Math.random()*.76;}while(Math.abs(z-Q.p)<.25);Q.zc=z;}
-  else{Q.got=Math.max(0,Q.got-1);Q.ok=0;Q.fx=.5;Q.lock=.5;Q.sp*=1.04;G.shake=Math.max(G.shake,.45);hitFx(.4);sfx('screamLo',.45);
+    Q.zw=Math.max(.14,Q.zw*.94);Q.sp=Math.min(1.05,Q.sp*1.03);let z;do{z=.12+Math.random()*.76;}while(Math.abs(z-Q.p)<.25);Q.zc=z;}
+  else{Q.got=Math.max(0,Q.got-1);Q.ok=0;Q.fx=.5;Q.lock=.45;G.shake=Math.max(G.shake,.45);hitFx(.4);sfx('screamLo',.45);
     if(G.dragBy!=='pale')crV('attack',()=>sfx('growl',.9),{});}
   qteUI(true);}
 function qteEscape(){G.escN=(G.escN||0)+1;pl.hurtT=6;
