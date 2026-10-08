@@ -614,7 +614,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v57</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v58</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1268,19 +1268,26 @@ function skBegin(){gl.useProgram(PSK.p);const u=PSK.u,sc=SCN;
   gl.uniform1i(u.uNP,sc.PP.length/4);if(sc.PP.length){gl.uniform4fv(u.uPP,sc.PP);gl.uniform3fv(u.uPC,sc.PC);}
   gl.uniform3fv(u.uEmi,Z3);gl.uniform1f(u.uMat,7);return u;}
 // ---- birinci şahıs kollar: madenci modelinin gerçek kolları/eldivenleri (gövde, baş, bacak kemikleri göğüs noktasına büzülür) ----
-const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},dy:-22,dz:34,rx:.65,sr:.1,sx:.03,sy:.08,syw:-.2,keep:null};
+// FP anahtar pozları (kamera uzayı, cm, göze göre; X sağ, Y yukarı, Z ileri): [u, sağ el xyz, sap yönü xyz, sol el ağırlığı, eller arası]
+const FPK=[[0,28,-17,44,.3,.56,.77,0,24],[.14,32,-4,36,.25,.92,.3,0,22],[.42,34,4,22,.1,.55,-.83,0,14],[.52,14,-22,42,-.22,.25,.94,0,11],[.62,14,-25,41,-.22,.15,.96,0,11],[.8,24,-19,43,.12,.55,.83,0,18],[1,28,-17,44,.3,.56,.77,0,24]];
+const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},dy:-10,dz:26,keep:null,ey:null};
+function fpKey(u){let i=0;while(i<FPK.length-2&&u>FPK[i+1][0])i++;const A=FPK[i],B=FPK[i+1];let k=clamp((u-A[0])/(B[0]-A[0]),0,1);
+  k=i===2?k*k*k:i===3?1-(1-k)*(1-k):k*k*(3-2*k);return A.map((v,j)=>v+(B[j]-v)*k);}
 function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O=window.__FPA||FPA;
   const u=O.u!=null?O.u:s<=0?0:s<.44?.52*s/.44:.52+(s-.44)/.56*.48;
-  const P=clipMine(u,mnPoseNew());P.look=[0,0];
-  if(!e.boneM)e.boneM=new Float32Array(MN.nb*16);const r=mnSolve(P,e.boneM);
-  const bi=MN.bi,hi=bi['head.x'],ch=r.Pp[bi['spine_03.x']];
-  const keep=FPA.keep||(FPA.keep=MN.names.map(n=>/^(shoulder|arm_|forearm_|hand\.|c_)/.test(n)));
+  if(!e.boneM)e.boneM=new Float32Array(MN.nb*16);
+  if(!FPA.ey){const r0=mnSolve(mnPoseNew(),e.boneM),h0=MN.bi['head.x'];FPA.ey=v3(r0.Pp[h0],qRot(r0.Dq[h0],[0,9,9]));}
+  const ey=FPA.ey,dz=O.dz!=null?O.dz:FPA.dz,dy=O.dy!=null?O.dy:FPA.dy,K=O.K||fpKey(u),br=Math.sin(G.time*1.7)*.6;
+  const cm=(x,y,z)=>({x:ey[0]-x,y:ey[1]+y-dy,z:ey[2]+z-dz});
+  const P=mnPoseNew();P.look=[0,0];armPose(P,'l',76*DEG,3*DEG,14*DEG,2*DEG);fingers(P,'r',72*DEG);fingers(P,'l',lerp(30,72,K[7])*DEG);
+  const hd=vnorm([K[4],K[5],K[6]]);const R=cm(K[1],K[2]+br,K[3]);P.arms.r={...R,w:1};
+  if(K[7]>.01){const L=cm(K[1]+hd[0]*K[8]-4,K[2]+br+hd[1]*K[8],K[3]+hd[2]*K[8]);P.arms.l={...L,w:K[7]};}
+  P.hold='mine';const r=mnSolve(P,e.boneM);
+  const ch=[ey[0],ey[1]-30-dy,ey[2]-30-dz];
+  const keep=FPA.keep||(FPA.keep=MN.names.map(n=>/^(arm_|forearm_|hand\.|c_).*\.r$/.test(n)));
   for(let i=0;i<MN.nb;i++)if(!keep[i]){const o=i*16;e.boneM.fill(0,o,o+16);e.boneM[o+12]=ch[0];e.boneM[o+13]=ch[1];e.boneM[o+14]=ch[2];e.boneM[o+15]=1;}
-  const ey=v3(r.Pp[hi],qRot(r.Dq[hi],[0,9,9]));
-  const w=u<.42?0:u<.52?(u-.42)/.1:u<.62?1:Math.max(0,1-(u-.62)/.25),ws=w*w*(3-2*w);
-  const sr=O.sr!=null?O.sr:.5,sx=O.sx!=null?O.sx:0,sy=O.sy!=null?O.sy:0,syw=O.syw!=null?O.syw:0;
-  e.tint=O.tint||[1.7,1.7,1.7];e.mnE=X(camW,M4.T(bx+sx*ws,by+sy*ws,0),M4.RY(syw*ws),M4.RX((O.rx||0)-sr*ws),M4.RY(Math.PI),M4.S(MN.S,MN.S,MN.S),M4.T(-ey[0],-ey[1]+O.dy,-ey[2]+O.dz));e.x=eye[0];e.z=eye[2];
-  e.handR=[r.Pp[bi['hand.r']],r.Dq[bi['hand.r']]];e.handL=[r.Pp[bi['hand.l']],r.Dq[bi['hand.l']]];e.mnHold=P.hold;e.axeDir=P.axeDir;
+  e.tint=O.tint||[1.5,1.5,1.5];e.mnE=X(camW,M4.T(bx,by,0),M4.RY(Math.PI),M4.S(MN.S,MN.S,MN.S),M4.T(-ey[0],-ey[1]+dy,-ey[2]+dz));e.x=eye[0];e.z=eye[2];
+  const bi=MN.bi;e.handR=[r.Pp[bi['hand.r']],r.Dq[bi['hand.r']]];e.handL=[r.Pp[bi['hand.l']],r.Dq[bi['hand.l']]];e.mnHold='mine';e.fpDir=[-hd[0],hd[1],hd[2]];{const sw=u<.42?sstep(.12,.42,u):u<.62?1:1-sstep(.62,.92,u);e.fpSide=O.side||vnorm([-.86*sw,.25+.25*sw,1-sw]);}
   drawMinerModel(e);return true;}
 function drawMinerModel(e){const u=skBegin();gl.uniform1f(u.uNoSkin,0);
   gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,MN.bt);gl.texSubImage2D(gl.TEXTURE_2D,0,0,0,4,MN.nb,gl.RGBA,gl.FLOAT,e.boneM);gl.activeTexture(gl.TEXTURE0);
@@ -1291,12 +1298,13 @@ function drawMinerModel(e){const u=skBegin();gl.uniform1f(u.uNoSkin,0);
   // kazma (asset'in kendi AXE modeli): sap birimi metre, baş +Y ucunda
   if(e.mnHold&&e.mnHold!=='carry'){const[hp,hq]=e.handR;let dir,grip,side;
     const palm=v3(hp,qRot(hq,[-7.5,-2.5,.5]));
-    if(e.mnHold==='mine'){const lp=v3(e.handL[0],qRot(e.handL[1],[7.5,-2.5,.5]));dir=vnorm(vsub(lp,palm));if(vlen(vsub(lp,palm))<8)dir=e.axeDir||dir;grip=12;side=[-1,0,0];}
+    if(e.mnHold==='mine'){const lp=v3(e.handL[0],qRot(e.handL[1],[7.5,-2.5,.5]));dir=vnorm(vsub(lp,palm));if(vlen(vsub(lp,palm))<8)dir=e.axeDir||dir;grip=12;side=[-1,0,0];if(e.fpDir){dir=e.fpDir;side=e.fpSide;}}
     else{const fw=qRot(hq,[0,0,1]);dir=vnorm(v3([0,-1,.3],fw,.45));grip=24;side=[-1,0,0];}
     // sap ekseni = dir; başın düzlemi karakterin ileri yönünü içersin
     let up=vnorm(vcross(side,dir));if(!isFinite(up[0]))up=[0,0,1];const sx=vnorm(vcross(dir,up));
     const o=v3(palm,dir,-grip);const k=100;// cm
-    const M=new Float32Array([sx[0]*k,sx[1]*k,sx[2]*k,0,dir[0]*k,dir[1]*k,dir[2]*k,0,up[0]*k,up[1]*k,up[2]*k,0,o[0],o[1],o[2],1]);
+    // baş (asset'te X ekseni) savuruş düzleminde: uçlar ileri/geri bakar
+    const M=new Float32Array([up[0]*k,up[1]*k,up[2]*k,0,dir[0]*k,dir[1]*k,dir[2]*k,0,-sx[0]*k,-sx[1]*k,-sx[2]*k,0,o[0],o[1],o[2],1]);
     gl.uniform1f(u.uNoSkin,1);gl.uniformMatrix4fv(u.uM,false,M4.mul(e.mnE,M));
     mnSetMat(u,{a:'axe',n:'axe_n',rm:'axe_rm',spec:.3,gloss:40,wrap:0});gl.bindVertexArray(MN.axe);gl.vertexAttribI4ui(4,0,0,0,0);gl.vertexAttrib4f(5,1,0,0,0);gl.drawElements(gl.TRIANGLES,MN.axeN,gl.UNSIGNED_SHORT,0);gl.uniform1f(u.uNoSkin,0);}
   gl.bindVertexArray(null);gl.useProgram(PR.p);}
