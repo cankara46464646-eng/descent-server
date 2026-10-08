@@ -223,6 +223,199 @@
     "metal": false
    },
    "kb": 348
+  },
+  {
+   "id": "cage_frame",
+   "group": "cage",
+   "category": "Props",
+   "path": "cage_frame/",
+   "source": "yapım: cage_build.py (Poly Haven CC0 dokular)",
+   "desc": "Kafes çerçevesi",
+   "dims_m": [
+    2.01,
+    3.91,
+    1.98
+   ],
+   "tris": [
+    336,
+    336,
+    336
+   ],
+   "verts": 672,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 80
+  },
+  {
+   "id": "cage_floor",
+   "group": "cage",
+   "category": "Props",
+   "path": "cage_floor/",
+   "source": "yapım: cage_build.py (Poly Haven CC0 dokular)",
+   "desc": "Kafes zemini",
+   "dims_m": [
+    1.98,
+    0.22,
+    1.98
+   ],
+   "tris": [
+    48,
+    48,
+    48
+   ],
+   "verts": 96,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 205
+  },
+  {
+   "id": "cage_roof",
+   "group": "cage",
+   "category": "Props",
+   "path": "cage_roof/",
+   "source": "yapım: cage_build.py (Poly Haven CC0 dokular)",
+   "desc": "Kafes çatısı",
+   "dims_m": [
+    2.02,
+    0.02,
+    2.02
+   ],
+   "tris": [
+    12,
+    12,
+    12
+   ],
+   "verts": 24,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 118
+  },
+  {
+   "id": "cage_mesh",
+   "group": "cage",
+   "category": "Props",
+   "path": "cage_mesh/",
+   "source": "yapım: cage_build.py (Poly Haven CC0 dokular)",
+   "desc": "Kafes tel örgüsü",
+   "dims_m": [
+    1.89,
+    2.36,
+    1.86
+   ],
+   "tris": [
+    12,
+    12,
+    12
+   ],
+   "verts": 24,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop",
+    "alpha"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 78
+  },
+  {
+   "id": "cage_gate",
+   "group": "cage",
+   "category": "Props",
+   "path": "cage_gate/",
+   "source": "yapım: cage_build.py (Poly Haven CC0 dokular)",
+   "desc": "Makaslı kafes kapısı",
+   "dims_m": [
+    1.93,
+    2.19,
+    0.04
+   ],
+   "tris": [
+    324,
+    324,
+    324
+   ],
+   "verts": 648,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 51
+  },
+  {
+   "id": "cage_stripe",
+   "group": "cage",
+   "category": "Props",
+   "path": "cage_stripe/",
+   "source": "yapım: cage_build.py (Poly Haven CC0 dokular)",
+   "desc": "Uyarı şeritli kiriş",
+   "dims_m": [
+    1.9,
+    0.09,
+    0.02
+   ],
+   "tris": [
+    12,
+    12,
+    12
+   ],
+   "verts": 24,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 18
   }
  ],
  "surfaces": [],

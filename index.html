@@ -502,7 +502,18 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 @media (hover:hover){.go:hover{filter:brightness(1.08)}}
 @media (hover:hover){.mb:hover,.mb:focus-visible{color:var(--chalk)}}
 @media (hover:hover){.mb:hover::before,.mb:focus-visible::before{transform:scaleX(1)}}
-@media (hover:hover){#start .mb.hs:hover::after,#start .mb.hs:focus-visible::after{opacity:1}}</style>
+@media (hover:hover){#start .mb.hs:hover::after,#start .mb.hs:focus-visible::after{opacity:1}}#gemHud{position:relative;gap:6px;padding:3px 8px 3px 5px;border-radius:9px;background:linear-gradient(90deg,rgba(40,90,110,.28),rgba(0,0,0,0));border:1px solid rgba(140,220,245,.18)}
+#gemHud .gIco{width:17px;height:17px;filter:drop-shadow(0 0 5px rgba(120,220,255,.65));flex:none}
+#gemHud .qn b{font-size:15px;color:#eafaff;text-shadow:0 0 8px rgba(110,210,245,.35)}
+#gemHud .qn small{font-family:var(--display);font-size:11px;color:#9fdcf0}
+#gemHud .qc{font-size:9.5px;letter-spacing:.12em;color:var(--muted);margin-left:2px;white-space:nowrap}
+#gemHud .qc:empty{display:none}
+#gemHud .qf{position:absolute;left:24px;top:-2px;font-style:normal;font-family:var(--display);font-weight:700;font-size:13px;color:#bff1ff;opacity:0;pointer-events:none;white-space:nowrap;text-shadow:0 2px 6px #000}
+#gemHud .qf.on{animation:qfUp 1.6s ease-out forwards}
+#gemHud.pop .gIco{animation:gPop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes qfUp{0%{opacity:0;transform:translateY(6px)}15%{opacity:1}70%{opacity:1}100%{opacity:0;transform:translateY(-18px)}}
+@keyframes gPop{0%{transform:scale(1)}40%{transform:scale(1.45) rotate(-8deg)}100%{transform:scale(1)}}
+</style>
 
 <canvas id="gl"></canvas>
 <div id="gasv"></div><div id="vig"></div><div id="red"></div><div id="flash"></div><div id="fade"></div>
@@ -520,7 +531,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
       <div class="mis"><div id="objL"></div><div style="display:flex;align-items:center"><div class="mp" id="misP" style="flex:1"><em id="misPf"></em></div><span class="mf" id="misF"></span></div></div>
       <div id="sqL"></div>
       <div class="tls">
-        <div class="quota" title="Vagondaki taşların değeri"><span class="gem"></span><span class="qn"><b id="qv">0</b><small>₺</small></span></div>
+        <div class="quota" id="gemHud" title="Vagondaki taşlar ve kazanç"><svg class="gIco" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="gGr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9fbff"/><stop offset=".5" stop-color="#7fd8f0"/><stop offset="1" stop-color="#2c88b0"/></linearGradient></defs><path d="M6.5 3.5h11l4 5.2L12 21 2.5 8.7z" fill="url(#gGr)"/><path d="M2.5 8.7h19M9 3.5l-1.6 5.2L12 21l4.6-12.3L15 3.5M7.4 8.7 12 3.6l4.6 5.1" fill="none" stroke="rgba(10,40,55,.55)" stroke-width=".9" stroke-linejoin="round"/><path d="M7 4.5 5 8" stroke="#fff" stroke-width="1" opacity=".8"/></svg><span class="qn"><b id="qv">0</b><small>₺</small></span><span class="qc" id="qc"></span><em class="qf" id="qf"></em></div>
         <div class="bat" id="batBox" title="Lamba pili"><span class="bi"><i><em id="batf"></em></i></span><small id="batN">100</small></div>
         <div class="nz" title="Çıkardığın ses"><div id="noise"><span></span><span></span><span></span><span></span></div><span class="lbl">SES</span></div>
       </div>
@@ -590,7 +601,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v53</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v54</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -689,7 +700,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <div class="dHd"><small id="endK">SENİ BULDU</small><h1 id="endTitle">YAKALANDIN</h1><p id="endReason"></p></div>
     <div class="stats">
       <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v15M6 12l6 6 6-6M4 21h16"/></svg></i><b id="sNight">-1</b><small id="lNight">KAT</small></div>
-      <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12l3 5-9 11L3 9zM3 9h18M9.5 4 12 20M14.5 4 12 20"/></svg></i><b id="sGem">0₺</b><small>ELMAS DEĞERİ</small></div>
+      <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12l3 5-9 11L3 9zM3 9h18M9.5 4 12 20M14.5 4 12 20"/></svg></i><b id="sGem">0 ₺</b><small>KAZANÇ</small></div>
       <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></i><b id="sTime">0:00</b><small>SÜRE</small></div>
     </div>
     <div id="endFun" class="fun"></div>
@@ -867,6 +878,12 @@ void main(){
   else if(uMat>2.5&&uMat<3.5){ spec=.55; gloss=70.; base*=.85+.3*n3(vW*18.); }
   else if(uMat>3.5&&uMat<4.5){ base*=.75+.45*n3(vec3(vW.x*2.,vW.y*30.,vW.z*2.)); spec=.02; }
   else if(uMat>4.5&&uMat<5.5){ float r=smoothstep(.35,.75,n3(vW*2.2)); base=mix(base,vec3(.34,.14,.05),r*.7)*(.7+.5*n3(vW*7.)); spec=mix(.35,.06,r); gloss=mix(40.,12.,r); }
+  else if(uMat>8.5&&uMat<9.5){ // değerli taş: keskin yüzeyler, parıltı, iç ışıma
+    vec3 V9=normalize(uEye-vW); float fr=pow(1.-abs(dot(N,V9)),2.2);
+    float fac=fract(sin(dot(floor(N*6.+.5),vec3(12.9898,78.233,37.719)))*43758.5453);
+    float tw=pow(max(0.,sin(uTime*1.7+fac*31.)),14.);
+    vec3 gc=pow(uCol,vec3(1.6)); base=gc*mix(.08,.85,fac*fac); spec=3.5; gloss=320.; wrap=0.; ao=1.;
+    veinE=uEmi*(.15+.3*fac+.2*fr)+gc*fr*.04+vec3(1.)*tw*step(.55,fac)*.3; }
   else if(uMat>6.5){ vec2 tuv=vec2(vUV.x,1.-vUV.y); vec4 alb4=texture(uAlb,tuv); if(uAlphaT>.5){ if(alb4.a<.42) discard; if(!gl_FrontFacing) N=-N; } base=alb4.rgb*uCol; vec3 Tg=vT.xyz-N*dot(N,vT.xyz); float tl=length(Tg);
     if(uHasN>.5&&tl>1e-4){ Tg/=tl; vec3 Bg=cross(N,Tg)*(vT.w<0.?-1.:1.); vec3 tn=texture(uNrm,tuv).xyz*2.-1.; N=normalize(mat3(Tg,Bg,N)*tn); }
     spec=uSpec; gloss=uGloss; wrap=uWrap;
@@ -903,7 +920,7 @@ void main(){
   L+=uHazeC*min(lit,1.2)*(1.-exp(-fd*uHaze));
   L=aces(L*uExp);
   L=pow(L,vec3(1./2.2));
-  float alpha=wA; if(uMat>7.5) alpha=texture(uAlb,vec2(vUV.x,1.-vUV.y)).a*uAlphaK;
+  float alpha=wA; if(uMat>7.5&&uMat<8.5) alpha=texture(uAlb,vec2(vUV.x,1.-vUV.y)).a*uAlphaK;
   o=vec4(L,alpha);
 }`;
 const GVS=`#version 300 es
@@ -1376,7 +1393,7 @@ async function envInit(){try{const r=await fetch(ENV.base+'library.json');if(!r.
   try{const r2=await fetch('Environment/Forest/library.json');if(r2.ok){const F2=await r2.json();for(const a of F2.assets){a.path='../Forest/'+a.path;if(a.texPath)a.texPath='../Forest/'+a.texPath;lib.assets.push(a);}ENV.forest=true;}}catch(e){console.warn('Orman kütüphanesi yüklenemedi:',e);}
   // üçüncü kütüphane: Environment/Props (Poly Haven CC0 — jeneratör, bidon, dolap, sandık, fener)
   try{const r3=await fetch('Environment/Props/library.json');if(r3.ok){const P3=await r3.json();for(const a of P3.assets){a.path='../Props/'+a.path;lib.assets.push(a);}ENV.props=true;}}catch(e){console.warn('Eşya kütüphanesi yüklenemedi:',e);}
-  ENV.lib=lib;for(const a of ENV.lib.assets)ENV.byId[a.id]=a;for(const s of ENV.lib.surfaces)ENV.byId['S:'+s.id]=s;for(const d of ENV.lib.decals)ENV.byId['D:'+d.id]=d;
+  ENV.lib=lib;for(const a of ENV.lib.assets)ENV.byId[a.id]=a;if(ENV.props&&typeof CAGE_P!=='undefined')setTimeout(()=>{for(const id of CAGE_P)envAsset(id);},0);for(const s of ENV.lib.surfaces)ENV.byId['S:'+s.id]=s;for(const d of ENV.lib.decals)ENV.byId['D:'+d.id]=d;
   if(pl){envSurfaces(RUN.floor);for(const g of ENV.groups.values())envAsset(g.a);for(const id in (ENV.Dm||{}))envDecalTex(id);}}catch(e){console.warn('Çevre kütüphanesi yüklenemedi (oyun eski görünümle devam eder):',e);}}
 // ---- statik mesh (KDM3) + PBR doku yükleme; her asset ilk ihtiyaçta bir kez yüklenir ----
 function envAsset(id){if(!ENV.lib)return null;let a=ENV.A[id];if(a)return a.ready?a:null;a=ENV.A[id]={ready:false};const e=ENV.byId[id];if(!e){a.bad=true;return null;}
@@ -1699,7 +1716,7 @@ const ENV_TINT={rock:()=>{const c=LK().rb,l=(c[0]+c[1]+c[2])/3||.2;return c.map(
 let ENV_BUF=new Float32Array(64*16);
 function envDrawGroup(u,g,list,PL){const a=envAsset(g.a);if(!a)return 0;const e2=eye;const lod=[[],[],[]];
   const low=SET.gfx===0;
-  for(const it of list){if(it.hide||!grid[it.cell])continue;const dx=it.x-e2[0],dz=it.z-e2[2],d2=dx*dx+dz*dz;if(d2>(g.far||30)**2)continue;
+  for(const it of list){if(it.hide||(it.cell>=0&&!grid[it.cell]))continue;const dx=it.x-e2[0],dz=it.z-e2[2],d2=dx*dx+dz*dz;if(d2>(g.far||30)**2)continue;
     if(it.sz==null){const m=it.m;it.sz=a.r*Math.max(Math.hypot(m[0],m[1],m[2]),Math.hypot(m[4],m[5],m[6]),Math.hypot(m[8],m[9],m[10]));}if(low&&it.sz<.15)continue;const r=it.sz*1.2,y=it.m[13]+(it.lsz?4:1);
     let vis=true;for(const p of PL)if(p[0]*it.x+p[1]*y+p[2]*it.z+p[3]<-r-1){vis=false;break;}if(!vis)continue;
     const q=(it.lsz||it.sz)/Math.sqrt(d2+.01);lod[a.noLod?0:Math.min(2,Math.max(it.ml||0,(q>.18?0:q>.06?1:2)+(low?1:0)))].push(it.m);}
@@ -2670,6 +2687,23 @@ function sweepGeo(pts,rad,sides){const g=geo(),ring=[];
   for(let i=0;i<pts.length-1;i++)for(let k=0;k<sides;k++){const A=ring[i][k],B=ring[i][k+1],C=ring[i+1][k+1],D=ring[i+1][k];vtx(g,A[0],A[1]);vtx(g,B[0],B[1]);vtx(g,C[0],C[1]);vtx(g,A[0],A[1]);vtx(g,C[0],C[1]);vtx(g,D[0],D[1]);}return g;}
 const pickPts=[],pickR=[];for(let i=0;i<=24;i++){const x=-.46+i/24*.9;pickPts.push([x,-.32*x*x-(x<0?.05*x*x:0)]);const e=Math.abs(x)/(x<0?.46:.44);pickR.push(Math.max(.004,.05*(1-Math.pow(e,1.6))+(x<0?.0:.0)));}
 const MB=toMesh(boxGeo()), MT=toMesh(tubGeo()), MPK=toMesh(sweepGeo(pickPts,pickR,10)), MH=toMesh(cylGeo(14,.42,.5)), MC=toMesh(cylGeo(16,.5,.5)), MCone=toMesh(cylGeo(12,0,.5)), MS=toMesh(sphGeo(18,12)), MO=toMesh(octGeo()), MA=toMesh(arrowGeo());
+// ---- değerli taş kümeleri: türüne göre ham kristal biçimleri (elmas: sekizyüzlü, zümrüt: altıgen prizma, yakut: kısa çift uçlu, ametist: sivri uçlar)
+function gemCrystal(g,b,d,len,r,sides,tip,tw,bip){let u=Math.abs(d[1])<.9?[0,1,0]:[1,0,0];u=v3n(v3x(d,u));const w=v3x(d,u);
+  const P=(c,rr,a)=>{const ca=Math.cos(a),sa=Math.sin(a);return[c[0]+(u[0]*ca+w[0]*sa)*rr,c[1]+(u[1]*ca+w[1]*sa)*rr,c[2]+(u[2]*ca+w[2]*sa)*rr];};
+  const at=(k)=>[b[0]+d[0]*k,b[1]+d[1]*k,b[2]+d[2]*k];const c0=b,c1=at(len),ap=at(len+tip),bo=at(-tip*.8);
+  for(let k=0;k<sides;k++){const a0=k/sides*TAU+tw,a1=(k+1)/sides*TAU+tw,am=(a0+a1)/2;const o=[u[0]*Math.cos(am)+w[0]*Math.sin(am),u[1]*Math.cos(am)+w[1]*Math.sin(am),u[2]*Math.cos(am)+w[2]*Math.sin(am)];
+    const p00=P(c0,r*.92,a0),p01=P(c0,r*.92,a1),p10=P(c1,r,a0),p11=P(c1,r,a1);
+    if(len>.005){tri(g,p00,p10,p11,o);tri(g,p00,p11,p01,o);}
+    tri(g,p10,ap,p11,v3n([o[0]+d[0],o[1]+d[1],o[2]+d[2]]));
+    if(bip)tri(g,p00,p01,bo,v3n([o[0]-d[0],o[1]-d[1],o[2]-d[2]]));}}
+const GEMSPEC={elmas:{n:5,sides:4,len:.02,tip:.12,r:.075,bip:1,spread:.95,base:.075},zumrut:{n:6,sides:6,len:.17,tip:.018,r:.036,spread:.7,base:.06},
+  yakut:{n:5,sides:6,len:.07,tip:.075,r:.052,bip:1,spread:.85,base:.06},kristal:{n:7,sides:6,len:.13,tip:.09,r:.036,spread:.75,base:.065},
+  dev:{n:7,sides:4,len:.05,tip:.27,r:.17,bip:1,spread:.65,base:.16},numune:{n:9,sides:5,len:.12,tip:.11,r:.05,spread:1,base:.08}};
+function gemCluster(sp,seed){const g=geo();let s=seed>>>0;const R=()=>{s=(Math.imul(s,1664525)+1013904223)>>>0;return s/4294967296;};
+  for(let k=0;k<sp.n;k++){const main=k===0,ang=R()*TAU,tl=main?R()*.12:sp.spread*(.45+R()*.55);const d=v3n([Math.sin(tl)*Math.cos(ang),Math.cos(tl),Math.sin(tl)*Math.sin(ang)]);
+    const br=main?0:sp.base*(.45+R()*.55),ba=R()*TAU,sc=main?1:.42+R()*.45;gemCrystal(g,[Math.cos(ba)*br,-.015,Math.sin(ba)*br],d,sp.len*sc,sp.r*sc*(.85+R()*.3),sp.sides,sp.tip*sc,R()*TAU,sp.bip);}
+  return toMesh(g);}
+const GEMM={};for(const k in GEMSPEC)GEMM[k]=gemCluster(GEMSPEC[k],k.length*7919+11);
 const glowVAO=(()=>{const vao=gl.createVertexArray();gl.bindVertexArray(vao);const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,1,1,-1,-1,1,1,-1,1]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);gl.bindVertexArray(null);return vao;})();
 
 // ================= mağara =================
@@ -2959,8 +2993,11 @@ function resetRun(){statsReset();RUN.floor=1;RUN.cash=0;RUN.total=0;RUN.time=0;R
 resetRun();
 const quotaOf=n=>6+(n-1)*4;
 const angerEff=()=>G.anger>0?G.anger+Math.min(6,G.time/300*.7):0;
-const PRICE={elmas:20,zumrut:40,yakut:60,kristal:100,dev:150,numune:250};
-const cartValue=()=>RUN.cartGems.reduce((a,t)=>a+PRICE[t],0);
+const PRICE={elmas:1200,zumrut:2400,yakut:3600,kristal:6000,dev:15000,numune:30000};
+const cartValue=()=>RUN.cartGems.reduce((a,t)=>a+(PRICE[t]||0),0);
+// toplam kazanç: vagondaki taşlar + yan görev ödülleri; Türkçe binlik ayraçla
+const runValue=()=>cartValue()+(RUN.cash||0);
+const tl=n=>Math.round(n).toLocaleString('tr-TR')+' ₺';
 const TOOL_ICO={"kazma": "<path d=\"M4 20 14 10M9.5 5.5c3-2 7-2 10 1-2-1-5-1-7 1M12.5 7.5l4 4\"/>", "dyn": "<path d=\"M8 10h8v10H8zM12 10V7c0-2 2-3 4-2\"/><path d=\"M17 3l1 1M19 5l1-1M18 2v1\"/>", "flare": "<path d=\"M10 21l4-12M14 9l1-3M15 6c1-1 2.5-2 2-4M15 6c-1.5-.5-2.5-2-2-4\"/>", "rock": "<path d=\"M5 15l3-6 6-2 5 4 1 5-5 4H9z\"/>", "beam": "<path d=\"M3 9h18v4H3zM6 13v7M18 13v7\"/>", "mantar": "<path d=\"M4 11a8 6 0 0 1 16 0zM10 11v8h4v-8\"/>", "sok": "<path d=\"M13 2 5 13h6l-2 9 9-12h-6z\"/>", "det": "<path d=\"M6 4h12v16H6zM9 8h6v4H9zM9 16h.01M12 16h.01M15 16h.01\"/>"};
 const TOOLS=[{id:'kazma',ad:'Kazma',act:'KAZ'},{id:'dyn',ad:'Dinamit',act:'YAK'},{id:'flare',ad:'Fişek',act:'FIRLAT'},{id:'rock',ad:'Taş',act:'AT'},{id:'beam',ad:'Kereste',act:'KOY'},{id:'mantar',ad:'Mantar',act:'KOY'},{id:'sok',ad:'Şok Cihazı',act:'ŞOK'},{id:'det',ad:'Ölçer',act:'ÖLÇ'}];
 const BOTDEF=[
@@ -2982,7 +3019,7 @@ const CFG={
   ev:{first:55,gapMin:80,gapMax:150,chance:.6,elevFail:.3,w:{power:3,cavein:2,gas:2,hunt:2}},
   ghost:{attackR:1.7,warn:1.5,hitsToDie:2,hideMax:22,hideWarn:15,flareR:7,flareT:4,cd:24,silhouette:true,
     speed:{drift:1,stalk:1.4,attack:1.9,hunt:2.5,repel:2.4},pStalk:[.25,.45,.7,1],pAtk:[0,.3,.55,1],man:[[26,42],[18,32],[12,22],[8,14]]},
-  side:{canta:40,kayit:30,telsiz:50,ornek:45,cevher:40},
+  side:{canta:2400,kayit:1800,telsiz:3000,ornek:2700,cevher:2400},
   botEsc:{chance:.85,tMin:4,tMax:9}};
 const SYS={stunCD:0,zaps:[],ev:{next:0,active:null,last:null},manT:20,manLast:'',fig:null,detV:10,detShow:'',detT:0,beepT:0,chirpT:0,glitchT:0,fakeT:0,fakeV:0,warnT:0,vig:0,frzT:0,hideT:0,breathT:0,huntSndT:0,finSndT:0,lampOffT:0};
 const GHO={on:false,x:0,z:0,tx:0,tz:0,st:'drift',act:1,hunt:false,tgt:0,t:0,wp:null,dt:0,lt:0,warnT:0,cd:0,rt:0};
@@ -3004,7 +3041,7 @@ function ghS(cat,x,z,o,fb){o=o||{};if(AUD.ready&&AC&&AUD.prof.profiles.ghost){co
 function ghSnear(cat,dx,dz,o,fb){o=o||{};o.fn=()=>[pl.x+dx,1.5,pl.z+dz];return ghS(cat,pl.x+dx,pl.z+dz,o,fb);}
 function sysReward(k,quiet){const a=CFG.side[k]||30;RUN.cash=(RUN.cash||0)+a;STATS.side=(STATS.side||0)+1;
   try{window.dispatchEvent(new CustomEvent('kd:reward',{detail:{type:'side',id:k,amount:a,floor:RUN.floor}}));}catch(e){}
-  if(!quiet){sfx('coin',.8);toast(`Yan görev tamam: ${TH2_SIDE[k]||k} (+${a}₺)`,3);}}
+  if(!quiet){sfx('coin',.8);toast(`Yan görev tamam: ${TH2_SIDE[k]||k} (+${tl(a)})`,3);gemHudFx(a);}}
 function sysTape(){const L=['"...kayıt. Üçüncü gün. Kuyunun dibinden bir ses geliyor..."','"...ışıkları kapattığımızda gidiyor. Çömelin. Nefes almayın..."','"...Hasan geri gelmedi. Kimse aşağı inmesin. Kimse..."'];
   sysStatic(1.2,.25);L.forEach((s,i)=>setTimeout(()=>{toast(s,3.4);sysStatic(.4,.12);},600+i*3600));}
 // ---------- kat başı ----------
@@ -3591,10 +3628,12 @@ function hudTL(){const F=RUN.floor,N=FLOORS.length;
 // DOM'a sadece değişince yaz (her 0.1 sn gereksiz yeniden çizim/stil hesabı telefonu yoruyordu)
 function sT(id,v){const e=typeof id==='string'?$(id):id;v=String(v);if(e.textContent!==v)e.textContent=v;}
 function sS(id,k,v){const e=typeof id==='string'?$(id):id;const kk='_s'+k;if(e[kk]===v&&e.style[k]===e[kk+'n'])return;e.style[k]=v;e[kk]=v;e[kk+'n']=e.style[k];}
+function gemHudFx(a,type){const h=$('gemHud'),f=$('qf');if(!h||!f)return;f.textContent='+'+tl(a);const T=type&&GEMT[type];f.style.color=T?`rgb(${T.col.map(v=>Math.round(140+115*v)).join(',')})`:'';
+  h.classList.remove('pop');f.classList.remove('on');requestAnimationFrame(()=>{h.classList.add('pop');f.classList.add('on');});}
 function updateHud(dt){
   hudT-=dt;if(toastT>0){toastT-=dt;if(toastT<=0)$('toast').classList.remove('on');}
   if(hudT>0)return;hudT=.1;
-  sT('qv',cartValue());hudTL();sS('batf','width',(pl.bat*100).toFixed(0)+'%');sT('batN',Math.round(pl.bat*100));$('batBox').classList.toggle('off',!pl.lamp);$('batBox').classList.toggle('low',pl.bat<.2);
+  sT('qv',Math.round(runValue()).toLocaleString('tr-TR'));sT('qc',RUN.cartGems.length?RUN.cartGems.length+' taş':'');hudTL();sS('batf','width',(pl.bat*100).toFixed(0)+'%');sT('batN',Math.round(pl.bat*100));$('batBox').classList.toggle('off',!pl.lamp);$('batBox').classList.toggle('low',pl.bat<.2);
   const cy=$('carry');if(pl.carry){cy.hidden=false;const T=GEMT[pl.carry.type];const hb=bots.find(b=>b.st==='help');cy.textContent=pl.carry.giant?`Dev elmas! ${hb?hb.name+' ile birlikte taşıyorsunuz.':'Tek başına kıpırdatamazsın.'}`:`Elinde ${T.ad} (${PRICE[pl.carry.type]}₺). Yavaşsın ve parlıyorsun.`;cy.style.color=`rgb(${T.col.map(v=>Math.round(Math.min(1,v*1.1)*255)).join(',')})`;}else cy.hidden=true;
   $('bLamp').classList.toggle('on',pl.lamp);
   const inGas=gasL[cidx(pl.x,pl.z)]>.2;$('gasw').hidden=!inGas;$('gasv').style.opacity=inGas?Math.min(1,gasL[cidx(pl.x,pl.z)]*1.2):0;
@@ -3626,7 +3665,7 @@ function context(){
     return{label:A?`Jeneratör çalıştırılıyor… ${Math.round(genProg()*100)}%`:'Jeneratörün ipini çek (basılı tut, ~7 sn)',kind:'gen',g,gi};}}
   const dl=Math.hypot(G.lift.x-pl.x,G.lift.z-pl.z);
   if(dl<2.2&&(!pl.carry||pl.carry.type==='numune')){if(FL().final&&TH2.core&&!sysCoreSecured())return{label:'Kara Damar Özü olmadan yukarı çıkılmaz: özü getir ya da vagona koy',kind:'none'};if(RUN.floor===1)return gensOn()===G.gens.length?{label:'Asansörle aşağı in',kind:'down'}:{label:`Elektrik yetmiyor: ${gensOn()}/${G.gens.length} jeneratör`,kind:'none'};
-    if(FL().final)return{label:`Ana kuyudan yukarı kaç (vagonda ${cartValue()}₺)`,kind:'up'};}
+    if(FL().final)return{label:`Ana kuyudan yukarı kaç (vagonda ${tl(cartValue())})`,kind:'up'};}
   if(G.shaft&&Math.hypot(G.shaft.x-pl.x,G.shaft.z-pl.z)<2.6){const b=th2Block();if(b)return b;return{label:'Kafese bin, aşağı in',kind:'down'};}
   if(pl.carry)return{label:pl.carry.giant?'Dev elması bırak':'Taşı bırak',kind:'drop'};
   if(dc<2.4&&railPath.length>1&&cart.target===null)return{label:cart.s<(railPath.length-1)/2?'Vagonu rayın ucuna it':'Vagonu geri it',kind:'push'};
@@ -3639,8 +3678,8 @@ function depositGem(){STATS.gems++;const g=pl.carry;const T=GEMT[g.type];g.st='c
   G.cartGems.push(g);RUN.cartGems.push(g.type);sfx('deposit');if(g.giant)sfx('heavy',.8);
   if(cr.st!=='sleep'&&cr.st!=='away')G.anger+=g.giant?2:1;
   setTimeout(()=>{if(G.state!=='play'&&G.state!=='dragged')return;crV('howl',()=>sfx('howl',.6+angerEff()*.06,(Math.random()-.5)*.8,true),{far:true});if(angerEff()>=4)sfx('sting',.5,0,false,musBus);G.shake=.2+angerEff()*.03;},900);
-  if(cr.st==='sleep'||cr.st==='away'){toast(`${cap(T.ad)} vagonda (+${PRICE[g.type]}₺ değer)`,2.4);}
-  else{G.threat=Math.min(130,G.threat+15+angerEff()*4);toast(`${cap(T.ad)} vagonda (+${PRICE[g.type]}₺) · Yaratık öfkeleniyor`,3);}}
+  if(cr.st==='sleep'||cr.st==='away'){toast(`${cap(T.ad)} vagonda (+${tl(PRICE[g.type])})`,2.4);gemHudFx(PRICE[g.type],g.type);}
+  else{G.threat=Math.min(130,G.threat+15+angerEff()*4);toast(`${cap(T.ad)} vagonda (+${tl(PRICE[g.type])}) · Yaratık öfkeleniyor`,3);gemHudFx(PRICE[g.type],g.type);}}
 function useDown(){useHeld=true;const c=context();if(!c)return;
   if(c.kind==='deposit')depositGem();
   else if(c.kind==='down'){if(!NET.started)goDown();else if(NET.host){if(gatherTeam()!==null)netDescend();}else{netLog('dn');toast('Asansör çağrıldı. Herkes birlikte iniyor...',2.4);}}
@@ -3872,7 +3911,7 @@ function botFindWork(b){if(b.carry)return null;let best=null,bd=1e9;
   return best;}
 function botDeposit(b){const g=b.carry;b.carry=null;g.st='cart';G.cartGems.push(g);RUN.cartGems.push(g.type);sfxAt('deposit',b.x,b.z,1,40);
   const aw=cr.st!=='sleep'&&cr.st!=='away';if(aw){G.anger+=1;G.threat=Math.min(130,(G.threat||0)+10+angerEff()*3);}
-  toast(`${b.name} vagona ${GEMT[g.type].ad} koydu (+${PRICE[g.type]}₺)`+(aw?' · Yaratık öfkeleniyor':''),2.6);b.st='follow';b.path=null;b.mineT=18+Math.random()*14;}
+  gemHudFx(PRICE[g.type],g.type);toast(`${b.name} vagona ${GEMT[g.type].ad} koydu (+${tl(PRICE[g.type])})`+(aw?' · Yaratık öfkeleniyor':''),2.6);b.st='follow';b.path=null;b.mineT=18+Math.random()*14;}
 const ACTIVE=['follow','dig','flee','help','rescue','mine','haul','save'];
 function candidates(){const out=[];if(G.state==='play'&&!pl.hideIn)out.push({e:pl,lamp:pl.lamp,carry:pl.carry});else if(G.state==='buried')out.push({e:pl,lamp:false,carry:null});
   for(const b of bots)if(ACTIVE.includes(b.st)&&!b.hid)out.push({e:b,lamp:b.lamp,carry:b.carry||null});return out;}
@@ -4242,7 +4281,7 @@ function endGame(){G.state='end';caughtHide();$('spec').hidden=true;$('floorCard
     elmas:['Taş parlıyordu. Sen de onunla birlikte.','Taşı bırakman gerekiyordu.'],temas:['Karanlıkta yanlış yöne yürüdün. Tam onun kucağına.','Sessiz ve karanlıktın. Ama tam önündeydin.'],su:['Suyun şapırtısı seni ele verdi.'],oksuruk:[FL().spores?'Sporların içinde öksürmek seni ele verdi.':'Grizuda öksürmek seni ele verdi.'],vagon:['Vagonun takırtısı onu doğrudan getirdi.'],
     kuyu:['Kafese yetişti. Aşağısı çok derindi.'],kristal:['Kristaller çınladı. O da duydu.','Damar seni ele verdi: her kristal bir çan.'],zar:['Zarın şapırtısı yuvayı uyandırdı.','Yapışkan zemin seni ele verdi.'],pompa:['Pompa bütün mağarayı çağırdı.'],ses:['Konuşmanı duydu. Fısıldamalıydın.','Telsizde gülmek iyi fikir değildi.'],vana:['Vananın gıcırtısı tünellerde yankılandı.'],kese:['Kese patladığında yuva seni duydu.','Yuvayı uyandırdın.'],hayalet:['Görmediğin şey seni buldu.','Ölçer haklıydı.'],patlama:['Patlamadan yeterince uzaklaşamadın.'],sok:['Şokun sesi seni ele verdi.'],spor:['Spor topu patladı, öksürüğün yankılandı.','Mantarlar seni ele verdi.'],koza:['Kozayı keserken çok ses çıkardın.'],patlama:['Fitil kısaydı, sen de çok yakındın.'],grizu:[FL().spores?'Sporlar bir kıvılcım bekliyordu. Sen verdin.':'Grizu bir kıvılcım bekliyordu. Sen verdin.'],gocuk:['Tavanın çatırdamasını duymuştun.']};
   $('endReason').textContent=pick(reasons[G.cause]||reasons.temas)+` Kat -${RUN.floor}.`;
-  $('lNight').textContent='KAT';$('sNight').textContent='-'+RUN.floor;$('sGem').textContent=cartValue()+'₺';$('again').hidden=false;$('restart').textContent='BAŞTAN BAŞLA';const s=Math.floor(G.time);$('sTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  $('lNight').textContent='KAT';$('sNight').textContent='-'+RUN.floor;$('sGem').textContent=tl(runValue());$('again').hidden=false;$('restart').textContent='BAŞTAN BAŞLA';const s=Math.floor(G.time);$('sTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
   $('endFun').innerHTML=funStats();$('end').hidden=false;$('hud').hidden=true;$('buried').hidden=true;}
 // ---- asansörde tedarik: 3 sandıktan 1'i (borç/dükkân yok; para yalnızca skor) ----
 const CRATES=[{id:'flare2',ad:'2 Fişek',ac:'Yaratıklar fişeğin ışığından kaçar.',give:{flare:2}},{id:'dynb',ad:'Dinamit + Kereste',ac:'Duvarı patlat, tavanı tut.',give:{dyn:1,beam:1}},
@@ -4276,8 +4315,8 @@ function updateAscend(dt){const A=G.asc;A.t+=dt;A.cT-=dt;A.hT-=dt;
   if(A.t>=A.dur)victory();}
 function victory(){G.state='end';smpRideStop();document.exitPointerLock?.();caughtHide();$('floorCard').classList.remove('on');$('ascend').hidden=true;$('hud').hidden=true;$('hotbar').hidden=false;$('bStruggle').hidden=true;sfx('nightDone',1.2);
   const n=RUN.alive.length+1,v=cartValue();$('end').classList.add('win');$('endK').textContent='GÜN IŞIĞI';$('endTitle').textContent=n>1?'KURTULDUNUZ':'KURTULDUN';
-  $('endReason').textContent=(n===4?'Dördünüz de gün ışığına çıktınız. ':n===3?`Sen, ${RUN.alive.join(' ve ')} çıktınız; biri aşağıda kaldı. `:n===2?`Sen ve ${RUN.alive[0]} çıktınız; diğerleri aşağıda kaldı. `:'Yüzeye bir tek sen çıktın. Aşağıdan hâlâ sesler geliyor. ')+(v>0?`Vagonda ${v}₺ değerinde taş var.`:'Elin boş ama hayattasın.');
-  $('lNight').textContent='ÇIKAN';$('sNight').textContent=n+' kişi';$('sGem').textContent=v+'₺';const s=Math.floor(RUN.time);$('sTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  $('endReason').textContent=(n===4?'Dördünüz de gün ışığına çıktınız. ':n===3?`Sen, ${RUN.alive.join(' ve ')} çıktınız; biri aşağıda kaldı. `:n===2?`Sen ve ${RUN.alive[0]} çıktınız; diğerleri aşağıda kaldı. `:'Yüzeye bir tek sen çıktın. Aşağıdan hâlâ sesler geliyor. ')+(v>0?`Vagonda ${tl(v)} değerinde taş var.`:'Elin boş ama hayattasın.');
+  $('lNight').textContent='ÇIKAN';$('sNight').textContent=n+' kişi';$('sGem').textContent=tl(runValue());const s=Math.floor(RUN.time);$('sTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
   $('again').hidden=true;$('restart').textContent='YENİDEN OYNA';$('endFun').innerHTML=funStats();$('end').hidden=false;clearSave();}
 function update(dt){G.time+=dt;audUpdate(dt);if(G.arrive)arriveTick(dt);if(G.state!=='play'&&RUN.floor===1)genTick(dt,null);
   if(false){G.babyT-=dt;if(G.babyT<=0){G.babyT=240;if(babies.filter(y=>y.st!=='dead').length<6){const R=rooms[2+Math.floor(Math.random()*Math.max(1,rooms.length-2))]||rooms[1];babies.push({x:(R.cx+.5)*S,z:(R.cy+.5)*S,face:0,st:'wander',path:null,pi:0,repath:0,timer:1,cd:5,walk:0,moving:false,twitch:0,stand:0,hp:2,t:0});sfxAt('babyScreech',(R.cx+.5)*S,(R.cy+.5)*S,.6,80);}}}const live=G.state==='play'||G.state==='dragged'||G.state==='dying'||G.state==='buried'||G.state==='spectate'||G.state==='paleGrab';
@@ -4924,8 +4963,8 @@ function drawCart(cb,real){
   for(const sx of[-1,1])for(const bz of[-.38,.38])draw(MB,X(tub,M4.T(sx*.52,.36,bz),M4.RZ(-sx*.18),M4.S(.03,.76,.09)),DKM,Z3,3);
   for(const sz of[-1,1])for(const bx of[-.28,.28])draw(MB,X(tub,M4.T(bx,.36,sz*.68),M4.RX(sz*.18),M4.S(.09,.76,.03)),DKM,Z3,3);}
   const tub=real?X(cb,M4.T(0,.53,0),M4.S(.78,1,.72)):X(cb,M4.T(0,.52,0));
-  G.cartGems.forEach((g,k)=>{const T=GEMT[g.type];if(g.giant){draw(MO,X(tub,M4.T(0,.35,0),M4.RY(.4),M4.S(.3,.42,.3)),T.col,T.emi);return;}
-    const gx=((k%3)-1)*.26,gz=(Math.floor(k/3)%3-1)*.36,gy=.12+Math.floor(k/9)*.12;draw(MO,X(tub,M4.T(gx,gy,gz),M4.RY(k),M4.RZ(.3*(k%2)),M4.S(.09,.13,.09)),T.col,T.emi);});
+  G.cartGems.forEach((g,k)=>{const T=GEMT[g.type];if(g.giant){draw(GEMM.dev,X(tub,M4.T(0,.25,0),M4.RY(.4)),T.col,T.emi,9);return;}
+    const gx=((k%3)-1)*.26,gz=(Math.floor(k/3)%3-1)*.36,gy=.12+Math.floor(k/9)*.12;draw(GEMM[g.type]||GEMM.elmas,X(tub,M4.T(gx,gy-.04,gz),M4.RY(k*1.3),M4.RZ(.35*(k%2))),T.col,T.emi,9);});
   const post=X(cb,M4.T(.95,0,.95));draw(MC,X(post,M4.T(0,1.1,0),M4.S(.12,2.2,.12)),WD,Z3,4);draw(MB,X(post,M4.T(-.17,2.05,0),M4.S(.42,.07,.07)),WD,Z3,4);
   draw(MC,X(post,M4.T(-.33,1.93,0),M4.S(.012,.2,.012)),DKM,Z3,3);
   const ln=X(cb,M4.T(.62,1.62,.95));
@@ -4976,7 +5015,19 @@ function cageBuild(){const g=()=>({P:[],N:[]}),F=g(),Bm=g(),Wd=g(),Gt=g(),Rf=g()
   for(let k=0;k<=n;k++)B(Gt,[step*k,1.2,0],.014,1.08,.014);B(Gt,[W,.13,0],W,.02,.02);B(Gt,[W,2.28,0],W,.02,.02);
   const mk=M=>M.P.length?mesh(M.P,M.N):null;CAGE.m={F:mk(F),Bm:mk(Bm),Wd:mk(Wd),Gt:mk(Gt),Rf:mk(Rf),Yl:mk(Yl)};}
 // o: {lamp:[r,g,b], gate:0 açık…1 kapalı, spin:makara açısı, cable:ip uzunluğu}
-function cageDraw(m,o){if(!CAGE.m)cageBuild();const C=CAGE.m,W=.95,Ht=2.75;
+// dokulu kafes (yeşil boyalı paslı çelik, kabartmalı zemin sacı, tel örgü, oluklu sac çatı); yüklenene kadar eski çizim
+const CAGE_P=['cage_frame','cage_floor','cage_roof','cage_mesh','cage_gate','cage_stripe'];
+function cageEnvOK(){if(!ENV.lib||!ENV.props)return false;let ok=true;for(const id of CAGE_P)if(!envAsset(id))ok=false;return ok;}
+function cageDraw(m,o){if(cageEnvOK()){const W=.95,Ht=2.75;try{const u=envBegin(),PL=envPlanes();const one=(id,M)=>envDrawGroup(u,{a:id,v:'',far:60},[{m:M,x:M[12],z:M[14],cell:-1}],PL);
+      for(const id of['cage_frame','cage_floor','cage_roof','cage_mesh','cage_stripe'])one(id,m);
+      const gk=.12+.88*clamp(o.gate==null?0:o.gate,0,1);one('cage_gate',X(m,M4.T(-W,0,-W-.03),M4.S(gk,1,1)));}catch(e){}
+    gl.useProgram(PR.p);gl.bindVertexArray(null);
+    const pm=X(m,M4.T(0,Ht+.5,0));draw(MC,X(pm,M4.RZ(Math.PI/2),M4.S(.52,.1,.52)),[.12,.115,.1],Z3,3);draw(MC,X(pm,M4.RZ(Math.PI/2),M4.S(.16,.14,.16)),[.06,.06,.06],Z3,3);
+    for(let k=0;k<3;k++)draw(MB,X(pm,M4.RX((o.spin||0)+k*Math.PI/3),M4.S(.02,.46,.03)),[.2,.19,.17],Z3,3);
+    const L=o.cable||H*1.2;for(const dx of[-.05,.05])draw(MC,X(m,M4.T(dx,Ht+.5+L/2,0),M4.S(.024,L,.024)),[.1,.095,.09],Z3,3);
+    draw(MS,X(m,M4.T(W-.16,1.32,-W+.06),M4.S(.035,.035,.02)),[.1,.1,.1],o.lamp||Z3,3);
+    draw(MC,X(m,M4.T(.55,Ht-.12,.55),M4.S(.12,.05,.12)),[.08,.08,.08],Z3,3);draw(MS,X(m,M4.T(.55,Ht-.2,.55),M4.S(.07,.08,.07)),[.3,.28,.2],[1.6,1.1,.5],3);return;}
+  if(!CAGE.m)cageBuild();const C=CAGE.m,W=.95,Ht=2.75;
   draw(C.F,m,[.19,.18,.165],Z3,3);draw(C.Bm,m,[.11,.105,.1],Z3,3);draw(C.Wd,m,[.2,.135,.075],Z3,4);draw(C.Rf,m,[.13,.115,.1],Z3,5);draw(C.Yl,m,[.5,.38,.05],Z3,2);
   const gk=.12+.88*clamp(o.gate==null?0:o.gate,0,1);draw(C.Gt,X(m,M4.T(-W,0,-W-.03),M4.S(gk,1,1)),[.075,.07,.065],Z3,5);
   const pm=X(m,M4.T(0,Ht+.42,0));draw(MC,X(pm,M4.RZ(Math.PI/2),M4.S(.5,.09,.5)),[.09,.09,.09],Z3,3);
@@ -5010,8 +5061,12 @@ function drawEgg(e){const y=floorY(e.x,e.z);const p=.5+.5*Math.sin(G.time*1.6+e.
   draw(MS,X(M4.T(e.x,y+.02,e.z),M4.S(.62*e.s,.1,.62*e.s)),[.06,.05,.04],Z3,2);
   draw(MS,X(M4.T(e.x,y+.28*e.s,e.z),M4.RY(e.rot),M4.RZ(.12),M4.S(.36*e.s,.54*e.s,.36*e.s)),[.42,.38,.3],[.05*p,.008*p,0],2);
   for(let k=0;k<3;k++){const a=k*2.1+e.rot;draw(MC,X(M4.T(e.x+Math.cos(a)*.14*e.s,y+.3*e.s,e.z+Math.sin(a)*.14*e.s),M4.RY(-a),M4.RZ(.35),M4.S(.012,.4*e.s,.012)),[.2,.05,.05],[.03*p,0,0],2);}}
-function drawGemAt(m,T,giant){if(giant){draw(MO,X(m,M4.S(.34,.5,.34)),T.col,T.emi);draw(MO,X(m,M4.T(.22,-.15,.1),M4.RZ(-.6),M4.S(.16,.26,.16)),T.col,T.emi);draw(MO,X(m,M4.T(-.2,-.18,-.08),M4.RZ(.5),M4.S(.14,.22,.14)),T.col,T.emi);return;}
-  draw(MO,X(m,M4.S(.1,.15,.1)),T.col,T.emi);}
+function gemId(T){if(!T.id)for(const k in GEMT)if(GEMT[k]===T)T.id=k;return T.id;}
+function drawGemAt(m,T,giant,big){const id=giant?'dev':gemId(T),k=(giant?1.25:1.05)*(big||1);draw(GEMM[id]||GEMM.elmas,X(m,M4.T(0,-.04*k,0),M4.S(k,k,k)),T.col,T.emi,9);}
+// duvardaki damar: küme duvarın normaline göre dışarı (ve biraz yukarı) doğru çıkar, yarısı kayaya gömülü
+function gemWallM(f,rot,sc){const Y=v3n([f[3]*.9,.38,f[4]*.9]);let Xa=v3n(v3x([0,1,0],Y));const Z0=v3x(Xa,Y);const c=Math.cos(rot),sn=Math.sin(rot);
+  const Xr=[Xa[0]*c+Z0[0]*sn,Xa[1]*c+Z0[1]*sn,Xa[2]*c+Z0[2]*sn],Zr=v3x(Xr,Y);
+  return [Xr[0]*sc,Xr[1]*sc,Xr[2]*sc,0,Y[0]*sc,Y[1]*sc,Y[2]*sc,0,Zr[0]*sc,Zr[1]*sc,Zr[2]*sc,0,f[0]-f[3]*.05,f[1]-.03,f[2]-f[4]*.05,1];}
 
 let RS=1,ftAcc=0,ftN=0;
 // ================= son işlem: çoklu örnekleme (MSAA) + ışık taşması (bloom) =================
@@ -5154,11 +5209,9 @@ function render0(){
   if(!envOK)for(const s of supports)if(d2(...ctr(s.c))<1600)drawSupport(s);
   // taşlar
   for(const g of gems){const T=GEMT[g.type];
-    if(g.st==='floor'){if(d2(g.x,g.z)>900)continue;const gy=water[cidx(g.x,g.z)]?Math.max(g.y,.42):g.y;drawGemAt(X(M4.T(g.x,gy,g.z),M4.RY(g.rot),M4.RZ(g.giant?0:g.tilt)),T,g.giant);}
+    if(g.st==='floor'){if(d2(g.x,g.z)>900)continue;const gy=water[cidx(g.x,g.z)]?Math.max(g.y,.42):Math.max(g.y,floorY(g.x,g.z));drawGemAt(X(M4.T(g.x,gy,g.z),M4.RY(g.rot),M4.RZ(g.giant?0:g.tilt*.5)),T,g.giant,1.5);}
     else if(g.st==='ore')for(const f of g.faces){if(d2(f[0],f[2])>900)continue;const sc=g.sz;
-      draw(MO,X(M4.T(f[0],f[1],f[2]),M4.RY(g.rot),M4.RZ(g.tilt),M4.S(.12*sc,.19*sc,.12*sc)),T.col,T.emi);
-      draw(MO,X(M4.T(f[0]+f[4]*.1*sc,f[1]-.13*sc,f[2]+f[3]*.1*sc),M4.RY(g.rot+1),M4.RZ(-.6),M4.S(.06*sc,.1*sc,.06*sc)),T.col,T.emi);
-      draw(MO,X(M4.T(f[0]-f[4]*.12*sc,f[1]+.1*sc,f[2]-f[3]*.12*sc),M4.RY(g.rot+2),M4.RZ(.5),M4.S(.05*sc,.08*sc,.05*sc)),T.col,T.emi);}}
+      draw(GEMM[g.giant?'dev':g.type]||GEMM.elmas,gemWallM(f,g.rot,(g.giant?.95:1.45)*sc),T.col,T.emi,9);}}
   const fuseTips=[];for(const d of dyns)fuseTips.push(drawDyn(d));
   for(const f of flares){const m=X(M4.T(f.x,f.y+.04,f.z),M4.RZ(Math.PI/2),M4.RY(f.x));drawFlareStick(m,true);}
   try{xtDraw();}catch(e){}
@@ -5490,7 +5543,7 @@ function ldFinishNow(){if(!LD.on)return;if(!LD.worked)ldWork();$('load').hidden=
 function ldNeeds(){const F=FLOORS[LD.floor-1]||{};const L=[['Mağara kazılıyor',LD.worked],['Madenciler',typeof MN==='undefined'||!!MN.ready],['Yaratık',typeof HX==='undefined'||!!HX.ready]];
   if(F.pale&&!F.roots)L.push(['Derisiz',!!DZ.ready]);if(F.roots)L.push(['Öcü',!!OC.ready]);
   let au=true;if(AC){if(!AUD.ready)au=false;else{const k=Object.keys(AUD.load);au=!k.length||k.filter(u=>AUD.buf[u]).length>=k.length*.8;}}L.push(['Sesler',au]);
-  if(ENV.lib&&ENV.groups&&LD.worked&&!LD.surf){let n=0,r=0;for(const g of ENV.groups.values()){n++;const a=ENV.A[g.a];if(a&&(a.ready||a.bad))r++;}const sf=(ENV_FS[LD.floor-1]||ENV_FS[0]||[]).slice(0,2).every(id=>{const q=ENV.S[id];return !q||q.ready||q.bad;})&&(!ENV.props||(PROP_FLOOR[LD.floor]||[]).every(id=>{envAsset(id);const q=ENV.A[id];return !q||q.ready||q.bad;}));L.push(['Maden donanımı',(!n||r>=n)&&sf||LD.t>14]);}
+  if(ENV.lib&&ENV.groups&&LD.worked&&!LD.surf){let n=0,r=0;for(const g of ENV.groups.values()){n++;const a=ENV.A[g.a];if(a&&(a.ready||a.bad))r++;}const sf=(ENV_FS[LD.floor-1]||ENV_FS[0]||[]).slice(0,2).every(id=>{const q=ENV.S[id];return !q||q.ready||q.bad;})&&(!ENV.props||(PROP_FLOOR[LD.floor]||[]).concat(typeof CAGE_P!=='undefined'?CAGE_P:[]).every(id=>{envAsset(id);const q=ENV.A[id];return !q||q.ready||q.bad;}));L.push(['Maden donanımı',(!n||r>=n)&&sf||LD.t>14]);}
   return L;}
 function loadTick(dt0){if(!LD.on)return;const nw=performance.now();const dt=Math.min(.1,(nw-(LD.tl||nw))/1000);LD.tl=nw;LD.t=(nw-LD.t0)/1000;const L=ldNeeds(),ok=L.filter(x=>x[1]).length,all=ok===L.length;
   // hız: kalkışta ivmelen, sonunda yavaşla ve otur
