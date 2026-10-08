@@ -601,7 +601,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v54</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v55</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1109,8 +1109,9 @@ function carryArms(P){// taşı iki elle göbek önünde tut
 // 0-.42 kaldır (baş arkaya), .42-.54 indir (vuruş .52), .54-1 toparlan
 function mineKey(u){let a,h,rad,sp,dip;// a: tutuşun ileri-yatay eksenden açısı, h: sap açısı
   if(u<.42){const k=sstep(0,.42,u);a=lerp(-40,95,k);h=lerp(25,150,k);rad=lerp(34,30,k);sp=lerp(10,-12,k);dip=0;}
-  else if(u<.54){const k=(u-.42)/.12,e=k*k*(3-2*k);a=lerp(95,-25,e);h=lerp(150,-40,Math.min(1,k*1.15));rad=lerp(30,40,e);sp=lerp(-12,30,e);dip=Math.sin(k*Math.PI/2)*10;}
-  else{const k=sstep(.54,1,u);a=lerp(-25,-40,k);h=lerp(-40,25,k);rad=lerp(40,34,k);sp=lerp(30,10,k);dip=(1-k)*10;}
+  else if(u<.54){const k=(u-.42)/.12,e=k*k*(3-2*k);a=lerp(95,-8,e);h=lerp(150,4,Math.min(1,k*1.15));rad=lerp(30,44,e);sp=lerp(-12,16,e);dip=Math.sin(k*Math.PI/2)*6;}
+  else if(u<.62){const k=(u-.54)/.08;a=lerp(-8,-4,Math.sin(k*Math.PI));h=lerp(4,10,Math.sin(k*Math.PI));rad=44;sp=16;dip=6;}// duvara saplanıp hafif sekme
+  else{const k=sstep(.62,1,u);a=lerp(-8,-40,k);h=lerp(4,25,k);rad=lerp(44,34,k);sp=lerp(16,10,k);dip=(1-k)*6;}
   return {a:a*DEG,h:h*DEG,rad,sp,dip};}
 function clipMine(u,base){const P=base||mnPoseNew();const K=mineKey(u);
   const C=[-4,136,4];const g=[C[0],C[1]+Math.sin(K.a)*K.rad,C[2]+Math.cos(K.a)*K.rad];const hd=[.08,Math.sin(K.h),Math.cos(K.h)];
@@ -3832,10 +3833,10 @@ function updateBots(dt){
       if(b.mineT<=0&&b.st==='follow'&&G.state==='play'){b.mineT=XT.ord==='work'?1.5:5;const w=botFindWork(b);if(w){b.job=w;b.st='mine';b.path=null;b.repath=0;b.digTick=.7;}}
       if(b.moving&&Math.random()<dt*2)emit(b.x,b.z,water[cidx(b.x,b.z)]?5:2.4,b,'temas');
       break;}
-    case 'dig':{const[tx,tz]=ctr(b.dc);b.face=turnTo(b.face,Math.atan2(-(tx-b.x),-(tz-b.z)),dt*6);
+    case 'dig':{const[tx,tz]=ctr(b.dc);b.face=turnTo(b.face,Math.atan2(-(tx-b.x),-(tz-b.z)),dt*6);botStandoff(b,tx,tz,dt);
       if(!grid[b.dc]){b.digTick-=dt;if(b.digTick<=0){b.digTick=1.2;b.swing=.4;hpA[b.dc]=Math.max(0,hpA[b.dc]-1);const isO=oreAt[b.dc]>=0;
         if(gasL[cidx(b.x,b.z)]>.3&&Math.random()<.35){explode(lerp(b.x,tx,.5),lerp(b.z,tz,.5),'grizu');break;}
-        emit(b.x,b.z,13,b,'kazma');sfxAt(isO?'clang':'rock',b.x,b.z,.9);spark(lerp(b.x,tx,.55),1.2,lerp(b.z,tz,.55),isO?GEMT[gems[oreAt[b.dc]].type].col:[1,.7,.35],5);
+        emit(b.x,b.z,13,b,'kazma');sfxAt(isO?'digOre':'dig',b.x,b.z,.9);spark(lerp(b.x,tx,.55),1.2,lerp(b.z,tz,.55),isO?GEMT[gems[oreAt[b.dc]].type].col:[1,.7,.35],5);
         if(hpA[b.dc]<=0)openCell(b.dc%GW,(b.dc/GW)|0,b);}}
       if(grid[b.dc]||Math.hypot(b.x-pl.x,b.z-pl.z)>9||(G.state==='play'&&!pl.lamp&&Math.random()<dt*.5)){b.st='follow';b.path=null;b.digT=35+Math.random()*30;}
       break;}
@@ -3854,7 +3855,7 @@ function updateBots(dt){
       const d=Math.hypot(ax-b.x,az-b.z);
       if(d>.6){b.repath-=dt;if(b.repath<=0||!b.path){b.repath=1;pathTo(b,ax,az,false);if(!b.path){b.st='follow';b.job=null;b.mineT=8;break;}}
         followPath(b,dt,3.2);if(b.moving&&Math.random()<dt*2)emit(b.x,b.z,2.4,b,'temas');}
-      else{b.face=turnTo(b.face,Math.atan2(-(tx-b.x),-(tz-b.z)),dt*6);b.digTick-=dt;
+      else{b.face=turnTo(b.face,Math.atan2(-(tx-b.x),-(tz-b.z)),dt*6);botStandoff(b,tx,tz,dt);b.digTick-=dt;
         if(b.digTick<=0){b.digTick=1.15;b.swing=.4;
           if(gasL[cidx(b.x,b.z)]>.3&&Math.random()<.35){explode(lerp(b.x,tx,.5),lerp(b.z,tz,.5),'grizu');break;}
           const T=GEMT[gems[oreAt[w.c]].type];hpA[w.c]=Math.max(0,hpA[w.c]-1);emit(b.x,b.z,15,b,'kazma');sfxAt('digOre',b.x,b.z,.9);sfxAt('gem',b.x,b.z,.3,20);spark(lerp(b.x,tx,.55),1.2,lerp(b.z,tz,.55),T.col,6);
@@ -3912,6 +3913,10 @@ function botFindWork(b){if(b.carry)return null;let best=null,bd=1e9;
 function botDeposit(b){const g=b.carry;b.carry=null;g.st='cart';G.cartGems.push(g);RUN.cartGems.push(g.type);sfxAt('deposit',b.x,b.z,1,40);
   const aw=cr.st!=='sleep'&&cr.st!=='away';if(aw){G.anger+=1;G.threat=Math.min(130,(G.threat||0)+10+angerEff()*3);}
   gemHudFx(PRICE[g.type],g.type);toast(`${b.name} vagona ${GEMT[g.type].ad} koydu (+${tl(PRICE[g.type])})`+(aw?' · Yaratık öfkeleniyor':''),2.6);b.st='follow';b.path=null;b.mineT=18+Math.random()*14;}
+// kazan madenci duvara yapışmasın: kazma ucu ancak ~1 m ileri uzanır; duvara çok yakınsa geri adım atar
+function botStandoff(b,tx,tz,dt){const dx=b.x-tx,dz=b.z-tz;const ax=Math.abs(dx)>=Math.abs(dz)?[Math.sign(dx),0]:[0,Math.sign(dz)];
+  const fx=tx+ax[0]*S/2,fz=tz+ax[1]*S/2;const dist=(b.x-fx)*ax[0]+(b.z-fz)*ax[1];
+  if(dist<1.0){const k=Math.min(1.0-dist,dt*1.3);const mv=moveCircle(b,ax[0]*k,ax[1]*k,.3);if(mv>.001){b.walk+=mv*.5;}}}
 const ACTIVE=['follow','dig','flee','help','rescue','mine','haul','save'];
 function candidates(){const out=[];if(G.state==='play'&&!pl.hideIn)out.push({e:pl,lamp:pl.lamp,carry:pl.carry});else if(G.state==='buried')out.push({e:pl,lamp:false,carry:null});
   for(const b of bots)if(ACTIVE.includes(b.st)&&!b.hid)out.push({e:b,lamp:b.lamp,carry:b.carry||null});return out;}
@@ -5275,16 +5280,19 @@ function render0(){
     const hand=(m)=>{draw(MS,X(m,M4.T(-.02,0,.04),M4.S(.12,.15,.1)),GL,Z3,4);for(let f=0;f<4;f++)draw(MC,X(m,M4.T(-.03,.05-f*.035,-.035),M4.RZ(Math.PI/2),M4.RX(-.4),M4.S(.035,.1,.035)),GL,Z3,4);
       draw(MC,X(m,M4.T(.03,.07,-.02),M4.RZ(-.8),M4.S(.035,.08,.035)),GL,Z3,4);draw(MC,X(m,M4.T(.02,-.12,.26),M4.RX(-1.1),M4.S(.14,.42,.14)),SL,Z3,4);draw(MC,X(m,M4.T(.01,-.04,.09),M4.RX(-1.1),M4.S(.15,.05,.15)),[.7,.68,.4],Z3,4);};
     // kazma: dikey (tepeden aşağı) vuruş. Uç ileri bakar; kaldırırken omuz üstüne geriye, vururken nişangâha doğru aşağı iner.
-    if(tid==='kazma'&&!(pl.carry&&pl.carry.giant)){const s=pl.swing>0?1-pl.swing/.5:0;const e=x=>x*x*(3-2*x);
-      const ang=s<=0?0:s<.42?1.05*e(s/.42):s<.56?1.05-2.55*e((s-.42)/.14):-1.5*(1-e((s-.56)/.44));const hit=s>=.42?Math.max(0,-ang)/1.5:0;
-      // kaldırırken eller yukarı-geri çıkar (kazma ekranın üstüne taşar), vururken nişangâha doğru tepeden iner; sivri uç ileri bakar
-      const up=Math.max(0,ang)/1.05,th=-.3+(ang>0?ang*.33:ang*.8);
-      const pk=X(camW,M4.T(.34+bobx+up*.02-hit*.12,-.5+boby+up*.3-hit*.08,-.62-up*.08-hit*.1),M4.RY(hit*.32),M4.RX(th),M4.RZ(.1),M4.RY(.22+Math.PI),M4.S(.8,.8,.8));
+    if(tid==='kazma'&&!(pl.carry&&pl.carry.giant)){const s=pl.swing>0?1-pl.swing/.5:0;
+      // anahtar pozlar: dinlenme (sap çapraz, kazma başı sağ üstte, sivri uç ileri) → omuz üstüne kaldır → nişangâha tepeden vur (vuruş anı s≈.44) → sekme → dinlenme
+      const K=[[0,.36,-.42,-.52,-.22,.3,.65],[.3,.4,-.26,-.48,.4,.22,.7],[.445,.12,-.3,-.74,-.5,.08,.95],[.53,.15,-.33,-.7,-.35,.12,.9],[1,.36,-.42,-.52,-.22,.3,.65]];
+      let q=K[0].slice(1);if(s>0){let i=0;while(i<K.length-2&&s>K[i+1][0])i++;const A=K[i],B=K[i+1];let f=clamp((s-A[0])/(B[0]-A[0]),0,1);f=i===1?f*f:f*f*(3-2*f);q=A.slice(1).map((v,k)=>v+(B[k+1]-v)*f);}
+      if(window.__PK)q=window.__PK;
+      const shk=s>.44&&s<.56?Math.sin((s-.44)*120)*.012*(1-(s-.44)/.12):0;
+      const pk=X(camW,M4.T(q[0]+bobx+shk,q[1]+boby,q[2]),M4.RZ(q[4]),M4.RX(q[3]),M4.RY(q[5]+Math.PI),M4.S(.8,.8,.8));
       if(MN.ready){const u=skBegin();gl.uniform1f(u.uNoSkin,1);gl.uniformMatrix4fv(u.uM,false,X(pk,M4.T(0,-.3,0),M4.RY(Math.PI/2),M4.S(.95,.95,.95)));gl.uniform3fv(u.uCol,[1,1,1]);
         mnSetMat(u,{a:'axe',n:'axe_n',rm:'axe_rm',spec:.3,gloss:40,wrap:0});gl.bindVertexArray(MN.axe);gl.vertexAttribI4ui(4,0,0,0,0);gl.vertexAttrib4f(5,1,0,0,0);gl.drawElements(gl.TRIANGLES,MN.axeN,gl.UNSIGNED_SHORT,0);gl.bindVertexArray(null);gl.uniform1f(u.uNoSkin,0);gl.useProgram(PR.p);}
       else{draw(MH,X(pk,M4.T(0,.2,0),M4.S(.052,.86,.052)),[.34,.22,.12],Z3,4);
       const hd=X(pk,M4.T(0,.62,0));draw(MB,X(hd,M4.S(.085,.11,.1)),[.12,.12,.13],Z3,3);draw(MPK,X(hd,M4.T(0,.02,0),M4.S(1,1,1.1)),[.3,.3,.32],Z3,3);draw(MC,X(hd,M4.T(0,-.07,0),M4.S(.07,.04,.07)),[.1,.1,.1],Z3,3);}
-      hand(X(pk,M4.T(0,-.12,0)));}
+      const glove=m=>{draw(MS,X(m,M4.S(.13,.16,.12)),GL,Z3,4);for(let f=0;f<4;f++)draw(MC,X(m,M4.T(-.02,.055-f*.036,-.05),M4.RZ(Math.PI/2),M4.S(.04,.11,.04)),GL,Z3,4);draw(MC,X(m,M4.T(0,-.05,.06),M4.RX(.4),M4.S(.15,.12,.15)),SL,Z3,4);};
+      glove(X(pk,M4.T(0,-.2,0)));glove(X(pk,M4.T(0,.08,0)));}
     else if(!(pl.carry&&pl.carry.giant)){const hm=X(camW,M4.T(.3+bobx,-.36+boby+thr*.12,-.55-thr*.25),M4.RX(-.5-thr*1.2),M4.RZ(.15));
       if(toolCount(pl.tool)>0){
         if(tid==='dyn')drawDyn(null,X(hm,M4.T(0,.02,-.02),M4.S(.9,.9,.9)));
@@ -6065,7 +6073,7 @@ function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
-window.__kd={__SMP:SMP,__watRip:(x,z,w)=>watRip(x,z,w),__WAT:WAT,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
+window.__kd={__SMP:SMP,__bso:(b,x,z,dt)=>botStandoff(b,x,z,dt),__watRip:(x,z,w)=>watRip(x,z,w),__WAT:WAT,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
   nbuf=C.createBuffer(1,sr*2,sr);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}
   try{for(const[ty,v,dl]of type)setTimeout(()=>0,0),(dl?(()=>{const t0=C.currentTime;})():0),sfx(ty,v,0);}finally{}const buf=await C.startRendering();[AC,sfxBus,nbuf,master]=sv;return Array.from(buf.getChannelData(0));},__sfR:()=>{sfRender();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},__mR:()=>{sfMenuRender(0);gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},UI:{VC,XT,vcPress,vcRelease,orderSet,noteOpen,crLure,teamRevive,openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get cratesA(){return crates;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
   LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
