@@ -614,7 +614,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v58</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v59</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1216,7 +1216,7 @@ function mnSolve(P,out){const nb=MN.nb,bp=MN.bp,par=MN.par,Dq=new Array(nb),Pp=n
       if(o){if(o.blend)D=qNl(D,o.blend,o.w);else if(o.toe!==undefined)D=qMul(Dq[p],qAx(1,0,0,o.toe));else D=o;}
       if(n==='head.x'){// kafa: gövde eğimine karşı dengelenir, bakış yönüne döner
         const f=qRot(Dq[p],[0,0,1]);const yaw=Math.atan2(f[0],f[2]);const lvl=qMul(qAx(0,1,0,yaw+P.look[0]),qAx(1,0,0,P.look[1]));D=qNl(qMul(D,qAx(0,1,0,P.look[0])),lvl,P.headLevel*.85);}
-      Dq[i]=D;}}
+      if(P.hw&&P.hw[n])D=P.hw[n](Pp[p],Pp[i]);Dq[i]=D;}}
   // matrisler: M_i = [R(D_i) | P_i - R(D_i)·bp_i]
   for(let i=0;i<nb;i++){const[x,y,z,w]=Dq[i],o=i*16;const m=out;
     m[o]=1-2*(y*y+z*z);m[o+1]=2*(x*y+z*w);m[o+2]=2*(x*z-y*w);m[o+3]=0;m[o+4]=2*(x*y-z*w);m[o+5]=1-2*(x*x+z*z);m[o+6]=2*(y*z+x*w);m[o+7]=0;
@@ -1269,8 +1269,8 @@ function skBegin(){gl.useProgram(PSK.p);const u=PSK.u,sc=SCN;
   gl.uniform3fv(u.uEmi,Z3);gl.uniform1f(u.uMat,7);return u;}
 // ---- birinci şahıs kollar: madenci modelinin gerçek kolları/eldivenleri (gövde, baş, bacak kemikleri göğüs noktasına büzülür) ----
 // FP anahtar pozları (kamera uzayı, cm, göze göre; X sağ, Y yukarı, Z ileri): [u, sağ el xyz, sap yönü xyz, sol el ağırlığı, eller arası]
-const FPK=[[0,28,-17,44,.3,.56,.77,0,24],[.14,32,-4,36,.25,.92,.3,0,22],[.42,34,4,22,.1,.55,-.83,0,14],[.52,14,-22,42,-.22,.25,.94,0,11],[.62,14,-25,41,-.22,.15,.96,0,11],[.8,24,-19,43,.12,.55,.83,0,18],[1,28,-17,44,.3,.56,.77,0,24]];
-const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},dy:-10,dz:26,keep:null,ey:null};
+const FPK=[[0,14,-16,40,-.12,.56,.81,0,30],[.14,24,-6,36,0,.9,.35,0,24],[.42,32,4,22,.1,.55,-.83,0,14],[.52,13,-18,42,-.2,.07,.98,0,14],[.62,13,-20,41,-.2,0,.98,0,14],[.8,16,-20,41,-.16,.5,.85,0,24],[1,14,-16,40,-.12,.56,.81,0,30]];
+const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},palm:[-7.5,1,.5],dy:-10,dz:26,keep:null,ey:null};
 function fpKey(u){let i=0;while(i<FPK.length-2&&u>FPK[i+1][0])i++;const A=FPK[i],B=FPK[i+1];let k=clamp((u-A[0])/(B[0]-A[0]),0,1);
   k=i===2?k*k*k:i===3?1-(1-k)*(1-k):k*k*(3-2*k);return A.map((v,j)=>v+(B[j]-v)*k);}
 function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O=window.__FPA||FPA;
@@ -1279,15 +1279,15 @@ function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O
   if(!FPA.ey){const r0=mnSolve(mnPoseNew(),e.boneM),h0=MN.bi['head.x'];FPA.ey=v3(r0.Pp[h0],qRot(r0.Dq[h0],[0,9,9]));}
   const ey=FPA.ey,dz=O.dz!=null?O.dz:FPA.dz,dy=O.dy!=null?O.dy:FPA.dy,K=O.K||fpKey(u),br=Math.sin(G.time*1.7)*.6;
   const cm=(x,y,z)=>({x:ey[0]-x,y:ey[1]+y-dy,z:ey[2]+z-dz});
-  const P=mnPoseNew();P.look=[0,0];armPose(P,'l',76*DEG,3*DEG,14*DEG,2*DEG);fingers(P,'r',72*DEG);fingers(P,'l',lerp(30,72,K[7])*DEG);
+  const P=mnPoseNew();P.look=[0,0];armPose(P,'l',76*DEG,3*DEG,14*DEG,2*DEG);fingers(P,'r',(O.curl||90)*DEG);{const th=O.th||[1,0,0,120];setR(P,'c_thumb1.r',qAx(th[0],th[1],th[2],th[3]*DEG));}fingers(P,'l',lerp(30,72,K[7])*DEG);
   const hd=vnorm([K[4],K[5],K[6]]);const R=cm(K[1],K[2]+br,K[3]);P.arms.r={...R,w:1};
-  if(K[7]>.01){const L=cm(K[1]+hd[0]*K[8]-4,K[2]+br+hd[1]*K[8],K[3]+hd[2]*K[8]);P.arms.l={...L,w:K[7]};}
+  const hdm=[-hd[0],hd[1],hd[2]];P.hw={'hand.r':(pe,pw)=>qAlign([0,0,1],[-1,0,0],hdm,vsub(pw,pe))};// el, sapı avucunda kavrar: boğum hattı sap boyunca, parmak kökü ön kol yönünde
   P.hold='mine';const r=mnSolve(P,e.boneM);
   const ch=[ey[0],ey[1]-30-dy,ey[2]-30-dz];
-  const keep=FPA.keep||(FPA.keep=MN.names.map(n=>/^(arm_|forearm_|hand\.|c_).*\.r$/.test(n)));
+  const keep=O.keepRe?MN.names.map(n=>new RegExp(O.keepRe).test(n)):FPA.keep||(FPA.keep=MN.names.map(n=>/^(shoulder|arm_|forearm_|hand\.|c_)/.test(n)));
   for(let i=0;i<MN.nb;i++)if(!keep[i]){const o=i*16;e.boneM.fill(0,o,o+16);e.boneM[o+12]=ch[0];e.boneM[o+13]=ch[1];e.boneM[o+14]=ch[2];e.boneM[o+15]=1;}
   e.tint=O.tint||[1.5,1.5,1.5];e.mnE=X(camW,M4.T(bx,by,0),M4.RY(Math.PI),M4.S(MN.S,MN.S,MN.S),M4.T(-ey[0],-ey[1]+dy,-ey[2]+dz));e.x=eye[0];e.z=eye[2];
-  const bi=MN.bi;e.handR=[r.Pp[bi['hand.r']],r.Dq[bi['hand.r']]];e.handL=[r.Pp[bi['hand.l']],r.Dq[bi['hand.l']]];e.mnHold='mine';e.fpDir=[-hd[0],hd[1],hd[2]];{const sw=u<.42?sstep(.12,.42,u):u<.62?1:1-sstep(.62,.92,u);e.fpSide=O.side||vnorm([-.86*sw,.25+.25*sw,1-sw]);}
+  const bi=MN.bi;e.handR=[r.Pp[bi['hand.r']],r.Dq[bi['hand.r']]];e.handL=[r.Pp[bi['hand.l']],r.Dq[bi['hand.l']]];e.mnHold='mine';e.fpDir=hdm;e.fpGrip=K[8];e.fpPalm=O.palm||FPA.palm;{const sw=u<.42?sstep(.12,.42,u):u<.62?1:1-sstep(.62,.92,u);e.fpSide=O.side||vnorm([-.86*sw,.25+.25*sw,1-sw]);}
   drawMinerModel(e);return true;}
 function drawMinerModel(e){const u=skBegin();gl.uniform1f(u.uNoSkin,0);
   gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,MN.bt);gl.texSubImage2D(gl.TEXTURE_2D,0,0,0,4,MN.nb,gl.RGBA,gl.FLOAT,e.boneM);gl.activeTexture(gl.TEXTURE0);
@@ -1297,8 +1297,8 @@ function drawMinerModel(e){const u=skBegin();gl.uniform1f(u.uNoSkin,0);
   for(const g of GR){mnSetMat(u,MN.mat[g.mat]);gl.drawElements(gl.TRIANGLES,g.count,it,g.start*bs);}
   // kazma (asset'in kendi AXE modeli): sap birimi metre, baş +Y ucunda
   if(e.mnHold&&e.mnHold!=='carry'){const[hp,hq]=e.handR;let dir,grip,side;
-    const palm=v3(hp,qRot(hq,[-7.5,-2.5,.5]));
-    if(e.mnHold==='mine'){const lp=v3(e.handL[0],qRot(e.handL[1],[7.5,-2.5,.5]));dir=vnorm(vsub(lp,palm));if(vlen(vsub(lp,palm))<8)dir=e.axeDir||dir;grip=12;side=[-1,0,0];if(e.fpDir){dir=e.fpDir;side=e.fpSide;}}
+    const palm=v3(hp,qRot(hq,e.fpPalm||[-7.5,-2.5,.5]));
+    if(e.mnHold==='mine'){const lp=v3(e.handL[0],qRot(e.handL[1],[7.5,-2.5,.5]));dir=vnorm(vsub(lp,palm));if(vlen(vsub(lp,palm))<8)dir=e.axeDir||dir;grip=12;side=[-1,0,0];if(e.fpDir){dir=e.fpDir;side=e.fpSide;grip=e.fpGrip||12;}}
     else{const fw=qRot(hq,[0,0,1]);dir=vnorm(v3([0,-1,.3],fw,.45));grip=24;side=[-1,0,0];}
     // sap ekseni = dir; başın düzlemi karakterin ileri yönünü içersin
     let up=vnorm(vcross(side,dir));if(!isFinite(up[0]))up=[0,0,1];const sx=vnorm(vcross(dir,up));
