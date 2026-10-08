@@ -470,18 +470,15 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 #hitF{position:fixed;inset:0;pointer-events:none;z-index:4;opacity:0;background:radial-gradient(ellipse at center,rgba(255,235,220,.35) 0%,rgba(160,8,4,.35) 45%,rgba(90,0,0,.9) 100%)}
 #hitF.on{animation:hitA .9s ease-out}#hitF.on.soft{animation:hitS .5s ease-out}
 @keyframes hitA{0%{opacity:1}12%{opacity:.85}100%{opacity:0}}@keyframes hitS{0%{opacity:.45}100%{opacity:0}}
-#caught{position:fixed;inset:0;z-index:5;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding-bottom:12vh}
-#caught b{position:relative;font-family:var(--display);font-weight:700;font-size:clamp(30px,6.4vw,80px);letter-spacing:.12em;white-space:nowrap;max-width:92vw;color:#f1d8cf;text-shadow:0 0 30px rgba(200,20,10,.85),0 4px 0 #2a0402;opacity:0}
-#caught b::before,#caught b::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;height:100%}
-#caught b::before{color:rgba(225,40,30,.85);transform:translate(-4px,1px);clip-path:inset(0 0 55% 0);mix-blend-mode:screen}
-#caught b::after{color:rgba(255,190,170,.5);transform:translate(4px,-1px);clip-path:inset(55% 0 0 0)}
-#caught small{font-family:var(--display);font-size:13px;letter-spacing:.3em;color:#e9b3a8;text-shadow:0 2px 8px #000;opacity:0}
-#caught.on b{animation:cgIn 2.3s cubic-bezier(.2,.9,.3,1) forwards,cgJit .09s steps(2) 7}
-#caught.on small{animation:cgSub 2.3s ease-out .35s forwards}
-@keyframes cgIn{0%{opacity:0;transform:scale(1.6);filter:blur(6px)}8%{opacity:1;transform:scale(.96);filter:blur(0)}14%{transform:scale(1.02)}80%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.04)}}
-@keyframes cgJit{50%{translate:3px -2px}}
-@keyframes cgSub{0%{opacity:0;transform:translateY(6px)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0}}
-#hud.caught #hotbar,#hud.caught #ctx,#hud.caught #hold,#hud.caught .btns,#hud.caught #tip,#hud.caught #bTalk{visibility:hidden}
+#caught{position:fixed;left:0;right:0;top:13%;z-index:5;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:6px}
+#caught b{font-family:var(--display);font-weight:500;font-size:clamp(17px,2.6vw,26px);letter-spacing:.55em;padding-left:.55em;color:#ff6b5a;text-shadow:0 0 18px rgba(255,40,20,.55),0 2px 6px #000;opacity:0}
+#caught small{font-family:var(--ui);font-size:11.5px;letter-spacing:.14em;color:rgba(255,220,210,.75);text-shadow:0 1px 6px #000;opacity:0}
+#caught.on b{animation:cgIn 2.3s ease-out forwards}
+#caught.on small{animation:cgSub 2.3s ease-out .25s forwards}
+@keyframes cgIn{0%{opacity:0;letter-spacing:.9em}12%{opacity:1;letter-spacing:.55em}82%{opacity:1}100%{opacity:0}}
+@keyframes cgSub{0%{opacity:0}15%{opacity:1}80%{opacity:1}100%{opacity:0}}
+#hud.caught #hotbar,#hud.caught #ctx,#hud.caught #hold,#hud.caught .btns,#hud.caught #tip,#hud.caught #bTalk,#hud.caught .tl,#hud.caught #team,#hud.caught #cross,#hud.caught #carry,#hud.caught #digb,#hud.caught #joy,#hud.caught #gemHud{visibility:hidden}
+#digb{display:none!important}
 #bStruggle{width:156px;height:156px;border:2px solid rgba(230,70,55,.9);background:radial-gradient(circle,rgba(150,20,12,.55),rgba(60,4,2,.7));box-shadow:0 0 0 6px rgba(230,70,55,.12),0 0 40px rgba(200,20,10,.45);animation:strP .8s ease-in-out infinite;text-shadow:0 2px 6px #000}
 #bStruggle.down{transform:translate(-50%,-50%) scale(.93)}
 #bStruggle i{width:96px;height:6px;border-radius:3px;margin-top:10px}#bStruggle i em{background:linear-gradient(90deg,#f6c7bc,#fff)}
@@ -514,18 +511,20 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 @keyframes qfUp{0%{opacity:0;transform:translateY(6px)}15%{opacity:1}70%{opacity:1}100%{opacity:0;transform:translateY(-18px)}}
 @keyframes gPop{0%{transform:scale(1)}40%{transform:scale(1.45) rotate(-8deg)}100%{transform:scale(1)}}
 #bStruggle .qbar,#bStruggle .qpips{display:none}
-#bStruggle.qte{width:min(300px,62vw);height:118px;border-radius:20px;animation:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:10px 16px}
+#bStruggle.qte{top:74%;width:min(320px,64vw);height:auto;border-radius:14px;animation:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:12px 18px 11px;background:rgba(12,8,8,.58);border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 #bStruggle.qte>i{display:none}
-#bStruggle.qte #strL{font-size:20px;letter-spacing:.12em}
-#bStruggle.qte .qbar{display:block;position:relative;width:100%;height:16px;border-radius:8px;background:rgba(0,0,0,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);overflow:hidden}
-#bStruggle .qbar #qz{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,#7dff9a,#2fbf5a);box-shadow:0 0 12px rgba(80,255,130,.7)}
-#bStruggle .qbar #qn{position:absolute;top:-3px;bottom:-3px;width:4px;margin-left:-2px;background:#fff;border-radius:2px;box-shadow:0 0 8px #fff}
-#bStruggle.qte .qpips{display:flex;gap:6px}
-#bStruggle .qpips i{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
-#bStruggle .qpips i.on{background:#7dff9a;box-shadow:0 0 8px rgba(80,255,130,.8)}
-#bStruggle.qte.inz{border-color:#7dff9a;box-shadow:0 0 0 6px rgba(80,255,130,.18),0 0 40px rgba(60,220,110,.45)}
-#bStruggle.qte.inz #strL{color:#b9ffc8}
-#bStruggle.qte.hitbad{border-color:#ff3b2a;background:radial-gradient(circle,rgba(200,20,10,.7),rgba(80,4,2,.85))}
+#bStruggle.qte #strL{font-size:13px;letter-spacing:.32em;font-weight:500;color:rgba(255,235,228,.9)}
+#bStruggle.qte .qbar{display:block;position:relative;width:100%;height:10px;border-radius:5px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);overflow:visible}
+#bStruggle .qbar #qz{position:absolute;top:0;bottom:0;border-radius:5px;background:linear-gradient(180deg,rgba(150,255,170,.95),rgba(50,190,95,.95));box-shadow:0 0 10px rgba(80,255,130,.55)}
+#bStruggle .qbar #qn{position:absolute;top:-5px;bottom:-5px;width:3px;margin-left:-1.5px;background:#fff;border-radius:2px;box-shadow:0 0 6px #fff}
+#bStruggle.qte .qpips{display:flex;gap:7px;align-items:center}
+#bStruggle .qpips i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.16)}
+#bStruggle .qpips i.on{background:#8dffa6;box-shadow:0 0 6px rgba(80,255,130,.8)}
+#bStruggle .qd{display:none;font-family:var(--ui);font-size:10.5px;letter-spacing:.14em;color:rgba(255,190,180,.8)}
+#bStruggle.qte .qd{display:block}
+#bStruggle.qte.inz{border-color:rgba(120,255,150,.55);box-shadow:0 0 24px rgba(60,220,110,.35)}
+#bStruggle.qte.inz #strL{color:#c4ffd0}
+#bStruggle.qte.hitbad{border-color:rgba(255,70,50,.8);background:rgba(90,8,4,.7)}
 #bStruggle.qte.hitok{transform:translate(-50%,-50%) scale(1.06)}
 </style>
 
@@ -582,7 +581,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
   <div id="lsn" hidden><i class="lsR"></i><i class="lsA" id="lsA0"></i><i class="lsA" id="lsA1"></i><b id="lsT"></b></div>
   <div id="vcL" aria-live="off"></div>
   <div id="tip" aria-live="polite"><b>İPUCU</b><span id="tipT"></span></div>
-  <button id="bStruggle" hidden><span id="strL">ÇIRPIN!</span><i><em id="strf"></em></i><span class="qbar"><span id="qz"></span><b id="qn"></b></span><span class="qpips" id="qpips"></span></button>
+  <button id="bStruggle" hidden><span id="strL">ÇIRPIN!</span><i><em id="strf"></em></i><span class="qbar"><span id="qz"></span><b id="qn"></b></span><span class="qpips" id="qpips"></span><span class="qd" id="qd"></span></button>
 </div>
 
 <div id="load" hidden aria-live="polite">
@@ -615,7 +614,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v56</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v57</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1268,6 +1267,21 @@ function skBegin(){gl.useProgram(PSK.p);const u=PSK.u,sc=SCN;
   gl.uniform1i(u.uNS,sc.SP.length/4);if(sc.SP.length){gl.uniform4fv(u.uSP,sc.SP);gl.uniform4fv(u.uSD,sc.SD);gl.uniform3fv(u.uSC,sc.SC);}
   gl.uniform1i(u.uNP,sc.PP.length/4);if(sc.PP.length){gl.uniform4fv(u.uPP,sc.PP);gl.uniform3fv(u.uPC,sc.PC);}
   gl.uniform3fv(u.uEmi,Z3);gl.uniform1f(u.uMat,7);return u;}
+// ---- birinci şahıs kollar: madenci modelinin gerçek kolları/eldivenleri (gövde, baş, bacak kemikleri göğüs noktasına büzülür) ----
+const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},dy:-22,dz:34,rx:.65,sr:.1,sx:.03,sy:.08,syw:-.2,keep:null};
+function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O=window.__FPA||FPA;
+  const u=O.u!=null?O.u:s<=0?0:s<.44?.52*s/.44:.52+(s-.44)/.56*.48;
+  const P=clipMine(u,mnPoseNew());P.look=[0,0];
+  if(!e.boneM)e.boneM=new Float32Array(MN.nb*16);const r=mnSolve(P,e.boneM);
+  const bi=MN.bi,hi=bi['head.x'],ch=r.Pp[bi['spine_03.x']];
+  const keep=FPA.keep||(FPA.keep=MN.names.map(n=>/^(shoulder|arm_|forearm_|hand\.|c_)/.test(n)));
+  for(let i=0;i<MN.nb;i++)if(!keep[i]){const o=i*16;e.boneM.fill(0,o,o+16);e.boneM[o+12]=ch[0];e.boneM[o+13]=ch[1];e.boneM[o+14]=ch[2];e.boneM[o+15]=1;}
+  const ey=v3(r.Pp[hi],qRot(r.Dq[hi],[0,9,9]));
+  const w=u<.42?0:u<.52?(u-.42)/.1:u<.62?1:Math.max(0,1-(u-.62)/.25),ws=w*w*(3-2*w);
+  const sr=O.sr!=null?O.sr:.5,sx=O.sx!=null?O.sx:0,sy=O.sy!=null?O.sy:0,syw=O.syw!=null?O.syw:0;
+  e.tint=O.tint||[1.7,1.7,1.7];e.mnE=X(camW,M4.T(bx+sx*ws,by+sy*ws,0),M4.RY(syw*ws),M4.RX((O.rx||0)-sr*ws),M4.RY(Math.PI),M4.S(MN.S,MN.S,MN.S),M4.T(-ey[0],-ey[1]+O.dy,-ey[2]+O.dz));e.x=eye[0];e.z=eye[2];
+  e.handR=[r.Pp[bi['hand.r']],r.Dq[bi['hand.r']]];e.handL=[r.Pp[bi['hand.l']],r.Dq[bi['hand.l']]];e.mnHold=P.hold;e.axeDir=P.axeDir;
+  drawMinerModel(e);return true;}
 function drawMinerModel(e){const u=skBegin();gl.uniform1f(u.uNoSkin,0);
   gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,MN.bt);gl.texSubImage2D(gl.TEXTURE_2D,0,0,0,4,MN.nb,gl.RGBA,gl.FLOAT,e.boneM);gl.activeTexture(gl.TEXTURE0);
   gl.uniformMatrix4fv(u.uM,false,e.mnE);gl.uniform3fv(u.uCol,e.tint||[1,1,1]);gl.bindVertexArray(MN.vao);
@@ -3774,7 +3788,8 @@ function qteUI(on){const b=$('bStruggle');if(!b)return;const Q=G.qte;b.classList
   z.style.left=((Q.zc-Q.zw/2)*100).toFixed(2)+'%';z.style.width=(Q.zw*100).toFixed(2)+'%';n.style.left=(Q.p*100).toFixed(2)+'%';
   const inz=qteIn(Q)&&!Q.done;b.classList.toggle('inz',inz);b.classList.toggle('hitok',Q.fx>0&&Q.ok===1);b.classList.toggle('hitbad',Q.fx>0&&Q.ok===0);
   const key=Q.got+'/'+Q.need;if(pp._k!==key){pp._k=key;pp.innerHTML=Array.from({length:Q.need},(_,i)=>`<i class="${i<Q.got?'on':''}"></i>`).join('');}
-  $('strL').textContent=Q.done?'KURTULDUN!':Q.lock>0?'NEFES AL…':inz?'ŞİMDİ!':'BEKLE…';}
+  $('strL').textContent=Q.done?'KURTULDUN':Q.lock>0?'NEFES AL':inz?'ŞİMDİ':'BEKLE';
+  let dtxt='';if(G.dragBy!=='pale'&&cr.path){const n=Math.max(0,cr.path.length-(cr.pi||0));dtxt=n>0?`YUVAYA ${Math.round(n*S)} M`:'YUVADA';}const qd=$('qd');if(qd&&qd.textContent!==dtxt)qd.textContent=dtxt;}
 function creatureRetreat(){const c=cr;c.st='retreat';c.retT=8;c.path=null;c.comeback=true;crV('pain',()=>{sfxAt('snarl',c.x,c.z,1,40);sfxAt('growl',c.x,c.z,.8,40);});if(CRE)audLater(CRE,'retreat',1.4);
   const f=bfsField(cidx(c.x,c.z));let best=-1,bs=-1;for(let q=0;q<f.length;q++){if(f[q]<5||f[q]>30||safe[q])continue;const[x,z]=ctr(q);const d=Math.hypot(x-pl.x,z-pl.z);const sc=d+Math.random()*4;if(d>13&&sc>bs){bs=sc;best=q;}}
   if(best>=0){const[x,z]=ctr(best);pathTo(c,x,z,true);}if(!c.path){const N=rooms[nest];c.path=pathDig(cidx(c.x,c.z),N.cy*GW+N.cx);c.pi=c.path&&c.path.length>1?1:0;}}
@@ -4217,7 +4232,7 @@ function paleGrab(){const p=pale;const T=PT||pl;let dx=p.x-T.x,dz=p.z-T.z,d=Math
   p.face=faceTo(p,T.x,T.z);p.st='grab';p.stT=3.0;dzPlay(p,'E_KillPlayer');p.an.f=0;
   if(T!==pl){T.st='dragged';netLog('vg',T.peer,'pale');STATS.dragged[T.name]=(STATS.dragged[T.name]||0)+1;if(!audPlay(p.em,'grab',{force:true}))sfxAt('babyScreech',p.x,p.z,1.2,40);toast(`${p.nm||'Derisiz'} ${T.name} adlı arkadaşını yakaladı!`,2.4);return;}
   STATS.dragged['Sen']=(STATS.dragged['Sen']||0)+1;
-  G.state='paleGrab';G.dragBy='pale';hitFx(1);caughtShow('DERİSİZ','İbre yeşile girince vur!');pl.swing=0;pl.struggle=0;if(pl.carry)dropGem(false);document.exitPointerLock?.();
+  G.state='paleGrab';G.dragBy='pale';hitFx(1);caughtShow('YAKALANDIN','Derisiz seni yakaladı · ibre yeşildeyken vur');pl.swing=0;pl.struggle=0;if(pl.carry)dropGem(false);document.exitPointerLock?.();
   if(!audPlay(p.em,'grab',{force:true}))sfx('babyScreech',1.2);audLater(p.em,'contort',.9);audLater(p.em,'grab_close',1.7);sfx('screamLo',1);G.shake=.5;G.plYell=2.2;toast(`${(p.nm||'Derisiz').toLocaleUpperCase('tr')} SENİ YAKALADI!`,2.2);STATS.caught++;}
 function paleGrabTick(dt){const p=pale;p.stT-=dt;const T=PT||pl;if(T===pl)G.shake=Math.max(G.shake,.08);
   if(p.stT<=0){// sürüklemeye geç: uzak bir noktaya
@@ -4574,7 +4589,7 @@ function netEnt(peer){if(peer===NET.myPeer)return pl;const rec=NET.peers.get(pee
 function netPlaceBeam(c,ax){if(support[c])return;const[x,z]=ctr(c);support[c]=1;supports.push({c,ax});sfxAt('hammer',x,z,1,30);}
 // ---- kurban (bu istemcinin oyuncusu) ----
 function netVictimGrab(by){if(!['play','buried'].includes(G.state))return;pl.swing=0;pl.struggle=0;if(pl.carry)dropGem(false);document.exitPointerLock?.();G.shake=.6;
-  if(by==='pale'){G.state='paleGrab';G.dragBy='pale';hitFx(1);caughtShow('DERİSİZ','İbre yeşile girince vur!');G.vgT=3;NET.paTrail=[];if(pale&&pale.em&&!audPlay(pale.em,'grab',{force:true}))sfx('babyScreech',1.2);sfx('screamLo',1);toast(`${(pale&&pale.nm||'Derisiz').toLocaleUpperCase('tr')} SENİ YAKALADI!`,2.2);}
+  if(by==='pale'){G.state='paleGrab';G.dragBy='pale';hitFx(1);caughtShow('YAKALANDIN','Derisiz seni yakaladı · ibre yeşildeyken vur');G.vgT=3;NET.paTrail=[];if(pale&&pale.em&&!audPlay(pale.em,'grab',{force:true}))sfx('babyScreech',1.2);sfx('screamLo',1);toast(`${(pale&&pale.nm||'Derisiz').toLocaleUpperCase('tr')} SENİ YAKALADI!`,2.2);}
   else{G.state='dragged';G.dragBy='cr';G.faceT=1.6;NET.crTrail=[{x:cr.x,z:cr.z}];sfx('thump',1);crV('attack',()=>sfx('roar',1.2,0,false),{force:true});sfx('screamLo',1);caughtShow('YAKALANDIN');}
   G.plYell=2.2;STATS.caught++;STATS.dragged['Sen']=(STATS.dragged['Sen']||0)+1;}
 function netVictimFree(){if(G.state!=='dragged'&&G.state!=='paleGrab')return;G.state='play';G.dragBy=null;pl.struggle=0;pl.lamp=pl.bat>0;toast('Kurtuldun! Hemen uzaklaş!',2.4);sfx('bonk',.8);STATS.rescued++;}
@@ -5163,8 +5178,8 @@ var GQ={bad:0};
 function adaptRes(dt){ftAcc+=dt;ftN++;if(ftAcc>1.2){const a=ftAcc/ftN,minR=SET.gfx>=3?.65:.7;if(a>1/36)RS=Math.max(minR,RS-.05);else if(a<1/56&&RS<1)RS=Math.min(1,RS+.05);
     // çözünürlük en altta ve oyun hâlâ ~28 FPS altındaysa (3 ölçüm üst üste) kaliteyi bir kademe düşür; elle seçilmişse dokunma
     const act=!LD.on&&!document.hidden&&['play','surface','intro','descend','spectate','dragged'].includes(G.state);
-    if(act&&a>1/28&&RS<=minR+.001)GQ.bad++;else GQ.bad=0;
-    if(GQ.bad>=3&&SET.gfxAuto!==false&&SET.gfx>1){SET.gfx--;RS=1;GQ.bad=0;saveSet();try{$('sGfx').value=SET.gfx;segSync();}catch(e){}if(G.state==='play'||G.state==='surface')toast('Akıcılık için grafik kalitesi düşürüldü: '+GFXN[SET.gfx]+'.',2.6);}
+    if(act&&a>1/26&&RS<=minR+.001)GQ.bad++;else GQ.bad=0;
+    if(GQ.bad>=3&&SET.gfxAuto!==false&&SET.gfx>1){SET.gfx--;RS=1;GQ.bad=0;saveSet();try{$('sGfx').value=SET.gfx;segSync();}catch(e){}}
     ftAcc=0;ftN=0;}}
 // duraklatıldığında sahne, durmadan önceki haliyle çizilmeye devam eder
 // görüş konisi testi (küre): kameranın arkasındaki/yanındaki ağır modelleri hiç çizme (madenci modeli ~55 bin üçgen)
@@ -5320,11 +5335,12 @@ function render0(){
   if(G.state==='play'){gl.clear(gl.DEPTH_BUFFER_BIT);gl.useProgram(PR.p);
     const bobx=Math.cos(pl.bob*.5)*.012,boby=Math.abs(Math.sin(pl.bob*.5))*.015;const tid=TOOLS[pl.tool].id;
     const thr=pl.throwT>0?Math.sin((1-pl.throwT/.35)*Math.PI):0;
-    const GL=[.23,.18,.12],SL=[.13,.15,.2];
+    const GL=[.045,.042,.04],SL=[.04,.05,.075];
     const hand=(m)=>{draw(MS,X(m,M4.T(-.02,0,.04),M4.S(.12,.15,.1)),GL,Z3,4);for(let f=0;f<4;f++)draw(MC,X(m,M4.T(-.03,.05-f*.035,-.035),M4.RZ(Math.PI/2),M4.RX(-.4),M4.S(.035,.1,.035)),GL,Z3,4);
-      draw(MC,X(m,M4.T(.03,.07,-.02),M4.RZ(-.8),M4.S(.035,.08,.035)),GL,Z3,4);draw(MC,X(m,M4.T(.02,-.12,.26),M4.RX(-1.1),M4.S(.14,.42,.14)),SL,Z3,4);draw(MC,X(m,M4.T(.01,-.04,.09),M4.RX(-1.1),M4.S(.15,.05,.15)),[.7,.68,.4],Z3,4);};
+      draw(MC,X(m,M4.T(.03,.07,-.02),M4.RZ(-.8),M4.S(.035,.08,.035)),GL,Z3,4);draw(MC,X(m,M4.T(.02,-.12,.26),M4.RX(-1.1),M4.S(.14,.42,.14)),SL,Z3,4);draw(MC,X(m,M4.T(.015,-.07,.15),M4.RX(-1.1),M4.S(.146,.05,.146)),[.75,.62,.08],[.05,.04,0],4);};
     // kazma: dikey (tepeden aşağı) vuruş. Uç ileri bakar; kaldırırken omuz üstüne geriye, vururken nişangâha doğru aşağı iner.
-    if(tid==='kazma'&&!(pl.carry&&pl.carry.giant)){const s=pl.swing>0?1-pl.swing/.5:0;
+    if(tid==='kazma'&&!(pl.carry&&pl.carry.giant)&&fpArms(camW,pl.swing>0?1-pl.swing/.5:0,bobx,boby)){}
+    else if(tid==='kazma'&&!(pl.carry&&pl.carry.giant)){const s=pl.swing>0?1-pl.swing/.5:0;
       // anahtar pozlar: dinlenme (sap çapraz, kazma başı sağ üstte, sivri uç ileri) → omuz üstüne kaldır → nişangâha tepeden vur (vuruş anı s≈.44) → sekme → dinlenme
       const K=[[0,.36,-.42,-.52,-.22,.3,.65],[.3,.4,-.26,-.48,.4,.22,.7],[.445,.12,-.3,-.74,-.5,.08,.95],[.53,.15,-.33,-.7,-.35,.12,.9],[1,.36,-.42,-.52,-.22,.3,.65]];
       let q=K[0].slice(1);if(s>0){let i=0;while(i<K.length-2&&s>K[i+1][0])i++;const A=K[i],B=K[i+1];let f=clamp((s-A[0])/(B[0]-A[0]),0,1);f=i===1?f*f:f*f*(3-2*f);q=A.slice(1).map((v,k)=>v+(B[k+1]-v)*f);}
@@ -5357,7 +5373,7 @@ const DIFFS=[{ad:'Kolay',cr:.82,hear:.75,bat:.6,arrive:1.6,ghHits:1,ghAtk:.6,sok
 function DIFF(){try{const d=(NET.started&&!NET.host&&NET.hostDiff!=null)?NET.hostDiff:(SET.diff==null?1:SET.diff);return DIFFS[Math.max(0,Math.min(2,d|0))]||DIFFS[1];}catch(e){return {ad:'Normal',cr:1,hear:1,bat:1,arrive:1,ghHits:0,ghAtk:1,sok:0};}}
 try{Object.assign(SET,JSON.parse(localStorage.getItem('kd_set')||'{}'));}catch(e){}
 // grafik kalitesi: kullanıcı elle seçmediyse otomatik; telefonda Ultra ile başlamaz
-if(SET.gfxAuto==null){SET.gfxAuto=true;if(isTouch&&SET.gfx>2)SET.gfx=2;}
+if(SET.gfxAuto==null)SET.gfxAuto=true;if(!SET.gfxV3){SET.gfxV3=1;if(SET.gfxAuto)SET.gfx=3;}
 let SEEN=new Set();try{SEEN=new Set(JSON.parse(localStorage.getItem('kd_tips')||'[]'));}catch(e){}
 function saveSet(){try{localStorage.setItem('kd_set',JSON.stringify(SET));}catch(e){}}
 function applyAudio(){if(!AC)return;master.gain.setTargetAtTime(SET.vol,AC.currentTime,.05);musBus.gain.setTargetAtTime(SET.mus,AC.currentTime,.05);}
