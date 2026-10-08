@@ -614,7 +614,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v61</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v62</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1273,7 +1273,7 @@ function skBegin(){gl.useProgram(PSK.p);const u=PSK.u,sc=SCN;
 // ---- birinci şahıs kollar: madenci modelinin gerçek kolları/eldivenleri (gövde, baş, bacak kemikleri göğüs noktasına büzülür) ----
 // FP anahtar pozları (kamera uzayı, cm, göze göre; X sağ, Y yukarı, Z ileri): [u, sağ el xyz, sap yönü xyz, sol el ağırlığı, eller arası]
 const FPK=[[0,15,-10,40,-.12,.56,.81,0,20],[.14,24,-6,36,.05,.95,.25,0,22],[.42,24,8,34,.05,.97,-.15,0,14],[.52,13,-18,42,-.2,.07,.98,0,14],[.62,13,-20,41,-.2,0,.98,0,14],[.8,16,-15,41,-.16,.5,.85,0,24],[1,15,-10,40,-.12,.56,.81,0,20]];
-const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},palm:[-10.8,-4.7,.6],roll:20,A:[.2,-.26,-.42],k:.72,dy:-10,dz:26,keep:null,ey:null};
+const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},palm:[-10.8,-4.7,.6],roll:20,A:[.26,-.27,-.42],k:.55,dy:-10,dz:26,keep:null,ey:null};
 function fpKey(u){let i=0;while(i<FPK.length-2&&u>FPK[i+1][0])i++;const A=FPK[i],B=FPK[i+1];let k=clamp((u-A[0])/(B[0]-A[0]),0,1);
   k=i===2?k*k*k:i===3?1-(1-k)*(1-k):k*k*(3-2*k);return A.map((v,j)=>v+(B[j]-v)*k);}
 function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O=window.__FPA||FPA;
