@@ -614,7 +614,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v59</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v60</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1269,8 +1269,8 @@ function skBegin(){gl.useProgram(PSK.p);const u=PSK.u,sc=SCN;
   gl.uniform3fv(u.uEmi,Z3);gl.uniform1f(u.uMat,7);return u;}
 // ---- birinci şahıs kollar: madenci modelinin gerçek kolları/eldivenleri (gövde, baş, bacak kemikleri göğüs noktasına büzülür) ----
 // FP anahtar pozları (kamera uzayı, cm, göze göre; X sağ, Y yukarı, Z ileri): [u, sağ el xyz, sap yönü xyz, sol el ağırlığı, eller arası]
-const FPK=[[0,14,-16,40,-.12,.56,.81,0,30],[.14,24,-6,36,0,.9,.35,0,24],[.42,32,4,22,.1,.55,-.83,0,14],[.52,13,-18,42,-.2,.07,.98,0,14],[.62,13,-20,41,-.2,0,.98,0,14],[.8,16,-20,41,-.16,.5,.85,0,24],[1,14,-16,40,-.12,.56,.81,0,30]];
-const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},palm:[-7.5,1,.5],dy:-10,dz:26,keep:null,ey:null};
+const FPK=[[0,14,-16,40,-.12,.56,.81,0,30],[.14,24,-6,36,.05,.95,.25,0,22],[.42,24,8,34,.05,.97,-.15,0,14],[.52,13,-18,42,-.2,.07,.98,0,14],[.62,13,-20,41,-.2,0,.98,0,14],[.8,16,-20,41,-.16,.5,.85,0,24],[1,14,-16,40,-.12,.56,.81,0,30]];
+const FPA={e:{x:0,z:0,boneM:null,tint:[1,1,1]},palm:[-7.5,1,.5],A:[.2,-.26,-.42],k:.62,dy:-10,dz:26,keep:null,ey:null};
 function fpKey(u){let i=0;while(i<FPK.length-2&&u>FPK[i+1][0])i++;const A=FPK[i],B=FPK[i+1];let k=clamp((u-A[0])/(B[0]-A[0]),0,1);
   k=i===2?k*k*k:i===3?1-(1-k)*(1-k):k*k*(3-2*k);return A.map((v,j)=>v+(B[j]-v)*k);}
 function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O=window.__FPA||FPA;
@@ -1286,7 +1286,7 @@ function fpArms(camW,s,bx,by){if(!MN.ready||!MN.axe)return false;const e=FPA.e,O
   const ch=[ey[0],ey[1]-30-dy,ey[2]-30-dz];
   const keep=O.keepRe?MN.names.map(n=>new RegExp(O.keepRe).test(n)):FPA.keep||(FPA.keep=MN.names.map(n=>/^(shoulder|arm_|forearm_|hand\.|c_)/.test(n)));
   for(let i=0;i<MN.nb;i++)if(!keep[i]){const o=i*16;e.boneM.fill(0,o,o+16);e.boneM[o+12]=ch[0];e.boneM[o+13]=ch[1];e.boneM[o+14]=ch[2];e.boneM[o+15]=1;}
-  e.tint=O.tint||[1.5,1.5,1.5];e.mnE=X(camW,M4.T(bx,by,0),M4.RY(Math.PI),M4.S(MN.S,MN.S,MN.S),M4.T(-ey[0],-ey[1]+dy,-ey[2]+dz));e.x=eye[0];e.z=eye[2];
+  e.tint=O.tint||[1.5,1.5,1.5];const A=O.A||FPA.A,k=O.k||FPA.k;e.mnE=X(camW,M4.T(bx,by,0),M4.T(A[0],A[1],A[2]),M4.S(k,k,k),M4.T(-A[0],-A[1],-A[2]),M4.RY(Math.PI),M4.S(MN.S,MN.S,MN.S),M4.T(-ey[0],-ey[1]+dy,-ey[2]+dz));e.x=eye[0];e.z=eye[2];
   const bi=MN.bi;e.handR=[r.Pp[bi['hand.r']],r.Dq[bi['hand.r']]];e.handL=[r.Pp[bi['hand.l']],r.Dq[bi['hand.l']]];e.mnHold='mine';e.fpDir=hdm;e.fpGrip=K[8];e.fpPalm=O.palm||FPA.palm;{const sw=u<.42?sstep(.12,.42,u):u<.62?1:1-sstep(.62,.92,u);e.fpSide=O.side||vnorm([-.86*sw,.25+.25*sw,1-sw]);}
   drawMinerModel(e);return true;}
 function drawMinerModel(e){const u=skBegin();gl.uniform1f(u.uNoSkin,0);
