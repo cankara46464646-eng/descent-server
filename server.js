@@ -26,7 +26,7 @@ const server = http.createServer((req, res) => {
       let host = null; for (const c of room.values()) if (c.d && c.d.h) { host = c; break; }
       const d = host && host.d; if (!d || !d.rm || !d.rm.pub) continue;
       const f = Array.isArray(d.g) ? d.g[0] : 1;
-      out.push({ c: code.slice(8).toUpperCase().slice(0, 4), t: String(d.rm.t || '').slice(0, 22), n: String(d.n || '').slice(0, 14), p: room.size, ph: d.ph === 'game' ? 'game' : 'lobby', f: (f | 0) || 1 });
+      out.push({ c: code.slice(8).toUpperCase().slice(0, 4), t: String(d.rm.t || '').slice(0, 22), n: String(d.n || '').slice(0, 14), p: room.size, ph: d.ph === 'game' ? 'game' : 'lobby', f: (f | 0) || 1, v: d.vr | 0 });
       if (out.length >= 40) break;
     }
     out.sort((a, b) => (a.ph === b.ph ? 0 : a.ph === 'lobby' ? -1 : 1) || (a.p >= 4) - (b.p >= 4));
