@@ -380,6 +380,49 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 #end.win #restart{background:var(--lamp);color:#1a1206;border-color:var(--lamp)}
 @media (pointer:coarse){.kD{display:none}}@media (pointer:fine){.kT{display:none}}
 .muJoin{display:flex;flex-direction:column;gap:8px}.muJoin #mCreate{width:100%}
+/* ---- oda lobisi ---- */
+.muDlg{width:min(860px,100%)}
+.muV{display:flex;flex-direction:column;gap:9px;min-height:0;flex:1 1 auto}
+.muV[hidden]{display:none}
+.muBar{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}.muBar .sp{flex:1}
+.muName{display:flex;flex-direction:column;gap:4px;flex:0 1 230px;min-width:150px}.muName small{font-family:var(--display);font-size:9.5px;letter-spacing:.32em;color:var(--lamp)}.muName .minp{flex:none}
+.muLive{font-size:11px;color:var(--muted);letter-spacing:.06em;align-self:center;display:flex;align-items:center;gap:6px}.muLive::before{content:"";width:7px;height:7px;border-radius:50%;background:#7fc46f;box-shadow:0 0 8px #7fc46f;animation:liveP 2s ease-in-out infinite}
+.muLive.off::before{background:#c0625a;box-shadow:none;animation:none}
+@keyframes liveP{50%{opacity:.35}}
+.dScr .go.icon{padding:9px;width:38px;height:38px;flex:none}
+.roomList{display:flex;flex-direction:column;gap:6px;overflow:auto;min-height:96px;max-height:min(42vh,300px);padding-right:2px;touch-action:pan-y;overscroll-behavior:contain}
+.room{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:12px;padding:9px 10px 9px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(236,230,217,.08);animation:dIn .25s ease-out both}
+.room>i{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:rgba(239,184,67,.08);border:1px solid rgba(239,184,67,.25)}
+.room>i svg,.visB svg{width:17px;height:17px;fill:none;stroke:var(--lamp);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.room .rT{min-width:0;display:flex;flex-direction:column;gap:2px}.room .rT b{font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room .rT small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room .st{font-family:var(--display);font-size:9px;letter-spacing:.2em;padding:3px 7px;border-radius:999px;border:1px solid rgba(127,196,111,.45);color:#bff0a8;margin-left:6px;vertical-align:1px}
+.room .st.game{border-color:rgba(239,184,67,.45);color:var(--lamp)}
+.pips{display:flex;gap:4px;align-items:center}.pips i{width:9px;height:9px;border-radius:50%;border:1px solid rgba(236,230,217,.35)}.pips i.on{background:var(--lamp);border-color:var(--lamp);box-shadow:0 0 6px rgba(239,184,67,.5)}
+.pips em{font-style:normal;font-size:11px;color:var(--muted);margin-left:4px;font-variant-numeric:tabular-nums}
+.dScr .room .go{padding:8px 16px;font-size:12px}
+.room.full{opacity:.55}
+.roomEmpty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:22px 12px;border:1px dashed rgba(236,230,217,.14);border-radius:10px;color:var(--muted);font-size:12.5px;line-height:1.5}
+.roomEmpty b{font-family:var(--display);font-weight:500;letter-spacing:.18em;font-size:12px;color:var(--fg)}
+.muForm{display:flex;flex-direction:column;gap:12px;max-width:520px}
+.visSeg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.visB{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(236,230,217,.12);color:inherit;font:inherit;cursor:pointer}
+.visB span{display:flex;flex-direction:column;gap:2px}.visB b{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.14em}.visB small{font-size:11px;color:var(--muted);letter-spacing:normal;font-family:inherit}
+.visB.on{border-color:rgba(239,184,67,.6);background:rgba(239,184,67,.08)}.visB:not(.on) svg{stroke:var(--muted)}
+.roomHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:10px;background:rgba(239,184,67,.05);border:1px solid rgba(239,184,67,.18)}
+.rhT{display:flex;flex-direction:column;min-width:0}.rhT b{font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rhT small{font-size:11px;color:var(--muted)}
+.codeChip{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:1px;background:none;border:1px dashed rgba(239,184,67,.5);border-radius:8px;padding:4px 10px;color:inherit;font:inherit;cursor:pointer}
+.codeChip small{font-family:var(--display);font-size:8.5px;letter-spacing:.3em;color:var(--muted)}.codeChip b{font-family:var(--display);font-size:20px;letter-spacing:.28em;color:var(--lamp);line-height:1}
+.seat .crown{width:12px;height:12px;fill:var(--lamp);vertical-align:-1px;margin-left:4px}
+.seat small.ok{color:#9fdc8a}.seat small.wait{color:#d9a35a}
+.chatCol{min-height:0}
+.chat{flex:1 1 auto;min-height:92px;max-height:min(34vh,220px);overflow:auto;display:flex;flex-direction:column;gap:4px;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid rgba(236,230,217,.08);font-size:12.5px;line-height:1.4;touch-action:pan-y;overscroll-behavior:contain}
+.chat p{margin:0;overflow-wrap:anywhere}.chat p b{font-weight:600;color:var(--lamp);margin-right:6px}.chat p.sys{color:var(--muted);font-style:italic;font-size:11.5px}.chat p.me b{color:#bff0a8}
+.chatIn{display:flex;gap:6px}.chatIn .minp{flex:1 1 auto}
+#mReady.on{background:#7fc46f;border-color:#7fc46f;color:#0f1a0c}
+.dFoot>span{display:contents}.dFoot>span[hidden]{display:none}
+@media (max-width:620px){.room{grid-template-columns:auto minmax(0,1fr) auto;}.room .pips{display:none}.visSeg{grid-template-columns:1fr}}
+@media (max-height:430px){.roomList{max-height:44vh}.chat{max-height:30vh;min-height:70px}.muDlg .dNote{font-size:11px}}
 .or{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted);letter-spacing:.18em}.or::before,.or::after{content:"";flex:1;height:1px;background:rgba(236,230,217,.12)}
 .codeRow{display:flex;gap:8px}.dlg .codeRow .mcodeIn{flex:1 1 auto;font-family:var(--display);font-size:16px}
 .dlg .mcode:empty{display:none}
@@ -614,7 +657,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v62</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v63</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -665,31 +708,64 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 </div>
 
 <div id="multi" class="screen menuScr dScr" hidden>
-  <div class="set dlg" role="dialog" aria-labelledby="muTitle">
-    <div class="sHead"><div><small>4 KİŞİLİK ODA</small><h2 id="muTitle">ÇOK OYUNCULU</h2></div><button class="sX back" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    <p class="dNote" id="mNote">Oda kur ve kodu arkadaşlarına ver, ya da onların kodunu gir. En fazla 4 kişi; boş yerlere bot gelir.</p>
-    <div class="muGrid">
-      <div class="muCol">
-        <label class="fld"><small>OYUNCU ADI</small><input id="mName" class="minp" maxlength="14" placeholder="Adın" autocomplete="off" spellcheck="false"></label>
-        <div class="muJoin" id="mJoinRow">
-          <button class="go" id="mCreate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>ODA KUR</button>
-          <div class="or">ya da koda katıl</div>
-          <div class="codeRow"><input id="mJoinCode" class="minp mcodeIn" maxlength="4" placeholder="KOD" autocomplete="off" spellcheck="false"><button class="go ghost" id="mJoin">KATIL</button></div>
-        </div>
-        <div class="mrow" id="mRejoinRow" hidden><button class="go ghost" id="mRejoin">SON ODAYA DÖN</button></div>
-        <div id="mCode" class="mcode"></div>
+  <div class="set dlg muDlg" role="dialog" aria-labelledby="muTitle">
+    <div class="sHead"><div><small id="muKick">ODA LOBİSİ</small><h2 id="muTitle">ÇOK OYUNCULU</h2></div><button class="sX back" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <!-- 1) oda listesi -->
+    <section class="muV" id="muBrowse">
+      <div class="muBar">
+        <label class="muName"><small>ADIN</small><input id="mName" class="minp" maxlength="14" placeholder="Madenci adın" autocomplete="off" spellcheck="false"></label>
+        <span class="sp"></span>
+        <span class="muLive" id="mListInfo">Odalar aranıyor...</span>
+        <button class="go dim icon" id="mRefresh" aria-label="Listeyi yenile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
       </div>
-      <div class="muCol">
-        <small class="lbl">EKİP</small>
-        <div class="lobby" id="mSeats">
-          <div class="seat me"><i>S</i><span><b>Sen</b><small>HAZIR</small></span></div>
-          <div class="seat bot"><i>B</i><span><b>Ahmet</b><small>BOT</small></span></div>
-          <div class="seat bot"><i>B</i><span><b>Mehmet</b><small>BOT</small></span></div>
-          <div class="seat bot"><i>B</i><span><b>Hasan</b><small>BOT</small></span></div>
+      <div class="roomList" id="mList" role="list"></div>
+      <p class="dNote muMsg" id="mNote"></p>
+    </section>
+    <!-- 2) oda kur -->
+    <section class="muV" id="muCreate" hidden>
+      <div class="muForm">
+        <label class="fld"><small>ODA ADI</small><input id="mRoomName" class="minp" maxlength="22" autocomplete="off" spellcheck="false"></label>
+        <div class="fld"><small>KİMLER GİREBİLİR</small>
+          <div class="visSeg" id="mVis" role="radiogroup">
+            <button class="visB on" data-v="1" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span><b>HERKESE AÇIK</b><small>Listede görünür</small></span></button>
+            <button class="visB" data-v="0" role="radio" aria-checked="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span><b>ÖZEL</b><small>Sadece kodla</small></span></button>
+          </div>
+        </div>
+        <p class="dNote">En fazla 4 kişi. Boş yerleri botlar doldurur; oyun sürerken gelen arkadaşın bir sonraki katta katılır.</p>
+        <p class="dNote muMsg"></p>
+      </div>
+    </section>
+    <!-- 3) kodla katıl -->
+    <section class="muV" id="muCode" hidden>
+      <div class="muForm">
+        <label class="fld"><small>ODA KODU</small><input id="mJoinCode" class="minp mcodeIn" maxlength="4" placeholder="ABCD" autocomplete="off" spellcheck="false" autocapitalize="characters"></label>
+        <p class="dNote">Özel odalar listede görünmez. Arkadaşından 4 harfli kodu iste.</p>
+        <p class="dNote muMsg"></p>
+      </div>
+    </section>
+    <!-- 4) oda içi -->
+    <section class="muV" id="muRoom" hidden>
+      <div class="muGrid">
+        <div class="muCol">
+          <div class="roomHead"><div class="rhT"><b id="mRoomT">Oda</b><small id="mRoomS"></small></div><button class="codeChip" id="mCode" aria-label="Oda kodunu kopyala"></button></div>
+          <div class="lobby" id="mSeats"></div>
+        </div>
+        <div class="muCol chatCol">
+          <small class="lbl">SOHBET</small>
+          <div class="chat" id="mChat" aria-live="polite"></div>
+          <form class="chatIn" id="mChatF" autocomplete="off"><input id="mChatI" class="minp" maxlength="80" placeholder="Mesaj yaz..." spellcheck="false"><button class="go dim icon" aria-label="Gönder"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-2-7z"/></svg></button></form>
         </div>
       </div>
+    </section>
+    <div class="dFoot">
+      <span class="fB"><button class="go dim" id="mBots">BOTLARLA OYNA</button><button class="go ghost" id="mRejoin" hidden>SON ODAYA DÖN</button></span>
+      <span class="fC" hidden><button class="go dim" id="mCancel">VAZGEÇ</button></span>
+      <span class="fR" hidden><button class="go dim" id="mLeave">ODADAN ÇIK</button><button class="go ghost" id="mTalk" hidden>BAS-KONUŞ</button></span>
+      <span class="sp"></span>
+      <span class="fB"><button class="go ghost" id="mCodeBtn">KODLA KATIL</button><button class="go" id="mNewRoom"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>ODA KUR</button></span>
+      <span class="fC" hidden><button class="go" id="mCreate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>ODAYI KUR</button><button class="go" id="mJoin">KATIL</button></span>
+      <span class="fR" hidden><button class="go ghost" id="mReady">HAZIRIM</button><button class="go" id="mStart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span id="mStartL">BAŞLAT</span></button></span>
     </div>
-    <div class="dFoot"><button class="go dim" id="mBots">BOTLARLA OYNA</button><button class="go ghost" id="mTalk" hidden>BAS-KONUŞ</button><span class="sp"></span><button class="go ghost" id="mLeave" hidden>ODADAN ÇIK</button><button class="go" id="mStart" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>BAŞLAT</button></div>
   </div>
 </div>
 
@@ -4462,7 +4538,7 @@ function wsApi(base){return{join(name){return new Promise((res,rej)=>{const url=
 async function netApi(){if(NET.api)return NET.api;try{NET.api=window.claude&&window.claude.use?await window.claude.use('room'):null;}catch(e){NET.api=null;}
   if(!NET.api){const s=kdServer();if(s){NET.api=wsApi(s);NET.viaServer=true;}}return NET.api;}
 function netCode(){const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<4;i++)s+=A[Math.floor(Math.random()*A.length)];return s;}
-function netMsg(t){NET.msg=t;const el=$('mNote');if(el)el.textContent=t;}
+function netMsg(t){NET.msg=t;for(const el of document.querySelectorAll('.muMsg'))el.textContent=t;if(NET.on&&LB.view==='room'&&t&&LB.lastSys!==t){LB.lastSys=t;muChatAdd(null,t,'sys');}}
 async function netJoin(code,asHost){const api=await netApi();
   if(!api){netMsg('Bu görünümde oda kurulamıyor: çok oyunculu sunucusu henüz ayarlanmadı.');return false;}
   if(NET.viaServer)netMsg('Sunucuya bağlanılıyor... (sunucu uyuyorsa ilk bağlantı 1 dakika sürebilir)');
@@ -4471,6 +4547,7 @@ async function netJoin(code,asHost){const api=await netApi();
     NET.room=await api.join('descent-'+code.toLowerCase());}catch(e){netMsg('Odaya bağlanılamadı ('+(e&&e.code||'hata')+'). Tekrar dene.');return false;}
   NET.code=code.toUpperCase();try{localStorage.setItem('kd_last',JSON.stringify({code:NET.code,t:Date.now()}));}catch(e){}NET.host=!!asHost;NET.on=true;NET.phase='lobby';NET.waitTok=undefined;NET.started=false;NET.peers.clear();NET.seq=0;NET.log=[];NET.hostPeer=null;
   NET.name=($('mName')&&$('mName').value.trim().slice(0,14))||NET.name||('Madenci'+Math.floor(Math.random()*90+10));try{localStorage.setItem('kd_name',NET.name);}catch(e){}
+  NET.ready=false;LB.chat=[];LB.cmOut=[];LB.cmId=0;LB.lastSys='';const ch=$('mChat');if(ch)ch.innerHTML='';muView('room');muChatAdd(null,asHost?(NET.pub?'Oda kuruldu. Arkadaşların listeden ya da '+NET.code+' koduyla girebilir.':'Özel oda kuruldu; listede görünmez. Arkadaşların '+NET.code+' koduyla girebilir.'):'Odaya girdin. Hazır olunca HAZIRIM\'a bas.','sys');
   NET.room.onPeers(ch=>netPeers(ch),e=>{netMsg('Oda bağlantısı koptu ('+e.code+').');});
   netPush(true);netLobbyRender();if(vcMode()!=='off')vcStart();vcUI();return true;}
 function netLost(){if(!NET.lostShown){NET.lostShown=true;toast('Bağlantı koptu, yeniden bağlanılıyor...',3);}}
@@ -4486,12 +4563,12 @@ function netAdopt(rec){const u=rec.u;let old=null;for(const[k2,r2]of NET.peers)i
   if(!old&&NET.gone&&NET.gone.has(u)){old=NET.gone.get(u).rec;NET.gone.delete(u);}
   if(old){rec.last=Math.max(rec.last,old.last);if(old.e&&!rec.e){rec.e=old.e;rec.e.peer=rec.peer;rec.e.lost=false;toast(`${rec.e.name} geri döndü.`,2);}}
   else if(NET.lastU&&NET.lastU[u])rec.last=Math.max(rec.last,NET.lastU[u]);}
-function netLeave(){try{vcStop();for(const R of VC.rx.values())try{R.g.disconnect();}catch(e){}VC.rx.clear();}catch(e){}if(NET.room){try{NET.room.leave();}catch(e){}}NET.room=null;NET.on=false;NET.started=false;NET.phase='menu';NET.host=false;NET.code='';NET.gameTok=null;NET.seedQ=null;NET.forceSeed=null;NET.peers.clear();for(let i=bots.length-1;i>=0;i--)if(bots[i].remote)bots.splice(i,1);}
+function netLeave(){try{vcStop();for(const R of VC.rx.values())try{R.g.disconnect();}catch(e){}VC.rx.clear();}catch(e){}if(NET.room){try{NET.room.leave();}catch(e){}}NET.room=null;NET.on=false;NET.started=false;NET.phase='menu';NET.ready=false;muAdvertise();NET.host=false;NET.code='';NET.gameTok=null;NET.seedQ=null;NET.forceSeed=null;NET.peers.clear();for(let i=bots.length-1;i>=0;i--)if(bots[i].remote)bots.splice(i,1);}
 // ---- presence: kendi durumum + olay günlüğüm (+ host ise dünya) ----
 function netMyState(){if(!pl)return null;const st=NET_ST.indexOf(G.state==='dying'||G.state==='end'?'dead':G.state);const gi=pl.carry?gems.indexOf(pl.carry):-1;
   return[r2(pl.x),r2(pl.z),r2(pl.yaw),r2(pl.pitch),pl.lamp?1:0,st<0?0:st,gi,r2(pl.swing||0),pl.crouch?1:0,pl.struggle|0,RUN.floor,pl.hideIn?1:0,G.genWant>=0?G.genWant+1:0,SF.on?(sfInCage(pl.x,pl.z)?2:1):0];}
 function netPush(force){if(!NET.room)return;const now=performance.now();if(!force&&now-NET.pushT<(NET.viaServer?60:45))return;NET.pushT=now;
-  const P={v:1,u:NET.uid,n:NET.name,c:NET.col,h:NET.host?1:0,hk:NET.host?(NET.hk|0):undefined,ph:NET.phase,df:NET.host?SET.diff:undefined};
+  const P={v:1,u:NET.uid,n:NET.name,c:NET.col,h:NET.host?1:0,hk:NET.host?(NET.hk|0):undefined,ph:NET.phase,df:NET.host?SET.diff:undefined,rd:NET.ready?1:0,rm:NET.host?{t:NET.roomT||'',pub:NET.pub?1:0}:undefined,cm:LB.cmOut.length?LB.cmOut:undefined};
   // olay günlüğü: açık bağlantıdan 5 sn önce gönderilmiş olaylar herkese ulaştı → tekrar yollanmaz (mobil veri yarıya iner).
   // Bağlantı yokken kaydedilenler, bağlantı gelince gönderilir.
   if(NET.started){P.p=netMyState();const live=!NET.room.ws||NET.room.ws.readyState===1;if(!NET.logSent)NET.logSent=new Map();
@@ -4508,7 +4585,9 @@ const NET_ENC=new TextEncoder();
 // ---- oda üyeleri ----
 function netPeers(ch){const peers=NET.room?NET.room.peers():[];const seen=new Set();
   for(const pr of peers){if(pr.isMe){NET.myPeer=pr.peer;continue;}if(pr.kind!=='viewer')continue;if(NET.retired&&NET.retired.has(pr.peer))continue;seen.add(pr.peer);const P=pr.presence||{};
-    let rec=NET.peers.get(pr.peer);if(!rec){rec={peer:pr.peer,last:0,e:null};NET.peers.set(pr.peer,rec);}if(rec.P!==P)rec.seenT=performance.now();rec.P=P;if((P.hk|0)>(NET.hkSeen|0))NET.hkSeen=P.hk|0;if(P.u&&rec.u!==P.u){rec.u=P.u;netAdopt(rec);}
+    let rec=NET.peers.get(pr.peer);if(!rec){rec={peer:pr.peer,last:0,e:null};NET.peers.set(pr.peer,rec);}if(rec.P!==P)rec.seenT=performance.now();rec.P=P;
+    if(P.n&&!rec.annc){rec.annc=1;if(NET.phase==='lobby'&&!(NET.gone&&NET.gone.has(P.u)))muChatAdd(null,String(P.n).slice(0,14)+' odaya girdi.','sys');}
+    if(Array.isArray(P.cm))for(const m of P.cm){if(!Array.isArray(m)||!(m[0]>(rec.cmL|0)))continue;rec.cmL=m[0];muChatAdd(String(P.n||'?').slice(0,14),String(m[1]||'').slice(0,80));}if((P.hk|0)>(NET.hkSeen|0))NET.hkSeen=P.hk|0;if(P.u&&rec.u!==P.u){rec.u=P.u;netAdopt(rec);}
     if(P.g&&P.h&&!NET.host){if(NET.waitTok===undefined){const canMid=P.ph==='game'&&(P.sv||P.s&&P.s.tok===P.g[3]);NET.waitTok=(!NET.started&&P.ph==='game'&&!canMid)?P.g[3]:-1;if(canMid&&!NET.started)NET.needSnap=true;}
       if(P.g[3]>NET.waitTok)netGame(P.g);else if(NET.phase==='lobby')netMsg('Oyun sürüyor. Bir sonraki kata inerken otomatik katılacaksın.');}
     if(NET.started&&P.p)netRemoteUpdate(rec,P);
@@ -4519,7 +4598,7 @@ function netPeers(ch){const peers=NET.room?NET.room.peers():[];const seen=new Se
     if(NET.needSnap&&NET.started&&P.h&&P.s&&!NET.host&&G.state!=='intro'&&P.s.tok===NET.gameTok){if(netApplySnap(P.s))NET.needSnap=false;}
     // iki oda sahibi olduysa (ben donmuşken biri devraldı): devralma sayacı büyük olan kalır, eşitse küçük etiket
     if(NET.host&&P.h&&NET.started&&performance.now()-rec.seenT<5000&&((P.hk|0)>(NET.hk|0)||((P.hk|0)===(NET.hk|0)&&pr.peer<NET.myPeer))){NET.host=false;NET.needSnap=true;toast('Sen yokken oyunu bir arkadaşın yönetti; devam ediyorsunuz.',3);}}
-  for(const[k,rec]of NET.peers)if(!seen.has(k)){NET.peers.delete(k);
+  for(const[k,rec]of NET.peers)if(!seen.has(k)){NET.peers.delete(k);if(NET.phase==='lobby'&&rec.P&&rec.P.n)muChatAdd(null,String(rec.P.n).slice(0,14)+' ayrıldı.','sys');
     // telefonu kilitlenen / interneti giden oyuncu: 25 sn bekle; aynı kimlikle dönerse karakteri kaldığı yerden devam eder
     if(rec.e&&rec.u&&NET.started&&NET.gone){NET.gone.set(rec.u,{rec,t:performance.now()});rec.e.lost=true;if(ACTIVE.includes(rec.e.st))rec.e.st='lost';rec.e.tx=rec.e.x;rec.e.tz=rec.e.z;toast(`${rec.e.name}: bağlantı koptu, bekleniyor...`,2.4);}else netDropRec(rec);}
   if(NET.gone)for(const[u,g]of NET.gone)if(performance.now()-g.t>25000){NET.gone.delete(u);netDropRec(g.rec);}
@@ -4533,11 +4612,60 @@ function netPeers(ch){const peers=NET.room?NET.room.peers():[];const seen=new Se
   NET.hostPeer=NET.host?NET.myPeer:hp;
   if(NET.phase==='lobby')netLobbyRender();}
 // ---- lobi ----
-function netLobbyRender(){const L=$('mSeats');if(!L)return;const me={n:NET.name+' (sen)',h:NET.host};const list=[me];
-  for(const rec of NET.peers.values())if(rec.P&&rec.P.n)list.push({n:String(rec.P.n).slice(0,14),h:!!rec.P.h});
-  let h='';for(let i=0;i<4;i++){const s=list[i];if(s)h+=`<div class="seat${i===0?' me':' pl'}"><i>${esc((String(s.n).trim()[0]||'?').toLocaleUpperCase('tr'))}</i><span><b>${esc(s.n)}</b><small>${s.h?'ODA SAHİBİ':'HAZIR'}</small></span></div>`;else h+=`<div class="seat bot"><i>B</i><span><b>${BOTN[i-list.length]||'Bot'}</b><small>BOT</small></span></div>`;}
-  L.innerHTML=h;$('mCode').innerHTML=NET.on&&NET.code?('<small>ODA KODU</small><b>'+esc(NET.code)+'</b>'):'';$('mStart').hidden=!(NET.on&&NET.host);$('mLeave').hidden=!NET.on;$('mJoinRow').hidden=!!NET.on;$('mName').disabled=!!NET.on;
-  if(NET.on)netMsg(NET.host?'Arkadaşların bu kodla katılsın, sonra BAŞLAT. Boş yerlere bot gelir.':'Oda sahibinin başlatması bekleniyor...');}
+const LB={view:'browse',vis:1,list:[],chat:[],cmOut:[],cmId:0,busy:false,lastSys:'',adv:'',startArm:0,joining:false};
+const ROOM_NAMES=['Derin Damar','Karanlık Kuyu','Kömür Tayfası','Son Vardiya','Elmas Avcıları','Gece Ekibi','Kara Galeri','Sessiz Ocak','Yeraltı Ekibi','Paslı Kazma'];
+const MU_ICO={pick:'<svg viewBox="0 0 24 24"><path d="M14.5 4.5c2.5.3 4.7 1.5 6 3.4M4 20l9.5-9.5M10.5 7.5l6 6M9.6 3.9c3.5-.9 7.4 0 10.5 2.6"/></svg>',lock:'<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',crown:'<svg class="crown" viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>'};
+function muView(v){LB.view=v;for(const[id,k]of[['muBrowse','browse'],['muCreate','create'],['muCode','code'],['muRoom','room']]){const e=$(id);if(e)e.hidden=k!==v;}
+  const show={fB:v==='browse',fC:v==='create'||v==='code',fR:v==='room'};for(const c in show)for(const e of document.querySelectorAll('#multi .dFoot .'+c))e.hidden=!show[c];
+  $('mCreate').hidden=v!=='create';$('mJoin').hidden=v!=='code';
+  $('muKick').textContent=v==='room'?'ODA':v==='create'?'YENİ ODA':v==='code'?'ÖZEL ODA':'ODA LOBİSİ';$('muTitle').textContent=v==='create'?'ODA KUR':v==='code'?'KODLA KATIL':'ÇOK OYUNCULU';
+  $('mName').disabled=v==='room';
+  if(v==='browse'){netRejoinUI();muRefresh();}
+  if(v==='create'){const r=$('mRoomName');if(!r.value)r.value=ROOM_NAMES[Math.floor(Math.random()*ROOM_NAMES.length)];}
+  if(v==='code')setTimeout(()=>{try{$('mJoinCode').focus();}catch(e){}},60);}
+// açık odalar: sunucuda /rooms, Claude sayfasında herkesin paylaştığı lobi bilgisi
+async function netList(){const api=await netApi();if(!api)return null;
+  if(NET.viaServer){const ac=new AbortController();const to=setTimeout(()=>ac.abort(),25000);
+    try{const r=await fetch(kdServer()+'/rooms',{cache:'no-store',signal:ac.signal});if(!r.ok)throw new Error('http');const j=await r.json();if(!j||!Array.isArray(j.rooms))throw new Error('fmt');return j.rooms;}finally{clearTimeout(to);}}
+  const out=[],seen=new Set();for(const pr of (api.peers?api.peers():[])){const k=pr.presence&&pr.presence.kdr;if(!k||!k.pub||!k.c||seen.has(k.c))continue;seen.add(k.c);out.push(k);}return out;}
+async function muRefresh(){if(LB.busy)return;LB.busy=true;const info=$('mListInfo');if(!LB.listOk)info.textContent='Sunucuya bağlanılıyor...';
+  try{const L=await netList();if(L===null){LB.list=[];info.textContent='Çok oyunculu kullanılamıyor';info.classList.add('off');}
+    else{LB.list=L.filter(r=>r&&/^[A-Z0-9]{4}$/.test(String(r.c||'').toUpperCase()));LB.listOk=true;info.classList.remove('off');info.textContent=LB.list.length?LB.list.length+' açık oda':'Canlı';}}
+  catch(e){info.classList.add('off');info.textContent=LB.listOk?'Bağlantı zayıf':'Liste alınamadı';}
+  LB.busy=false;muListRender();}
+function muListRender(){const L=$('mList');if(!L)return;const R=LB.list;
+  if(!R.length){L.innerHTML=`<div class="roomEmpty"><b>${LB.listOk?'AÇIK ODA YOK':'ODALAR YÜKLENİYOR'}</b><span>${LB.listOk?'İlk odayı sen kur; arkadaşların burada görüp katılabilir.':'Sunucu uyuyorsa ilk açılış bir dakika kadar sürebilir.'}</span></div>`;return;}
+  L.innerHTML=R.slice(0,30).map(r=>{const p=Math.max(1,Math.min(4,r.p|0)),full=p>=4,game=r.ph==='game',c=String(r.c).toUpperCase();
+    return `<div class="room${full?' full':''}" role="listitem"><i>${MU_ICO.pick}</i><div class="rT"><b>${esc(String(r.t||'Oda').slice(0,22))}</b><small><span class="st${game?' game':''}">${game?'KAT '+((r.f|0)||1):'LOBİDE'}</span> ${esc(String(r.n||'?').slice(0,14))} kurdu</small></div><div class="pips">${[0,1,2,3].map(i=>`<i class="${i<p?'on':''}"></i>`).join('')}<em>${p}/4</em></div><button class="go${full?' dim':''}" data-code="${esc(c)}"${full||LB.joining?' disabled':''}>${full?'DOLU':'KATIL'}</button></div>`;}).join('');}
+async function muJoin(code,asHost){if(LB.joining)return;LB.joining=true;for(const b of document.querySelectorAll('#multi .go'))b.disabled=true;
+  try{const nm=$('mName');if(nm&&!nm.value.trim())nm.value='Madenci'+Math.floor(Math.random()*90+10);
+    if(asHost){NET.roomT=($('mRoomName').value.trim()||ROOM_NAMES[0]).slice(0,22);NET.pub=LB.vis?1:0;}
+    netMsg(asHost?'Oda kuruluyor...':'Odaya bağlanılıyor...');const ok=await netJoin(code,asHost);if(ok)netLobbyRender();}
+  finally{LB.joining=false;for(const b of document.querySelectorAll('#multi .go'))b.disabled=false;if(LB.view==='browse')muListRender();}}
+function netLobbyRender(){const L=$('mSeats');if(!L)return;
+  if(!NET.on){if(LB.view==='room')muView('browse');muAdvertise();return;}
+  if(LB.view!=='room')muView('room');
+  const list=[{n:NET.name,me:1,h:NET.host,rd:NET.host||NET.ready}];let hostP=null;
+  for(const rec of NET.peers.values())if(rec.P&&rec.P.n){list.push({n:String(rec.P.n).slice(0,14),h:!!rec.P.h,rd:!!(rec.P.h||rec.P.rd)});if(rec.P.h)hostP=rec.P;}
+  let h='';for(let i=0;i<4;i++){const x=list[i];
+    if(x)h+=`<div class="seat${x.me?' me':' pl'}"><i>${esc((String(x.n).trim()[0]||'?').toLocaleUpperCase('tr'))}</i><span><b>${esc(x.n)}${x.me?' (sen)':''}${x.h?MU_ICO.crown:''}</b><small class="${x.h?'':x.rd?'ok':'wait'}">${x.h?'ODA SAHİBİ':x.rd?'HAZIR':'HAZIR DEĞİL'}</small></span></div>`;
+    else h+=`<div class="seat bot"><i>B</i><span><b>${BOTN[i-list.length]||'Bot'}</b><small>BOT · BOŞ YER</small></span></div>`;}
+  L.innerHTML=h;
+  const rm=NET.host?{t:NET.roomT,pub:NET.pub}:(hostP&&hostP.rm)||{};
+  $('mRoomT').textContent=String(rm.t||'Oda').slice(0,22);$('mRoomS').textContent=(rm.pub?'Herkese açık':'Özel · sadece kodla')+' · '+Math.min(4,list.length)+'/4 oyuncu';
+  $('mCode').innerHTML='<small>KOD</small><b>'+esc(NET.code)+'</b>';
+  $('mStart').hidden=!NET.host;$('mReady').hidden=!!NET.host;$('mReady').classList.toggle('on',!!NET.ready);$('mReady').textContent=NET.ready?'HAZIR ✓':'HAZIRIM';
+  const others=list.length-1,rdy=list.slice(1).filter(x=>x.rd).length;
+  $('mStartL').textContent=LB.startArm&&performance.now()-LB.startArm<3500?'YİNE DE BAŞLAT':others?'BAŞLAT · '+rdy+'/'+others+' HAZIR':'BAŞLAT';
+  muAdvertise();}
+// Claude sayfasında (sunucusuz) açık odayı lobiye duyur
+function muAdvertise(){const api=NET.api;if(!api||NET.viaServer||!api.presence)return;
+  let k=null;if(NET.on&&NET.host&&NET.pub&&NET.code)k={c:NET.code,t:String(NET.roomT||'Oda').slice(0,22),n:String(NET.name||'').slice(0,14),p:Math.min(4,NET.peers.size+1),ph:NET.phase==='game'?'game':'lobby',f:RUN.floor|0,pub:1};
+  const j=JSON.stringify(k);if(j===LB.adv)return;LB.adv=j;try{api.presence({kdr:k}).catch(()=>{});}catch(e){}}
+function muChatAdd(n,t,cls){if(!t)return;LB.chat.push(1);const C=$('mChat');if(!C)return;const p=document.createElement('p');if(cls)p.className=cls;
+  if(n){const b=document.createElement('b');b.textContent=n;p.appendChild(b);}p.appendChild(document.createTextNode(t));C.appendChild(p);while(C.children.length>60)C.firstChild.remove();C.scrollTop=C.scrollHeight;}
+function muChatSend(t){t=String(t||'').replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028-\u202e\u2060-\u206f\ufeff]/g,'').trim().slice(0,80);if(!t||!NET.on)return;
+  LB.cmId++;LB.cmOut.push([LB.cmId,t]);if(LB.cmOut.length>4)LB.cmOut.shift();muChatAdd(NET.name,t,'me');netPush(true);}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 // host: oyunu başlat / yeni kat → g = [kat, tohum, gürültü tohumu, sayaç, insan sayısı]
 function netHostStart(floor){if(!NET.host)return;const sd=(Math.random()*4294967296)>>>0,ns=(Math.random()*1e9)|0;NET.seedQ=[floor,sd,ns,(NET.seedQ?NET.seedQ[3]:0)+1,NET.peers.size+1];netPush(true);netGame(NET.seedQ);}
@@ -5916,20 +6044,33 @@ function showMenu(){document.exitPointerLock?.();caughtHide();for(const id of['h
   const sv=loadSave();$('contBox').hidden=true;if(sv)$('mContL').textContent='KAT -'+sv.snap.floor;$('start').hidden=false;$('play').focus({preventScroll:true});}
 function subMenu(id){$('start').hidden=true;$(id).hidden=false;const b=$(id).querySelector('.go:not([disabled])');if(b)b.focus({preventScroll:true});}
 $('mCont').addEventListener('click',()=>{const d=loadSave();if(!d){showMenu();return;}resetRun();const sn=d.snap;RUN.floor=sn.floor;RUN.inv={...sn.inv};RUN.cartGems=[...sn.cartGems];RUN.alive=[...sn.alive];RUN.up={...RUN.up,...d.up};RUN.time=d.time;begin();});
-$('mHow').addEventListener('click',()=>subMenu('how'));$('mMulti').addEventListener('click',()=>{kdWake();storyThen(()=>{subMenu('multi');netRejoinUI();});});
+$('mHow').addEventListener('click',()=>subMenu('how'));$('mMulti').addEventListener('click',()=>{kdWake();storyThen(()=>{subMenu('multi');if(NET.on&&!NET.started)netLobbyRender();else muView('browse');});});
 $('mBots').addEventListener('click',()=>{if(NET.on)netLeave();resetRun();clearSave();begin();});
 try{$('mName').value=localStorage.getItem('kd_name')||'';}catch(e){}
-$('mCreate').addEventListener('click',async()=>{netMsg('Oda kuruluyor...');if(await netJoin(netCode(),true))netLobbyRender();});
-function netRejoinUI(){let L=null;try{L=JSON.parse(localStorage.getItem('kd_last')||'null');}catch(e){}const row=$('mRejoinRow');if(!row)return;const ok=L&&L.code&&Date.now()-L.t<30*60*1000&&!NET.on;row.hidden=!ok;if(ok)$('mRejoin').textContent='SON ODAYA DÖN ('+L.code+')';}
-$('mRejoin').addEventListener('click',async()=>{let L=null;try{L=JSON.parse(localStorage.getItem('kd_last')||'null');}catch(e){}if(!L)return;netMsg('Odaya geri bağlanılıyor...');if(await netJoin(L.code,false)){netLobbyRender();netRejoinUI();}});
+$('mCreate').addEventListener('click',()=>muJoin(netCode(),true));
+$('mNewRoom').addEventListener('click',()=>{netMsg('');muView('create');});$('mCodeBtn').addEventListener('click',()=>{netMsg('');muView('code');});$('mCancel').addEventListener('click',()=>{netMsg('');muView('browse');});
+$('mRefresh').addEventListener('click',()=>muRefresh());
+$('mList').addEventListener('click',e=>{const b=e.target.closest('button[data-code]');if(b&&!b.disabled)muJoin(b.dataset.code,false);});
+for(const b of document.querySelectorAll('#mVis .visB'))b.addEventListener('click',()=>{LB.vis=+b.dataset.v;for(const o of document.querySelectorAll('#mVis .visB')){o.classList.toggle('on',o===b);o.setAttribute('aria-checked',o===b?'true':'false');}});
+$('mRoomName').addEventListener('keydown',e=>{if(e.key==='Enter')$('mCreate').click();});
+$('mReady').addEventListener('click',()=>{if(!NET.on||NET.host)return;NET.ready=!NET.ready;netPush(true);netLobbyRender();});
+$('mChatF').addEventListener('submit',e=>{e.preventDefault();const i=$('mChatI');muChatSend(i.value);i.value='';});
+$('mCode').addEventListener('click',()=>{if(!NET.code)return;const txt='Descent: odama gel! Kod: '+NET.code;
+  const done=()=>muChatAdd(null,'Oda kodu kopyalandı: '+NET.code,'sys');
+  try{if(navigator.share&&isTouch){navigator.share({text:txt}).catch(()=>{});return;}}catch(e){}
+  try{navigator.clipboard.writeText(NET.code).then(done,()=>{});}catch(e){}});
+setInterval(()=>{if(!$('multi').hidden&&LB.view==='browse'&&!document.hidden)muRefresh();if(NET.on)muAdvertise();},4000);
+function netRejoinUI(){let L=null;try{L=JSON.parse(localStorage.getItem('kd_last')||'null');}catch(e){}const row=$('mRejoin');if(!row)return;const ok=L&&L.code&&Date.now()-L.t<30*60*1000&&!NET.on;row.hidden=!ok;if(ok)row.textContent='SON ODA ('+L.code+')';}
+$('mRejoin').addEventListener('click',async()=>{let L=null;try{L=JSON.parse(localStorage.getItem('kd_last')||'null');}catch(e){}if(!L)return;await muJoin(L.code,false);netRejoinUI();});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&NET.room&&NET.room.kick)NET.room.kick();});
 addEventListener('online',()=>{if(NET.room&&NET.room.kick)NET.room.kick();});
 $('mTut').addEventListener('click',()=>{resetRun();clearSave();G.tutForce=true;begin();});
 $('tutSkip').addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();sysTutEnd(true);});
-$('mJoin').addEventListener('click',async()=>{const c=$('mJoinCode').value.trim().toUpperCase();if(!/^[A-Z0-9]{4}$/.test(c)){netMsg('Kod 4 karakter olmalı.');return;}netMsg('Bağlanılıyor...');if(await netJoin(c,false))netLobbyRender();});
+$('mJoin').addEventListener('click',()=>{const c=$('mJoinCode').value.trim().toUpperCase();if(!/^[A-Z0-9]{4}$/.test(c)){netMsg('Kod 4 harf/rakam olmalı.');return;}muJoin(c,false);});
 $('mJoinCode').addEventListener('keydown',e=>{if(e.key==='Enter')$('mJoin').click();});
-$('mStart').addEventListener('click',()=>{if(NET.host&&!NET.started)netHostStart(1);});
-$('mLeave').addEventListener('click',()=>{netLeave();netLobbyRender();netMsg('Odadan çıktın.');});
+$('mStart').addEventListener('click',()=>{if(!NET.host||NET.started)return;let others=0,rdy=0;for(const r of NET.peers.values())if(r.P&&r.P.n){others++;if(r.P.rd)rdy++;}
+  if(rdy<others&&!(LB.startArm&&performance.now()-LB.startArm<3500)){LB.startArm=performance.now();netLobbyRender();netMsg('Herkes hazır değil. Yine de başlatmak için tekrar bas.');setTimeout(()=>{LB.startArm=0;if(NET.on&&!NET.started)netLobbyRender();},3600);return;}LB.startArm=0;netHostStart(1);});
+$('mLeave').addEventListener('click',()=>{netLeave();muView('browse');netMsg('Odadan çıktın.');});
 $('mQuit').addEventListener('click',()=>{if(/Electron/.test(navigator.userAgent)){window.close();return;}try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}if(AC)AC.suspend();subMenu('bye');});
 for(const b of document.querySelectorAll('.back'))b.addEventListener('click',()=>{if(AC)AC.resume();if(NET.on&&!NET.started&&b.closest('#multi'))netLeave();showMenu();});
 $('endMenu').addEventListener('click',showMenu);
