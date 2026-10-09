@@ -380,6 +380,11 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 #end.win #restart{background:var(--lamp);color:#1a1206;border-color:var(--lamp)}
 @media (pointer:coarse){.kD{display:none}}@media (pointer:fine){.kT{display:none}}
 .muJoin{display:flex;flex-direction:column;gap:8px}.muJoin #mCreate{width:100%}
+.verBar{position:absolute;right:clamp(14px,3vw,36px);top:clamp(12px,3vh,28px);z-index:5;display:flex;align-items:center;gap:12px;max-width:min(420px,calc(100% - 28px));padding:10px 12px 10px 14px;border-radius:12px;background:rgba(20,16,10,.88);border:1px solid rgba(239,184,67,.5);box-shadow:0 8px 30px rgba(0,0,0,.5);animation:dIn .35s ease-out}
+.verBar[hidden]{display:none}.verBar>i{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(239,184,67,.12)}.verBar>i svg{width:17px;height:17px;fill:none;stroke:var(--lamp);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.verBar span{display:flex;flex-direction:column;gap:2px;min-width:0}.verBar b{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.18em;color:var(--lamp)}.verBar small{font-size:11.5px;color:#cfc6b5;line-height:1.35}
+.verBar .go{margin:0;font-size:12px;letter-spacing:.14em;padding:9px 16px;border-radius:8px;flex:none}
+.seat small.old{color:#e0705f}.room .st.old{border-color:rgba(224,112,95,.55);color:#f0a191}
 /* ---- oda lobisi ---- */
 .muDlg{width:min(860px,100%)}
 .muV{display:flex;flex-direction:column;gap:9px;min-height:0;flex:1 1 auto}
@@ -652,12 +657,13 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
       <button class="mb" id="mQuit" style="--i:4"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 4h4v16h-4M10 17l5-5-5-5M15 12H3"/></svg></i><span><b>ÇIKIŞ</b><small></small></span></button>
     </nav>
   </div>
+  <div id="verBar" class="verBar" hidden role="status"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></i><span><b id="verT">YENİ SÜRÜM</b><small id="verS"></small></span><button class="go" id="verGo">GÜNCELLE</button></div>
   <div id="contBox" class="contBox" hidden>
     <small>KAYITLI OYUN BULUNDU</small>
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span>v63</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v64</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -4512,6 +4518,25 @@ const r2=v=>Math.round(v*100)/100;
 function netLog(...a){if(!NET.on||NET.applying||!NET.started)return;NET.seq++;NET.log.push([NET.seq,...a]);if(NET.log.length>48)NET.log.shift();}
 // Sunucu: claude.ai dışında (itch.io vb.) çok oyunculu için kendi oda sunucumuz. Adres ?server= ile de verilebilir.
 const KD_SERVER_DEFAULT='https://descent-server.onrender.com';
+// ---- sürüm: menüdeki etiket (vNN) tek kaynak; yayın sitesindeki version.json ile karşılaştırılır ----
+const KD_VER=(()=>{try{return parseInt(document.getElementById('kdVer').textContent.replace(/\D/g,''))||0;}catch(e){return 0;}})();
+const KD_WEB='https://cankara46464646-eng.github.io/descent-server/',KD_REL='https://github.com/cankara46464646-eng/descent-server/releases';
+function kdPlatform(){const h=location.hostname;if(window.claude)return'claude';if(h==='appassets.androidplatform.net')return'apk';if(/Electron/.test(navigator.userAgent))return'pc';if(h.endsWith('github.io'))return'web';if(/itch\.(io|zone)|hwcdn/.test(h))return'itch';return'web';}
+async function verCheck(){const pf=kdPlatform();if(pf==='claude')return;
+  try{const url=(pf==='web'&&location.hostname.endsWith('github.io')?'version.json':KD_WEB+'version.json')+'?t='+Date.now();
+    const r=await fetch(url,{cache:'no-store'});if(!r.ok)return;const j=await r.json();const v=j&&j.v|0;if(!(v>KD_VER))return;
+    const bar=$('verBar');if(!bar)return;$('verT').textContent='YENİ SÜRÜM v'+v;
+    const go=$('verGo');
+    if(pf==='apk'){$('verS').textContent='Senin sürümün v'+KD_VER+'. Arkadaşlarınla oynamak için yeni APK\'yı kur.';go.textContent='İNDİR';go.onclick=()=>{const u=KD_REL+'/tag/apk-v'+v;try{const w=window.open(u,'_blank');if(!w)location.href=u;}catch(e){location.href=u;}};}
+    else if(pf==='pc'){$('verS').textContent='Senin sürümün v'+KD_VER+'. Yeni sürümü indirip kur.';go.textContent='İNDİR';go.onclick=()=>{try{window.open(KD_REL,'_blank');}catch(e){}};}
+    else if(pf==='itch'){$('verS').textContent='Senin sürümün v'+KD_VER+'. Sayfayı yenile; olmazsa itch sayfasını kapatıp aç.';go.textContent='YENİLE';go.onclick=()=>location.reload();}
+    else{$('verS').textContent='Senin sürümün v'+KD_VER+'. Tek dokunuşla güncelle (kayıtların silinmez).';go.textContent='GÜNCELLE';go.onclick=verUpdateWeb;}
+    bar.hidden=false;}catch(e){}}
+async function verUpdateWeb(){const go=$('verGo');if(go){go.disabled=true;go.textContent='...';}
+  try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));}}catch(e){}
+  try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)));}}catch(e){}
+  const u=new URL(location.href);u.searchParams.set('v',String(Date.now()));location.replace(u.toString());}
+setTimeout(verCheck,2500);setInterval(()=>{if(!$('start').hidden)verCheck();},10*60*1000);
 function kdServer(){let s='';try{s=new URLSearchParams(location.search).get('server')||'';}catch(e){}return (s||KD_SERVER_DEFAULT||'').replace(/\/+$/,'');}
 function kdWake(){const s=kdServer();if(s&&!window.claude){try{fetch(s+'/health',{mode:'no-cors'}).catch(()=>{});}catch(e){}}}
 function wsApi(base){return{join(name){return new Promise((res,rej)=>{const url=base.replace(/^http/,'ws')+'/ws?room='+encodeURIComponent(name)+(NET.uid?'&id='+NET.uid:'');
@@ -4568,7 +4593,7 @@ function netLeave(){try{vcStop();for(const R of VC.rx.values())try{R.g.disconnec
 function netMyState(){if(!pl)return null;const st=NET_ST.indexOf(G.state==='dying'||G.state==='end'?'dead':G.state);const gi=pl.carry?gems.indexOf(pl.carry):-1;
   return[r2(pl.x),r2(pl.z),r2(pl.yaw),r2(pl.pitch),pl.lamp?1:0,st<0?0:st,gi,r2(pl.swing||0),pl.crouch?1:0,pl.struggle|0,RUN.floor,pl.hideIn?1:0,G.genWant>=0?G.genWant+1:0,SF.on?(sfInCage(pl.x,pl.z)?2:1):0];}
 function netPush(force){if(!NET.room)return;const now=performance.now();if(!force&&now-NET.pushT<(NET.viaServer?60:45))return;NET.pushT=now;
-  const P={v:1,u:NET.uid,n:NET.name,c:NET.col,h:NET.host?1:0,hk:NET.host?(NET.hk|0):undefined,ph:NET.phase,df:NET.host?SET.diff:undefined,rd:NET.ready?1:0,rm:NET.host?{t:NET.roomT||'',pub:NET.pub?1:0}:undefined,cm:LB.cmOut.length?LB.cmOut:undefined};
+  const P={v:1,u:NET.uid,n:NET.name,c:NET.col,h:NET.host?1:0,hk:NET.host?(NET.hk|0):undefined,ph:NET.phase,df:NET.host?SET.diff:undefined,vr:KD_VER,rd:NET.ready?1:0,rm:NET.host?{t:NET.roomT||'',pub:NET.pub?1:0}:undefined,cm:LB.cmOut.length?LB.cmOut:undefined};
   // olay günlüğü: açık bağlantıdan 5 sn önce gönderilmiş olaylar herkese ulaştı → tekrar yollanmaz (mobil veri yarıya iner).
   // Bağlantı yokken kaydedilenler, bağlantı gelince gönderilir.
   if(NET.started){P.p=netMyState();const live=!NET.room.ws||NET.room.ws.readyState===1;if(!NET.logSent)NET.logSent=new Map();
@@ -4635,8 +4660,8 @@ async function muRefresh(){if(LB.busy)return;LB.busy=true;const info=$('mListInf
   LB.busy=false;muListRender();}
 function muListRender(){const L=$('mList');if(!L)return;const R=LB.list;
   if(!R.length){L.innerHTML=`<div class="roomEmpty"><b>${LB.listOk?'AÇIK ODA YOK':'ODALAR YÜKLENİYOR'}</b><span>${LB.listOk?'İlk odayı sen kur; arkadaşların burada görüp katılabilir.':'Sunucu uyuyorsa ilk açılış bir dakika kadar sürebilir.'}</span></div>`;return;}
-  L.innerHTML=R.slice(0,30).map(r=>{const p=Math.max(1,Math.min(4,r.p|0)),full=p>=4,game=r.ph==='game',c=String(r.c).toUpperCase();
-    return `<div class="room${full?' full':''}" role="listitem"><i>${MU_ICO.pick}</i><div class="rT"><b>${esc(String(r.t||'Oda').slice(0,22))}</b><small><span class="st${game?' game':''}">${game?'KAT '+((r.f|0)||1):'LOBİDE'}</span> ${esc(String(r.n||'?').slice(0,14))} kurdu</small></div><div class="pips">${[0,1,2,3].map(i=>`<i class="${i<p?'on':''}"></i>`).join('')}<em>${p}/4</em></div><button class="go${full?' dim':''}" data-code="${esc(c)}"${full||LB.joining?' disabled':''}>${full?'DOLU':'KATIL'}</button></div>`;}).join('');}
+  L.innerHTML=R.slice(0,30).map(r=>{const p=Math.max(1,Math.min(4,r.p|0)),full=p>=4,game=r.ph==='game',c=String(r.c).toUpperCase(),vr=r.v|0,bad=vr!==KD_VER;
+    return `<div class="room${full?' full':''}" role="listitem"><i>${MU_ICO.pick}</i><div class="rT"><b>${esc(String(r.t||'Oda').slice(0,22))}</b><small><span class="st${game?' game':''}">${game?'KAT '+((r.f|0)||1):'LOBİDE'}</span>${bad?`<span class="st old">${vr>KD_VER?'YENİ SÜRÜM':'ESKİ SÜRÜM'}${vr?' v'+vr:''}</span>`:''} ${esc(String(r.n||'?').slice(0,14))} kurdu</small></div><div class="pips">${[0,1,2,3].map(i=>`<i class="${i<p?'on':''}"></i>`).join('')}<em>${p}/4</em></div><button class="go${full||bad?' dim':''}" data-code="${esc(c)}"${full||bad||LB.joining?' disabled':''}>${full?'DOLU':bad?(vr>KD_VER?'GÜNCELLE':'ESKİ'):'KATIL'}</button></div>`;}).join('');}
 async function muJoin(code,asHost){if(LB.joining)return;LB.joining=true;for(const b of document.querySelectorAll('#multi .go'))b.disabled=true;
   try{const nm=$('mName');if(nm&&!nm.value.trim())nm.value='Madenci'+Math.floor(Math.random()*90+10);
     if(asHost){NET.roomT=($('mRoomName').value.trim()||ROOM_NAMES[0]).slice(0,22);NET.pub=LB.vis?1:0;}
@@ -4646,9 +4671,10 @@ function netLobbyRender(){const L=$('mSeats');if(!L)return;
   if(!NET.on){if(LB.view==='room')muView('browse');muAdvertise();return;}
   if(LB.view!=='room')muView('room');
   const list=[{n:NET.name,me:1,h:NET.host,rd:NET.host||NET.ready}];let hostP=null;
-  for(const rec of NET.peers.values())if(rec.P&&rec.P.n){list.push({n:String(rec.P.n).slice(0,14),h:!!rec.P.h,rd:!!(rec.P.h||rec.P.rd)});if(rec.P.h)hostP=rec.P;}
+  for(const rec of NET.peers.values())if(rec.P&&rec.P.n){const vr=rec.P.vr|0;list.push({n:String(rec.P.n).slice(0,14),h:!!rec.P.h,rd:!!(rec.P.h||rec.P.rd),vr,bad:vr!==KD_VER});if(rec.P.h)hostP=rec.P;
+    if(vr!==KD_VER&&!rec.verWarn){rec.verWarn=1;muChatAdd(null,String(rec.P.n).slice(0,14)+(vr>KD_VER?' daha yeni sürümde (v'+vr+'). Senin oyunun eski: menüden güncelle.':' eski sürümde'+(vr?' (v'+vr+')':'')+'. Herkes aynı sürümde olmalı; oyununu güncellesin.'),'sys');}}
   let h='';for(let i=0;i<4;i++){const x=list[i];
-    if(x)h+=`<div class="seat${x.me?' me':' pl'}"><i>${esc((String(x.n).trim()[0]||'?').toLocaleUpperCase('tr'))}</i><span><b>${esc(x.n)}${x.me?' (sen)':''}${x.h?MU_ICO.crown:''}</b><small class="${x.h?'':x.rd?'ok':'wait'}">${x.h?'ODA SAHİBİ':x.rd?'HAZIR':'HAZIR DEĞİL'}</small></span></div>`;
+    if(x)h+=`<div class="seat${x.me?' me':' pl'}"><i>${esc((String(x.n).trim()[0]||'?').toLocaleUpperCase('tr'))}</i><span><b>${esc(x.n)}${x.me?' (sen)':''}${x.h?MU_ICO.crown:''}</b><small class="${x.bad?'old':x.h?'':x.rd?'ok':'wait'}">${x.bad?(x.vr>KD_VER?'YENİ SÜRÜM v'+x.vr:'ESKİ SÜRÜM'+(x.vr?' v'+x.vr:'')):x.h?'ODA SAHİBİ':x.rd?'HAZIR':'HAZIR DEĞİL'}</small></span></div>`;
     else h+=`<div class="seat bot"><i>B</i><span><b>${BOTN[i-list.length]||'Bot'}</b><small>BOT · BOŞ YER</small></span></div>`;}
   L.innerHTML=h;
   const rm=NET.host?{t:NET.roomT,pub:NET.pub}:(hostP&&hostP.rm)||{};
@@ -4660,7 +4686,7 @@ function netLobbyRender(){const L=$('mSeats');if(!L)return;
   muAdvertise();}
 // Claude sayfasında (sunucusuz) açık odayı lobiye duyur
 function muAdvertise(){const api=NET.api;if(!api||NET.viaServer||!api.presence)return;
-  let k=null;if(NET.on&&NET.host&&NET.pub&&NET.code)k={c:NET.code,t:String(NET.roomT||'Oda').slice(0,22),n:String(NET.name||'').slice(0,14),p:Math.min(4,NET.peers.size+1),ph:NET.phase==='game'?'game':'lobby',f:RUN.floor|0,pub:1};
+  let k=null;if(NET.on&&NET.host&&NET.pub&&NET.code)k={c:NET.code,t:String(NET.roomT||'Oda').slice(0,22),n:String(NET.name||'').slice(0,14),p:Math.min(4,NET.peers.size+1),ph:NET.phase==='game'?'game':'lobby',f:RUN.floor|0,pub:1,v:KD_VER};
   const j=JSON.stringify(k);if(j===LB.adv)return;LB.adv=j;try{api.presence({kdr:k}).catch(()=>{});}catch(e){}}
 function muChatAdd(n,t,cls){if(!t)return;LB.chat.push(1);const C=$('mChat');if(!C)return;const p=document.createElement('p');if(cls)p.className=cls;
   if(n){const b=document.createElement('b');b.textContent=n;p.appendChild(b);}p.appendChild(document.createTextNode(t));C.appendChild(p);while(C.children.length>60)C.firstChild.remove();C.scrollTop=C.scrollHeight;}
@@ -6068,8 +6094,8 @@ $('mTut').addEventListener('click',()=>{resetRun();clearSave();G.tutForce=true;b
 $('tutSkip').addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();sysTutEnd(true);});
 $('mJoin').addEventListener('click',()=>{const c=$('mJoinCode').value.trim().toUpperCase();if(!/^[A-Z0-9]{4}$/.test(c)){netMsg('Kod 4 harf/rakam olmalı.');return;}muJoin(c,false);});
 $('mJoinCode').addEventListener('keydown',e=>{if(e.key==='Enter')$('mJoin').click();});
-$('mStart').addEventListener('click',()=>{if(!NET.host||NET.started)return;let others=0,rdy=0;for(const r of NET.peers.values())if(r.P&&r.P.n){others++;if(r.P.rd)rdy++;}
-  if(rdy<others&&!(LB.startArm&&performance.now()-LB.startArm<3500)){LB.startArm=performance.now();netLobbyRender();netMsg('Herkes hazır değil. Yine de başlatmak için tekrar bas.');setTimeout(()=>{LB.startArm=0;if(NET.on&&!NET.started)netLobbyRender();},3600);return;}LB.startArm=0;netHostStart(1);});
+$('mStart').addEventListener('click',()=>{if(!NET.host||NET.started)return;let others=0,rdy=0;let bad=null;for(const r of NET.peers.values())if(r.P&&r.P.n){others++;if((r.P.vr|0)!==KD_VER)bad=String(r.P.n).slice(0,14);else if(r.P.rd)rdy++;}
+  if(rdy<others&&!(LB.startArm&&performance.now()-LB.startArm<3500)){LB.startArm=performance.now();netLobbyRender();netMsg(bad?bad+' farklı sürümde; oyun bozulabilir. Yine de başlatmak için tekrar bas.':'Herkes hazır değil. Yine de başlatmak için tekrar bas.');setTimeout(()=>{LB.startArm=0;if(NET.on&&!NET.started)netLobbyRender();},3600);return;}LB.startArm=0;netHostStart(1);});
 $('mLeave').addEventListener('click',()=>{netLeave();muView('browse');netMsg('Odadan çıktın.');});
 $('mQuit').addEventListener('click',()=>{if(/Electron/.test(navigator.userAgent)){window.close();return;}try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}if(AC)AC.suspend();subMenu('bye');});
 for(const b of document.querySelectorAll('.back'))b.addEventListener('click',()=>{if(AC)AC.resume();if(NET.on&&!NET.started&&b.closest('#multi'))netLeave();showMenu();});
