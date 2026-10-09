@@ -1,4 +1,4 @@
-// Descent oda sunucusu — bağımlılıksız (yalnızca Node.js). Oda kodu → en fazla 4 oyuncu.
+// Descent oda sunucusu — bağımlılıksız (yalnızca Node.js). Oda kodu → en fazla 4 oyuncu. GET /rooms → herkese açık odalar.
 // Her oyuncu kendi "presence" durumunu gönderir; sunucu odadaki diğerlerine iletir.
 // Protokol (JSON metin çerçeveleri):
 //   istemci → {t:'p', d:<presence>}            kendi durumum
@@ -18,6 +18,21 @@ const rooms = new Map();       // kod → Map(peer → client)
 
 const server = http.createServer((req, res) => {
   if (req.url === '/health') { res.writeHead(200, { 'content-type': 'text/plain' }); return res.end('ok'); }
+  // açık oda listesi (oda lobisi): yalnızca oda sahibi "herkese açık" dediyse görünür
+  if (req.url.split('?')[0] === '/rooms') {
+    const out = [];
+    for (const [code, room] of rooms) {
+      if (!code.startsWith('descent-')) continue;
+      let host = null; for (const c of room.values()) if (c.d && c.d.h) { host = c; break; }
+      const d = host && host.d; if (!d || !d.rm || !d.rm.pub) continue;
+      const f = Array.isArray(d.g) ? d.g[0] : 1;
+      out.push({ c: code.slice(8).toUpperCase().slice(0, 4), t: String(d.rm.t || '').slice(0, 22), n: String(d.n || '').slice(0, 14), p: room.size, ph: d.ph === 'game' ? 'game' : 'lobby', f: (f | 0) || 1 });
+      if (out.length >= 40) break;
+    }
+    out.sort((a, b) => (a.ph === b.ph ? 0 : a.ph === 'lobby' ? -1 : 1) || (a.p >= 4) - (b.p >= 4));
+    res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'access-control-allow-origin': '*', 'cache-control': 'no-store' });
+    return res.end(JSON.stringify({ rooms: out }));
+  }
   let players = 0; for (const r of rooms.values()) players += r.size;
   res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'access-control-allow-origin': '*' });
   res.end(`Descent sunucusu çalışıyor. Açık oda: ${rooms.size}, oyuncu: ${players}\n`);
