@@ -669,7 +669,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v66</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v67</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -806,7 +806,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     </div>
     <div id="endFun" class="fun"></div>
     <div class="keys endNote">Kat, o kata girdiğin andaki eşyalarla baştan başlar. Her denemede mağara değişir.</div>
-    <div class="dFoot"><button class="go" id="endRevive" hidden>KALDIĞIN YERDEN DEVAM</button><button class="go" id="again">KATI TEKRAR DENE</button><button class="go ghost" id="restart">BAŞTAN BAŞLA</button><button class="go dim" id="endMenu">ANA MENÜ</button></div>
+    <div class="dFoot"><button class="go" id="endRevive" hidden>HEP BİRLİKTE KALDIĞINIZ YERDEN</button><button class="go" id="again">KATI TEKRAR DENE</button><button class="go ghost" id="restart">BAŞTAN BAŞLA</button><button class="go dim" id="endMenu">ANA MENÜ</button></div>
   </div>
 </div>
 
@@ -4093,7 +4093,7 @@ function crSniff(c,t){c.st='listen';c.timer=3.2+Math.random()*2.6;c.path=null;c.
 function perceive(){let best=null;
   for(const c of candidates()){const e=c.e;if(isSafe(e.x,e.z))continue;const d=Math.hypot(e.x-cr.x,e.z-cr.z);
     {const hid=plHidden(e),cro=hid&&(e===pl?pl.crouch:e.crouchN);const cR=hid?(cro?.38:.95):1.3;if(d<cR){if(cro&&!['chase','drag'].includes(cr.st)){if(cr.st!=='listen')crSniff(cr,e);continue;}return{e,cause:'temas',d};}}
-    if(d>22)continue;if(!los(cr.x,cr.z,e.x,e.z))continue;
+    if(d>22+Math.max(0,RUN.floor-3)*2.5)continue;if(!los(cr.x,cr.z,e.x,e.z))continue;
     let cause=null;const cr2=c.carry?(c.carry.giant?18:c.carry.type==='yakut'?14:c.carry.type==='zumrut'?12:11):0;
     if(c.lamp)cause='lamba';else if(c.carry&&d<cr2)cause='elmas';
     if(cause&&(!best||d<best.d))best={e,cause,d};}
@@ -4445,22 +4445,30 @@ function killPlayer(dragged){if(['dying','end','spectate'].includes(G.state))ret
 // Ölen oyuncu hemen menüye atılmaz: bir süre arkadaşının omzunun üstünden olanları izler.
 function startSpectate(al){const b=al.slice().sort((p,q)=>(q.remote?1:0)-(p.remote?1:0)||Math.hypot(p.x-cr.x,p.z-cr.z)-Math.hypot(q.x-cr.x,q.z-cr.z))[0];
   G.state='spectate';G.specT=NET.started?8:15;specSet(b);G.specPitch=0;$('fade').style.opacity=0;$('hud').hidden=true;$('spec').hidden=false;
-  $('specT').textContent=G.cause==='patlama'||G.cause==='grizu'?'PATLAMADA ÖLDÜN':'SENİ GÖTÜRDÜ';$('specRevive').hidden=!canRevive();
-  $('specN').textContent=NET.started?'Arkadaşlarının gözünden izliyorsun. Kat bitince yeniden doğacaksın.':'Arkadaşlarının gözünden izliyorsun. Oklarla değiştir.';document.exitPointerLock?.();}
+  $('specT').textContent=G.cause==='patlama'||G.cause==='grizu'?'PATLAMADA ÖLDÜN':'SENİ GÖTÜRDÜ';$('specRevive').hidden=true;
+  $('specN').textContent=NET.started?'Arkadaşlarının gözünden izliyorsun. Kat bitince yeniden doğacaksın; hepiniz ölürseniz birlikte kaldığınız yerden devam.':'Arkadaşlarının gözünden izliyorsun. Hepiniz ölürseniz kaldığınız yerden birlikte devam edebilirsiniz.';document.exitPointerLock?.();}
 // izleyici: arkadaşının kendi gözünden (birinci şahıs) izlenir; oklarla kişi değişir
 function specList(){return bots.filter(e=>!e.away&&(ACTIVE.includes(e.st)||e.st==='dragged'));}
 function specSet(b){if(!b)return;G.specB=b;G.specYaw=b.remote&&b.yaw!=null?b.yaw:b.face;const w=$('specWho');if(w)w.textContent=b.name;const n=specList().length;$('specPrev').hidden=$('specNext').hidden=n<2;}
 function specStep(d){if(G.state!=='spectate')return;const L=specList();if(!L.length)return;let i=L.indexOf(G.specB);i=((i<0?0:i+d)%L.length+L.length)%L.length;specSet(L[i]);if(!NET.started)G.specT=Math.max(G.specT,15);}
-// patlamada ölen oyuncu: aynı katta, öldüğü yerin yakınındaki güvenli bir noktadan devam eder (harita, kazılanlar, taşlar korunur)
-function canRevive(){return ['patlama','grizu'].includes(G.cause);}
-function reviveHere(){if(!['end','spectate','dying'].includes(G.state)||!canRevive())return;
-  let tgt=null;try{const f=bfsField(cidx(pl.x,pl.z));let bd=1e9;const crOn=!['sleep','away'].includes(cr.st);
+// takım tamamen ölünce: herkes aynı katta, öldüğü yerin yakınından birlikte devam eder (harita, kazılanlar, taşlar korunur). Katta bir kez.
+function teamWiped(){return !bots.some(b=>ACTIVE.includes(b.st)||b.st==='dragged');}
+function canRevive(){return G.state==='end'&&RUN.revF!==RUN.floor&&teamWiped()&&G.cause!=='kuyu';}
+function reviveTeam(fromNet){if(!['end','spectate','dying'].includes(G.state))return;if(!fromNet&&!canRevive())return;RUN.revF=RUN.floor;
+  if(!fromNet&&NET.started)netLog('rv');
+  const crOn=!['sleep','away'].includes(cr.st);
+  let tgt=null;try{const f=bfsField(cidx(pl.x,pl.z));let bd=1e9;
     for(let q=0;q<f.length;q++){if(f[q]<0||f[q]>16||!grid[q]||gasL[q]>.15)continue;const[x,z]=ctr(q);const dc=Math.hypot(x-cr.x,z-cr.z);if(crOn&&dc<9)continue;const sc=f[q]+(f[q]<1?2:0)+(crOn&&dc<15?4:0);if(sc<bd){bd=sc;tgt=[x,z];}}}catch(e){}
   if(tgt){pl.x=tgt[0];pl.z=tgt[1];}
+  // yerel botlar oyuncunun yanına döner
+  const back=teamRevive();let n=0;for(const b of bots){if(b.remote||!['dead','stuck','dragged','buried','lost'].includes(b.st))continue;
+    const a=n++*2.1;let bx=pl.x+Math.cos(a)*1.3,bz=pl.z+Math.sin(a)*1.3;if(hits(bx,bz,.3)){bx=pl.x;bz=pl.z;}b.x=bx;b.z=bz;b.st='follow';b.path=null;b.slot=null;b.stuckT=0;b.lamp=true;b.carry=null;}
+  // yaratıklar geri çekilir
+  if(cr.victim){cr.victim=null;}if(crOn){cr.st='listen';cr.timer=4;cr.path=null;cr.tgt=null;if(Math.hypot(cr.x-pl.x,cr.z-pl.z)<16&&rooms[nest]){const N=rooms[nest];cr.x=(N.cx+.5)*S;cr.z=(N.cy+.5)*S;cr.trail=[];}}
+  if(pale&&Math.hypot(pale.x-pl.x,pale.z-pl.z)<16){pale=null;G.paleT=35;}
   G.state='play';G.cause=null;G.fade=0;G.dragBy=null;G.specB=null;pl.struggle=0;pl.swing=0;pl.lamp=pl.bat>0;pl.hurtT=Math.max(pl.hurtT||0,3);
   $('end').hidden=true;$('spec').hidden=true;$('hud').hidden=false;$('hotbar').hidden=false;$('touch').hidden=!isTouch;$('fade').style.opacity=0;caughtHide();
-  if(cr.victim===pl)cr.victim=null;if(cr.tgt===pl&&cr.st==='chase'){cr.st='listen';cr.timer=3;cr.path=null;cr.tgt=null;}
-  renderHotbar();if(NET.started)netPush(true);toast('Kaldığın yerden devam! Fitili yakınca hemen uzaklaş.',3);}
+  renderHotbar();if(NET.started)netPush(true);toast('Hep birlikte kaldığınız yerden devam! Bu katta başka şans yok.',3.2);}
 function funStats(){const S=STATS,L=[];const e=s=>esc(String(s));
   const dr=Object.entries(S.dragged||{}).sort((a,b)=>b[1]-a[1]);if(dr.length&&dr[0][1]>0)L.push(`En çok sürüklenen: <b>${e(dr[0][0])}</b> (${dr[0][1]} kez)${dr[0][1]>=3?' <i>— artık yaratıkla tanışıyorlar.</i>':''}`);
   if(S.closest<99)L.push(`Yaratığa en yakın an: <b>${S.closest.toFixed(1)} m</b>${S.closest<1.6?' <i>— nefesini ensende hissettin.</i>':S.closest<4?' <i>— kıl payı.</i>':''}`);
@@ -4756,6 +4764,7 @@ function netRemoteTick(dt){for(const e of bots){if(!e.remote||e.tx==null)continu
 function netApply(rec,a){const k=a[0];const E=rec.e;
   switch(k){
   case 'o':{const[,i,j]=a;if(!grid[j*GW+i])openCell(i,j,E||'net');break;}
+  case 'rv':{if(['end','spectate','dying'].includes(G.state))setTimeout(()=>reviveTeam(true),0);else RUN.revF=RUN.floor;break;}
   case 'h':{const[,c,d]=a;if(c>=0&&c<GW*GH&&!grid[c]){hpA[c]=Math.max(0,hpA[c]-((d|0)||1));DIGH.set(c,{t:G.time,by:E||rec.peer});if(E)E._swT=G.time;}break;}
   case 'gs':{const[,gi,st,x,z]=a;const g=gems[gi];if(!g)break;if(st===2){g.st='cart';if(E&&E.carry===g)E.carry=null;if(NET.host){G.cartGems.push(g);RUN.cartGems.push(g.type);sfxAt('deposit',x||cartPos[0],z||cartPos[1],1,40);}}
     else if(st===0){g.st='floor';g.x=x;g.z=z;g.y=floorY(x,z)+(g.giant?.35:.14);if(E&&E.carry===g)E.carry=null;}else if(st===1){g.st='carried';if(E)E.carry=g;}break;}
@@ -5576,7 +5585,11 @@ function render0(){
 const SET={vc:'ptt',vcv:1,fps:true,sens:1,bright:1,vol:.9,mus:.6,tips:true,gfx:3,btn:1,alpha:1,lefty:false,diff:1};
 // zorluk: 0 Kolay · 1 Normal · 2 Zor. Çok oyunculuda oda sahibininki geçerli.
 const DIFFS=[{ad:'Kolay',cr:.82,hear:.75,bat:.6,arrive:1.6,ghHits:1,ghAtk:.6,sok:.3},{ad:'Normal',cr:1,hear:1,bat:1,arrive:1,ghHits:0,ghAtk:1,sok:0},{ad:'Zor',cr:1.12,hear:1.15,bat:1.3,arrive:.75,ghHits:0,ghAtk:1.25,sok:-.06}];
-function DIFF(){try{const d=(NET.started&&!NET.host&&NET.hostDiff!=null)?NET.hostDiff:(SET.diff==null?1:SET.diff);return DIFFS[Math.max(0,Math.min(2,d|0))]||DIFFS[1];}catch(e){return {ad:'Normal',cr:1,hear:1,bat:1,arrive:1,ghHits:0,ghAtk:1,sok:0};}}
+// 4. kattan sonra her kat: yaratık daha hızlı, daha iyi duyar, daha erken iner; pil daha çabuk biter
+const DIFFC={};
+function DIFF(){try{const d=(NET.started&&!NET.host&&NET.hostDiff!=null)?NET.hostDiff:(SET.diff==null?1:SET.diff);const B=DIFFS[Math.max(0,Math.min(2,d|0))]||DIFFS[1];
+    const k=Math.max(0,((RUN&&RUN.floor)|0)-3);if(!k)return B;const key=B.ad+k;
+    return DIFFC[key]||(DIFFC[key]={...B,cr:B.cr*(1+.08*k),hear:B.hear*(1+.12*k),arrive:B.arrive*Math.max(.45,1-.15*k),bat:B.bat*(1+.1*k),ghAtk:B.ghAtk*(1+.15*k),sok:B.sok-.03*k});}catch(e){return {ad:'Normal',cr:1,hear:1,bat:1,arrive:1,ghHits:0,ghAtk:1,sok:0};}}
 try{Object.assign(SET,JSON.parse(localStorage.getItem('kd_set')||'{}'));}catch(e){}
 // grafik kalitesi: kullanıcı elle seçmediyse otomatik; telefonda Ultra ile başlamaz
 if(SET.gfxAuto==null)SET.gfxAuto=true;if(!SET.gfxV3){SET.gfxV3=1;if(SET.gfxAuto)SET.gfx=3;}
@@ -5615,7 +5628,7 @@ $('bPause').addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagat
 document.addEventListener('pointerlockchange',()=>{if(document.pointerLockElement!==cv&&['play','dragged','buried'].includes(G.state)&&!isTouch&&$('note').hidden)openPause();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)openPause();});
 $('specSkip').addEventListener('click',()=>{if(G.state==='spectate')endGame();});
-$('specPrev').addEventListener('click',()=>specStep(-1));$('specNext').addEventListener('click',()=>specStep(1));$('specRevive').addEventListener('click',reviveHere);$('endRevive').addEventListener('click',reviveHere);
+$('specPrev').addEventListener('click',()=>specStep(-1));$('specNext').addEventListener('click',()=>specStep(1));$('endRevive').addEventListener('click',()=>reviveTeam(false));
 addEventListener('keydown',e=>{if(G.state!=='spectate')return;if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A')specStep(-1);else if(e.key==='ArrowRight'||e.key==='d'||e.key==='D')specStep(1);});
 
 // ================= ipuçları =================
