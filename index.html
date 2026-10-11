@@ -669,7 +669,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v68</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v69</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -3900,8 +3900,27 @@ function digDmg(c,by){const now=G.time;const h=DIGH.get(c);let d=1;if(h&&h.by!==
   if(DIGH.size>64)for(const k of DIGH.keys()){DIGH.delete(k);if(DIGH.size<=48)break;}
   if(d>1&&!G.coopTip&&(by===pl||(h&&h.by===pl))){G.coopTip=true;toast('Birlikte kazıyorsunuz: kaya iki kat hızlı kırılıyor!',2.6);}return d;}
 function digTarget(){const[fx,fz]=fwdXZ();for(let d=.3;d<=2.2;d+=.1){const x=pl.x+fx*d,z=pl.z+fz*d,i=cellOf(x),j=cellOf(z);if(solid(i,j))return{i,j,x,z};}return null;}
+// ---- yaratığa kazmayla vurmak: kan, sendeleme, acı sesi, geri itilme; üç darbe arka arkaya sersemletir; sürüklediği arkadaşı bıraktırır ----
+function crPickTry(fx,fz){const c=cr;if(!c||['away','sleep'].includes(c.st))return false;const dx=c.x-pl.x,dz=c.z-pl.z,d=Math.hypot(dx,dz);
+  if(d>2.9||(dx*fx+dz*fz)/Math.max(d,.01)<.42||!los(pl.x,pl.z,c.x,c.z))return false;
+  crPickFx(c,true);if(!NET.started||NET.host)crPickHit(pl);else netLog('kh');return true;}
+function crPickFx(c,mine){const y=floorY(c.x,c.z)+1.05;spark(c.x,y,c.z,[.55,.03,.02],22);spark(c.x,y+.25,c.z,[.28,.01,.01],12);spark(c.x,y-.2,c.z,[.7,.08,.04],8);
+  sfxAt('thump',c.x,c.z,1.1,30);sfxAt('bonk',c.x,c.z,.9,30);sfxAt('squelch',c.x,c.z,.7,24);c.hitT=.55;G.hitL={x:c.x,y:y+.2,z:c.z,t:.28};
+  if(mine){G.shake=Math.max(G.shake,.34);try{if(SET.vib!==false&&navigator.vibrate)navigator.vibrate([30,20,45]);}catch(e){}}}
+function crPickHit(by){const c=cr;if(by!==pl)crPickFx(c,false);c.hitT=.55;const now=G.time;c.pickN=(now-(c.pickT||-99)<6?(c.pickN||0):0)+1;c.pickT=now;
+  crV('pain',()=>sfxAt('snarl',c.x,c.z,1,40),{force:true});G.anger=Math.max(G.anger||0,1);
+  {const dx=c.x-by.x,dz=c.z-by.z,d=Math.hypot(dx,dz)||1;moveCircle(c,dx/d*.7,dz/d*.7,.5,true);}
+  if(c.st==='drag'){const v=c.victim;c.bonkT=Math.max(c.bonkT||0,.75);c.saveHits=(c.saveHits||0)+2;
+    if(v&&v!==pl&&c.saveHits>=5+(Math.random()*3|0)){if(by===pl){c.victim=null;c.saveHits=0;v.st='follow';v.path=null;v.lamp=true;if(v.remote)netLog('vf',v.peer);STATS.rescued++;toast(`${v.name} kurtuldu! Yaratığı kazmayla bıraktırdın.`,2.8);for(const o of bots)if(o.st==='save'){o.st='follow';o.path=null;}creatureRetreat();}else botSaveFree(by);}
+    else if(by===pl)toast('Vur! Birkaç darbe daha, bırakacak!',1.2);return;}
+  if(c.st==='stunned'){c.stT=Math.min(CFG.stun.dur,(c.stT||0)+1.5);return;}
+  if(['stagger','recovering','stun','flee'].includes(c.st))return;
+  if(c.pickN>=3){c.pickN=0;c.st='stun';c.stunT=2.6;c.path=null;c.tgt=null;crV('fall',()=>sfxAt('heavy',c.x,c.z,1,30),{force:true});if(by===pl)toast('Sersemledi! Hemen uzaklaş, uzun sürmez.',2.2);return;}
+  // öfkelenir: vurana döner
+  if(c.st!=='chase'||c.tgt!==by){c.st='chase';c.tgt=by;c.lost=0;c.lk=[by.x,by.z];c.path=null;crV('detection',()=>sfxAt('roar',c.x,c.z,1,42));}}
 function digImpact(){
   const ey=floorY(pl.x,pl.z)+1.5;const[fx,fz]=fwdXZ();
+  if(crPickTry(fx,fz))return;
   // önce önündeki yavru ya da yumurta
   for(const y of babies){if(y.st==='dead')continue;const dx=y.x-pl.x,dz=y.z-pl.z,d=Math.hypot(dx,dz);if(d<2.1&&(dx*fx+dz*fz)/d>.6){y.hp--;spark(y.x,.6,y.z,[.5,.1,.08],12);smV(y,babies.indexOf(y),'pain',()=>sfxAt('babyDie',y.x,y.z,.6,30));G.shake=.15;
       if(y.hp<=0){y.st='dead';smV(y,babies.indexOf(y),'death',()=>sfxAt('babyDie',y.x,y.z,1.2,40));emit(y.x,y.z,18,pl,'kazma');toast('Yavruyu öldürdün. Çığlığı uzağa gitti...',2.4);}else{y.st='screech';y.t=1.2;y.cd=6;smV(y,babies.indexOf(y),'alert',()=>sfxAt('babyScreech',y.x,y.z,1,45));emit(y.x,y.z,30,null,'yavru');}return;}}
@@ -4129,7 +4148,7 @@ function crFlee(f){STATS.fled++;const c=cr;if(c.st==='drag')crDropVictim();c.st=
   fleeRoute(c,f.x,f.z);
   crV('pain',()=>sfxAt('snarl',c.x,c.z,1,40),{force:true});}
 function updateCreature(dt){{const c=cr;if(G.state==='play'&&c.st!=='sleep'&&c.st!=='away')STATS.closest=Math.min(STATS.closest,Math.hypot(c.x-pl.x,c.z-pl.z));if(c.st==='listen'&&c._pst!=='listen')crV('sniff');c._pst=c.st;if(c.st==='sleep'&&CRE)audTick(CRE,'sleep',dt);}
-  const c=cr;c.moving=false;c.digging=false;c.twitch-=dt;G.theftCD-=dt;
+  const c=cr;c.moving=false;c.digging=false;c.twitch-=dt;G.theftCD-=dt;if(c.hitT>0)c.hitT-=dt;
   if(c.st==='away'){G.arriveT-=dt;if(G.arriveT<=0){c.st='listen';c.timer=3;G.anger=Math.max(G.anger,RUN.floor-1);G.threat=40;crV('howl',()=>sfx('howl',1,(Math.random()-.5)*.8,true),{far:true});sfx('scrape',.8,0,true);toast('Kuyudan aşağı bir şey indi... Sizi takip ediyor.',3.5);}return;}
   if(c.st==='sleep'){for(const q of candidates()){if(!isSafe(q.e.x,q.e.z)&&Math.hypot(q.e.x-c.x,q.e.z-c.z)<(q.lamp?5:3)){wakeCreature();G.anger=Math.max(G.anger,1);toast('Onu uyandırdınız!',2.5);return;}}
     for(const n of noises)if(Math.hypot(n.x-c.x,n.z-c.z)<n.r*.5){wakeCreature();G.anger=Math.max(G.anger,1);toast('Onu uyandırdınız!',2.5);return;}
@@ -4765,6 +4784,7 @@ function netRemoteTick(dt){for(const e of bots){if(!e.remote||e.tx==null)continu
 function netApply(rec,a){const k=a[0];const E=rec.e;
   switch(k){
   case 'o':{const[,i,j]=a;if(!grid[j*GW+i])openCell(i,j,E||'net');break;}
+  case 'kh':{if(NET.host&&E&&cr)crPickHit(E);break;}
   case 'rv':{if(['end','spectate','dying'].includes(G.state))setTimeout(()=>reviveTeam(true),0);else RUN.revF=RUN.floor;break;}
   case 'h':{const[,c,d]=a;if(c>=0&&c<GW*GH&&!grid[c]){hpA[c]=Math.max(0,hpA[c]-((d|0)||1));DIGH.set(c,{t:G.time,by:E||rec.peer});if(E)E._swT=G.time;}break;}
   case 'gs':{const[,gi,st,x,z]=a;const g=gems[gi];if(!g)break;if(st===2){g.st='cart';if(E&&E.carry===g)E.carry=null;if(NET.host){G.cartGems.push(g);RUN.cartGems.push(g.type);sfxAt('deposit',x||cartPos[0],z||cartPos[1],1,40);}}
@@ -5176,8 +5196,8 @@ function hxLook(c,k){const a=-(c.face+Math.PI),cc=Math.cos(a),ss=Math.sin(a),dx=
   const hp=c.headPos||[c.x,floorY(c.x,c.z)+.5,c.z];const d=Math.hypot(dx,dz)||1;return{lookY:clamp(Math.atan2(mx,mz),-.7,.7)*k,lookP:clamp(-Math.atan2(eye[1]-hp[1],d),-.6,.5)*k};}
 function drawCreature(){const c=cr;c.stand=lerp(c.stand||0,(c.st==='listen'&&!c.digging)?1:0,.04);
   if(HX.ready){const chase=c.st==='chase'||c.st==='flee'||(G.faceT>0&&G.state==='dragged'&&G.dragBy==='cr');const aware=chase||c.st==='listen'||c.st==='investigate';
-    drawHemi(c,1,{chase,drag:c.st==='drag',dig:c.digging,stand:c.stand,sleep:c.st==='sleep',stun:c.st==='stun',flare:c.st==='flee'&&c.fleeT<1.2,...hxLook(c,aware&&c.st!=='flee'?1:.25),...(crStunFlags(c)||{})});return;}
-  drawBeast(c,1,PAL_ADULT,{chase:c.st==='chase'||c.st==='flare'||(G.faceT>0&&G.state==='dragged'&&G.dragBy==='cr'),drag:c.st==='drag',dig:c.digging,listen:c.st==='listen'||c.st==='sleep'||(c.st==='lure'&&c.focusing),flare:c.st==='flare'&&c.flare&&Math.hypot(c.flare.x-c.x,c.flare.z-c.z)<1.6});}
+    drawHemi(c,1,{chase,drag:c.st==='drag',dig:c.digging,stand:c.stand,sleep:c.st==='sleep',stun:c.st==='stun'||c.hitT>0,flare:c.st==='flee'&&c.fleeT<1.2,...hxLook(c,aware&&c.st!=='flee'?1:.25),...(crStunFlags(c)||{})});return;}
+  drawBeast(c,1,PAL_ADULT,{chase:c.st==='chase'||c.st==='flare'||(G.faceT>0&&G.state==='dragged'&&G.dragBy==='cr'),drag:c.st==='drag',dig:c.digging,stun:c.hitT>0,listen:c.st==='listen'||c.st==='sleep'||(c.st==='lure'&&c.focusing),flare:c.st==='flare'&&c.flare&&Math.hypot(c.flare.x-c.x,c.flare.z-c.z)<1.6});}
 function drawBot(b){const t=G.time;const y=floorY(b.x,b.z);let base;const J=b.jacket,PANTS=[.09,.09,.1],SK=[.58,.42,.32],HELM=[.72,.56,.1],BOOT=[.06,.05,.045],REF=[.8,.78,.45],GLV=[.24,.19,.13],HAIR=[.06,.045,.035],DK=[.08,.08,.08];
   let flail=0;
   if(b.st==='dragged'){base=X(M4.T(b.x,y+.22+Math.abs(Math.sin(t*9))*.08,b.z),M4.RY(b.face+Math.PI),M4.RX(-Math.PI/2+Math.sin(t*7)*.1),M4.RZ(Math.sin(t*5)*.25));flail=1;}
@@ -5442,6 +5462,7 @@ function render0(){
   for(const b of booms)if(b.t<.9){const k=Math.pow(1-b.t/.9,1.6);PP.push(b.x,1.5,b.z,b.big?30:22);PC.push(4*k,2*k,.6*k);}
   {const ms=(G.mlights||[]).filter(m=>!m.lan).concat((G.shrooms||[]).filter(m=>m.left)).filter(m=>d2(m.x,m.z)<400&&los(eye[0],eye[2],m.x,m.z)).sort((a,b)=>d2(a.x,a.z)-d2(b.x,b.z)).slice(0,2);
     for(const m of ms){if(PP.length>=36)break;const k=(m.t!=null?Math.min(1,m.t/6):.7)*(.85+.15*Math.sin(G.time*1.3+m.ph));PP.push(m.x,floorY(m.x,m.z)+.45,m.z,m.t!=null?6.5:4.5);PC.push(.05*k,.22*k,.24*k);}}
+  if(G.hitL&&G.hitL.t>0){const k=G.hitL.t/.28;PP.push(G.hitL.x,G.hitL.y,G.hitL.z,5.5);PC.push(1.6*k,.5*k,.22*k);G.hitL.t-=1/60;}
   const fl=flares.slice().sort((a,b)=>d2(a.x,a.z)-d2(b.x,b.z)).slice(0,2);for(const f of fl){const k=(.85+Math.random()*.3)*Math.min(1,f.t/2);PP.push(f.x,f.y+.3,f.z,12);PC.push(1.3*k,.18*k,.1*k);}
   for(const d of dyns)if(PP.length<32){PP.push(d.x,floorY(d.x,d.z)+.5,d.z,3);PC.push(.6*(.7+Math.random()*.5),.3,.08);}
   envLights(PP,PC);thLights(PP,PC);try{sysLights(PP,PC);}catch(e){}
