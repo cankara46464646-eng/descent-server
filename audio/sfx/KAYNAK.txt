@@ -10,3 +10,6 @@ Su sesleri:
 Jeneratör (gen_pull_*, gen_start, gen_loop):
 - BigSoundBank (Joseph Sardin) "Mower: Start" (0764) ve "Mower: Start with starter" (0763) — CC0 (kamu malı)
 Karışım: gtools/build_gen.py (ip çekişi + öksürük, motorun tutması, dikişsiz rölanti döngüsü).
+Ayak sesleri (step_*): Freesound "Footsteps Dirt Gravel" (PotatokingXII) ve "Footsteps_Cave_01" (IPaddeh) — CC0
+Kazma (dig_*, dig_ore_*, dig_hard_*): Freesound "Pickaxe Striking Rock" (Benboncan) — CC BY 4.0; "Pick Hitting Rock" (spookymodem) — CC0;
+  döküntü kuyruğu: OpenGameArt "Breaking Rock" — CC0. Karışım: gtools/build_steps.py
