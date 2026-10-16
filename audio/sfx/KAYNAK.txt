@@ -7,3 +7,6 @@ Su sesleri:
 - wstep_*, drip_5/6: "Water Step Splashes" ve "Ambient Water Drips" — Yo Frankie! (Blender Foundation), OpenGameArt (Lamoot) — CC-BY 3.0
 - wrun_*: C-Dogs SDL "footsteps on different surfaces" (water) — CC-BY 3.0
 - drip_0..4: OpenGameArt "Object Dropping into Water" — CC0
+Jeneratör (gen_pull_*, gen_start, gen_loop):
+- BigSoundBank (Joseph Sardin) "Mower: Start" (0764) ve "Mower: Start with starter" (0763) — CC0 (kamu malı)
+Karışım: gtools/build_gen.py (ip çekişi + öksürük, motorun tutması, dikişsiz rölanti döngüsü).
