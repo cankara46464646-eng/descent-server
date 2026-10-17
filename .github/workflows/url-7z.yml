@@ -1,0 +1,36 @@
+name: Arşiv indir ve süz (CC0)
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'arşiv URL'
+        required: true
+      pattern:
+        description: 'dosya yolu için grep -iE deseni (boşsa yalnız liste)'
+        required: false
+        default: ''
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: İndir ve aç
+        env:
+          URL: ${{ github.event.inputs.url }}
+          PAT: ${{ github.event.inputs.pattern }}
+        run: |
+          sudo apt-get install -y p7zip-full >/dev/null 2>&1 || true
+          curl -fsSL --retry 3 -A "Mozilla/5.0" -o arc "$URL"
+          mkdir -p x && cd x && 7z x -y ../arc >/dev/null && cd ..
+          find x -type f | sed 's|^x/||' > list.txt; wc -l list.txt
+          mkdir -p sel
+          if [ -n "$PAT" ]; then grep -iE "$PAT" list.txt | head -400 | while IFS= read -r f; do mkdir -p "sel/$(dirname "$f")"; cp "x/$f" "sel/$f"; done; fi
+          cp list.txt sel/
+          cd sel && zip -qr ../arc-sel.zip . && cd .. && ls -la arc-sel.zip
+      - name: Yayınla
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete arc-sel -y --cleanup-tag -R ${{ github.repository }} || true
+          gh release create arc-sel arc-sel.zip -t "Süzülmüş arşiv" -n "CC0 kaynak" -R ${{ github.repository }}
