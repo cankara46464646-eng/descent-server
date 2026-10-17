@@ -670,7 +670,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v73</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v74</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1939,7 +1939,7 @@ function thVAO(G){const vao=gl.createVertexArray();gl.bindVertexArray(vao);const
   const ib=gl.createBuffer();bufs.push(ib);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint32Array(G.I),gl.STATIC_DRAW);gl.bindVertexArray(null);return{vao,n:G.I.length,bufs};}
 function thFree(){for(const k in TH.mesh)if(TH.mesh[k])freeMesh(TH.mesh[k]);TH.mesh={};TH.sig={};}
 // performans: tema meshleri gruplara ayrılır; yalnızca durumu değişen grup yeniden kurulur (kazarken/eşya alırken takılma olmasın)
-const TH_GRP={root:'R',trunk:'R',groot:'R',shroom:'S',giant:'S',shelf:'S',bone:'N',coc:'N',husk:'N',mem:'N',pud:'N',strand:'N',crys:'C',bat:'K',claw:'K',fire:'K',lan:'K',roll:'K',tent:'K',pipe:'F',pump:'F',walk:'F',puff:'P',kol:'M',lime:'M',mass:'M',valve:'M',drag:'V',skull:'V',vein:'V',anom:'X',body:'X',desk:'X',locker:'X',part:'X',rubble:'X',samp:'X',seal:'X',side:'X',trail:'T'};
+const TH_GRP={root:'R',trunk:'R',groot:'R',shroom:'S',giant:'S',shelf:'S',bone:'N',coc:'N',husk:'N',mem:'N',pud:'N',strand:'N',crys:'C',bat:'K',claw:'K',fire:'K',lan:'K',roll:'K',tent:'K',labF:'K',labW:'K',labL:'K',labD:'K',labB:'K',labT:'K',labX:'K',labG:'K',labO:'K',labK:'K',labP:'K',labS:'K',pipe:'F',pump:'F',walk:'F',puff:'P',kol:'M',lime:'M',mass:'M',valve:'M',drag:'V',skull:'V',vein:'V',anom:'X',body:'X',desk:'X',locker:'X',part:'X',rubble:'X',samp:'X',seal:'X',side:'X',trail:'T'};
 const TH_KEYS={R:k=>k==='roots',S:k=>k==='stem'||k==='cap0'||k==='cap1',N:k=>k.startsWith('c2_')&&!k.startsWith('c2_crys'),C:k=>k.startsWith('c2_crys'),K:k=>k.startsWith('c3_'),F:k=>k.startsWith('c4_'),P:k=>k.startsWith('c5_'),M:k=>k.startsWith('c6_'),V:k=>k.startsWith('c7_'),X:k=>k.startsWith('c8_'),T:k=>k.startsWith('c9_')};
 function thSig(it){return (it.done?1:0)|(it.open?2:0)|(it.popped?4:0)|(it.lit?8:0)|((it.stage||0)<<4)|(it.planted?64:0)|(it.k==='walk'&&water[it.c]?128:0)|(it.on?256:0)|(it.sac&&it.sac.done?512:0)|(it.drained?1024:0)|(it.usedMe?2048:0)|(it.k==='trail'&&th2TrailOn(it)?4096:0)|(PROPR[it.k]?8192:0);}
 // ---- kurulum: envBuild içinden çağrılır (aynı ayrı üreteç → belirlenimci) ----
@@ -2193,18 +2193,91 @@ function th2Cloth(M,a,b,c,d,nu,nv,sag,fold){const P=(u,v)=>{const top=[a[0]+(b[0
   const nrm=(i,j)=>{const i0=Math.max(0,i-1),i1=Math.min(nu,i+1),j0=Math.max(0,j-1),j1=Math.min(nv,j+1);const du=[G2[j][i1][0]-G2[j][i0][0],G2[j][i1][1]-G2[j][i0][1],G2[j][i1][2]-G2[j][i0][2]],dv=[G2[j1][i][0]-G2[j0][i][0],G2[j1][i][1]-G2[j0][i][1],G2[j1][i][2]-G2[j0][i][2]];return v3n(v3x(du,dv));};
   for(let j=0;j<nv;j++)for(let i=0;i<nu;i++){const A=G2[j][i],B=G2[j][i+1],C=G2[j+1][i+1],D=G2[j+1][i];const nA=nrm(i,j),nB=nrm(i+1,j),nC=nrm(i+1,j+1),nD=nrm(i,j+1);
     M.P.push(...A,...B,...C,...A,...C,...D);M.N.push(...nA,...nB,...nC,...nA,...nC,...nD);const f=n=>[-n[0],-n[1],-n[2]];M.P.push(...A,...C,...B,...A,...D,...C);M.N.push(...f(nA),...f(nC),...f(nB),...f(nA),...f(nD),...f(nC));}}
+// ---- 5. kat: YANKI LABORATUVARI — Derinkaya'nın kayaya gömülü gizli araştırma istasyonu (seramik zemin, fayans kaplı duvarlar,
+// titreyen floresanlar, kırık numune tankları, tezgâhlar, kayıt oynatan monitörler, çelik kapı kasaları). Oynanış hayalet görevinin aynısı.
+// ---- 5. kat BÜYÜK LABORATUVAR: girişe yakın, kayaya oyulmuş kapalı bir kompleks. Tek giriş: kilitli çelik kapı.
+// Kapının önünde ölü güvenlikçi ve kartı. Laboratuvar duvarları kazılamaz (betonarme). Kapı kartla açılır (ağ: t2 olayı).
+function labCarve(R){const E=rooms[entrance];if(!E)return null;const f=bfsField(E.cy*GW+E.cx);const I=c=>c%GW,J=c=>(c/GW)|0;
+  const inb=(i,j)=>i>=2&&j>=2&&i<=GW-3&&j<=GH-3;let best=null;
+  for(const[Ld,Wd]of[[4,4],[4,3],[3,4],[3,3]]){
+    for(let c=0;c<GW*GH;c++){if(!grid[c]||water[c]||blockC[c]||exitA[c])continue;const md=Math.abs(I(c)-E.cx)+Math.abs(J(c)-E.cy);const dd=f[c]>=0?f[c]:md+3;if(dd<1||dd>12)continue;
+      for(const[dx,dy]of DIRS){const px=-dy,py=dx,D=[I(c)+dx,J(c)+dy];
+        for(const b0 of Wd===4?[-1,-2]:[-1]){let ok=true;
+          for(let a=0;a<=Ld+1&&ok;a++)for(let b=b0-1;b<=b0+Wd&&ok;b++){const i=D[0]+dx*a+px*b,j=D[1]+dy*a+py*b;if(!inb(i,j)){ok=false;break;}const q=j*GW+i;if(grid[q]||safe[q]||exitA[q]||water[q]||LABW[q])ok=false;}
+          if(!ok)continue;const sc=dd+R()*3;if(!best||sc<best.sc)best={sc,O:c,dx,dy,px,py,Ld,Wd,b0};}}}
+    if(best)break;}
+  if(!best)return null;const{O,dx,dy,px,py,Ld,Wd,b0}=best;const D=[I(O)+dx,J(O)+dy],Dc=D[1]*GW+D[0];const cells=[];
+  for(let a=0;a<=Ld+1;a++)for(let b=b0-1;b<=b0+Wd;b++){const i=D[0]+dx*a+px*b,j=D[1]+dy*a+py*b,q=j*GW+i;const ins=(a>=1&&a<=Ld&&b>=b0&&b<b0+Wd)||(a===0&&b===0);if(ins)cells.push(q);else LABW[q]=1;}
+  for(const q of cells){grid[q]=1;natural[q]=0;dug[q]=0;water[q]=0;oreAt[q]=-1;feat[q]=0;roomId[q]=-1;}blockC[Dc]=1;
+  const[Dx,Dz]=ctr(Dc);return{O,D:Dc,dx,dy,px,py,Ld,Wd,b0,cells,set:new Set(cells),Dx,Dz,W:(a,b)=>[Dx+dx*a+px*b,Dz+dy*a+py*b],d3:[dx,0,dy],p3:[px,0,py]};}
+function th2BuildBigLab(L,R,rr,help,own){const{frame,col,fy}=help;TH2.labMon=[];TH2.labLc=null;TH2.lab=L;TH2.card=false;const W=L.W,d3=L.d3,p3=L.p3,nd=[-d3[0],0,-d3[2]],np=[-p3[0],0,-p3[2]];
+  const aF=.5*S,aB=(L.Ld+.5)*S,bL=(L.b0-.5)*S,bR=(L.b0+L.Wd-.5)*S,aM=(aF+aB)/2,bM=(bL+bR)/2;
+  const C=(a,b)=>cidx(...W(a,b));const ok=(a,b)=>L.set.has(C(a,b));const Y=(x,z)=>fy(x,z);
+  for(const c of L.cells){const[x,z]=ctr(c);TH.items.push({k:'labF',c,x,z,y:Y(x,z)});TH.items.push({k:'labX',c,x,z,y:Y(x,z)});
+    TH.items.push({k:'labL',c,x,y:Math.min(Y(x,z)+2.97,ceilY(x,z)-.06),z,top:Math.min(Y(x,z)+3.02,ceilY(x,z)),a:Math.abs(L.dx)?Math.PI/2:0,ph:R()*TAU,mode:R()<.15?'dead':R()<.3?'flick':'on'});}
+  for(const c of L.cells)for(const[dx,dy]of DIRS){const q=c+dx+dy*GW;if(grid[q])continue;const fr=frame({c,d:[dx,dy]});const a=fr.P(-1.2,.08),b=fr.P(1.2,.08);TH.items.push({k:'labW',c,a,b,n:[fr.n[0],0,fr.n[1]],t:[fr.t[0],0,fr.t[1]],hi:true});}
+  // kapı: O|D sınırında çelik perde duvar + sürgülü kanatlar; önünde ölü güvenlikçi ve kartı
+  {const[gx,gz]=W(-.5*S,0);TH.items.push({k:'labG',c:L.D,x:gx,z:gz,y:Y(gx,gz),t:p3,n:nd,top:ceilY(gx,gz)});
+    for(const s of[-1,1])for(const bb of[.85,1.05])col(...W(-.5*S+.05,s*bb),.2,{});
+    const dIt=th2Add({k:'ldoor',c:L.O,x:W(-.5*S-.35,0)[0],z:W(-.5*S-.35,0)[1],y:Y(gx,gz),done:false});TH2.labDoor={x:gx,z:gz,y:Y(gx,gz),t:p3,n:nd,k:0,it:dIt};
+    const[bx,bz]=W(-.5*S-1.25,.55);TH.items.push({k:'body',c:L.O,x:bx,z:bz,y:Y(bx,bz),t:d3,n:p3});
+    const[kx,kz]=W(-.5*S-.95,.95);th2Add({k:'kart',c:L.O,x:kx,z:kz,y:Y(kx,kz),done:false});}
+  // deney tankları arka duvarda (ortadaki kırık), ortada kayışlı deney masası, yan duvarlarda tezgâh+monitör ve numune kafesleri
+  const tB=[bM-1.6,bM,bM+1.6];tB.forEach((b,i)=>{const[x,z]=W(aB-.85,b);if(!ok(aB-.85,b))return;TH.items.push({k:'labT',c:C(aB-.85,b),x,z,y:Y(x,z),br:i===1,seed:(R()*1e9)|0});col(x,z,.5,{});});
+  {const[x,z]=W(aM,bM);TH.items.push({k:'labO',c:C(aM,bM),x,z,y:Y(x,z),t:d3,n:p3,top:Math.min(Y(x,z)+2.95,ceilY(x,z)),seed:(R()*1e9)|0});for(const da of[-.7,0,.7])col(...W(aM+da,bM),.45,{});if(L.Ld<4)TH2.labMon.push({x,z,seen:false});}
+  const bench=(a,b,n,t,mon)=>{const[x,z]=W(a,b);if(!ok(a,b))return;const it={k:'labB',c:C(a,b),x,z,y:Y(x,z),t,n,mon,seed:(R()*1e9)|0};TH.items.push(it);col(x,z,.4,{});const[x2,z2]=[x+t[0]*.6,z+t[2]*.6],[x3,z3]=[x-t[0]*.6,z-t[2]*.6];col(x2,z2,.3,{});col(x3,z3,.3,{});
+    if(mon){TH2.labMon.push({x,z,seen:false});}};
+  bench(aF+1.6,bL+.62,p3,d3,true);if(L.Ld>=4)bench(aF+3.9,bL+.62,p3,d3,true);bench(aF+1.6,bR-.62,np,nd,true);
+  const cage=(a,b)=>{const[x,z]=W(a,b);if(!ok(a,b))return;TH.items.push({k:'labK',c:C(a,b),x,z,y:Y(x,z),t:d3,n:np,seed:(R()*1e9)|0,top:ceilY(x,z)});col(x,z,.6,{});};
+  if(L.Ld>=4)cage(aF+3.7,bR-.85);else cage(aF+2.4,bR-.85);
+  // kristal örnekleri: cam muhafazalı kaideler (görev anomalileri bunların üstüne konur)
+  L.ped=[];for(const[a,b]of[[aB-1.9,bM-.8],[aM-.3,bR-1.9],[aF+2.6,bL+1.7]]){if(!ok(a,b))continue;const[x,z]=W(a,b);TH.items.push({k:'labP',c:C(a,b),x,z,y:Y(x,z)});col(x,z,.3,{});L.ped.push({x,z,y:Y(x,z),c:C(a,b)});}
+  // dolaplar (saklanma) kapının iki yanında, ön duvar boyunca
+  L.lock=[];for(const s of[-1,1]){const b=s<0?bL+.75:bR-.75;if(!ok(aF+.42,b))continue;const[x,z]=W(aF+.42,b);L.lock.push({x,z,c:C(aF+.42,b)});}
+  // kâğıtlar, kan izleri, devrik sandalye
+  for(let k=0;k<16;k++){const a=aF+.4+R()*(aB-aF-.8),b=bL+.4+R()*(bR-bL-.8);if(!ok(a,b))continue;const[x,z]=W(a,b);TH.items.push({k:'labS',c:C(a,b),x,z,y:Y(x,z),r:R()*TAU,s:k<10?0:1});}}
+function th2BuildLab(q,R,rr,help,walls,own){const{clearOK,frame,col,fy,put}=help;TH2.labMon=[];TH2.labLc=null;
+  const cells=[];for(let c=0;c<GW*GH;c++)if(grid[c]&&roomId[c]===q&&!safe[c])cells.push(c);if(!cells.length)return;
+  for(const c of cells){const[x,z]=ctr(c);TH.items.push({k:'labF',c,x,z,y:fy(x,z)});}
+  // tavan floresanları: her hücreye bir armatür (büyük odada seyrek); bazıları bozuk/titrek
+  let li=0;for(const c of cells){if(cells.length>12&&(li++%2))continue;const[x,z]=ctr(c);const cy=ceilY(x,z),y=Math.max(fy(x,z)+2.25,cy-.42);
+    const a=R()<.5?0:Math.PI/2;TH.items.push({k:'labL',c,x,y,z,top:cy,a,ph:R()*TAU,mode:R()<.18?'dead':R()<.35?'flick':'on'});}
+  // kapı kasaları: odanın dışa açılan kenarları
+  for(const c of cells)for(const[dx,dy]of DIRS){const q2=c+dx+dy*GW;if(!grid[q2]||roomId[q2]===q)continue;const[x,z]=ctr(c);const ex=x+dx*S/2,ez=z+dy*S/2;
+    TH.items.push({k:'labD',c,x:ex,z:ez,y:fy(ex,ez),t:[-dy,0,dx],n:[dx,0,dy],top:ceilY(ex,ez)});}
+  const A=walls.filter(w=>roomId[w.c]===q).sort(()=>R()-.5);
+  // duvar kaplaması: her duvar yüzüne fayans panel (kayadan biraz önde, alt süpürgelik + üst profil)
+  for(const W of A){const fr=frame(W);const a=fr.P(-1.18,.1),b=fr.P(1.18,.1);TH.items.push({k:'labW',c:W.c,a,b,n:[fr.n[0],0,fr.n[1]],t:[fr.t[0],0,fr.t[1]]});}
+  // donanım: tezgâh + monitör, numune tankları, dolap, sedye
+  let nb=0,nt=0,nc=0;const used=[];const free=(x,z,d)=>used.every(u=>Math.hypot(u[0]-x,u[1]-z)>d+u[2]);
+  for(const W of A){if(nt>=2)break;const fr=frame(W);const[x,z]=fr.P(rr(-.4,.4),.72);if(clearOK(x,z,.18)&&free(x,z,.7)){used.push([x,z,.7]);const it={k:'labT',c:W.c,x,z,y:fy(x,z),br:nt<1||R()<.5,seed:(R()*1e9)|0};TH.items.push(it);col(x,z,.5,own(x,z,it));nt++;}}
+  for(const W of A){const fr=frame(W);const T3=[fr.t[0],0,fr.t[1]],N3=[fr.n[0],0,fr.n[1]];
+    if(nb<4){const[x,z]=fr.P(rr(-.25,.25),.56);if(clearOK(x,z,.02)&&free(x,z,.9)){used.push([x,z,.9]);const it={k:'labB',c:W.c,x,z,y:fy(x,z),t:T3,n:N3,mon:nb<3,seed:(R()*1e9)|0};TH.items.push(it);
+        col(x,z,.55,own(x,z,it));const[x2,z2]=fr.P(.6,.48);col(x2,z2,.3,own(x2,z2,it));const[x3,z3]=fr.P(-.6,.48);col(x3,z3,.3,own(x3,z3,it));
+        if(it.mon){const m={x,z,seen:false};TH2.labMon.push(m);it.mI=TH2.labMon.length-1;}nb++;continue;}}
+    if(nt<3){const[x,z]=fr.P(rr(-.4,.4),.72);if(clearOK(x,z,.18)&&free(x,z,.7)){used.push([x,z,.7]);const it={k:'labT',c:W.c,x,z,y:fy(x,z),br:nt<2,seed:(R()*1e9)|0};TH.items.push(it);col(x,z,.5,own(x,z,it));nt++;continue;}}
+    if(nc<2){const u=rr(-.5,.5),[x,z]=fr.P(u,.35);if(free(x,z,.6)&&put(fr,'cabinet_metal',u,.35,{r:-.12,col:.32})){used.push([x,z,.6]);nc++;}}}
+  for(const W of A){if(R()<.5)continue;const fr=frame(W);const u=rr(-.6,.6),[x,z]=fr.P(u,.4);if(!free(x,z,.6))continue;if(put(fr,'crate_wood',u,.4,{r:-.05,col:.3,yaw:rr(-.3,.3),s:.8})){used.push([x,z,.6]);break;}}}
+function labLs(){return TH.items.filter(i=>i.k==='labL'&&!i.dead&&grid[i.c]);}
+function labLights(PP,PC){if(RUN.floor!==5)return;const t=G.time,c=[];for(const it of (TH2.labLc||(TH2.labLc=labLs()))){if(it.mode==='dead')continue;const d=Math.hypot(it.x-eye[0],it.z-eye[2]);if(d<20)c.push([d,it]);}
+  c.sort((a,b)=>a[0]-b[0]);for(const[,it]of c.slice(0,3)){if(PP.length>=36)break;const f=labFl(it,t);if(f<.1)continue;PP.push(it.x,it.y-.15,it.z,8.5);PC.push(.62*f,.7*f,.74*f);}}
+function labGlows(glow){if(RUN.floor!==5)return;const t=G.time;{const K=TH2.labKart;if(K&&!K.done){const f=Math.max(0,Math.sin(t*2.2))**6;glow([K.x,K.y+.08,K.z],.18,[.18*f,.17*f,.12*f]);}const D=TH2.labDoor;if(D){const c=D.open?[.02,.3,.06]:TH2.card?[.3,.18,.01]:[.35*(Math.sin(t*5)>0?1:.2),.01,.005];glow([D.x+D.n[0]*.15,D.y+2.62,D.z+D.n[2]*.15],.5,c);}}for(const it of (TH2.labLc||[])){if(it.mode==='dead'||Math.hypot(it.x-eye[0],it.z-eye[2])>24)continue;const f=labFl(it,t);glow([it.x,it.y-.06,it.z],.8,[.16*f,.18*f,.2*f]);}}
+const LAB_LOG=['Gün 41. Damarın içindeki canlı sesleri kaydediyor. Ona ne söylersek aynısını geri söylüyor. Şirket çok memnun.',
+  'Gün 63. Artık yalnızca tekrar etmiyor; seslerle avlanıyor. Üst kattaki madencilere bir şey söylemeyin. Emir Tekin Bey\'den.',
+  'Son kayıt. Tankı kırdı. Rıza\'nın ekibinin sesini öğrendi. Derinkaya kapıları kapatmamızı emretti… biz hâlâ içerideyken.'];
+function labTick(){if(RUN.floor!==5||!TH2.labMon||!pl)return;let n=TH2.labMon.filter(m=>m.seen).length;for(const m of TH2.labMon){if(m.seen||Math.hypot(m.x-pl.x,m.z-pl.z)>2.6)continue;m.seen=true;radioSay([['D',LAB_LOG[Math.min(n,LAB_LOG.length-1)]]]);n++;}}
 function th2BuildCamp(R,rr,pick,chance,help,walls,own){const{clearOK,frame,col,fy,put}=help;
   const cands=[];for(let q=2;q<rooms.length;q++)if(q!==nest)cands.push(q);const q=cands.length?th2Pick(R,cands):-1;TH2.room=q;if(q<0)return;
   const A=walls.filter(w=>roomId[w.c]===q).sort(()=>R()-.5);const r0=rooms[q];const[cx,cz]=ctr(r0.cy*GW+r0.cx);
-  // söndürülmüş kamp ateşi (oda ortası)
-  for(let k=0;k<40;k++){const a=R()*TAU,d=k?rr(.3,2.4):0,x=cx+Math.cos(a)*d,z=cz+Math.sin(a)*d;if(grid[cidx(x,z)]&&clearOK(x,z,.5)){TH.items.push({k:'fire',c:cidx(x,z),x,y:fy(x,z),z,seed:(R()*1e9)|0});col(x,z,.42,own(x,z,{}));TH2.fire=[x,z];break;}}
+  // 5. kat: girişe yakın, kilitli büyük laboratuvar (yer bulunamazsa kampın odası laboratuvara çevrilir)
+  {let L=null;try{L=labCarve(R);}catch(e){console.warn('lab',e);L=null;}if(L)th2BuildBigLab(L,R,rr,help,own);else th2BuildLab(q,R,rr,help,walls,own);}
   let nt=0,nb=0,nl=0,np=0,nc=0;
   for(const W of A){const fr=frame(W);
-    let tp=null;if(nt<3)for(let k=0;k<8&&!tp;k++){const u=rr(-.6,.6);const[x,z]=fr.P(u,.42);const[x2,z2]=fr.P(u,0);if(clearOK(x,z,.36))tp=[x2,z2];}
+    let tp=null;if(false&&nt<3)for(let k=0;k<8&&!tp;k++){const u=rr(-.6,.6);const[x,z]=fr.P(u,.42);const[x2,z2]=fr.P(u,0);if(clearOK(x,z,.36))tp=[x2,z2];}
     if(tp){const[x,z]=tp;{const it={k:'tent',c:W.c,x,z,y:fy(x,z),t:[fr.t[0],0,fr.t[1]],n:[fr.n[0],0,fr.n[1]],L:rr(.75,.9),Wd:rr(.6,.7),H:rr(.95,1.1),seed:(R()*1e9)|0};
       TH.items.push(it);col(x,z,.6,own(x,z,it));nt++;
       const[bx,bz]=fr.P(rr(-.2,.2)+(R()<.5?-1:1)*1.25,.7);if(nb<4&&clearOK(bx,bz,.3)){TH.items.push({k:'roll',c:W.c,x:bx,y:fy(bx,bz)+.07,z:bz,a:Math.atan2(fr.t[1],fr.t[0])+rr(-.3,.3),L:rr(.8,.95)});nb++;}continue;}}
-    if(np<6&&chance(.7)){const r=R();if(r<.25)put(fr,'helmet',rr(-.5,.5),.55,{yaw:R()*TAU,rot:[M4.RZ(chance(.5)?0:1.3)],s:1.1});else if(r<.45)put(fr,'pickaxe_a',rr(-.6,-.2),.2,{rot:[M4.RX(-.26)],lean:true});
+    if(np<3&&chance(.5)){const r=R();if(r<.25)put(fr,'helmet',rr(-.5,.5),.55,{yaw:R()*TAU,rot:[M4.RZ(chance(.5)?0:1.3)],s:1.1});else if(r<.45)put(fr,'pickaxe_a',rr(-.6,-.2),.2,{rot:[M4.RX(-.26)],lean:true});
       else if(r<.6)put(fr,'shovel',rr(-.4,.4),.45,{yaw:(R()-.5)*.5,y:.01});else if(r<.8)put(fr,'plank_scrap',rr(-.5,.5),.5,{yaw:R()*TAU,y:.01,s:1.2});else put(fr,'lamp',rr(-.4,.4),.35,{yaw:R()*TAU,rot:[M4.RX(Math.PI/2)],s:1.25,y:.07});np++;}
     if(nc<1&&chance(.5)){const[x,z]=fr.P(rr(-.4,.4),.35);if(clearOK(x,z,.35)){const it={k:'bat',c:W.c,x,z,y:fy(x,z),t:[fr.t[0],0,fr.t[1]],n:[fr.n[0],0,fr.n[1]],id:TH2.use.length,used:false};TH.items.push(it);TH2.use.push(it);col(x,z,.3,own(x,z,it));nc++;}}}
   // feneri yakılabilir eski lambalar: kampta 3, koridorlarda birkaç tane
@@ -2219,6 +2292,7 @@ function th2BuildCamp(R,rr,pick,chance,help,walls,own){const{clearOK,frame,col,f
   cells.sort(()=>R()-.5);for(const c of cells.slice(0,10)){const[x,z]=ctr(c);TH2.arrows.push({c,x:x+rr(-.4,.4),z:z+rr(-.4,.4),rot:0,set:false,touched:false});}
   th2MisGhost(R,rr,help,walls);}
 function th2MeshCamp(live){const M={cloth:{P:[],N:[]},roll:{P:[],N:[]},stone:{P:[],N:[]},char:{P:[],N:[]},metal:{P:[],N:[]},glass:{P:[],N:[]},glassL:{P:[],N:[]},claw:{P:[],N:[]},box:{P:[],N:[]}};let any=false;
+  for(const k of['ltile','ltile2','ltileD','lgrout','lsteel','lwhite','lglass','lliq','lfluo','lfluoF','lfluoD','lscr','lhaz','ldark','lceil','lbag','lblood'])M[k]={P:[],N:[]};const LAB=labMeshItem(M);
   for(const it of live){
     if(it.k==='tent'){any=true;const{t,n}=it,c=[it.x,it.y,it.z];const P=(a,b,h)=>[c[0]+t[0]*a+n[0]*b,c[1]+h,c[2]+t[2]*a+n[2]*b];const L=it.L,W=it.Wd,H=it.H;
       th2Cloth(M.cloth,P(-L,-.05,H*1.15),P(L,-.05,H*1.15),P(L*1.05,.95,.02),P(-L*1.05,.95,.02),8,6,.09,5);th2Cloth(M.cloth,P(-L,-.05,H*1.15),P(-L*.95,.1,.6),P(-L*.9,.6,.02),P(-L*1.05,.95,.02),4,4,.04,2);
@@ -2237,9 +2311,83 @@ function th2MeshCamp(live){const M={cloth:{P:[],N:[]},roll:{P:[],N:[]},stone:{P:
       th2Ell(M.metal,[b[0],b[1]+.215*S1,b[2]],[1,0,0],[0,1,0],[0,0,1],.065*S1,.025*S1,.065*S1,8,3,0,0,8);const hp=[];for(let k=0;k<=8;k++){const a=k/8*Math.PI;hp.push([b[0]+Math.cos(a)*.05*S1,b[1]+(.23+Math.sin(a)*.06)*S1,b[2]]);}th2Tube(M.metal,hp,.006,4);
       for(const s of[-1,1])for(const r2 of[-1,1])th2Tube(M.metal,[[b[0]+s*.05*S1,b[1]+.03*S1,b[2]+r2*.05*S1],[b[0]+s*.05*S1,b[1]+.2*S1,b[2]+r2*.05*S1]],.006,4);}
     else if(it.k==='bat'){any=true;const{t,n}=it;th2Box(M.box,[it.x,it.y+.16,it.z],t,[0,1,0],n,.28,.16,.2);for(let k=0;k<4;k++){const o=(k-1.5)*.12;th2Tube(it.used?M.char:M.metal,[[it.x+t[0]*o,it.y+.32,it.z+t[2]*o],[it.x+t[0]*o,it.y+.42,it.z+t[2]*o]],.035,7);}}
+    else if(it.k.startsWith('lab')){if(LAB(it))any=true;}
     else if(it.k==='claw'){any=true;for(const p of it.pts){const up=v3n([it.t[0]*Math.sin(it.tilt),Math.cos(it.tilt),it.t[2]*Math.sin(it.tilt)]),side=v3n(v3x(up,it.n));th2Ell(M.claw,p,side,up,it.n,.018,it.L*.5,.012,5,6,0,0,9);}}}
   if(!any)return;for(const k in M)TH.mesh['c3_'+k]=M[k].P.length?mesh(M[k].P,M[k].N):null;}
-function th2DrawCamp(){const m=TH.mesh;if(!m.c3_cloth&&!m.c3_metal)return;const t=G.time;
+// laboratuvar parçalarının geometrisi (kamp grubuna yazılır; hücre kapanırsa kendiliğinden kalkar)
+function labMeshItem(M){const UP=[0,1,0];const Q=(m,a,b,c,d,n)=>{m.P.push(...a,...b,...c,...a,...c,...d);for(let k=0;k<6;k++)m.N.push(n[0],n[1],n[2]);};
+  return it=>{
+  if(it.k==='labF'){const h=S/2,nT=4,ts=S/nT,g=.016,Y=(x,z)=>floorY(x,z)+.03;
+    for(let i=0;i<nT;i++)for(let j=0;j<nT;j++){const x0=it.x-h+i*ts,x1=x0+ts,z0=it.z-h+j*ts,z1=z0+ts;
+      Q(M.lgrout,[x0,Y(x0,z0)-.007,z0],[x1,Y(x1,z0)-.007,z0],[x1,Y(x1,z1)-.007,z1],[x0,Y(x0,z1)-.007,z1],UP);
+      const a=[x0+g,0,z0+g],b=[x1-g,0,z0+g],c=[x1-g,0,z1-g],d=[x0+g,0,z1-g];for(const p of[a,b,c,d])p[1]=Y(p[0],p[2]);Q((i+j)&1?M.ltile:M.ltile2,a,b,c,d,UP);}return true;}
+  if(it.k==='labX'){const h=S/2,nT=4,ts=S/nT,g=.02,Yc=(x,z)=>Math.min(floorY(x,z)+3.02,ceilY(x,z)-.03),DN=[0,-1,0];
+    for(let i=0;i<nT;i++)for(let j=0;j<nT;j++){const x0=it.x-h+i*ts,x1=x0+ts,z0=it.z-h+j*ts,z1=z0+ts;
+      Q(M.lsteel,[x0,Yc(x0,z0)+.006,z0],[x1,Yc(x1,z0)+.006,z0],[x1,Yc(x1,z1)+.006,z1],[x0,Yc(x0,z1)+.006,z1],DN);
+      const a=[x0+g,0,z0+g],b=[x1-g,0,z0+g],c=[x1-g,0,z1-g],d=[x0+g,0,z1-g];for(const p of[a,b,c,d])p[1]=Yc(p[0],p[2]);Q((i*3+j)%7===0?M.ldark:M.lceil,a,b,c,d,DN);}return true;}
+  if(it.k==='labG'){const{t,n}=it,c=[it.x,it.y,it.z],P=(u,h,v)=>[c[0]+t[0]*u+n[0]*v,c[1]+h,c[2]+t[2]*u+n[2]*v];const top=Math.max(2.6,it.top-it.y+.3),dh=2.15;
+    for(const s of[-1,1]){th2Box(M.lsteel,P(s*.99,top/2,0),t,UP,n,.26,top/2,.06);th2Box(M.ldark,P(s*.74,dh/2,.07),t,UP,n,.04,dh/2,.03);
+      for(let k=0;k<6;k++)th2Box(M.lhaz,P(s*.735,.2+k*.36,.1),t,UP,n,.03,.09,.004);}
+    th2Box(M.lsteel,P(0,(dh+top)/2,0),t,UP,n,.74,(top-dh)/2,.06);th2Box(M.ldark,P(0,dh+.04,.07),t,UP,n,.78,.04,.03);
+    th2Box(M.lhaz,P(0,dh+.35,.065),t,UP,n,.55,.08,.004);for(let k=0;k<5;k++)th2Box(M.ldark,P(-.44+k*.22,dh+.35,.07),t,UP,n,.05,.08,.002);
+    th2Box(M.ldark,P(1.0,1.3,.08),t,UP,n,.08,.13,.02);return true;}
+  if(it.k==='labO'){const R=envRand(it.seed),{t,n}=it,c=[it.x,it.y,it.z],P=(u,v,h)=>[c[0]+t[0]*u+n[0]*v,c[1]+h,c[2]+t[2]*u+n[2]*v];
+    th2Box(M.lsteel,P(0,0,.86),t,UP,n,1.0,.04,.42);th2Box(M.lwhite,P(0,0,.91),t,UP,n,.96,.012,.38);th2Box(M.lsteel,P(0,0,.45),t,UP,n,.12,.42,.12);th2Box(M.lsteel,P(0,0,.04),t,UP,n,.55,.04,.3);
+    for(const u of[-.75,-.1,.55])th2Box(M.ldark,P(u,0,.94),t,UP,n,.05,.02,.43);// kayışlar
+    th2Ell(M.lbag,P(-.05,.02,1.04),t,UP,n,.82,.13,.24,10,5,0,.05,4);th2Ell(M.lbag,P(.78,.0,1.02),t,UP,n,.15,.1,.15,8,5,0,0,5);
+    th2Ell(M.lblood,P(.3,.55,.012),t,UP,n,.55,.004,.35,12,2,0,.25,6);th2Ell(M.lblood,P(-.6,-.5,.012),t,UP,n,.25,.004,.18,10,2,0,.3,7);
+    th2Box(M.lsteel,P(.2,-.75,.8),t,UP,n,.25,.015,.16);th2Box(M.lsteel,P(.2,-.75,.4),t,UP,n,.02,.4,.02);for(let k=0;k<4;k++)th2Box(M.lwhite,P(.05+k*.1,-.75,.825),t,UP,n,.04,.006,.01);
+    // tavandan cerrahi lamba
+    const lh=Math.max(1.9,it.top-it.y-.05);th2Tube(M.lsteel,[P(0,0,lh),P(0,0,1.95)],.025,6);th2Ell(M.lsteel,P(0,0,1.9),[1,0,0],UP,[0,0,1],.32,.08,.32,12,4,1,0,8);th2Ell(M.lfluo,P(0,0,1.83),[1,0,0],UP,[0,0,1],.22,.012,.22,10,2,0,0,9);return true;}
+  if(it.k==='labK'){const R=envRand(it.seed),{t,n}=it,c=[it.x,it.y,it.z],P=(u,v,h)=>[c[0]+t[0]*u+n[0]*v,c[1]+h,c[2]+t[2]*u+n[2]*v];const hw=.65,hd=.55,hh=1.7;
+    th2Box(M.lsteel,P(0,0,.03),t,UP,n,hw,.03,hd);th2Box(M.lsteel,P(0,0,hh),t,UP,n,hw,.03,hd);
+    for(let k=0;k<=8;k++){const u=-hw+k*hw/4;th2Tube(M.lsteel,[P(u,-hd,.05),P(u,-hd,hh)],.012,4);}
+    for(let k=0;k<=6;k++){const v=-hd+k*hd/3;for(const s of[-1,1])th2Tube(M.lsteel,[P(s*hw,v,.05),P(s*hw,v,hh)],.012,4);}
+    // ön yüz: içeriden dışarı bükülmüş parmaklıklar
+    for(let k=0;k<=8;k++){const u=-hw+k*hw/4,bend=Math.abs(u)<.35?(.35-Math.abs(u))*1.3:0;th2Tube(M.lsteel,[P(u,hd,.05),P(u+u*bend*.4,hd+bend*.55,hh*.5),P(u,hd,hh)],.012,4);}
+    th2Ell(M.lblood,P(.1,hd+.5,.012),t,UP,n,.4,.004,.3,10,2,0,.3,3);th2Ell(M.ldark,P(-.2,-.1,.06),t,UP,n,.3,.05,.2,8,4,0,.4,4);return true;}
+  if(it.k==='labP'){const{x,y,z}=it;th2Tube(M.lsteel,[[x,y,z],[x,y+.08,z]],.3,12);th2Tube(M.lsteel,[[x,y+.08,z],[x,y+.82,z]],.14,10);th2Tube(M.lsteel,[[x,y+.82,z],[x,y+.88,z]],.26,12);
+    th2Tube(M.lglass,[[x,y+.88,z],[x,y+1.32,z]],.22,12);th2Tube(M.lsteel,[[x,y+1.32,z],[x,y+1.36,z]],.24,12);return true;}
+  if(it.k==='labS'){const a=[Math.cos(it.r),0,Math.sin(it.r)],b=[-a[2],0,a[0]];const y=floorY(it.x,it.z)+.045;
+    if(it.s===0){const p=(u,v)=>[it.x+a[0]*u+b[0]*v,y,it.z+a[2]*u+b[2]*v];Q(M.lwhite,p(-.1,-.14),p(.1,-.14),p(.1,.14),p(-.1,.14),UP);}
+    else th2Ell(M.lblood,[it.x,y-.02,it.z],a,UP,b,.18+Math.abs(Math.sin(it.r*3))*.3,.004,.12+Math.abs(Math.cos(it.r*5))*.2,10,2,0,.35,5);return true;}
+  if(it.k==='labW'){const[a0,a1]=it.a,[b0,b1]=it.b,n=it.n,t=it.t;const mx=(a0+b0)/2,mz=(a1+b1)/2,fb=floorY(mx,mz);const top=it.hi?Math.min(2.95,ceilY(mx,mz)-fb-.05):Math.min(2.6,ceilY(mx,mz)-fb-.18);if(top<1.1)return false;
+    const NR=Math.max(2,Math.round((top-.14)/.34)),RH=(top-.14)/NR,NC=6,gp=.012,yb=fb+.13;
+    for(let i=0;i<NC;i++){const u0=i/NC,u1=(i+1)/NC;const p0=[a0+(b0-a0)*u0+t[0]*gp,a1+(b1-a1)*u0+t[2]*gp],p1=[a0+(b0-a0)*u1-t[0]*gp,a1+(b1-a1)*u1-t[2]*gp];
+      for(let r=0;r<NR;r++){const y0=yb+r*RH+gp,y1=yb+(r+1)*RH-gp;Q(r<2?M.ltileD:(i*7+r*3)%5===0?M.ltile2:M.ltile,[p0[0],y0,p0[1]],[p1[0],y0,p1[1]],[p1[0],y1,p1[1]],[p0[0],y1,p0[1]],n);}}
+    const back=[-n[0]*.006,-n[2]*.006];Q(M.lgrout,[a0+back[0],yb,a1+back[1]],[b0+back[0],yb,b1+back[1]],[b0+back[0],yb+NR*RH,b1+back[1]],[a0+back[0],yb+NR*RH,a1+back[1]],n);
+    th2Box(M.lsteel,[mx+n[0]*.012,fb+.07,mz+n[2]*.012],t,UP,n,1.18,.07,.018);th2Box(M.lsteel,[mx+n[0]*.012,yb+NR*RH+.025,mz+n[2]*.012],t,UP,n,1.18,.025,.03);
+    // duvarda boru ve kablo kanalı
+    th2Box(M.lsteel,[mx+n[0]*.05,yb+NR*RH-.25,mz+n[2]*.05],t,UP,n,1.18,.035,.035);return true;}
+  if(it.k==='labL'){const ax=[Math.cos(it.a),0,Math.sin(it.a)],az=[-ax[2],0,ax[0]];const{x,y,z}=it;
+    th2Box(M.lsteel,[x,y,z],ax,UP,az,.64,.035,.12);th2Box(it.mode==='dead'?M.lfluoD:it.mode==='flick'?M.lfluoF:M.lfluo,[x,y-.045,z],ax,UP,az,.6,.016,.06);
+    for(const s of[-.5,.5])th2Tube(M.lsteel,[[x+ax[0]*s,y+.03,z+ax[2]*s],[x+ax[0]*s,Math.max(y+.1,it.top+.08),z+ax[2]*s]],.006,3);return true;}
+  if(it.k==='labD'){const{t,n}=it,h=Math.max(1.8,Math.min(2.45,it.top-it.y-.12));
+    for(const s of[-1,1]){const c=[it.x+t[0]*s*1.08,it.y+h/2,it.z+t[2]*s*1.08];th2Box(M.lsteel,c,t,UP,n,.08,h/2,.14);
+      for(let k=0;k*.36+.2<h-.1;k+=2)for(const sd of[-1,1])th2Box(M.lhaz,[c[0]+n[0]*sd*.142,it.y+.2+k*.36,c[2]+n[2]*sd*.142],t,UP,n,.081,.09,.004);}
+    th2Box(M.lsteel,[it.x,it.y+h+.08,it.z],t,UP,n,1.18,.09,.15);for(const sd of[-1,1])th2Box(M.lhaz,[it.x+n[0]*sd*.152,it.y+h+.08,it.z+n[2]*sd*.152],t,UP,n,.5,.05,.004);return true;}
+  if(it.k==='labB'){const R=envRand(it.seed),{t,n}=it,c=[it.x,it.y,it.z];const P=(u,v,h)=>[c[0]+t[0]*u+n[0]*v,c[1]+h,c[2]+t[2]*u+n[2]*v];
+    th2Box(M.lwhite,P(0,0,.9),t,UP,n,.78,.025,.33);th2Box(M.lsteel,P(0,0,.86),t,UP,n,.76,.02,.31);th2Box(M.lsteel,P(0,0,.24),t,UP,n,.72,.015,.28);
+    for(const su of[-.72,.72])for(const sv of[-.27,.27])th2Box(M.lsteel,P(su,sv,.44),t,UP,n,.022,.44,.022);
+    // şişeler, deney tüpü rafı, mikroskop
+    for(let k=0;k<4;k++){const u=-.6+R()*.5,v=-.15+R()*.3,h=.08+R()*.1;th2Tube(R()<.5?M.lglass:M.lliq,[P(u,v,.925),P(u,v,.925+h)],.03+R()*.025,7);}
+    th2Box(M.lsteel,P(.15,-.12,.96),t,UP,n,.12,.04,.04);for(let k=0;k<5;k++)th2Tube(M.lglass,[P(.05+k*.05,-.12,.93),P(.05+k*.05,-.12,1.06)],.012,5);
+    if(!it.mon){th2Box(M.ldark,P(.5,0,1),t,UP,n,.07,.07,.1);th2Tube(M.lsteel,[P(.5,-.02,1.07),P(.5,.05,1.2)],.025,6);}
+    else{th2Box(M.ldark,P(.42,-.12,1.12),t,UP,n,.28,.19,.035);th2Box(M.lsteel,P(.42,-.15,.96),t,UP,n,.06,.04,.05);th2Box(M.ldark,P(.42,.12,.93),t,UP,n,.22,.008,.08);
+      const e=P(.42,-.12+.037,1.12),hw=.25,hh=.16;Q(M.lscr,[e[0]-t[0]*hw,e[1]-hh,e[2]-t[2]*hw],[e[0]+t[0]*hw,e[1]-hh,e[2]+t[2]*hw],[e[0]+t[0]*hw,e[1]+hh,e[2]+t[2]*hw],[e[0]-t[0]*hw,e[1]+hh,e[2]-t[2]*hw],n);}
+    return true;}
+  if(it.k==='labT'){const R=envRand(it.seed),{x,y,z}=it,gh=it.br?.55+R()*.5:1.95;
+    th2Tube(M.lsteel,[[x,y,z],[x,y+.22,z]],.52,16);th2Tube(M.lsteel,[[x,y+.22,z],[x,y+.26,z]],.47,16);
+    if(it.br){// kırık cam: düzensiz kenar + yerde cam kırıkları, dökülmüş sıvı
+      for(let k=0;k<12;k++){const a0=k/12*TAU,a1=(k+1)/12*TAU,h0=.26+gh*(.5+R()*.6),h1=.26+gh*(.5+R()*.6);const p=(a,h)=>[x+Math.cos(a)*.46,y+h,z+Math.sin(a)*.46];
+        const nn=[Math.cos((a0+a1)/2),0,Math.sin((a0+a1)/2)];Q(M.lglass,p(a0,.26),p(a1,.26),p(a1,h1),p(a0,h0),nn);}
+      for(let k=0;k<9;k++){const a=R()*TAU,d=.6+R()*.8,s=.04+R()*.06;th2Box(M.lglass,[x+Math.cos(a)*d,y+.035,z+Math.sin(a)*d],[Math.cos(a),0,Math.sin(a)],UP,[-Math.sin(a),0,Math.cos(a)],s,.004,s*.6);}
+      th2Ell(M.lliq,[x+.35,y+.022,z+.2],[1,0,0],UP,[0,0,1],1.05,.006,.8,14,2,0,0,3);}
+    else{th2Tube(M.lglass,[[x,y+.26,z],[x,y+gh,z]],.46,16);th2Tube(M.lliq,[[x,y+.27,z],[x,y+1.45,z]],.43,14);th2Ell(M.ldark,[x,y+.95,z],[1,0,0],UP,[0,0,1],.16,.42,.13,8,6,0,.2,9);
+      th2Tube(M.lsteel,[[x,y+gh,z],[x,y+gh+.12,z]],.5,16);th2Tube(M.lsteel,[[x+.2,y+gh+.12,z],[x+.2,y+2.9,z]],.035,6);}
+    return true;}
+  return false;};}
+function th2DrawCamp(){const m=TH.mesh;if(!m.c3_cloth&&!m.c3_metal&&!m.c3_ltile)return;const t=G.time;labDraw(m,t);
   if(m.c3_cloth)draw(m.c3_cloth,M4.id(),[.2,.19,.15],[0,0,0],4);if(m.c3_roll)draw(m.c3_roll,M4.id(),[.22,.25,.2],[0,0,0],2);
   if(m.c3_stone)draw(m.c3_stone,M4.id(),[.14,.135,.13],[0,0,0],0);if(m.c3_char)draw(m.c3_char,M4.id(),[.07,.06,.055],[0,0,0],0);
   if(m.c3_metal)draw(m.c3_metal,M4.id(),[.3,.27,.22],[0,0,0],3);if(m.c3_box)draw(m.c3_box,M4.id(),[.2,.15,.09],[0,0,0],4);
@@ -2249,9 +2397,25 @@ function th2DrawCamp(){const m=TH.mesh;if(!m.c3_cloth&&!m.c3_metal)return;const 
   // tebeşir okları: ilk çizimde asansöre giden yöne çevrilir
   if(TH2.arrows&&TH2.arrows.length&&G.lift){if(!TH2.arrowsSet){TH2.arrowsSet=true;const tg=TH2.mis&&TH2.mis.k==='camp'&&TH2.fire?TH2.fire:[G.lift.x,G.lift.z];const f=bfsField(cidx(tg[0],tg[1]));for(const a of TH2.arrows){let best=null,bv=f[a.c];for(const[dx,dy]of DIRS){const q=a.c+dx+dy*GW;if(f[q]>=0&&f[q]<bv){bv=f[q];best=[dx,dy];}}if(best)a.rot=Math.atan2(-best[0],-best[1]);else a.dead=true;}}
     for(const a of TH2.arrows){if(a.dead)continue;if(Math.hypot(a.x-eye[0],a.z-eye[2])>26)continue;draw(MA,X(M4.T(a.x,floorY(a.x,a.z)+.03,a.z),M4.RY(a.rot),M4.S(1.1,1,1.1)),[.82,.8,.74],[.02,.02,.018]);}}}
-function th2LightsCamp(PP,PC){if(!TH2.use)return;const c=[];for(const it of TH2.use){if(it.k!=='lan'||!it.lit||it.dead)continue;const d=Math.hypot(it.x-eye[0],it.z-eye[2]);if(d<22&&los(eye[0],eye[2],it.x,it.z))c.push([d,it]);}
+function labFl(it,t){if(it.mode==='dead')return 0;if(it.mode==='flick'){const a=Math.sin(t*23+it.ph),b=Math.sin(t*3.1+it.ph*2);return a>.2&&b>-.55?1:.06;}return .93+.07*Math.sin(t*50+it.ph);}
+const labBM=(x,y,z,t,n,sx,sy,sz)=>[t[0]*sx,0,t[2]*sx,0, 0,sy,0,0, n[0]*sz,0,n[2]*sz,0, x,y,z,1];
+function labDyn(t){const D=TH2.labDoor;if(D){const k=D.open?clamp((t-(D.t0||t))/1.6,0,1):0,e=k*k*(3-2*k),T=D.t,N=D.n;
+    for(const s of[-1,1]){const u=s*(.37+.72*e),x=D.x+T[0]*u+N[0]*.02,z=D.z+T[2]*u+N[2]*.02;draw(MB,labBM(x,D.y+1.07,z,T,N,.72,2.12,.06),[.24,.25,.26],Z3,3);
+      draw(MB,labBM(x+N[0]*.032,D.y+1.55,z+N[2]*.032,T,N,.28,.32,.01),[.02,.025,.03],[.004,.01,.012],3);draw(MB,labBM(x-T[0]*s*.3+N[0]*.035,D.y+1.0,z-T[2]*s*.3+N[2]*.035,T,N,.04,.22,.02),[.4,.4,.38],Z3,3);}
+    const col=D.open?[.05,1.2,.25]:TH2.card?[1.3,.8,.05]:(Math.sin(t*5)>0?[1.4,.06,.03]:[.35,.02,.01]);
+    draw(MS,labBM(D.x+T[0]*1.0+N[0]*.11,D.y+1.38,D.z+T[2]*1.0+N[2]*.11,T,N,.035,.035,.02),[.1,.1,.1],col,3);draw(MS,labBM(D.x+N[0]*.1,D.y+2.62,D.z+N[2]*.1,T,N,.09,.09,.05),[.1,.1,.1],col.map(v=>v*.8),3);}
+  const K=TH2.labKart||(TH2.labKart=(TH2.use||[]).find(i=>i.k==='kart'));if(K&&!K.done)draw(MB,labBM(K.x,K.y+.035,K.z,[1,0,0],[0,0,1],.085,.005,.055),[.85,.85,.8],[.05,.05,.04],2);}
+function labDraw(m,t){const I=M4.id();try{if(RUN.floor===5)labDyn(t);}catch(e){}if(!m.c3_ltile&&!m.c3_lsteel)return;
+  if(m.c3_lgrout)draw(m.c3_lgrout,I,[.06,.06,.058],Z3,0);if(m.c3_ltile)draw(m.c3_ltile,I,[.5,.52,.5],Z3,2);if(m.c3_ltile2)draw(m.c3_ltile2,I,[.42,.43,.41],Z3,2);if(m.c3_ltileD)draw(m.c3_ltileD,I,[.2,.3,.29],Z3,2);
+  if(m.c3_lsteel)draw(m.c3_lsteel,I,[.3,.31,.32],Z3,3);if(m.c3_lceil)draw(m.c3_lceil,I,[.4,.41,.4],Z3,2);if(m.c3_lbag)draw(m.c3_lbag,I,[.05,.07,.05],Z3,2);if(m.c3_lblood)draw(m.c3_lblood,I,[.16,.012,.01],Z3,3);if(m.c3_lwhite)draw(m.c3_lwhite,I,[.66,.66,.63],Z3,2);if(m.c3_lhaz)draw(m.c3_lhaz,I,[.58,.43,.05],Z3,2);if(m.c3_ldark)draw(m.c3_ldark,I,[.035,.035,.04],Z3,3);
+  if(m.c3_lglass)draw(m.c3_lglass,I,[.09,.12,.13],[.004,.008,.01],3);
+  {const p=.6+.4*Math.sin(t*.9);if(m.c3_lliq)draw(m.c3_lliq,I,[.05,.18,.11],[.008*p,.05*p,.03*p],2);}
+  if(m.c3_lfluo)draw(m.c3_lfluo,I,[.9,.95,1],[1.1,1.2,1.25],2);if(m.c3_lfluoD)draw(m.c3_lfluoD,I,[.35,.36,.36],Z3,2);
+  if(m.c3_lfluoF){const f=labFl({mode:'flick',ph:1.3},t);draw(m.c3_lfluoF,I,[.9,.95,1],[1.1*f,1.2*f,1.25*f],2);}
+  if(m.c3_lscr){const f=.75+.25*Math.sin(t*37)*Math.sin(t*2.3)+(Math.sin(t*.7)>.97?.6:0);draw(m.c3_lscr,I,[.01,.02,.025],[.02*f,.1*f,.12*f],2);}}
+function th2LightsCamp(PP,PC){labLights(PP,PC);if(!TH2.use)return;const c=[];for(const it of TH2.use){if(it.k!=='lan'||!it.lit||it.dead)continue;const d=Math.hypot(it.x-eye[0],it.z-eye[2]);if(d<22&&los(eye[0],eye[2],it.x,it.z))c.push([d,it]);}
   c.sort((a,b)=>a[0]-b[0]);const t=G.time;for(const[,it]of c.slice(0,3)){if(PP.length>=40)break;const f=.85+.15*Math.sin(t*9+it.ph)*Math.sin(t*5.3);PP.push(it.x,it.y+.45,it.z,6.5);PC.push(.95*f,.6*f,.28*f);}}
-function th2GlowsCamp(glow){if(!TH2.use)return;const t=G.time;for(const it of TH2.use){if(it.k!=='lan'||!it.lit||it.dead)continue;if(Math.hypot(it.x-eye[0],it.z-eye[2])>30)continue;const f=.85+.15*Math.sin(t*9+it.ph);glow([it.x,it.y+.13,it.z],.55,[.5*f,.3*f,.1*f]);}}
+function th2GlowsCamp(glow){try{labGlows(glow);}catch(e){}if(!TH2.use)return;const t=G.time;for(const it of TH2.use){if(it.k!=='lan'||!it.lit||it.dead)continue;if(Math.hypot(it.x-eye[0],it.z-eye[2])>30)continue;const f=.85+.15*Math.sin(t*9+it.ph);glow([it.x,it.y+.13,it.z],.55,[.5*f,.3*f,.1*f]);}}
 
 // ---- 3. kat: mantar mağarası — dev mantar korusu (en büyük oda, süzülen sporlar) + spor topları (basınca patlar: ses + spor bulutu → kazma kıvılcımı ateşler) ----
 function th2BuildShroom(R,rr,pick,chance,help,walls,own){const{clearOK,frame,col,fy}=help;TH2.motes=[];TH2.clouds=[];TH2.puffs=[];
@@ -2326,6 +2490,7 @@ function th2MisTxt(){const m=TH2.mis;if(!m)return null;
   if(m.k==='cave'){const n=m.parts.filter(p=>p.done).length,T=m.parts.length;if(m.rub.done)return 'Geçit açıldı. Kafese bin, aşağı in.';if(m.rub.planted)return `PATLAYICI KURULDU: ${Math.max(0,Math.ceil(m.rub.boomT||0))} sn! UZAKLAŞ!`;
     if(n<T)return `Kuyuya giden geçit göçük altında. Patlayıcıyı ve fünyeyi bul (${n}/${T}). Spor toplarına basma.`;return 'Parçalar tamam. Rüzgârı izle, göçüğü bul ve patlayıcıyı kur.';}
   if(m.k==='forest'){const n=m.samples.filter(x=>x.done).length,T=m.samples.length;if(n>=T)return 'Kök özleri tamam, kapaktaki kökler çürüdü. Kuyuyu bul ve in.';return `Kuyu kapağını saran kökleri çürütmek için ormanın köşelerinden kök özü topla (${n}/${T}). Işığa doğru git, kök sarılı duvarı kazma.`;}
+  if(m.k==='ghost'&&TH2.lab&&!(TH2.labDoor&&TH2.labDoor.open))return TH2.card?'Kart sende. Laboratuvarın çelik kapısına git, kartı okut.':'Kayadaki çelik kapı kilitli. Kapının önündeki ölü güvenlikçinin kartını al.';
   if(m.k==='ghost'){const n=m.anoms.filter(x=>x.done).length,T=m.anoms.length;if(n>=T)return 'AV BAŞLADI. Kristaller alındı, kafes doldu: kuyuya ulaş, dolaplara saklan!';return `Ölçerle 3 kristal noktasını bul, örnek al: kafesin aküsünü doldurur (${n}/${T}). Faaliyet: ${(typeof GHO!=='undefined'&&GHO.act)||1}/4`;}
   if(m.k==='final'){if(!m.taken)return 'Kafesi yukarı ancak Kara Damar Özü çıkarır. Kristal odasındaki özü bul ve kafese götür.';return 'ÖZ ALINDI! Kaçış başladı: özü asansöre ulaştırın. Taşıyan yavaş, düşerse biri alsın.';}
   if(m.k==='flood'){const n=th2Vopen(),T=m.valves.length;if(m.pump.drained)return 'Kuyu boşaldı! Rüzgârın sesini izle, kuyuya kaz ve kafesle in.';if(m.pump.on)return `Pompa çalışıyor, kuyu boşalıyor (${Math.max(0,Math.ceil(m.pump.runT||0))} sn). Gürültü her şeyi çağırdı, saklan!`;
@@ -2394,6 +2559,9 @@ function th2GlowsMis(glow){const m=TH2.mis;if(!m)return;const t=G.time;
   if(m.k==='shroom'&&!m.mass.done){const s=m.mass;if(Math.hypot(s.x-eye[0],s.z-eye[2])<26){const f=.7+.3*Math.sin(t*1.3);glow([s.x,s.y+.8,s.z],1.6,[.1*f,.05*f,.14*f]);}}
   if(m.k==='camp'&&!m.kol.done){const k=m.kol;if(Math.hypot(k.x-eye[0],k.z-eye[2])<14){const f=Math.max(0,Math.sin(t*1.7))**8;glow([k.x,k.y+.76,k.z],.14,[.3*f,.28*f,.24*f]);}}}
 function th2DoMis(it,mine){
+  if(it.k==='kart'){TH2.card=true;TH.dirty=true;sfxAt('pickup',it.x,it.z,.9,10);sfx('click',.4);toast(mine?'Güvenlik kartı sende: "DERİNKAYA · AR-GE · SEVİYE 3". Kapıya okut.':'Ekipten biri güvenlik kartını aldı. Kapı açılabilir.',3.2);try{radioSay(HK.labCard);}catch(e){}return true;}
+  if(it.k==='ldoor'){const L=TH2.lab;if(L){blockC[L.D]=0;}if(TH2.labDoor&&!TH2.labDoor.open){TH2.labDoor.open=true;TH2.labDoor.t0=G.time;}TH2.card=true;sfxAt('click',it.x,it.z,1,14);setTimeout(()=>{sfxAt('liftGate',it.x,it.z,1.2,40);sfxAt('hiss',it.x,it.z,.9,30);},350);
+    if(mine)emit(it.x,it.z,14,pl,'kapı');toast('Kart okundu. Çelik kapı açılıyor…',2.6);try{radioSay(HK.labOpen);}catch(e){}return true;}
   if(it.k==='sac'){th2SacDo(it,mine);return true;}
   if(it.k==='part'){TH.dirty=true;sfxAt('pickup',it.x,it.z,.8,10);const m=TH2.mis,n=m.parts.filter(p=>p.done).length,T=m.parts.length;toast(n<T?`${it.pk==='tnt'?'Patlayıcı':'Fünye'} alındı (${n}/${T}).`:'Patlayıcı ve fünye tamam. Göçüğü bul!',2.8);return true;}
   if(it.k==='samp'){TH.dirty=true;sfxAt('pickup',it.x,it.z,.8,10);sfxAt('rustle',it.x,it.z,.6,12);const m=TH2.mis,n=m.samples.filter(p=>p.done).length,T=m.samples.length;toast(n<T?`Kök özü alındı (${n}/${T}).`:'Üç örnek tamam! Kuyuyu bul.',2.8);if(mine)emit(pl.x,pl.z,5,pl,'temas');return true;}
@@ -2502,7 +2670,7 @@ function th2MisForest(R,rr,help,walls){if(!G.shaft)return;const S3=th2FarSpots(R
   const samples=S3.map(s=>th2Add({k:'samp',c:s.W.c,x:s.x,z:s.z,y:s.y,ph:R()*TAU,seed:(R()*1e9)|0,done:false}));
   if(samples.length)TH2.mis={k:'forest',samples};}
 // 5. kat: üç anomali noktası (madenci cesedi / terk edilmiş çalışma odası / mühürlü galeri) + saklanma dolapları
-function th2MisGhost(R,rr,help,walls){const{clearOK,frame,fy,put,col}=help;const S3=th2FarSpots(R,rr,help,walls,3,20,{home:12,v:.55,r:.2});
+function th2MisGhost(R,rr,help,walls){const{clearOK,frame,fy,put,col}=help;const LB=TH2.lab;if(LB&&LB.ped&&LB.ped.length>=3){th2MisGhostLab(LB,R,rr,help,walls);return;}const S3=th2FarSpots(R,rr,help,walls,3,20,{home:12,v:.55,r:.2});
   const kinds=['ceset','oda','muhur'];const anoms=S3.map((s,i)=>{const it=th2Add({k:'anom',c:s.W.c,x:s.x,z:s.z,y:s.y,ak:kinds[i],t:[s.fr.t[0],0,s.fr.t[1]],n:[s.fr.n[0],0,s.fr.n[1]],ph:R()*TAU,done:false});
     const fr=s.fr;if(i===0){put(fr,'helmet',rr(-.6,-.3),.45,{yaw:R()*TAU,rot:[M4.RZ(1.3)],s:1.1});put(fr,'lamp',rr(.4,.7),.3,{yaw:R()*TAU,rot:[M4.RX(Math.PI/2)],s:1.2,y:.07});put(fr,'pickaxe_b',rr(.6,.9),.6,{yaw:R()*TAU,y:.01});
       TH.items.push({k:'body',c:fr.c,x:s.x,z:s.z,y:s.y,t:it.t,n:it.n});}
@@ -2512,6 +2680,11 @@ function th2MisGhost(R,rr,help,walls){const{clearOK,frame,fy,put,col}=help;const
     return it;});
   const L=th2FarSpots(R,rr,help,walls,5,10,{home:6,v:.4,r:.25,avoid:anoms});const lockers=L.map(s=>{const it=th2Add({k:'locker',c:s.W.c,x:s.x,z:s.z,y:s.y,t:[s.fr.t[0],0,s.fr.t[1]],n:[s.fr.n[0],0,s.fr.n[1]],done:true,ctxSkip:true});col(s.x,s.z,.22,{});return it;});
   TH2.lockers=lockers;if(anoms.length)TH2.mis={k:'ghost',anoms};}
+function th2MisGhostLab(LB,R,rr,help,walls){const{col}=help;const kinds=['ceset','oda','muhur'];
+  const anoms=LB.ped.slice(0,3).map((p,i)=>th2Add({k:'anom',c:p.c,x:p.x,z:p.z,y:p.y+.62,ak:kinds[i],t:LB.p3,n:LB.d3,ph:R()*TAU,done:false}));
+  const L=th2FarSpots(R,rr,help,walls,3,10,{home:6,v:.4,r:.25});const lockers=L.map(s=>{const it=th2Add({k:'locker',c:s.W.c,x:s.x,z:s.z,y:s.y,t:[s.fr.t[0],0,s.fr.t[1]],n:[s.fr.n[0],0,s.fr.n[1]],done:true,ctxSkip:true});col(s.x,s.z,.22,{});return it;});
+  for(const q of LB.lock){const it=th2Add({k:'locker',c:q.c,x:q.x,z:q.z,y:floorY(q.x,q.z),t:LB.p3,n:LB.d3,done:true,ctxSkip:true});col(q.x+LB.d3[0]*.25,q.z+LB.d3[2]*.25,.3,{});lockers.push(it);}
+  TH2.lockers=lockers;TH2.mis={k:'ghost',anoms};}
 // 7. kat: Kara Damar Özü (numune) — jeot odasının ortasında; taşınır, düşürülür, ölen taşıyıcıdan yere düşer
 function th2MisFinal(R,rr,help){const q=TH2.room;let x,z;if(q>=0&&rooms[q]){const r=rooms[q];[x,z]=ctr(r.cy*GW+r.cx);}else return;
   for(let k=0;k<30;k++){const c=cidx(x,z);if(grid[c]&&help.clearOK(x,z,-.2))break;const r=rooms[q];const a=R()*TAU,d=rr(.5,2.5);[x,z]=ctr(r.cy*GW+r.cx);x+=Math.cos(a)*d;z+=Math.sin(a)*d;}
@@ -2664,7 +2837,7 @@ function th2Cluster(it,M){const R=envRand(it.seed);const n=it.n;for(let k=0;k<n;
     const d=main?it.dir:v3n([it.dir[0]+(R()-.5)*1.1,it.dir[1]+(R()-.5)*.9,it.dir[2]+(R()-.5)*1.1]);
     const off=main?[0,0,0]:[(R()-.5)*it.rad*3,(R()-.5)*it.rad*1.5,(R()-.5)*it.rad*3];
     th2Crystal(M,[it.x+off[0],it.y+off[1],it.z+off[2]],d,it.len*s,it.rad*(main?1:.55+R()*.35),R()<.7?6:5,R()*TAU);}}
-function th2Build(th,R,rr,pick,chance,help,walls,own){TH2.chimes=[];TH2.cgl=[];TH2.room=-1;TH2.squish=[];TH2.use=[];TH2.plank=null;TH2.drips=[];TH2.arrows=[];TH2.arrowsSet=false;TH2.fire=null;TH2.motes=[];TH2.clouds=[];TH2.puffs=[];TH2.mis=null;TH2.pend={};TH2.hangs=[];TH2.sacs=[];TH2.side=null;TH2.lockers=[];TH2.boom=null;TH2.core=null;
+function th2Build(th,R,rr,pick,chance,help,walls,own){TH2.lab=null;TH2.card=false;TH2.labDoor=null;TH2.labKart=null;TH2.chimes=[];TH2.cgl=[];TH2.room=-1;TH2.squish=[];TH2.use=[];TH2.plank=null;TH2.drips=[];TH2.arrows=[];TH2.arrowsSet=false;TH2.fire=null;TH2.motes=[];TH2.clouds=[];TH2.puffs=[];TH2.mis=null;TH2.pend={};TH2.hangs=[];TH2.sacs=[];TH2.side=null;TH2.lockers=[];TH2.boom=null;TH2.core=null;
   if(th==='flood')th2BuildFlood(R,rr,pick,chance,help,walls,own);
   if(th==='mushroom')th2BuildShroom(R,rr,pick,chance,help,walls,own);
   if(th==='nest')th2BuildNest(R,rr,pick,chance,help,walls,own);
@@ -2721,7 +2894,9 @@ function th2Ctx(){if(!TH2.use||!TH2.use.length)return null;for(const it of TH2.u
     if(it.k==='sac')return{label:'Kuluçka kesesini patlat (yuva öfkelenir)',kind:'th2',it};
     if(it.k==='part')return{label:it.pk==='tnt'?'Patlayıcı kutusunu al':'Fünyeyi (ateşleyici) al',kind:'th2',it};
     if(it.k==='samp')return{label:'Nadir kök özünü al',kind:'th2',it};
-    if(it.k==='anom')return{label:'Anomali örneğini al (faaliyet artar!)',kind:'th2',it};
+    if(it.k==='anom')return{label:TH2.lab?'Kristal örneğini muhafazadan al (faaliyet artar!)':'Anomali örneğini al (faaliyet artar!)',kind:'th2',it};
+    if(it.k==='kart')return{label:'Ölü güvenlikçinin kartını al',kind:'th2',it};
+    if(it.k==='ldoor')return TH2.card?{label:'Kartı okut: laboratuvar kapısını aç',kind:'th2',it}:{label:'Kapı kilitli. Kart okuyucu kırmızı yanıyor.',kind:'none'};
     if(it.k==='side'&&it.stage===0)return{label:{canta:'Kayıp madencinin çantasını al',kayit:'Kayıt cihazını al ve dinle',telsiz:'Bozuk telsizi al',ornek:'Özel maden örneğini çıkar'}[it.sk]||'Al',kind:'th2',it};}}return null;}
 function th2Do(it,mine){if(it.k==='puff'){th2PuffPop(it,mine);return;}if(it.k==='rubble'){th2RubbleDo(it,mine);return;}if(it.k==='side'){th2SideDo(it,mine);return;}if(it.k==='bat'){if(!mine)return;it.usedMe=true;pl.bat=1;pl.lamp=true;sfx('switch',.8);sfx('pickup',.6);toast('Lamba pili doldu. Bu katta pil çabuk biter, idareli kullan.',3);return;}
   if(it.done)return;it.done=true;if(th2DoMis(it,mine))return;
@@ -2840,7 +3015,8 @@ const glowVAO=(()=>{const vao=gl.createVertexArray();gl.bindVertexArray(vao);con
 const S=2.4, H=4.2, GW=48, GH=48;
 let bones=[];let blockC=new Uint8Array(48*48),DOME=null;let crateHints=[],tunnelCells=[], exitA, exitCells=[], exitDir=[0,0], grid, roomId, safe, natural, oreAt, hpA, feat, dug, support, gasL, water, rooms=[], entrance=0, nest=1, deco=[];
 const solid=(i,j)=>i<0||j<0||i>=GW||j>=GH||!grid[j*GW+i]||blockC[j*GW+i]===1;
-const canDig=(i,j)=>i>=1&&j>=1&&i<=GW-2&&j<=GH-2&&!safe[j*GW+i]&&!exitA[j*GW+i];
+let LABW=new Uint8Array(GW*GH);// laboratuvarın kazılamayan betonarme kabuğu
+const canDig=(i,j)=>i>=1&&j>=1&&i<=GW-2&&j<=GH-2&&!safe[j*GW+i]&&!exitA[j*GW+i]&&!LABW[j*GW+i];
 const cellOf=v=>Math.floor(v/S);
 const ctr=c=>[(c%GW+.5)*S,(((c/GW)|0)+.5)*S];
 const isSafe=(x,z)=>{const i=cellOf(x),j=cellOf(z);return i>=0&&j>=0&&i<GW&&j<GH&&safe[j*GW+i]===1;};
@@ -2874,7 +3050,7 @@ const FLOORS=[
   {ad:'SU BASMIŞ GALERİ',hint:'Pompalar durunca kuyuyu su bastı. İki tahliye pompasını çalıştır; su çekilince eski geçit açılır. Suda her adım duyulur.',gas:0,water:.11,ore:.8,babies:1,drain:1,flooded:true},
   {ad:'MANTAR MAĞARASI',hint:'Şirketin patlattığı göçük kuyunun yolunu kesmiş. Patlayıcı ve fünyeyi bul, göçüğe kur, uzaklaş. Spor toplarına basma.',gas:.11,water:0,ore:.9,babies:1,drain:1,gassy:true,spores:true},
   {pale:true,ad:'KÖK ORMANI',hint:'Kökler kuyunun kapağını sarmış; kök özü onları çürütür. Ormanın köşelerinden 3 kök özü topla. Kök sarılı duvarı kazma, tavan çöker.',gas:0,water:0,ore:1,babies:1,drain:1,roots:true},
-  {ad:'KAYIP EKİBİN KAMPI',hint:'Kafesin aküsü bitmiş; damar kristali onu doldurur. Ölçerle 3 kristal noktasını bul, örnek al. Görünmeyen şey yaklaşırsa dolaba saklan.',gas:0,water:0,ore:1.1,babies:0,drain:2,ghost:true},
+  {ad:'YANKI LABORATUVARI',hint:'Kayadaki çelik kapı kilitli: önündeki ölü güvenlikçinin kartını al, laboratuvarı aç. Kafesin aküsünü doldurmak için içerideki 3 kristal örneğini al, monitör kayıtlarını izle. Görünmeyen şey yaklaşırsa dolaba saklan.',gas:0,water:0,ore:1.1,babies:0,drain:2,ghost:true},
   {ad:'YAVRU YUVASI',hint:'Yaratığın yuvası kuyuyu tıkıyor. Kuluçka keselerini patlat; her kese yuvayı daha çok öfkelendirir.',gas:0,water:0,ore:1.2,babies:8,drain:1},
   {pale:true,ad:'ELMAS DAMARI',hint:'Kafesi yukarı ancak Kara Damar Özü çıkarır. Özü bul; aldığın an mağara uyanır: özle birlikte kafese koş.',gas:0,water:0,ore:2.4,babies:2,drain:1,final:true}];
 const FL=()=>FLOORS[RUN.floor-1];
@@ -3384,7 +3560,7 @@ function sysVM(tid,hm){// birinci şahıs: şok cihazı ve ölçer (endüstriyel
 // ==== SYS END ====
 function newGame(){
   RUN.snap={floor:RUN.floor,inv:{...RUN.inv},cartGems:[...RUN.cartGems],alive:[...RUN.alive]};
-  genCave(); $('gasw').textContent=FL().spores?'SPOR':'GRİZU'; try{envBuild();}catch(e){console.error('giydirme',e);ENV.inst=[];ENV.groups=new Map();ENV.cols=[];ENV.colG=new Map();try{cageSetup();}catch(e2){}} buildCaveMesh();const F=FL();if(ENV.lib)envSurfaces(RUN.floor);
+  LABW.fill(0);genCave(); $('gasw').textContent=FL().spores?'SPOR':'GRİZU'; try{envBuild();}catch(e){console.error('giydirme',e);ENV.inst=[];ENV.groups=new Map();ENV.cols=[];ENV.colG=new Map();try{cageSetup();}catch(e2){}} buildCaveMesh();const F=FL();if(ENV.lib)envSurfaces(RUN.floor);
   const E=rooms[entrance];const OD=exitDir,PD=[-OD[1],OD[0]];const[cx,cz]=ctr(E.cy*GW+E.cx);
   railPath=[E.cy*GW+E.cx];cart.s=0;cart.target=null;G.cartYaw0=Math.atan2(PD[0],PD[1]);
   G.lift={x:cx+OD[0]*S*1.55,z:cz+OD[1]*S*1.55,yaw:Math.atan2(OD[0],OD[1])};
@@ -3952,7 +4128,7 @@ function digImpact(){
   spark(t.x,ey-.25,t.z,isOre?GEMT[gems[oreAt[c]].type].col:[1,.7,.35],isOre?10:7);G.shake=.1;
   try{const dd=Math.hypot(t.x-pl.x,t.z-pl.z)||1,ux=(pl.x-t.x)/dd,uz=(pl.z-t.z)/dd;const fx2=t.x+ux*S*.5,fz2=t.z+uz*S*.5;if(!exitA[c])debChip(fx2,ey-.25,fz2,ux,uz,isOre?GEMT[gems[oreAt[c]].type].col:null);}catch(e){}
   if(exitA[c]){sfx('rock',.7);toast('Giriş tahtalarla kapalı. Geri dönüş yok; yol aşağıda.',2);return;}
-  if(!canDig(t.i,t.j)){sfx('digHard',.9);emit(pl.x,pl.z,8,pl,'kazma');toast('Bu kaya kazılamayacak kadar sert.',1.5);return;}
+  if(!canDig(t.i,t.j)){if(LABW[c]){sfx('digHard',.9);toast('Betonarme duvar. Laboratuvara ancak kapıdan girilir.',1.8);return;}sfx('digHard',.9);emit(pl.x,pl.z,8,pl,'kazma');toast('Bu kaya kazılamayacak kadar sert.',1.5);return;}
   const dmg=digDmg(c,pl);hpA[c]=Math.max(0,hpA[c]-dmg);if(NET.started)netLog('h',c,dmg);if(dmg>1)spark(t.x,ey-.2,t.z,[1,.85,.5],8);const mx=isOre?(gems[oreAt[c]].giant?(RUN.up.pick?5:6):(RUN.up.pick?3:4)):(RUN.up.pick?2:3);G.digInfo={c,hp:hpA[c],max:mx,t:1.6,ore:isOre};
   sfx(isOre?'digOre':'dig');if(isOre)sfx('gem',.4);if(feat[c]===3){sfx('knock',1);if(!G.knockT||G.time>G.knockT){G.knockT=G.time+6;toast('Tok bir tahta sesi... arkasında bir şey var.',2);}}emit(pl.x,pl.z,isOre?15:13,pl,'kazma');
   if(hpA[c]<=0)openCell(t.i,t.j,pl);}
@@ -6514,7 +6690,7 @@ document.addEventListener('pointerover',e=>{if(e.pointerType!=='mouse')return;co
 // ================= HİKÂYE: "YANKI" — telsiz konuşmaları, kat başı/ilerleme/bitiş anları, iniş metinleri, final =================
 // Konuşanlar: R = Rıza Usta (telsiz; aslında yaratık onun sesini taklit ediyor), Y = bozulan ses, T = Tekin (Derinkaya, yüzey),
 // K = 3 gün önceki gerçek kayıt, N = ekibin gördüğü (anlatı). Ağdan bir şey gönderilmez: her oyuncu aynı oyun durumundan aynı anları görür.
-const HK_WHO={R:['RIZA USTA · TELSİZ','#e8b04a'],Y:['RIZA USTA?','#d9534a'],T:['TEKİN · DERİNKAYA','#7fb0e0'],K:['KAYIT · ÜÇ GÜN ÖNCE','#c98a6a'],N:['','#a39d92']};
+const HK_WHO={D:['DR. NEVİN ARAS · KAYIT','#8fd3c8'],R:['RIZA USTA · TELSİZ','#e8b04a'],Y:['RIZA USTA?','#d9534a'],T:['TEKİN · DERİNKAYA','#7fb0e0'],K:['KAYIT · ÜÇ GÜN ÖNCE','#c98a6a'],N:['','#a39d92']};
 const HK={
   0:{surf:[['R','…sesim geliyor mu? Burası Rıza… kafes… kafes hâlâ çalışıyor. Aşağı gelin.'],['R','Yaşıyoruz. Ama çok az kaldık.']]},
   1:{load:'Şirket madeni mühürlerken elektriği de kesmiş. Güç gelmeden kafes daha aşağı inmez.',
@@ -6537,8 +6713,8 @@ const HK={
      p1:[['N','Kökler kayadan değil, aşağıdaki damardan büyüyor. Sanki bir şeyin damarları.']],
      mid:[['Y','Gel. Gel. Gel. Gel.']],
      done:[['R','Kapak çözüldü. Aşağıda kampımız var. Orada… bekliyoruz.']]},
-  5:{load:'Rıza\'nın ekibinin son kampı. Kafesin aküsü burada bitmiş; damar kristali onu doldurabilir.',
-     start:[['N','Kamp boş. Yataklar serili, yemekler yarım kalmış. Kimse yok.'],['R','Kampa geldiniz mi? Biz buradayız. Yanınızdayız.']],
+  5:{load:'Kayıtlarda olmayan bir kat: Derinkaya\'nın gizli araştırma istasyonu. Rıza\'nın ekibi damarı delerken buraya çıkmış.',
+     start:[['N','Mağaranın duvarına gömülü çelik bir kapı. Üstünde kırmızı yanan bir kart okuyucu.'],['R','Laboratuvar orası. Kafesin aküsünü dolduracak kristaller içeride. Kapı kilitli… güvenlikçide kart vardı.']],
      p1:[['N','Ölçer çıldırıyor. Kristalin içinden sesler geliyor: madencilerin son sözleri. Bu taş duyduğunu saklıyor.']],
      mid:[['N','Galeride görünmeyen bir şey dolaşıyor. Ölçer ötünce dolaplara saklanın.']],
      done:[['K','Burası Rıza. Damarı deldik, altında bir şey vardı. Adamlarımı aldı. Kafesi yukarı gönderiyorum.'],['K','Kimse aşağı inmesin. Telsizden benim sesimi duyarsanız… o ben değilim.'],['Y','Aşağı gelin.']]},
@@ -6550,6 +6726,8 @@ const HK={
   7:{load:'Kara Damar\'ın kalbi. Duvarlar çan gibi çınlıyor.',
      start:[['N','Kristal odasının önünde Rıza Usta\'nın bareti duruyor. Telsizi hâlâ açık.'],['Y','Sonunda geldiniz. Sizi çok bekledim.']],
      p1:[['Y','KALBİMİ YUKARI TAŞIYIN.'],['N','Mağara uyandı. KOŞ!']]},
+  labCard:[['N','Kartın üstünde kan: "DERİNKAYA · AR-GE · SEVİYE 3".']],
+  labOpen:[['N','Kapı açıldı. İçeride deney tankları, kayışlı bir masa, içeriden bükülmüş kafes parmaklıkları.'],['R','Kristaller cam muhafazalarda. Alın ve çıkın. Burada… kimse kalmadı.']],
   asc:[['T','Öz yanınızda mı? Kapağı açıyorum.'],['Y','Yukarıda… o kadar çok ses var ki…']]};
 const RADIO={q:[],cur:null,t:0,el:null};
 function radioEl(){if(RADIO.el)return RADIO.el;const st=document.createElement('style');
@@ -6575,7 +6753,7 @@ function storyTick(dt){if(G.state!=='play'&&G.state!=='spectate')return;const F=
   else{const m=TH2.mis;if(!m)return;const tx=th2MisTxt()||'',mm=/\((\d+)\s*\/\s*(\d+)\)/.exec(tx);if(mm)a=+mm[1];
     if(m.k==='final'){a=m.taken?1:0;}else if(m.k==='cave')a=m.parts.filter(p=>p.done).length;else if(m.k==='flood2')a=m.pumps.filter(p=>p.on).length;
     done=m.k!=='final'&&th2MisDone();}
-  if(a>=1)hkFire('p1');if(done)hkFire('done');if(HKS.t>150&&!done)hkFire('mid');}
+  if(F===5)labTick();if(a>=1)hkFire('p1');if(done)hkFire('done');if(HKS.t>150&&!done)hkFire('mid');}
 const STORY=['Kara Damar Madeni. Üç gün önce en alt katta bir göçük oldu.','Derinkaya Madencilik madeni mühürledi. "Kurtarılacak kimse kalmadı" dediler.','Ama dün gece eski maden telsizi cızırdadı. Rıza Usta\'nın sesi: "Yaşıyoruz. Gelin."','Siz onun yetiştirdiği dört madencisiniz. Şirketten habersiz, gece iniyorsunuz.','Aşağıda bir şey var. Işığını gören, sesini duyan seni bulur.'];
 function storyThen(cb){let seen=false;try{seen=localStorage.getItem('kd_story2')==='1';localStorage.setItem('kd_story2','1');}catch(e){}
   if(seen||(navigator.webdriver&&!window.__kdStory)){cb();return;}
@@ -6615,7 +6793,7 @@ function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
-window.__kd={__LOOPS:LOOPS,__DEB:DEB,__HK:()=>({f:HKS.f,t:HKS.t,fired:[...HKS.fired],q:RADIO.q.map(l=>l[0]+":"+l[1].slice(0,30)),cur:RADIO.cur}),__AUD:()=>AUD,__MIM:MIM,__mimPlay:()=>mimPlay(cr),__SMP:SMP,__qte:()=>G.qte,__qteIn:()=>G.qte&&qteIn(G.qte),__bso:(b,x,z,dt)=>botStandoff(b,x,z,dt),__watRip:(x,z,w)=>watRip(x,z,w),__WAT:WAT,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
+window.__kd={__LOOPS:LOOPS,__DEB:DEB,__labOpen:()=>{const k=TH2.use.find(i=>i.k==='kart');if(k&&!k.done)th2Do(k,true);const d=TH2.use.find(i=>i.k==='ldoor');if(d&&!d.done)th2Do(d,true);},__labInfo:()=>{const L=TH2.lab;if(!L)return null;const D=TH2.labDoor;return{door:[D.x,D.z],n:D.n,O:ctr(L.O),Ld:L.Ld,Wd:L.Wd,mid:L.W((L.Ld+1)*S/2,(L.b0+L.Wd/2-.5)*S),back:L.W((L.Ld+.5)*S-1,(L.b0+L.Wd/2-.5)*S),blk:blockC[L.D],anoms:TH2.mis&&TH2.mis.anoms?TH2.mis.anoms.map(a=>[a.x,a.z]):[],mis:th2MisTxt()};},__lab:()=>{const q=TH2.room,r=rooms[q];const L=TH.items.filter(i=>i.k.startsWith("lab"));const cnt={};for(const i of L)cnt[i.k]=(cnt[i.k]||0)+1;return {q,c:r?ctr(r.cy*GW+r.cx):null,cnt,mon:(TH2.labMon||[]).map(m=>[m.x,m.z]),tank:L.filter(i=>i.k==="labT").map(i=>[i.x,i.z]),mesh:Object.keys(TH.mesh).filter(k=>k.startsWith("c3_l")&&TH.mesh[k])};},__HK:()=>({f:HKS.f,t:HKS.t,fired:[...HKS.fired],q:RADIO.q.map(l=>l[0]+":"+l[1].slice(0,30)),cur:RADIO.cur}),__AUD:()=>AUD,__MIM:MIM,__mimPlay:()=>mimPlay(cr),__SMP:SMP,__qte:()=>G.qte,__qteIn:()=>G.qte&&qteIn(G.qte),__bso:(b,x,z,dt)=>botStandoff(b,x,z,dt),__watRip:(x,z,w)=>watRip(x,z,w),__WAT:WAT,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
   nbuf=C.createBuffer(1,sr*2,sr);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}
   try{for(const[ty,v,dl]of type)setTimeout(()=>0,0),(dl?(()=>{const t0=C.currentTime;})():0),sfx(ty,v,0);}finally{}const buf=await C.startRendering();[AC,sfxBus,nbuf,master]=sv;return Array.from(buf.getChannelData(0));},__sfR:()=>{sfRender();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},__mR:()=>{sfMenuRender(0);gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},UI:{VC,XT,vcPress,vcRelease,orderSet,noteOpen,crLure,teamRevive,openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get cratesA(){return crates;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
   LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
