@@ -672,7 +672,7 @@ html.rot #rotate{display:none!important}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v77</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v78</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -2325,11 +2325,13 @@ function th2BuildBigLab2(L,R,rr,help,own){const{frame,col,fy}=help;TH2.labMon=[]
 // Hücre bloğu koridoru → Ana Hücre (DENEK-0 ile son kavga, kristal 3) → Servis asansörü (kat çıkışı).
 // Yerleşim seviye tohumundan üretilir (çok oyunculuda herkeste aynı).
 const LAB3_SEQS=[[{t:'lobby',w:4,h:5,hc:4.8},{t:'hall',w:5,h:6,hc:6.8,con:11,bend:1,ct:'corr'},{t:'surg',w:4,h:4,hc:4.6,con:3},{t:'kulu',w:5,h:4,hc:5.4,con:5,bend:1,ct:'conn'},{t:'ctrl',w:4,h:4,hc:4.1,con:4,bend:1,ct:'conn'},
-  {t:'arena',w:6,h:6,hc:7.2,con:10,bend:1,ct:'block'},{t:'lift',w:2,h:2,hc:4.4,con:3}],
+  {t:'arena',w:6,h:6,hc:7.2,con:10,bend:1,ct:'block'},{t:'lift',w:3,h:3,hc:4.6,con:3}],
  [{t:'lobby',w:3,h:5,hc:4.8},{t:'hall',w:5,h:5,hc:6.8,con:9,bend:1,ct:'corr'},{t:'surg',w:4,h:4,hc:4.6,con:2},{t:'kulu',w:4,h:4,hc:5.4,con:4,bend:1,ct:'conn'},{t:'ctrl',w:3,h:4,hc:4.1,con:3,bend:1,ct:'conn'},
-  {t:'arena',w:6,h:5,hc:7.2,con:8,bend:1,ct:'block'},{t:'lift',w:2,h:2,hc:4.4,con:2}],
+  {t:'arena',w:6,h:5,hc:7.2,con:8,bend:1,ct:'block'},{t:'lift',w:3,h:3,hc:4.6,con:2}],
  [{t:'lobby',w:3,h:5,hc:4.8},{t:'hall',w:4,h:5,hc:6.8,con:7,bend:1,ct:'corr'},{t:'surg',w:3,h:4,hc:4.6,con:2},{t:'kulu',w:4,h:4,hc:5.4,con:3,bend:1,ct:'conn'},{t:'ctrl',w:3,h:3,hc:4.1,con:3,bend:1,ct:'conn'},
-  {t:'arena',w:5,h:5,hc:7.2,con:6,bend:1,ct:'block'},{t:'lift',w:2,h:2,hc:4.4,con:2}]];
+  {t:'arena',w:5,h:5,hc:7.2,con:6,bend:1,ct:'block'},{t:'lift',w:3,h:3,hc:4.6,con:2}],
+ [{t:'lobby',w:3,h:4,hc:4.8},{t:'hall',w:4,h:4,hc:6.8,con:5,bend:1,ct:'corr'},{t:'surg',w:3,h:3,hc:4.6,con:2},{t:'kulu',w:3,h:4,hc:5.4,con:3,bend:1,ct:'conn'},{t:'ctrl',w:3,h:3,hc:4.1,con:2,bend:1,ct:'conn'},
+  {t:'arena',w:4,h:5,hc:7.2,con:4,bend:1,ct:'block'},{t:'lift',w:3,h:3,hc:4.6,con:2}]];
 let LAB3_SEQ=LAB3_SEQS[0];
 const LAB3_GATE=['guard','kris1','kris2','nest','lever','boss'];
 function lab3Gen(R){for(const q of LAB3_SEQS){LAB3_SEQ=q;const L=lab3GenOne(R);if(L)return L;}return null;}
@@ -2366,17 +2368,17 @@ function lab3GenOne(R){const E=rooms[entrance];if(!E)return null;const f=bfsFiel
   const cand=[];for(let c=0;c<N;c++){if(!grid[c]||water[c]||blockC[c]||exitA[c])continue;const md=Math.abs(I(c)-E.cx)+Math.abs(J(c)-E.cy);const dd=f[c]>=0?f[c]:md+3;if(dd<1||dd>15)continue;
     for(const d of DIRS)for(let T=0;T<=7;T++){let ok=true;for(let k=1;k<=T+1;k++){const q=step(c,d,k);if(!base(q)){ok=false;break;}}if(!ok)break;cand.push([dd+T*.9+R()*2,c,d,T]);}}
   cand.sort((a,b)=>a[0]-b[0]);
-  for(const[,O,d,T]of cand.slice(0,60)){occ=new Int16Array(N).fill(-1);budget=0;const tun=[];for(let k=1;k<=T;k++)tun.push(step(O,d,k));const D=step(O,d,T+1);
+  for(const[,O,d,T]of cand.slice(0,LAB3_SEQ===LAB3_SEQS[LAB3_SEQS.length-1]?160:60)){occ=new Int16Array(N).fill(-1);budget=0;const tun=[];for(let k=1;k<=T;k++)tun.push(step(O,d,k));const D=step(O,d,T+1);
     // hava kilidinin yan komşuları kaya olmalı; tünel komşuları serbest
     const p=[-d[1],d[0]];if(!base(step(D,p,1))||!base(step(D,p,-1)))continue;occ[D]=99;for(const q of tun)occ[q]=98;
     result=null;if(placeRoom(0,D,d,[D],[])){return lab3Pack(result,O,D,tun,d,occ);}}
   return null;}
 function lab3Pack(list,O,D,tun,d,occ){const N=GW*GH;const zones=[],area=new Map(),cells=[D];area.set(D,-2);
-  for(const z of list){z.i=zones.length;zones.push(z);for(const c of z.cells){cells.push(c);area.set(c,z.i);}}
+  for(const z of list){z.i=zones.length;zones.push(z);for(const c of z.cells){cells.push(c);area.set(c,z.i);}if(z.t==='guard'&&z.con)for(const c of z.con){cells.push(c);area.set(c,z.i);}}
   const Fc=tun.length?tun[tun.length-1]:O;const doors=[{a:Fc,b:D,gate:'card'}];
   const lobby=zones.find(z=>z.t==='lobby');doors.push({a:D,b:lobby.cells.find(c=>c===D+d[0]+d[1]*GW)||lobby.cells[0],gate:null});
   for(const z of zones){if(z.t==='corr'||z.t==='conn'||z.t==='block'){doors.push({a:z.from,b:z.cells[0],gate:z.gate});}
-    else if(z.t!=='lobby'){const first=z.e+z.d[0]+z.d[1]*GW;doors.push({a:z.e,b:first,gate:null,into:z.i});}
+    else if(z.t!=='lobby'&&z.t!=='guard'){const first=z.e+z.d[0]+z.d[1]*GW;doors.push({a:z.e,b:first,gate:null,into:z.i});}
     if(z.t==='guard')doors.push({a:z.x,b:z.con[0],gate:null});}
   for(const q of cells.concat(tun)){grid[q]=1;natural[q]=0;dug[q]=0;water[q]=0;oreAt[q]=-1;feat[q]=0;roomId[q]=-1;}
   for(const q of cells.concat(tun))for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]){const n=q+dx+dy*GW;if(n>=0&&n<N&&!grid[n])LABW[n]=1;}
@@ -2385,7 +2387,7 @@ function lab3Pack(list,O,D,tun,d,occ){const N=GW*GH;const zones=[],area=new Map(
   const L={v3:true,O:Fc,D,dir:d,tun,cells,set:new Set(cells),area,zones,doors,d3:[d[0],0,d[1]],p3:[-d[1],0,d[0]]};
   for(const dr of doors)if(dr.gate)blockC[dr.b]=1;
   // kat çıkışı (kuyu) servis asansörüne taşınır
-  const lift=zones.find(z=>z.t==='lift');if(lift){let best=lift.cells[0],bd=-1;for(const c of lift.cells){const q=ctr(c),e=ctr(lift.e),dd=Math.hypot(q[0]-e[0],q[1]-e[1]);if(dd>bd){bd=dd;best=c;}}const[x,z]=ctr(best);G.shaft={c:best,x,z};}
+  const lift=zones.find(z=>z.t==='lift');if(lift){let best=lift.cells[0],bd=-1;const inner=lift.cells.filter(c=>[1,-1,GW,-GW,GW+1,GW-1,-GW+1,-GW-1].every(o=>lift.cells.includes(c+o)));if(inner.length){best=inner[0];bd=1e9;}else for(const c of lift.cells){const q=ctr(c),e=ctr(lift.e),dd=Math.hypot(q[0]-e[0],q[1]-e[1]);if(dd>bd){bd=dd;best=c;}}const[x,z]=ctr(best);G.shaft={c:best,x,z};}
   return L;}
 // laboratuvar kabuğu: hücre haritasından mesafe (düz duvar / yüksek tavan)
 function labNearD(x,z,map){const ci=Math.floor(x/S),cj=Math.floor(z/S);let b=9;for(let dj=-1;dj<=1;dj++)for(let di=-1;di<=1;di++){const i=ci+di,j=cj+dj;if(i<0||j<0||i>=GW||j>=GH||!map[j*GW+i])continue;
@@ -2395,6 +2397,31 @@ const LAB3_SIGN={hall:1,surg:2,kulu:14,ctrl:3,block:4,guard:10,corr:11,arena:12,
 function lab3Frame(z){// odanın yerel çerçevesi: u = giriş yönü, v = yan; merkez ve yarı boyutlar
   const d=z.d,p=[-d[1],d[0]];const[ex,ez]=ctr(z.e);const kc=(1+z.w)/2,bc=(-z.o+(z.h-1-z.o))/2;const cx=ex+(d[0]*kc+p[0]*bc)*S,cz=ez+(d[1]*kc+p[1]*bc)*S;
   return{cx,cz,d3:[d[0],0,d[1]],p3:[p[0],0,p[1]],hu:z.w*S/2,hv:z.h*S/2,RP:(u,v)=>[cx+d[0]*u+p[0]*v,cz+d[1]*u+p[1]*v]};}
+// ---- geçilebilirlik doğrulaması: oyuncu (r .42) girişten kafese kadar her odaya ve her eşyaya ulaşabilmeli; engelleyen mobilya/dekor kaldırılır ----
+function lab3Reach(L,r,h){const pts=[...L.cells,...L.tun,L.O].map(c=>ctr(c));let x0=1e9,z0=1e9,x1=-1e9,z1=-1e9;for(const[x,z]of pts){x0=Math.min(x0,x-1.4);z0=Math.min(z0,z-1.4);x1=Math.max(x1,x+1.4);z1=Math.max(z1,z+1.4);}
+  const W=Math.ceil((x1-x0)/h)+1,H=Math.ceil((z1-z0)/h)+1,okA=new Int8Array(W*H),seen=new Uint8Array(W*H);const ok=(i,j)=>{const k=j*W+i;if(okA[k])return okA[k]>0;const x=x0+i*h,z=z0+j*h;const v=!hits(x,z,r)&&envPen(x,z,r)<=1e-4;okA[k]=v?1:-1;return v;};
+  const[sx,sz]=ctr(L.O);let si=Math.round((sx-x0)/h),sj=Math.round((sz-z0)/h);{let bd=1e9,bi=-1,bj=-1;for(let dj=-7;dj<=7;dj++)for(let di=-7;di<=7;di++){const a=si+di,b=sj+dj;if(a<0||b<0||a>=W||b>=H)continue;if(ok(a,b)&&di*di+dj*dj<bd){bd=di*di+dj*dj;bi=a;bj=b;}}if(bi<0)return null;si=bi;sj=bj;}
+  let q=[si+sj*W];seen[q[0]]=1;const list=[];while(q.length){const nq=[];for(const k of q){list.push(k);const i=k%W,j=(k/W)|0;for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const a=i+di,b=j+dj;if(a<0||b<0||a>=W||b>=H)continue;const kk=b*W+a;if(seen[kk])continue;seen[kk]=1;if(ok(a,b))nq.push(kk);else seen[kk]=2;}}q=nq;}
+  const R2={x0,z0,h,W,H,list,seen};R2.near=(x,z,rad)=>{const ci=Math.round((x-x0)/h),cj=Math.round((z-z0)/h),n=Math.ceil(rad/h);for(let dj=-n;dj<=n;dj++)for(let di=-n;di<=n;di++){const a=ci+di,b=cj+dj;if(a<0||b<0||a>=W||b>=H)continue;if(di*di+dj*dj>n*n)continue;const k=b*W+a;if(seen[k]===1&&okA[k]>0)return true;}return false;};
+  R2.closest=(x,z)=>{let bd=1e9,bp=null;for(const k of list){const px=x0+(k%W)*h,pz=z0+((k/W)|0)*h,d=(px-x)**2+(pz-z)**2;if(d<bd){bd=d;bp=[px,pz];}}return bp;};return R2;}
+function lab3Validate(L){const doorOpen=[];for(const D of TH2.labDoors||[]){doorOpen.push([D.b,blockC[D.b]]);blockC[D.b]=0;}
+  // önce lab hücrelerindeki, tüneldeki ve kart kapısının önündeki mağara dekorunu kaldır
+  const D0=TH2.labDoor;for(const it of ENV.inst){if(it.hide||it.lab)continue;const c=cidx(it.x,it.z);if(L.set.has(c)||L.tun.includes(c)||(D0&&Math.hypot(it.x-D0.x,it.z-D0.z)<2.2))envHide(it);}
+  const killCol=c=>{const k=cidx(c.x,c.z);for(const kk of[k,k-1,k+1,k-GW,k+GW,k-GW-1,k-GW+1,k+GW-1,k+GW+1]){const A=ENV.colG.get(kk);if(!A)continue;for(let q=A.length-1;q>=0;q--)if(A[q]===c)A.splice(q,1);}const i2=ENV.cols.indexOf(c);if(i2>=0)ENV.cols.splice(i2,1);};
+  const removeIt=c=>{const it=c.it;if(it&&it.lab){const F=it.lab;for(const c2 of ENV.cols.slice())if(c2.it&&c2.it.lab===F)killCol(c2);const ix=TH.items.indexOf(F);if(ix>=0)TH.items.splice(ix,1);TH.dirty=true;
+      for(const u of TH2.use||[]){if(Math.hypot(u.x-F.x,u.z-F.z)<.8&&u.y>floorY(u.x,u.z)+.3&&(u.k==='silah'||u.k==='mermi'||u.k==='kris')){u.y=floorY(u.x,u.z)+(u.k==='kris'?.2:.05);}}return'mobilya '+F.k;}
+    if(it&&it.a){envHide(it);return'dekor '+it.a;}killCol(c);return'çarpıştırıcı';};
+  const log=[];
+  for(let pass=0;pass<14;pass++){const RR=lab3Reach(L,.44,.2);if(!RR)break;const T=[];
+    for(const c of L.cells){const[x,z]=ctr(c);if(!RR.near(x,z,1.15))T.push([x,z,'hücre']);}
+    for(const u of TH2.use||[]){if(u.x<-50||u.dead)continue;if(!/^(silah|mermi|dugme|kol2|kris|kart|ldoor)$/.test(u.k))continue;if(!RR.near(u.x,u.z,1.35))T.push([u.x,u.z,u.k]);}
+    if(G.shaft&&!RR.near(G.shaft.x,G.shaft.z,1.0))T.push([G.shaft.x,G.shaft.z,'kafes']);
+    if(!T.length)break;
+    // ilk hedef: başlangıca en yakın erişilemeyen
+    const t0=T[0],P=RR.closest(t0[0],t0[1]);if(!P)break;const ax=P[0],az=P[1],bx=t0[0],bz=t0[1],L2=(bx-ax)**2+(bz-az)**2||1;
+    let best=null,bd=1e9;for(const c of ENV.cols){if(!c.it||c.it.door||c.cage)continue;if(!(c.it.lab||c.it.a))continue;const tt=clamp(((c.x-ax)*(bx-ax)+(c.z-az)*(bz-az))/L2,0,1);const px=ax+(bx-ax)*tt,pz=az+(bz-az)*tt;const d=Math.hypot(c.x-px,c.z-pz)-c.r;if(d>.5)continue;const dd=Math.hypot(c.x-ax,c.z-az);if(dd<bd){bd=dd;best=c;}}
+    if(!best)break;log.push(t0[2]+': '+removeIt(best));}
+  for(const[b,v]of doorOpen)blockC[b]=v;if(log.length)console.log('lab3 geçiş düzeltmesi',log.join(' | '));TH2.lab3.fix=log;}
 function th2BuildLab3(L,R,rr,help,own){const{frame,col,fy}=help;const Y=(x,z)=>fy(x,z);TH2.lab=L;TH2.labMon=[];TH2.labLc=null;TH2.card=false;TH2.labDoors=[];TH2.le=[];TH2.leN=0;TH2.lab3={ev:{},alarm:0,dark:{},zoneIn:-9};
   if(TH2.signM){try{freeMesh(TH2.signM);}catch(e){}TH2.signM=null;}const signs=[];
   const zoneOf=c=>{const a=L.area.get(c);return a==null?null:a===-2?{t:'air',hc:3.02,i:-2}:L.zones[a];};
@@ -2409,7 +2436,7 @@ function th2BuildLab3(L,R,rr,help,own){const{frame,col,fy}=help;const Y=(x,z)=>f
   // kapılar: her geçit çelik perde duvar + sürgülü kanatlar (kilitli olanlar şartla açılır)
   const doorPts=[];
   for(const dr of L.doors){const[ax,az]=ctr(dr.a),[bx,bz]=ctr(dr.b);const n=[Math.sign(ax-bx),0,Math.sign(az-bz)],t=[-n[2],0,n[0]];const gx=(ax+bx)/2,gz=(az+bz)/2;
-    TH.items.push({k:'labG',c:dr.b,x:gx,z:gz,y:Y(gx,gz),t,n,top:ceilY(gx,gz)});for(const s of[-1,1])for(const bb of[.85,1.05])col(gx+t[0]*s*bb,gz+t[2]*s*bb,.2,{});
+    TH.items.push({k:'labG',c:dr.b,x:gx,z:gz,y:Y(gx,gz),t,n,top:ceilY(gx,gz)});for(const s of[-1,1])for(const bb of[.85,1.05])col(gx+t[0]*s*bb,gz+t[2]*s*bb,.2,{door:1});
     const D2={x:gx,z:gz,y:Y(gx,gz),t,n,gate:dr.gate,open:!dr.gate,t0:-9,b:dr.b,into:dr.into};TH2.labDoors.push(D2);doorPts.push([gx,gz]);
     const zb=zoneOf(dr.b);if(zb&&LAB3_SIGN[zb.t]!=null)signs.push({c:[gx+n[0]*.07,Y(gx,gz)+2.55,gz+n[2]*.07],n,w:1.45,h:.14,i:LAB3_SIGN[zb.t]});
     if(dr.gate==='card'){TH2.labDoor=D2;const dIt=th2Add({k:'ldoor',c:dr.a,x:gx+n[0]*.35,z:gz+n[2]*.35,y:Y(gx,gz),done:false});D2.it=dIt;
@@ -2419,53 +2446,54 @@ function th2BuildLab3(L,R,rr,help,own){const{frame,col,fy}=help;const Y=(x,z)=>f
     else if(dr.gate){D2.locked=true;signs.push({c:[gx+n[0]*.07-t[0]*.99,Y(gx,gz)+1.5,gz+n[2]*.07-t[2]*.99],n,w:.46,h:.045,i:6});}}
   const used=doorPts.map(p=>[p[0],p[1],1.3]);const free=(x,z,r)=>used.every(u=>Math.hypot(u[0]-x,u[1]-z)>r+u[2]);const put2=(x,z,r)=>used.push([x,z,r]);
   const inZ=(z,x,zz)=>z.cells.includes(cidx(x,zz));
-  const items={};const add=(it)=>{TH.items.push(it);return it;};
+  const items={};let lastIt=null;const add=(it)=>{TH.items.push(it);lastIt=it;return it;};
   const ammo=(x,z,c,n)=>{const it=th2Add({k:'mermi',c,x,z,y:Y(x,z),n:n||10,done:false});put2(x,z,.4);return it;};
   // duvar dibi yerleri
   const along=(F,z)=>{const out=[];for(let k=-3;k<=3;k++){out.push([F.hu-.72,k*1.15,[-F.d3[0],0,-F.d3[2]],F.p3],[-F.hu+.72,k*1.15,F.d3,[-F.p3[0],0,-F.p3[2]]],[k*1.15,F.hv-.68,[-F.p3[0],0,-F.p3[2]],[-F.d3[0],0,-F.d3[2]]],[k*1.15,-F.hv+.68,F.p3,F.d3]);}return out.sort(()=>R()-.5);};
   const kris=[];const mon=(x,z,log)=>TH2.labMon.push({x,z,seen:false,log});
   for(const z of L.zones){if(!z.w)continue;const F=lab3Frame(z);const ok=(u,v,r)=>{const[x,zz]=F.RP(u,v);return inZ(z,x,zz)&&free(x,zz,r);};
     const pick=(r,skip)=>{const A=along(F);for(const rr2 of[r,.2])for(const a of A){if(skip&&skip(a))continue;if(ok(a[0],a[1],rr2))return a;}for(const a of A){const[x,zz]=F.RP(a[0],a[1]);if(inZ(z,x,zz))return a;}return null;};
-    const bench=(u,v,n,t,mn,log)=>{const[x,zz]=F.RP(u,v);const it=add({k:'labB',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n,mon:mn,seed:(R()*1e9)|0});col(x,zz,.45,{});put2(x,zz,.85);if(mn)mon(x,zz,log);return it;};
+    const bench=(u,v,n,t,mn,log)=>{const[x,zz]=F.RP(u,v);const it=add({k:'labB',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n,mon:mn,seed:(R()*1e9)|0});col(x,zz,.45,{lab:lastIt});put2(x,zz,.85);if(mn)mon(x,zz,log);return it;};
     if(z.t==='lobby'){// resepsiyon bankosu, bekleme koltukları, büyük logo, turnike
-      if(ok(.2,0,1.1)){const[x,zz]=F.RP(.2,0);add({k:'labRD',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t:F.p3,n:[-F.d3[0],0,-F.d3[2]],seed:(R()*1e9)|0});for(const dv of[-1,0,1])col(x+F.p3[0]*dv,zz+F.p3[2]*dv,.45,{});put2(x,zz,1.4);mon(x,zz,0);}
-      let n=0;for(const[u,v,nn,t]of along(F)){if(n>=2)break;if(!ok(u,v,.7))continue;const[x,zz]=F.RP(u,v);add({k:'labCh',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn});col(x,zz,.4,{});put2(x,zz,.9);n++;}
+      if(ok(.2,0,1.1)){const[x,zz]=F.RP(.2,0);add({k:'labRD',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t:F.p3,n:[-F.d3[0],0,-F.d3[2]],seed:(R()*1e9)|0});for(const dv of[-1,0,1])col(x+F.p3[0]*dv,zz+F.p3[2]*dv,.45,{lab:lastIt});put2(x,zz,1.4);mon(x,zz,0);}
+      let n=0;for(const[u,v,nn,t]of along(F)){if(n>=2)break;if(!ok(u,v,.7))continue;const[x,zz]=F.RP(u,v);add({k:'labCh',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn});col(x,zz,.4,{lab:lastIt});put2(x,zz,.9);n++;}
       {const[x,zz]=F.RP(F.hu-.1,0);signs.push({c:[x-F.d3[0]*.02,Y(x,zz)+3.3,zz-F.d3[2]*.02],n:[-F.d3[0],0,-F.d3[2]],w:2.6,h:.26,i:0});}
-      for(const[u,v,nn]of along(F)){if(!ok(u,v,.5))continue;const[x,zz]=F.RP(u,v);add({k:'labPl',c:cidx(x,zz),x,z:zz,y:Y(x,zz)});col(x,zz,.3,{});put2(x,zz,.5);break;}
+      for(const[u,v,nn]of along(F)){if(!ok(u,v,.5))continue;const[x,zz]=F.RP(u,v);add({k:'labPl',c:cidx(x,zz),x,z:zz,y:Y(x,zz)});col(x,zz,.3,{lab:lastIt});put2(x,zz,.5);break;}
       {const[x,zz]=F.RP(-.3,F.hv-1.2);if(free(x,zz,.8)){add({k:'body',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t:F.d3,n:F.p3});put2(x,zz,.8);}}}
-    else if(z.t==='guard'){{const a=pick(.55);if(a){const[u,v,nn,t]=a;const[x,zz]=F.RP(u,v);add({k:'labB',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn,mon:true,seed:(R()*1e9)|0});col(x,zz,.45,{});put2(x,zz,.85);mon(x,zz,1);
-          const gx=x+t[0]*-.35+nn[0]*.05,gz=zz+t[2]*-.35+nn[2]*.05;items.gun=th2Add({k:'silah',w:'gun',c:cidx(x,zz),x:gx,z:gz,y:Y(x,zz)+.94,yaw:Math.atan2(t[0],t[2]),done:false});}}
-      {const a=pick(.55);if(a){const[u,v,nn,t]=a;const[x,zz]=F.RP(u,v);add({k:'labWR',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn});col(x,zz,.35,{});put2(x,zz,.7);}}
-      {const a=pick(.5);if(a){const[u,v,nn,t]=a;const[x,zz]=F.RP(u,v);const wx=x-nn[0]*.48,wz=zz-nn[2]*.48;items.btn=th2Add({k:'dugme',c:cidx(x,zz),x:wx+nn[0]*.4,z:wz+nn[2]*.4,y:Y(x,zz),px:wx,pz:wz,n:nn,t,done:false});put2(x,zz,.5);}}
-      if(!items.gun){const[x,zz]=F.RP(0,0);items.gun=th2Add({k:'silah',w:'gun',c:cidx(x,zz),x,z:zz,y:Y(x,zz)+.05,yaw:0,done:false});}
-      {const[x,zz]=F.RP(0,0);ammo(x+.3,zz+.3,cidx(x,zz),10);}}
+    else if(z.t==='guard'){// sabit düzen: giriş karşısındaki duvarda tezgâh (tabanca) ve silah dolabı, kilit düğmesi de aynı duvarda — giriş hep boş kalır
+      const nn=[-F.d3[0],0,-F.d3[2]],t=F.p3;
+      {const[x,zz]=F.RP(F.hu-.55,-F.hv*.42);add({k:'labB',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn,mon:true,seed:(R()*1e9)|0});col(x,zz,.45,{lab:lastIt});put2(x,zz,.85);mon(x,zz,1);
+        const gx=x+t[0]*-.35+nn[0]*.05,gz=zz+t[2]*-.35+nn[2]*.05;items.gun=th2Add({k:'silah',w:'gun',c:cidx(x,zz),x:gx,z:gz,y:Y(x,zz)+.94,yaw:Math.atan2(t[0],t[2]),done:false});}
+      {const[x,zz]=F.RP(F.hu-.45,F.hv*.62);add({k:'labWR',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn});col(x,zz,.35,{lab:lastIt});put2(x,zz,.7);}
+      {const[x,zz]=F.RP(F.hu-.24,F.hv*.12);const wx=x,wz=zz;items.btn=th2Add({k:'dugme',c:cidx(x,zz),x:wx+nn[0]*.4,z:wz+nn[2]*.4,y:Y(x,zz),px:wx,pz:wz,n:nn,t,done:false});put2(x,zz,.5);}
+      {const[x,zz]=F.RP(-.2,0);ammo(x,zz,cidx(x,zz),10);}}
     else if(z.t==='hall'){// iki sıra uzun tank (bir kısmı kırık: yavrular buradan çıkar), ortada kristal muhafazası
-      z.spawn=[];for(const v of[-F.hv+.95,F.hv-.95])for(let u=-F.hu+1;u<=F.hu-1;u+=1.3){if(!ok(u,v,.55))continue;const[x,zz]=F.RP(u,v);const br=R()<.35;add({k:'labT',c:cidx(x,zz),x,z:zz,y:Y(x,zz),br,tall:true,seed:(R()*1e9)|0});col(x,zz,.5,{});put2(x,zz,.6);if(br||R()<.4)z.spawn.push([x-F.p3[0]*Math.sign(v)*.9,zz-F.p3[2]*Math.sign(v)*.9]);}
-      {const[x,zz]=F.RP(.3,0);add({k:'labP',c:cidx(x,zz),x,z:zz,y:Y(x,zz),big:true});col(x,zz,.35,{});put2(x,zz,.6);kris.push(th2Add({k:'kris',ki:0,c:cidx(x,zz),x,z:zz,y:Y(x,zz)+.62,done:false,ph:R()*TAU}));
+      z.spawn=[];for(const v of[-F.hv+.95,F.hv-.95])for(let u=-F.hu+1;u<=F.hu-1;u+=1.3){if(!ok(u,v,.55))continue;const[x,zz]=F.RP(u,v);const br=R()<.35;add({k:'labT',c:cidx(x,zz),x,z:zz,y:Y(x,zz),br,tall:true,seed:(R()*1e9)|0});col(x,zz,.5,{lab:lastIt});put2(x,zz,.6);if(br||R()<.4)z.spawn.push([x-F.p3[0]*Math.sign(v)*.9,zz-F.p3[2]*Math.sign(v)*.9]);}
+      {const[x,zz]=F.RP(.3,0);add({k:'labP',c:cidx(x,zz),x,z:zz,y:Y(x,zz),big:true});col(x,zz,.35,{lab:lastIt});put2(x,zz,.6);kris.push(th2Add({k:'kris',ki:0,c:cidx(x,zz),x,z:zz,y:Y(x,zz)+.62,done:false,ph:R()*TAU}));
         add({k:'labH',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t:F.d3,n:F.p3,hu:1.1,hv:1.1});}
       {const[x,zz]=F.RP(-F.hu+.8,F.hv-.8);if(free(x,zz,.4))ammo(x,zz,cidx(x,zz),8);}}
-    else if(z.t==='surg'){if(ok(-.2,0,.9)){const[x,zz]=F.RP(-.2,0);add({k:'labO',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t:F.d3,n:F.p3,top:Math.min(Y(x,zz)+z.hc,ceilY(x,zz)),seed:(R()*1e9)|0});for(const da of[-.7,0,.7])col(x+F.d3[0]*da,zz+F.d3[2]*da,.45,{});put2(x,zz,1.1);}
-      let mg=0;for(const[u,v,nn,t]of along(F)){if(mg>=1)break;if(!ok(u,v,.8))continue;const[x,zz]=F.RP(u,v);add({k:'labMg',c:cidx(x,zz),x:x-nn[0]*.45,z:zz-nn[2]*.45,y:Y(x,zz),t,n:nn});col(x,zz,.5,{});put2(x,zz,1.2);mg++;}
-      let tr=0;for(const[u,v,nn,t]of along(F)){if(tr>=1)break;if(!ok(u,v,.55))continue;const[x,zz]=F.RP(u,v);add({k:'labB',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn,mon:true,seed:(R()*1e9)|0});col(x,zz,.45,{});put2(x,zz,.85);mon(x,zz,2);tr++;}
+    else if(z.t==='surg'){if(ok(-.2,0,.9)){const[x,zz]=F.RP(-.2,0);add({k:'labO',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t:F.d3,n:F.p3,top:Math.min(Y(x,zz)+z.hc,ceilY(x,zz)),seed:(R()*1e9)|0});for(const da of[-.7,0,.7])col(x+F.d3[0]*da,zz+F.d3[2]*da,.45,{lab:lastIt});put2(x,zz,1.1);}
+      let mg=0;for(const[u,v,nn,t]of along(F)){if(mg>=1)break;if(!ok(u,v,.8))continue;const[x,zz]=F.RP(u,v);add({k:'labMg',c:cidx(x,zz),x:x-nn[0]*.45,z:zz-nn[2]*.45,y:Y(x,zz),t,n:nn});col(x,zz,.5,{lab:lastIt});put2(x,zz,1.2);mg++;}
+      let tr=0;for(const[u,v,nn,t]of along(F)){if(tr>=1)break;if(!ok(u,v,.55))continue;const[x,zz]=F.RP(u,v);add({k:'labB',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn,mon:true,seed:(R()*1e9)|0});col(x,zz,.45,{lab:lastIt});put2(x,zz,.85);mon(x,zz,2);tr++;}
       {let P=null;for(const[u,v]of[[F.hu-1.1,-F.hv+1.1],[F.hu-1.1,F.hv-1.1],[.9,F.hv-1],[-F.hu+1,F.hv-1],[-F.hu+1,-F.hv+1],[F.hu-.8,0]]){if(ok(u,v,.4)){P=[u,v];break;}}if(!P)for(const[u,v]of[[F.hu-.9,0],[0,F.hv-.9],[0,-F.hv+.9]]){const[x,zz]=F.RP(u,v);if(inZ(z,x,zz)){P=[u,v];break;}}if(!P)P=[0,0];
-        const[x,zz]=F.RP(P[0],P[1]);add({k:'labP',c:cidx(x,zz),x,z:zz,y:Y(x,zz)});col(x,zz,.3,{});put2(x,zz,.5);kris.push(th2Add({k:'kris',ki:1,c:cidx(x,zz),x,z:zz,y:Y(x,zz)+.62,done:false,ph:R()*TAU}));}
+        const[x,zz]=F.RP(P[0],P[1]);add({k:'labP',c:cidx(x,zz),x,z:zz,y:Y(x,zz)});col(x,zz,.3,{lab:lastIt});put2(x,zz,.5);kris.push(th2Add({k:'kris',ki:1,c:cidx(x,zz),x,z:zz,y:Y(x,zz)+.62,done:false,ph:R()*TAU}));}
       for(let k=0;k<3;k++){const[x,zz]=F.RP((R()-.5)*F.hu*1.4,(R()-.5)*F.hv*1.4);if(!free(x,zz,.5)||!inZ(z,x,zz))continue;add({k:'labBag',c:cidx(x,zz),x,z:zz,y:Y(x,zz),r:R()*TAU});put2(x,zz,.6);}
       {const[x,zz]=F.RP(-F.hu+.8,-F.hv+.8);if(free(x,zz,.4))ammo(x,zz,cidx(x,zz),8);}
       z.passFrom=F.RP(F.hu-.7,-F.hv+.7);z.passTo=F.RP(F.hu-.7,F.hv-.7);}
     else if(z.t==='kulu'){// kuluçka makineleri (kısa tanklar, çoğu kırık), ısı lambaları, yerde zar ve kan; yavrular dalga dalga buradan çıkar
-      z.spawn=[];for(const v of[-F.hv+.85,F.hv-.85])for(let u=-F.hu+.9;u<=F.hu-.9;u+=1.25){if(!ok(u,v,.5))continue;const[x,zz]=F.RP(u,v);const br=R()<.6;add({k:'labT',c:cidx(x,zz),x,z:zz,y:Y(x,zz),br,seed:(R()*1e9)|0});col(x,zz,.45,{});put2(x,zz,.55);(z.heat||(z.heat=[])).push([x,Y(x,zz)+1.25,zz,R()*TAU]);z.spawn.push([x-F.p3[0]*Math.sign(v)*.85,zz-F.p3[2]*Math.sign(v)*.85]);}
-      for(const u of[-F.hu*.35,F.hu*.35]){if(!ok(u,0,.5))continue;const[x,zz]=F.RP(u,0);add({k:'labT',c:cidx(x,zz),x,z:zz,y:Y(x,zz),br:true,seed:(R()*1e9)|0});col(x,zz,.45,{});put2(x,zz,.55);z.spawn.push([x+F.d3[0]*.8,zz+F.d3[2]*.8]);}
+      z.spawn=[];for(const v of[-F.hv+.85,F.hv-.85])for(let u=-F.hu+.9;u<=F.hu-.9;u+=1.25){if(!ok(u,v,.5))continue;const[x,zz]=F.RP(u,v);const br=R()<.6;add({k:'labT',c:cidx(x,zz),x,z:zz,y:Y(x,zz),br,seed:(R()*1e9)|0});col(x,zz,.45,{lab:lastIt});put2(x,zz,.55);(z.heat||(z.heat=[])).push([x,Y(x,zz)+1.25,zz,R()*TAU]);z.spawn.push([x-F.p3[0]*Math.sign(v)*.85,zz-F.p3[2]*Math.sign(v)*.85]);}
+      for(const u of[-F.hu*.35,F.hu*.35]){if(!ok(u,0,.5))continue;const[x,zz]=F.RP(u,0);add({k:'labT',c:cidx(x,zz),x,z:zz,y:Y(x,zz),br:true,seed:(R()*1e9)|0});col(x,zz,.45,{lab:lastIt});put2(x,zz,.55);z.spawn.push([x+F.d3[0]*.8,zz+F.d3[2]*.8]);}
       for(let k=0;k<10;k++){const[x,zz]=F.RP((R()-.5)*F.hu*1.7,(R()-.5)*F.hv*1.7);if(!inZ(z,x,zz)||!free(x,zz,.2))continue;add({k:'labS',c:cidx(x,zz),x,z:zz,y:Y(x,zz),r:R()*TAU,s:1});}
       for(let k=0;k<3;k++){const[x,zz]=F.RP((R()-.5)*F.hu*1.3,(R()-.5)*F.hv*1.3);if(!free(x,zz,.5)||!inZ(z,x,zz))continue;add({k:'labBag',c:cidx(x,zz),x,z:zz,y:Y(x,zz),r:R()*TAU});put2(x,zz,.6);}
       let b=0;for(const[u,v,nn,t]of along(F)){if(b>=1)break;if(!ok(u,v,.6))continue;bench(u,v,nn,t,true,3);b++;}
       for(const[u,v]of[[-F.hu+.75,-F.hv+.75],[F.hu-.75,F.hv-.75],[F.hu-.75,-F.hv+.75]]){const[x,zz]=F.RP(u,v);if(free(x,zz,.4)&&inZ(z,x,zz))ammo(x,zz,cidx(x,zz),10);}}
     else if(z.t==='ctrl'){let k=0;for(const[u,v,nn,t]of along(F)){if(k>=3)break;if(!ok(u,v,.6))continue;bench(u,v,nn,t,true,[4,6,5][k]);k++;}
-      let s=0;for(const[u,v,nn,t]of along(F)){if(s>=2)break;if(!ok(u,v,.45))continue;const[x,zz]=F.RP(u,v);add({k:'labQ',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn,seed:(R()*1e9)|0});col(x,zz,.35,{});put2(x,zz,.5);s++;}
+      let s=0;for(const[u,v,nn,t]of along(F)){if(s>=2)break;if(!ok(u,v,.45))continue;const[x,zz]=F.RP(u,v);add({k:'labQ',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn,seed:(R()*1e9)|0});col(x,zz,.35,{lab:lastIt});put2(x,zz,.5);s++;}
       {const a=pick(.55);if(a){const[u,v,nn,t]=a;const[x,zz]=F.RP(u,v);const wx=x-nn[0]*.45,wz=zz-nn[2]*.45;items.lever=th2Add({k:'kol2',c:cidx(x,zz),x:wx+nn[0]*.45,z:wz+nn[2]*.45,y:Y(x,zz),px:wx,pz:wz,n:nn,t,done:false});put2(x,zz,.6);}}
-      for(const[u,v,nn,t]of along(F)){if(!ok(u,v,.55))continue;const[x,zz]=F.RP(u,v);add({k:'labWR',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn,sg:true});col(x,zz,.35,{});put2(x,zz,.7);items.sg=th2Add({k:'silah',w:'pompa',c:cidx(x,zz),x:x+nn[0]*.3,z:zz+nn[2]*.3,y:Y(x,zz)+1.0,yaw:Math.atan2(t[0],t[2]),done:false});break;}
+      for(const[u,v,nn,t]of along(F)){if(!ok(u,v,.55))continue;const[x,zz]=F.RP(u,v);add({k:'labWR',c:cidx(x,zz),x,z:zz,y:Y(x,zz),t,n:nn,sg:true});col(x,zz,.35,{lab:lastIt});put2(x,zz,.7);items.sg=th2Add({k:'silah',w:'pompa',c:cidx(x,zz),x:x+nn[0]*.3,z:zz+nn[2]*.3,y:Y(x,zz)+1.0,yaw:Math.atan2(t[0],t[2]),done:false});break;}
       {const[x,zz]=F.RP(0,0);if(free(x,zz,.4))ammo(x,zz,cidx(x,zz),12);}}
     else if(z.t==='arena'){// ortada kırık dev muhafaza; zincirler, kan; DENEK-0 burada
-      {const[x,zz]=F.RP(.3,0);add({k:'labBig',c:cidx(x,zz),x,z:zz,y:Y(x,zz),top:Math.min(Y(x,zz)+z.hc,ceilY(x,zz)),seed:(R()*1e9)|0});col(x,zz,1.05,{});put2(x,zz,1.6);
+      {const[x,zz]=F.RP(.3,0);add({k:'labBig',c:cidx(x,zz),x,z:zz,y:Y(x,zz),top:Math.min(Y(x,zz)+z.hc,ceilY(x,zz)),seed:(R()*1e9)|0});col(x,zz,1.05,{lab:lastIt});put2(x,zz,1.6);
         kris.push(th2Add({k:'kris',ki:2,c:cidx(x,zz),x:x-F.d3[0]*1.25,z:zz-F.d3[2]*1.25,y:Y(x,zz)+.62,done:false,ph:R()*TAU,lock:true}));add({k:'labP',c:cidx(x,zz),x:x-F.d3[0]*1.25,z:zz-F.d3[2]*1.25,y:Y(x,zz)});}
       for(let k=0;k<6;k++){const[x,zz]=F.RP((R()-.5)*F.hu*1.6,(R()-.5)*F.hv*1.6);if(!inZ(z,x,zz))continue;add({k:'labCn',c:cidx(x,zz),x,z:zz,y:Y(x,zz),top:Math.min(Y(x,zz)+z.hc,ceilY(x,zz)),L:1.5+R()*2.2});}
       for(let k=0;k<8;k++){const[x,zz]=F.RP((R()-.5)*F.hu*1.7,(R()-.5)*F.hv*1.7);if(!inZ(z,x,zz))continue;add({k:'labS',c:cidx(x,zz),x,z:zz,y:Y(x,zz),r:R()*TAU,s:1});}
@@ -2485,7 +2513,8 @@ function th2BuildLab3(L,R,rr,help,own){const{frame,col,fy}=help;const Y=(x,z)=>f
   const boss=th2Add({k:'bossx',c:L.D,x:-99,z:-99,y:0,done:false,ctxSkip:true});if(L.zones.some(q=>q.t==='kulu'))items.nest=th2Add({k:'nestx',c:L.D,x:-99,z:-99,y:0,done:false,ctxSkip:true});
   TH2.mis={k:'lab3',kris,boss,items};TH2.lockers=[];
   {const og=g=>{for(const D of TH2.labDoors)if(D.gate===g){D.open=true;D.t0=-9;blockC[D.b]=0;}};if(!items.btn)og('guard');if(!items.lever)og('lever');if(!kris.some(k=>k.ki===0))og('kris1');if(!kris.some(k=>k.ki===1))og('kris2');}
-  try{labSignTex();TH2.signM=labSignMesh(signs);}catch(e){console.warn('tabela',e);}}
+  try{labSignTex();TH2.signM=labSignMesh(signs);}catch(e){console.warn('tabela',e);}
+  try{lab3Validate(L);}catch(e){console.warn('lab3 doğrulama',e);}}
 // ---------- tesis senaryosu, laboratuvar düşmanları (kuluçka yavruları + DENEK-0), silahlar ----------
 const LAB3_LOG=['Gün 1. Derinkaya Ar-Ge, Yankı Projesi. Damarın içinde canlı bir doku bulduk. Ona konuştuğumuzda, sesimizi geri veriyor.',
   'GÜVENLİK KAYDI: Kod kırmızı. DENEK-0 B hücresinden çıktı. Tekin Bey bütün kapıları mühürletti. Silahlı personel kalsın.',
@@ -2517,7 +2546,9 @@ function lab3Tick(dt){const L=TH2.lab;if(!L||!L.v3||RUN.floor!==5)return;const S
       if(host&&(z.t==='corr'||z.t==='block')&&!S3.ev['amb'+zi]&&c===z.trig){S3.ev['amb'+zi]=1;lab3Ambush(z);if(NET.started)netLog('za',zi);}}}
   if(!NET.started||NET.host)for(const e of TH2.le)leUpdate(e,dt);else for(const e of TH2.le){if(e.k==='denek')dzTick(e,dt);}
   // yalnız kalan kuluçka yavrusu/denek sesleri
-  for(const e of TH2.le){if(e.st==='dead'||e.st==='gone'||!e.em)continue;audTick(e.em,e.k==='yavru'?'idle':(e.st==='chase'?'chase':'breathing'),dt);}}
+  // denek kendi nefesini çalar; yavrular ortak sırayla (12 yavru aynı sesi üst üste tekrarlamasın)
+  for(const e of TH2.le){if(e.st==='dead'||e.st==='gone'||!e.em||e.k==='yavru')continue;audTick(e.em,e.st==='chase'?'chase':'breathing',dt);}
+  S3.yIdT=(S3.yIdT??3)-dt;if(S3.yIdT<=0){const Y=TH2.le.filter(e=>e.k==='yavru'&&e.em&&e.st!=='dead'&&e.st!=='gone'&&Math.hypot(e.x-pl.x,e.z-pl.z)<24);S3.yIdT=Y.length?4.5+Math.random()*5:2;if(Y.length){const e=Y[Math.floor(Math.random()*Y.length)];if(e!==S3.yLast||Y.length===1){S3.yLast=e;try{audPlay(e.em,'idle');}catch(er){}}}}}
 function lab3Enter(z){const S3=TH2.lab3;if(S3.ev['in'+z.i])return;S3.ev['in'+z.i]=1;const say=l=>{try{radioSay(l);}catch(e){}};
   if(z.t==='lobby')say([['N','Lobi. Resepsiyonun arkasında DERİNKAYA logosu. Bankonun önünde devrilmiş bir sandalye, yerde kurumuş kan.'],['R','Yan taraftaki güvenlik odası… orada silah olmalı.']]);
   else if(z.t==='guard')say([['N','Güvenlik odası. Silah dolabı açık; tabancalardan biri hâlâ yerinde. Duvarda lobi kapısının kilit düğmesi.']]);
@@ -2536,11 +2567,15 @@ function lab3Nest(z){const S3=TH2.lab3;if(S3.nest)return;S3.nest={z:z.i,w:0,ids:
   for(const D of TH2.labDoors)if(D.into===z.i)lab3DoorLock(D,true);S3.alarm=Math.max(S3.alarm,6);sfx('klax',.5,0,false);G.shake=Math.max(G.shake,.25);
   try{radioSay([['N','KAPILAR KİLİTLENDİ. Kuluçka makineleri açılıyor!'],['Y','Doğum günleri… sizin sesinizle.']]);}catch(e){}}
 function lab3NestTick(){const S3=TH2.lab3,N=S3.nest;if(!N||N.done||(NET.started&&!NET.host))return;const L=TH2.lab,z=L.zones[N.z];if(G.time<N.t)return;
-  const alive=N.ids.filter(id=>{const e=TH2.le.find(q=>q.id===id);return e&&e.st!=='dead'&&e.st!=='gone';}).length;if(alive)return;
+  const AL=N.ids.map(id=>TH2.le.find(q=>q.id===id)).filter(e=>e&&e.st!=='dead'&&e.st!=='gone');
+  if(AL.length){// takılan yavru dalgayı kilitlemesin: 30 sn sonra uzaktakiler odaya geri çağrılır, 75 sn sonra dalga biter
+    const wt=G.time-(N.wT||G.time);const T=leTargets();
+    if(wt>30&&G.time>(N.rcT||0)){N.rcT=G.time+8;const pts=(z.spawn&&z.spawn.length?z.spawn:z.cells.map(c=>ctr(c)));for(const e of AL){const d=Math.min(99,...T.map(q=>Math.hypot(q.x-e.x,q.z-e.z)));if(d<8)continue;const p=pts[Math.floor(Math.random()*pts.length)];e.x=p[0];e.z=p[1];e.st='hunt';e.path=null;e.repath=0;sfxAt('babyScreech',p[0],p[1],.8,30);}}
+    if(wt>75){for(const e of AL){e.hp=.01;leDamage(e,1);}}return;}
   if(N.w>=3){N.done=true;lab3OpenGate('nest');for(const D of TH2.labDoors)if(D.into===z.i)lab3DoorLock(D,false);if(TH2.mis&&TH2.mis.items.nest){const it=TH2.mis.items.nest;if(!it.done){netLog('t2',it.id);th2Do(it,true);}}
     try{radioSay([['N','Son kuluçka makinesi de boşaldı. Kilitler açıldı.'],['R','Kontrol odası ileride. Hücre bloğunun kolu orada.']]);}catch(e){}return;}
   if(N.w>0&&!N.pause){N.pause=1;N.t=G.time+2.4;try{radioSay([['N',N.w===1?'Bir makine daha çatlıyor…':'Sonuncusu! En büyükleri.']]);}catch(e){}return;}
-  N.pause=0;N.w++;const n=[3,4,5][N.w-1];const pts=(z.spawn&&z.spawn.length?z.spawn:z.cells.map(c=>ctr(c))).slice().sort(()=>Math.random()-.5);
+  N.pause=0;N.w++;N.wT=G.time;const n=[3,4,5][N.w-1];const pts=(z.spawn&&z.spawn.length?z.spawn:z.cells.map(c=>ctr(c))).slice().sort(()=>Math.random()-.5);
   for(let i=0;i<n;i++){const p=pts[i%pts.length];lab3Q(.15+i*.55,()=>{sfxAt('glass',p[0],p[1],1,30);sfxAt('babyScreech',p[0],p[1],.9,30);const e=leSpawn('yavru',p[0]+(Math.random()-.5)*.5,p[1]+(Math.random()-.5)*.5,{st:'hunt',t:0});if(e)N.ids.push(e.id);});}
   N.t=G.time+.4+n*.55;}
 function lab3Ambush(z){const L=TH2.lab;sfx('babyScreech',.9,(Math.random()-.5),true);G.shake=Math.max(G.shake,.15);TH2.lab3.dark[z.i]=2.4;
@@ -2548,7 +2583,7 @@ function lab3Ambush(z){const L=TH2.lab;sfx('babyScreech',.9,(Math.random()-.5),t
   for(let k=0;k<n;k++){const p=pts[k%pts.length];leSpawn('yavru',p[0]+(Math.random()-.5)*.6,p[1]+(Math.random()-.5)*.6);}
   try{radioSay([['Y',z.t==='block'?'Onları besledim. Sizi bekliyorlardı.':'Onları uyandırdınız.']]);}catch(e){}}
 function lab3Q(dl,f){const S3=TH2.lab3;(S3.q||(S3.q=[])).push({t:G.time+dl,f});}
-function lab3Alarm(){const L=TH2.lab,S3=TH2.lab3;S3.alarm=24;sfx('klax',.5,0,false);for(let k=1;k<=6;k++)lab3Q(k*3.2,()=>sfx('klax',.42,0,false));
+function lab3Alarm(){const L=TH2.lab,S3=TH2.lab3;S3.alarm=24;sfx('klax',.5,0,false);for(let k=1;k<=4;k++)lab3Q(k*3.6,()=>sfx('klax',.4-.05*k,0,false));
   const hall=L.zones.find(z=>z.t==='hall');if(hall){const pts=hall.spawn&&hall.spawn.length?hall.spawn:[ctr(hall.e)];for(let i=0;i<4;i++){const p=pts[i%pts.length];lab3Q(.5+i*.7,()=>{sfxAt('glass',p[0],p[1],1.1,30);if(!NET.started||NET.host)leSpawn('yavru',p[0],p[1]);});}}
   try{radioSay([['N','ALARM. Tankların camları birer birer patlıyor!']]);}catch(e){}}
 function lab3Boss(z){const S3=TH2.lab3;if(S3.ev.boss)return;S3.ev.boss=1;if(NET.started&&!NET.host)return;
@@ -2586,8 +2621,9 @@ function leUpdate(e,dt){if(e.st==='dead'){e.fall=Math.min(1.45,e.fall+dt*2.2);re
   if(e.st==='attack'){e.t-=dt;e.face=turnTo(e.face,face,dt*3);if(!e.hit&&e.t<.6){e.hit=true;if(td<2.3)leHit(e,tg,e.boss?42:34,'denek');}if(e.t<=0){e.st='chase';dzPlay(e,'E_Walk',1.8);}return;}}
 function leDamage(e,dmg){if(!e||e.st==='dead'||e.st==='gone')return;if(NET.started&&!NET.host){netLog('xd',e.id,dmg);e.flash=.12;return;}
   e.hp-=dmg;e.flash=.12;e.stun=e.k==='yavru'?.18:(e.boss?.05:.12);const fy=floorY(e.x,e.z);spark(e.x,fy+(e.k==='yavru'?.45:1.3*e.sc),e.z,[.5,.04,.03],10);
-  if(e.hp<=0){e.st='dead';e.fall=0;e.hp=0;leSay(e,'death',()=>sfxAt(e.k==='yavru'?'babyDie':'roar',e.x,e.z,1.1,40));if(e.k==='denek'){dzPlay(e,'E_Staring',.2);if(e.boss)lab3BossDead();}return;}
-  leSay(e,'pain',()=>sfxAt(e.k==='yavru'?'babyDie':'growl',e.x,e.z,.8,30));
+  const S3q=TH2.lab3||{},ySnd=e.k!=='yavru'||G.time-(S3q.ySndT||-9)>.32;if(ySnd&&e.k==='yavru')S3q.ySndT=G.time;
+  if(e.hp<=0){e.st='dead';e.fall=0;e.hp=0;if(ySnd)leSay(e,'death',()=>sfxAt(e.k==='yavru'?'babyDie':'roar',e.x,e.z,1.1,40));else sfxAt('squelch',e.x,e.z,.6,25);if(e.k==='denek'){dzPlay(e,'E_Staring',.2);if(e.boss)lab3BossDead();}return;}
+  if(ySnd)leSay(e,'pain',()=>sfxAt(e.k==='yavru'?'babyDie':'growl',e.x,e.z,.8,30));
   if(e.boss){const r=e.hp/e.max;if(!e.ph&&r<=.55){e.ph=1;lab3BossPhase(e,1);}else if(e.ph===1&&r<=.25){e.ph=2;lab3BossPhase(e,2);}}
   if(e.k==='denek'&&!e.boss&&e.hp<=14&&e.st!=='retreat'){e.st='retreat';e.path=null;try{radioSay([['Y','Acıyor… Ama Ana Hücre\'de… bekliyorum.']]);}catch(er){}}
   if(e.k==='yavru'&&e.st==='lurk')e.st='hunt';if(e.k==='denek'&&e.st==='stalk')e.st='chase';}
@@ -2657,7 +2693,7 @@ function fpGun(camW,kind,bobx,boby){const rc=pl.recoil||0;pl.recoil=Math.max(0,r
     draw(MS,X(m,M4.T(.005,-.075,.035),M4.S(.085,.11,.09)),GL,Z3,4);draw(MC,X(m,M4.T(-.012,-.04,-.02),M4.RZ(Math.PI/2),M4.S(.026,.06,.026)),GL,Z3,4);draw(MC,X(m,M4.T(.02,-.13,.15),M4.RX(-1.0),M4.S(.12,.36,.12)),[.1,.11,.14],Z3,4);}
   if(TH2.flash&&G.time-TH2.flash.t<.06){const f=1-(G.time-TH2.flash.t)/.06,z=kind==='pompa'?-.72:-.19,y=kind==='pompa'?.04:.025;const mm=X(base,M4.T(0,y,z));draw(MO,X(mm,M4.RZ(G.time*40),M4.S(.06*f+.03,.06*f+.03,.12*f)),[0,0,0],[3*f,2*f,.8*f],0);}}
 const LAB3_LOCK={card:'Kart okuyucu kırmızı. Ölü güvenlikçinin kartı lazım.',guard:'Kilitli. Güvenlik odasındaki düğme bu kapıyı açar.',kris1:'Kilitli. Salondaki kristal muhafazası açılınca kilit kalkar.',kris2:'Kilitli. Ameliyathanedeki kristal alınınca açılır.',nest:'Kilitli. Kuluçka makinelerinin hepsi boşalmadan açılmaz.',lever:'Kilitli. Kontrol odasındaki HÜCRE BLOĞU KİLİDİ koluyla açılır.',boss:'Kilitli. DENEK-0 yaşadıkça bu kapı açılmaz.'};
-function lab3DoorHint(){if(G.state!=='play'||!TH2.labDoors)return;const S3=TH2.lab3;if(G.time<(S3.hintT||0))return;for(const D of TH2.labDoors){if(D.open)continue;const d=Math.hypot(D.x-pl.x,D.z-pl.z);if(d>1.7)continue;const m=D.gate?LAB3_LOCK[D.gate]:(S3.nest&&!S3.nest.done?'Kapı kilitlendi! Önce yavruları temizle.':'Kapı kilitli.');if(D.gate==='card'&&TH2.card)return;toast(m,2.2);sfx('blip',.35);S3.hintT=G.time+5;return;}}
+function lab3DoorHint(){if(G.state!=='play'||!TH2.labDoors)return;const S3=TH2.lab3;if(G.time<(S3.hintT||0))return;for(const D of TH2.labDoors){if(D.open)continue;const d=Math.hypot(D.x-pl.x,D.z-pl.z);if(d>1.7)continue;const m=D.gate?LAB3_LOCK[D.gate]:(S3.nest&&!S3.nest.done?'Kapı kilitlendi! Önce yavruları temizle.':'Kapı kilitli.');if(D.gate==='card'&&TH2.card)return;if(G.time<(D.hintT||0))continue;D.hintT=G.time+14;toast(m,2.4);sfx('blip',.3);S3.hintT=G.time+4;return;}}
 function lab3OpenGate(g){for(const D of TH2.labDoors||[]){if(D.gate!==g)continue;D.want=false;if(!D.open){D.open=true;D.relock=false;D.t0=G.time;blockC[D.b]=0;sfxAt('liftGate',D.x,D.z,1.1,40);sfxAt('hiss',D.x,D.z,.9,30);}}}
 function lab3MisTxt(m){const it=m.items||{},D0=TH2.labDoor,S3=TH2.lab3||{ev:{}};const nk=m.kris.filter(k=>k.done).length;const KR=i=>m.kris.find(k=>k.ki===i)||{done:true};
   if(D0&&!D0.open)return TH2.card?'Kart sende. Tesisin çelik kapısına git, kartı okut.':'Kayadaki çelik kapı kilitli. Kapının önündeki ölü güvenlikçinin kartını al.';
@@ -4135,9 +4171,12 @@ function newGame(){LAMB.card=false;
   const E=rooms[entrance];const OD=exitDir,PD=[-OD[1],OD[0]];const[cx,cz]=ctr(E.cy*GW+E.cx);
   railPath=[E.cy*GW+E.cx];cart.s=0;cart.target=null;G.cartYaw0=Math.atan2(PD[0],PD[1]);
   G.lift={x:cx+OD[0]*S*1.55,z:cz+OD[1]*S*1.55,yaw:Math.atan2(OD[0],OD[1])};
-  pl={x:G.lift.x-OD[0]*.2,z:G.lift.z-OD[1]*.2,yaw:Math.atan2(OD[0],OD[1]),pitch:-.05,lamp:true,bat:1,carry:null,bob:0,stepT:0,swing:0,throwT:0,adapt:0,struggle:0,rescueT:0,genT:0,tool:0,coughT:2,buryCell:-1,buryT:0};
+  const SLOT=[[-.52,-.58],[-.52,.58],[.55,-.58],[.55,.58]],slotAt=k=>{const sl=SLOT[k%4];return[G.lift.x+OD[0]*sl[0]+PD[0]*sl[1],G.lift.z+OD[1]*sl[0]+PD[1]*sl[1]];};
+  let myS=0,humN=1;if(NET.started){const ids=[NET.myPeer,...NET.peers.keys()].map(String).sort();myS=Math.max(0,ids.indexOf(String(NET.myPeer)));humN=ids.length;}
+  const p0=slotAt(myS);
+  pl={x:p0[0],z:p0[1],yaw:Math.atan2(OD[0],OD[1]),pitch:-.05,lamp:true,bat:1,carry:null,bob:0,stepT:0,swing:0,throwT:0,adapt:0,struggle:0,rescueT:0,genT:0,tool:0,coughT:2,buryCell:-1,buryT:0};
   G.barr=[-99,-99];G.shopPos=[-99,-99];G.genAct=null;G.genWant=-1;
-  bots=BOTDEF.filter(d=>RUN.alive.includes(d.name)).map((d,k)=>({...d,x:G.lift.x+OD[0]*(k===2?-.15:.35)+[-1,1,0][k%3]*PD[0]*.5,z:G.lift.z+OD[1]*(k===2?-.15:.35)+[-1,1,0][k%3]*PD[1]*.5,face:pl.yaw,st:'follow',lamp:true,lampT:.6,path:null,pi:0,repath:0,walk:0,side:[-1,1,0][k%3],
+  bots=BOTDEF.filter(d=>RUN.alive.includes(d.name)).map((d,k)=>({...d,x:slotAt(humN+k)[0],z:slotAt(humN+k)[1],face:pl.yaw,st:'follow',lamp:true,lampT:.6,path:null,pi:0,repath:0,walk:0,side:[-1,1,0][k%3],
     digT:30+Math.random()*20+k*18,sakarT:30+Math.random()*20,dc:-1,digTick:0,stuckT:0,yellT:0,slot:null,swing:0,moving:false,grT:0,cell:-1,buryT:0}));
   const N=rooms[nest];
   cr={x:(N.cx+.5)*S,z:(N.cy+.5)*S,face:0,st:(RUN.floor===1||F.final)?'sleep':'away',path:null,pi:0,repath:0,timer:1,tgt:null,lost:0,lk:[0,0],ix:0,iz:0,victim:null,trail:[],bonkT:0,stunT:0,dragT:0,mimicT:14+Math.random()*8,walk:0,twitch:0,moving:false,digger:true,digT:0,scrT:0,digging:false,grT:0,grT2:4,flare:null};
@@ -4204,7 +4243,7 @@ function followPath(ag,dt,speed){if(!ag.path||ag.pi>=ag.path.length)return true;
 function pathTo(ag,x,z,blockSafe){ag.path=bfs(cidx(ag.x,ag.z),cidx(x,z),blockSafe);ag.pi=ag.path&&ag.path.length>1?1:0;}
 function emit(x,z,r,src,cause){if(src)r*=DIFF().hear;noises.push({x,z,r,src,cause});if(src===pl&&NET.started&&!NET.host)netLog('nz',r2(x),r2(z),Math.round(r),cause||'temas');if(G.anger>0&&src&&(src===pl||src.name)&&!isSafe(x,z)){G.threat=Math.min(130,(G.threat||0)+r*.32*(1+angerEff()*.15));G.lastNoise={x,z};}if(src===pl)G.noiseLvl=Math.max(G.noiseLvl,r/16);}
 // ================= ses =================
-let earLP=null,windG=null,windLP=null,windPan=null,AC=null,master=null,sfxBus=null,musBus=null,nbuf=null,crGain=null,crPan=null,DIST=null,mDrone=null,mTrem=null;
+let earLP=null,windG=null,windLP=null,windPan=null,AC=null,master=null,sfxBus=null,musBus=null,nbuf=null,nbufL=null,nbufL2=null,crGain=null,crPan=null,DIST=null,mDrone=null,mTrem=null;
 function makeIR(sec){const len=Math.floor(AC.sampleRate*sec),b=AC.createBuffer(2,len,AC.sampleRate);for(let ch=0;ch<2;ch++){const d=b.getChannelData(ch);let lp=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;lp=lp*.55+w*.45;d[i]=lp*Math.pow(1-i/len,3.4)*(i<AC.sampleRate*.012?i/(AC.sampleRate*.012):1);}}return b;}
 function audioInit(){if(AC)return;try{AC=new(window.AudioContext||window.webkitAudioContext)();
   const comp=AC.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=4;comp.connect(AC.destination);
@@ -4213,9 +4252,12 @@ function audioInit(){if(AC)return;try{AC=new(window.AudioContext||window.webkitA
   sfxBus=AC.createGain();sfxBus.connect(master);const sS=AC.createGain();sS.gain.value=.38;sfxBus.connect(sS).connect(rev);
   musBus=AC.createGain();musBus.gain.value=.6;musBus.connect(master);const mS=AC.createGain();mS.gain.value=.7;musBus.connect(mS).connect(rev);
   DIST=new Float32Array(1024);for(let i=0;i<1024;i++){const x=i/512-1;DIST[i]=Math.tanh(x*3.2);}
-  nbuf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}smpLoad();
+  nbuf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}
+  // döngüde çalan uğultular için uzun (11–9 sn) gürültü: 2 sn'lik tampon döngüde kendini tekrar ediyormuş gibi duyuluyordu
+  const mkN=(sec)=>{const B=AC.createBuffer(1,Math.floor(AC.sampleRate*sec),AC.sampleRate),D=B.getChannelData(0);let b2=0,b3=0;for(let i=0;i<D.length;i++){const w=Math.random()*2-1;b2=(b2+.02*w)/1.02;b3=.995*b3+.005*w;D[i]=w*.55+b2*3+b3*4;}const F=Math.floor(AC.sampleRate*.25);for(let i=0;i<F;i++){const k=i/F;D[i]=D[i]*k+D[D.length-F+i]*(1-k);}return B;};
+  nbufL=mkN(11.37);nbufL2=mkN(8.83);smpLoad();
   // ortam uğultusu
-  const src=AC.createBufferSource();src.buffer=nbuf;src.loop=true;const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=130;const g=AC.createGain();g.gain.value=.14;src.connect(lp).connect(g).connect(master);src.start();
+  const src=AC.createBufferSource();src.buffer=nbufL;src.loop=true;const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=130;const g=AC.createGain();g.gain.value=.14;src.connect(lp).connect(g).connect(master);src.start(0,Math.random()*9);
   // müzik: alçak drone
   const df=AC.createBiquadFilter();df.type='lowpass';df.frequency.value=200;df.Q.value=2;const dg=AC.createGain();dg.gain.value=0;df.connect(dg).connect(musBus);
   [[55,'sawtooth'],[55.35,'sawtooth'],[82.4,'triangle'],[27.5,'sine']].forEach(([f,ty])=>{const o=AC.createOscillator();o.type=ty;o.frequency.value=f;o.connect(df);o.start();});
@@ -4227,14 +4269,14 @@ function audioInit(){if(AC)return;try{AC=new(window.AudioContext||window.webkitA
   const tl=AC.createOscillator();tl.frequency.value=9;const tlg=AC.createGain();tlg.gain.value=.5;tl.connect(tlg).connect(tAm.gain);tl.start();
   tf.connect(tAm).connect(tg).connect(musBus);mTrem=tg;
   // yaratık nefesi
-  const cs=AC.createBufferSource();cs.buffer=nbuf;cs.loop=true;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=380;bp.Q.value=3;
+  const cs=AC.createBufferSource();cs.buffer=nbufL2;cs.loop=true;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=380;bp.Q.value=3;
   const trem=AC.createGain();trem.gain.value=.5;const lfo=AC.createOscillator();lfo.frequency.value=.7;const lg=AC.createGain();lg.gain.value=.5;lfo.connect(lg).connect(trem.gain);lfo.start();
-  {const ws=AC.createBufferSource();ws.buffer=nbuf;ws.loop=true;ws.playbackRate.value=.6;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=420;bp.Q.value=.7;
+  {const ws=AC.createBufferSource();ws.buffer=nbufL;ws.loop=true;ws.playbackRate.value=.6;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=420;bp.Q.value=.7;
    const wl=AC.createOscillator();wl.frequency.value=.13;const wg=AC.createGain();wg.gain.value=160;wl.connect(wg).connect(bp.frequency);wl.start();
    windLP=AC.createBiquadFilter();windLP.type='lowpass';windLP.frequency.value=700;windG=AC.createGain();windG.gain.value=0;windPan=AC.createStereoPanner?AC.createStereoPanner():null;
-   ws.connect(bp).connect(windLP).connect(windG);if(windPan)windG.connect(windPan).connect(sfxBus);else windG.connect(sfxBus);ws.start();}
+   ws.connect(bp).connect(windLP).connect(windG);if(windPan)windG.connect(windPan).connect(sfxBus);else windG.connect(sfxBus);ws.start(0,Math.random()*10);}
   crGain=AC.createGain();crGain.gain.value=0;crPan=AC.createStereoPanner?AC.createStereoPanner():null;
-  cs.connect(bp).connect(trem).connect(crGain);if(crPan){crGain.connect(crPan).connect(sfxBus);}else crGain.connect(sfxBus);cs.start();
+  cs.connect(bp).connect(trem).connect(crGain);if(crPan){crGain.connect(crPan).connect(sfxBus);}else crGain.connect(sfxBus);cs.start(0,Math.random()*8);
  }catch(e){AC=null;}}
 function env(g,t,a,d,peak){g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d);}
 // ==== SFXB64 BEGIN (audio/sfx/*.mp3 gömülü: tek dosya sürümünde de gerçek sesler çalsın)
@@ -4281,7 +4323,8 @@ function smpLoad(){if(!AC||SMP.req)return;SMP.req=1;for(const k in SMP.def)for(c
 function smpRideStop(){if(!AC)return;const t=AC.currentTime;for(const r of SMP.rides){try{r.g.gain.setTargetAtTime(0,t,.12);r.s.stop(t+.7);}catch(e){}}SMP.rides=[];}
 function smpPlay(type,vol,o2){const D=SMP.def[type];if(!D)return false;const B=D.f.map(f=>AUD.buf[smpUrl(f)]).filter(Boolean);if(!B.length){smpLoad();return false;}
   const t=AC.currentTime;if(D.stopRide)smpRideStop();
-  const s=AC.createBufferSource();s.buffer=B[Math.floor(Math.random()*B.length)];s.playbackRate.value=D.r[0]+Math.random()*(D.r[1]-D.r[0]);
+  let bi=Math.floor(Math.random()*B.length);if(B.length>1){const h=D.h||(D.h=[]);let tr=0;while(h.includes(bi)&&tr++<8)bi=Math.floor(Math.random()*B.length);h.push(bi);while(h.length>Math.min(2,B.length-1))h.shift();}
+  const s=AC.createBufferSource();s.buffer=B[bi];s.playbackRate.value=D.r[0]+Math.random()*(D.r[1]-D.r[0]);
   const g=AC.createGain();g.gain.value=vol*D.g;s.connect(g).connect(o2);s.start(t);
   if(D.ride){const r={s,g};SMP.rides.push(r);s.onended=()=>{SMP.rides=SMP.rides.filter(x=>x!==r);};}return true;}
 function out(vol,pan,muff,bus){const g=AC.createGain();let n=g;if(muff){const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=650;n.connect(f);n=f;}
@@ -4481,7 +4524,7 @@ function genDoneFx(g,by,E){const n=gensOn(),T=G.gens.length;sfxAt('engineStart',
   else{toast(`Jeneratörler: ${n}/${T}. Ana güç devrede! Asansöre dön!`,4);setTimeout(()=>sfx('hoist',.7),900);}}
 function hear(x,z,maxd=30){const d=Math.hypot(x-pl.x,z-pl.z);const vol=clamp(1-d/maxd,0,1)**1.6;const ang=Math.atan2(-(x-pl.x),-(z-pl.z))-pl.yaw;return {vol,pan:-Math.sin(ang)*.8,d};}
 function sfxAt(type,x,z,vol=1,maxd=30){const h=hear(x,z,maxd);if(h.vol<.02)return;const m=!los(pl.x,pl.z,x,z);sfx(type,vol*h.vol*(m?.8:1),h.pan,m);}
-const MU={I:0,sw:3,pl:1.5,beat:0};
+const MU={I:0,sw:6,pl:4,beat:0};
 // laboratuvar içi: floresan vızıltısı + havalandırma uğultusu + uzak alarm; müzik elektronik tınıya döner
 function inLab(x,z){const L=TH2&&TH2.lab;return !!(L&&RUN.floor===5&&L.set&&L.set.has(cidx(x,z)));}
 const LAMB={n:null,on:0,alT:20,card:false};
@@ -4489,18 +4532,32 @@ function labAmbTick(dt){if(!AC||!sfxBus)return;const live=['play','dragged','dyi
   if(want&&!LAMB.n){try{const t=AC.currentTime,out=AC.createGain();out.gain.value=0;out.connect(sfxBus);
       const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=520;lp.connect(out);for(const[f,g]of[[100,.5],[200,.22],[300,.08]]){const o=AC.createOscillator();o.type='sawtooth';o.frequency.value=f;const gg=AC.createGain();gg.gain.value=g;o.connect(gg);gg.connect(lp);o.start(t);}
       const am=AC.createOscillator();am.frequency.value=.23;const amg=AC.createGain();amg.gain.value=.25;am.connect(amg);amg.connect(out.gain);am.start(t);
-      const ns=AC.createBufferSource();ns.buffer=nbuf;ns.loop=true;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=260;bp.Q.value=.7;const ng=AC.createGain();ng.gain.value=1.3;ns.connect(bp);bp.connect(ng);ng.connect(out);ns.start(t);
+      const ns=AC.createBufferSource();ns.buffer=nbufL2||nbuf;ns.loop=true;const bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=260;bp.Q.value=.7;const ng=AC.createGain();ng.gain.value=1.3;ns.connect(bp);bp.connect(ng);ng.connect(out);ns.start(t,Math.random()*7);
       LAMB.n={out};}catch(e){LAMB.n=null;}}
   if(LAMB.n){LAMB.on=want;LAMB.n.out.gain.setTargetAtTime(want?.05:0,AC.currentTime,want?.9:.6);}
   if(want){if(!LAMB.card){LAMB.card=true;try{$('fcN').textContent='KAT -5 · DERİNKAYA AR-GE';$('fcA').textContent='YANKI ARAŞTIRMA TESİSİ';$('fcH').textContent='Yetkisiz giriş yasaktır. Biyolojik tehlike: Seviye 3.';const fc=$('floorCard');fc.classList.add('on');clearTimeout(showFloorCard.t);showFloorCard.t=setTimeout(()=>fc.classList.remove('on'),3800);}catch(e){}sfx('sting',.55,0,false,musBus);}
     LAMB.alT-=dt;if(LAMB.alT<=0){LAMB.alT=28+Math.random()*30;sfx('klax',.05,(Math.random()-.5)*1.4,true);}}}
 function labThreat(){if(!TH2.le||!TH2.le.length||!pl)return 0;let v=0;for(const e of TH2.le){if(e.st==='dead'||e.st==='gone')continue;const d=Math.hypot(e.x-pl.x,e.z-pl.z);if(e.boss&&d<30)return 1;if(d>20)continue;if(['hunt','lunge','back','chase','attack','roar'].includes(e.st))v=Math.max(v,e.k==='denek'?.95:.78);else if(d<14)v=Math.max(v,.5);}const N=TH2.lab3&&TH2.lab3.nest;if(N&&N.w&&!N.done)v=Math.max(v,.85);return v;}
+// oyun içi müzik: aynı notayı her birkaç saniyede bir çalmak yerine seyrek, değişen kısa cümleler ve uzun sessizlikler
+// mağarada derin çan/marimba, laboratuvarda camsı FM tınısı
+function musNote(f,t0,v,pan,lab){try{const e=AC.createGain();e.gain.setValueAtTime(0,t0);e.gain.linearRampToValueAtTime(v,t0+(lab?.012:.006));e.gain.exponentialRampToValueAtTime(.0001,t0+(lab?3.4:2.6));
+    let o2=e;if(AC.createStereoPanner){const pn=AC.createStereoPanner();pn.pan.value=pan;e.connect(pn);o2=pn;}o2.connect(musBus);
+    if(lab){const c=AC.createOscillator(),m=AC.createOscillator(),mg=AC.createGain();c.type='sine';c.frequency.value=f;m.type='sine';m.frequency.value=f*3.5;mg.gain.setValueAtTime(f*1.6,t0);mg.gain.exponentialRampToValueAtTime(f*.05,t0+1.6);m.connect(mg).connect(c.frequency);c.connect(e);
+      const o3=AC.createOscillator(),g3=AC.createGain();o3.type='sine';o3.frequency.value=f*2.003;g3.gain.value=.12;o3.connect(g3).connect(e);for(const o of[c,m,o3]){o.start(t0);o.stop(t0+3.6);}}
+    else for(const[mu,a]of[[1,1],[2.76,.17],[5.4,.045]]){const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=f*mu;o.detune.value=(Math.random()-.5)*6;g.gain.value=a;o.connect(g).connect(e);o.start(t0);o.stop(t0+2.8);}}catch(er){}}
+const MU_SC={cave:[98,110,130.81,146.83,164.81,196,220],lab:[293.66,329.63,349.23,440,493.88,523.25,587.33]};
+function musPhrase(lab,I){const sc=lab?MU_SC.lab:MU_SC.cave;
+  if(Math.random()<.3){MU.pl=14+Math.random()*18;return;}// sessizlik
+  const n=1+(Math.random()*3|0)+(Math.random()<.2?1:0);let i=MU.ni??3;let tt=AC.currentTime+.05;const used=[];
+  for(let k=0;k<n;k++){let st,g=0;do{st=[-2,-1,1,2,3,-3][Math.random()*6|0];g++;}while((i+st<0||i+st>=sc.length||used.includes(i+st))&&g<20);if(i+st>=0&&i+st<sc.length)i+=st;used.push(i);
+    musNote(sc[i]*(Math.random()<.12?.5:1),tt,(lab?.032:.05)*(1-I*.4),(Math.random()-.5)*1.1,lab);tt+=.45+Math.random()*.75;}
+  MU.ni=i;MU.pl=(9+Math.random()*13)*(1-I*.35);}
 function updateMusic(dt){if(!AC||!mDrone)return;const live=G.state==='play'||G.state==='dragged';const lab=LAMB.on;
   const tgt=live?Math.max(clamp((G.threat||0)/100,0,1)*.45,G.hbI||0,(cr.st==='chase'&&cr.tgt===pl)||G.state==='dragged'?1:0,lab?labThreat():0):.12;
   MU.I=lerp(MU.I,tgt,Math.min(1,dt*(tgt>MU.I?1.6:.25)));const I=MU.I,t=AC.currentTime;
   mDrone.f.frequency.setTargetAtTime((lab?90:150)+I*650,t,.6);mDrone.g.gain.setTargetAtTime(.05+I*.06,t,.6);mTrem.gain.setTargetAtTime(Math.max(0,I-.45)*.08,t,.5);
-  MU.sw-=dt;if(MU.sw<=0){MU.sw=8+Math.random()*8;sfx('swell',.028+I*.03,(Math.random()-.5)*.6,false,musBus);}
-  MU.pl-=dt;if(MU.pl<=0){MU.pl=(lab?1.6+Math.random()*3:2.5+Math.random()*5)*(1-I*.5);sfx(lab?'blip':'plink',lab?.035:.05,(Math.random()-.5)*1.2,false,musBus);}
+  MU.sw-=dt;if(MU.sw<=0){MU.sw=15+Math.random()*16;sfx('swell',.028+I*.03,(Math.random()-.5)*.6,false,musBus);}
+  MU.pl-=dt;if(MU.pl<=0)musPhrase(lab,I);
   if(I>.45&&live){MU.beat-=dt;if(MU.beat<=0){MU.beat=lerp(.85,.34,(I-.45)/.55);sfx('tom',.12+I*.14,0,false,musBus);}}}
 
 // konuşma: botlar konuşmaz; yaratığın taklidi fısıltı ve altyazıdır
@@ -5379,6 +5436,25 @@ function victory(){G.state='end';smpRideStop();document.exitPointerLock?.();caug
   $('endReason').textContent=(n===4?'Dördünüz de gün ışığına çıktınız. ':n===3?`Sen, ${RUN.alive.join(' ve ')} çıktınız; biri aşağıda kaldı. `:n===2?`Sen ve ${RUN.alive[0]} çıktınız; diğerleri aşağıda kaldı. `:'Yüzeye bir tek sen çıktın. Aşağıdan hâlâ sesler geliyor. ')+(v>0?`Vagonda ${tl(v)} değerinde taş var.`:'Elin boş ama hayattasın.')+' Tekin Bey kapağı açıp Kara Damar Özü\'nü aldı, elinize bir zarf tutuşturdu. Arkanızda, kafesin içinde telsiz bir kez daha cızırdadı. Bu sefer konuşan, Tekin\'in sesiydi.';
   $('lNight').textContent='ÇIKAN';$('sNight').textContent=n+' kişi';$('sGem').textContent=tl(runValue());const s=Math.floor(RUN.time);$('sTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
   $('again').hidden=true;$('endRevive').hidden=true;$('restart').textContent='YENİDEN OYNA';$('endFun').innerHTML=funStats();$('end').hidden=false;clearSave();}
+// ---- karakter çarpışması: oyuncu, botlar, diğer oyuncular ve laboratuvar yaratıkları iç içe geçmez (yumuşak itme, duvarlara saygılı) ----
+// pay: botlar oyuncuya yol verir; uzak oyuncu engel sayılır (öbür taraf da kendi payını iter); host yaratıkları, istemci yalnız kendini iter
+const SEP_ST=['follow','dig','flee','help','rescue','mine','haul','save','stuck','idle'];
+function charSep(dt){if(G.arrive||SF.on)return;const host=!NET.started||NET.host;const A=[];
+  if(G.state==='play'&&!pl.hideIn)A.push({e:pl,r:.36,wr:.42,k:'pl',mv:true});
+  for(const b of bots){if(b.hideIn||!SEP_ST.includes(b.st)||b.mnY)continue;if(b.remote)A.push({e:b,r:.36,k:'rem',mv:false});else A.push({e:b,r:.36,wr:.3,k:'bot',mv:host});}
+  if(TH2.le&&RUN.floor===5)for(const e of TH2.le){if(e.st==='dead'||e.st==='gone')continue;A.push({e,r:e.k==='yavru'?.3:.44*(e.sc||1),wr:.3,k:e.k,mv:host});}
+  if(A.length<2)return;const k=Math.min(1,dt*14);
+  for(let i=0;i<A.length;i++)for(let j=i+1;j<A.length;j++){const a=A[i],b=A[j];if(a.k!=='pl'&&a.k!=='bot'&&a.k!=='rem'&&b.k!=='pl'&&b.k!=='bot'&&b.k!=='rem')continue;
+    if((a.k==='pl'&&b.e.st==='help')||(b.k==='pl'&&a.e.st==='help'))continue;
+    let dx=a.e.x-b.e.x,dz=a.e.z-b.e.z,d=Math.hypot(dx,dz);const R=a.r+b.r;if(d>=R)continue;if(d<1e-4){const an=(i*7+j*13)%10*.63;dx=Math.cos(an);dz=Math.sin(an);d=1;}else{dx/=d;dz/=d;}
+    const ov=(R-Math.min(d,R))*k;
+    // paylar
+    let wa=.5,wb=.5;const heavy=q=>q.k==='denek',light=q=>q.k==='bot'||q.k==='yavru';
+    if(a.k==='pl'&&b.k==='bot'){wa=.2;wb=.8;}else if(b.k==='pl'&&a.k==='bot'){wa=.8;wb=.2;}
+    else if(heavy(a)){wa=.1;wb=.9;}else if(heavy(b)){wa=.9;wb=.1;}
+    else if(a.k==='yavru'&&b.k!=='yavru'){wa=.6;wb=.4;}else if(b.k==='yavru'&&a.k!=='yavru'){wa=.4;wb=.6;}
+    if(!a.mv){wb=b.mv?(a.k==='rem'?.5:1):0;wa=0;}if(!b.mv){wa=a.mv?(b.k==='rem'?.5:1):0;wb=0;}
+    if(wa>0)moveCircle(a.e,dx*ov*wa,dz*ov*wa,a.wr||.3);if(wb>0)moveCircle(b.e,-dx*ov*wb,-dz*ov*wb,b.wr||.3);}}
 function update(dt){G.time+=dt;audUpdate(dt);try{labAmbTick(dt);}catch(e){frameErr('lamb',e);}try{lab3Tick(dt);}catch(e){frameErr('lab3',e);}try{storyTick(dt);}catch(e){frameErr('story',e);}if(G.arrive)arriveTick(dt);if(G.state!=='play'&&RUN.floor===1)genTick(dt,null);
   if(false){G.babyT-=dt;if(G.babyT<=0){G.babyT=240;if(babies.filter(y=>y.st!=='dead').length<6){const R=rooms[2+Math.floor(Math.random()*Math.max(1,rooms.length-2))]||rooms[1];babies.push({x:(R.cx+.5)*S,z:(R.cy+.5)*S,face:0,st:'wander',path:null,pi:0,repath:0,timer:1,cd:5,walk:0,moving:false,twitch:0,stand:0,hp:2,t:0});sfxAt('babyScreech',(R.cx+.5)*S,(R.cy+.5)*S,.6,80);}}}const live=G.state==='play'||G.state==='dragged'||G.state==='dying'||G.state==='buried'||G.state==='spectate'||G.state==='paleGrab';
   if((G.state==='play'||G.state==='buried')&&G.anger>0)G.threat=Math.min(130,(G.threat||0)+dt*.5*(1+angerEff()*.35));G.noiseLvl=Math.max(0,G.noiseLvl-dt*.9);G.shake=Math.max(0,G.shake-dt);flushChunks();if(G.digInfo){G.digInfo.t-=dt;if(G.digInfo.t<=0)G.digInfo=null;}
@@ -5389,12 +5465,13 @@ function update(dt){G.time+=dt;audUpdate(dt);try{labAmbTick(dt);}catch(e){frameE
   try{watTick(dt);}catch(e){}
   try{qteTick(dt);}catch(e){}
   try{mimTick(dt);}catch(e){}
-  if(live){const H=!NET.started||NET.host;if(H&&!(G.arrive&&G.arrive.land<0))updateBots(dt);mnUpdateBots(dt);if(H){updateCreature(dt);updatePale(dt);updateBabies(dt);}updateWorld(dt);}
+  if(live){const H=!NET.started||NET.host;if(H&&!(G.arrive&&G.arrive.land<0))updateBots(dt);mnUpdateBots(dt);if(H){updateCreature(dt);updatePale(dt);updateBabies(dt);}updateWorld(dt);try{charSep(dt);}catch(e){frameErr('sep',e);}}
   noises.length=0;
   try{debTick(dt);}catch(e){}
   for(let i=sparks.length-1;i>=0;i--){const s=sparks[i];s.life-=dt;s.vy-=9*dt;s.x+=s.vx*dt;s.y+=s.vy*dt;s.z+=s.vz*dt;if(s.life<=0)sparks.splice(i,1);}
-  {const lk=LK();if(Math.random()<dt*(lk.drip||.25))sfxAt('drip',pl.x+(Math.random()-.5)*16,pl.z+(Math.random()-.5)*16,.5);
-   if(lk.amb&&(G.state==='play'||G.state==='buried')&&Math.random()<dt*lk.ambR){const a=Math.random()*TAU,r=6+Math.random()*14;sfxAt(lk.amb,pl.x+Math.cos(a)*r,pl.z+Math.sin(a)*r,lk.ambV,26);}}
+  {const lk=LK(),inL=LAMB.on;if(Math.random()<dt*(lk.drip||.25)*(inL?.2:1))sfxAt('drip',pl.x+(Math.random()-.5)*16,pl.z+(Math.random()-.5)*16,inL?.3:.5);
+   if(inL){if((G.state==='play')&&Math.random()<dt*.05){const a=Math.random()*TAU,r=8+Math.random()*14;const k=['clang','hiss','creak','clank'][Math.random()*4|0];sfxAt(k==='clank'?'clang':k,pl.x+Math.cos(a)*r,pl.z+Math.sin(a)*r,.18,30);}}
+   else if(lk.amb&&(G.state==='play'||G.state==='buried')&&Math.random()<dt*lk.ambR){const a=Math.random()*TAU,r=6+Math.random()*14;sfxAt(lk.amb,pl.x+Math.cos(a)*r,pl.z+Math.sin(a)*r,lk.ambV,26);}}
   if(G.state==='play')updateTips(dt);
   if(G.state==='spectate'&&NET.started){const b=G.specB;if(!b||!(ACTIVE.includes(b.st)||b.st==='dragged')){const al=bots.filter(e=>ACTIVE.includes(e.st)||e.st==='dragged');if(al.length){specSet(al[0]);G.specT=8;}else{G.specT-=dt;if(G.specT<=0)endGame();}}}
   else if(G.state==='spectate'){G.specT-=dt;const b=G.specB;if(b&&!ACTIVE.includes(b.st)&&b.st!=='dragged'){const L=specList();if(L.length){specSet(L[0]);G.specT=Math.max(G.specT,6);}else G.specT=Math.min(G.specT,1.8);}if(G.specT<=0)endGame();}
@@ -6128,7 +6205,7 @@ function drawCart(cb,real){
 // ---- kafes çarpışması: yan ve arka duvar dolu, sadece önden (makaslı kapı tarafı) girilir ----
 function cageColsAdd(x,z,yaw){const fx=-Math.sin(yaw),fz=-Math.cos(yaw),rx=Math.cos(yaw),rz=-Math.sin(yaw);
   const add=(px,pz)=>{const c={x:px,z:pz,r:.09,cage:1};ENV.cols.push(c);const k=cidx(px,pz);if(!ENV.colG.has(k))ENV.colG.set(k,[]);ENV.colG.get(k).push(c);};
-  for(let u=-.97;u<=.971;u+=.12){add(x-fx*.98+rx*u,z-fz*.98+rz*u);for(const sd of[-1,1])add(x+sd*rx*.98-fx*u,z+sd*rz*.98-fz*u);}}
+  const W2=.98*CGS;for(let u=-.97*CGS;u<=.971*CGS;u+=.12){add(x-fx*W2+rx*u,z-fz*W2+rz*u);for(const sd of[-1,1])add(x+sd*rx*W2-fx*u,z+sd*rz*W2-fz*u);}}
 // kuyu kafesi sabit yönlü: önü en açık tarafa bakar (eskiden her kare oyuncuya dönüyordu)
 function cageSetup(){if(!ENV.colG)ENV.colG=new Map();if(!ENV.cols)ENV.cols=[];{const E=rooms[entrance],OD=exitDir;const[cx,cz]=ctr(E.cy*GW+E.cx);cageColsAdd(cx+OD[0]*S*1.55,cz+OD[1]*S*1.55,Math.atan2(OD[0],OD[1]));}
   if(G.shaft){const ci=cellOf(G.shaft.x),cj=cellOf(G.shaft.z);let best=null,bs=-1;for(const[dx,dy]of DIRS){let n=0;for(let k=1;k<=4;k++){if(solid(ci+dx*k,cj+dy*k))break;n++;}if(n>bs){bs=n;best=[dx,dy];}}
@@ -6138,6 +6215,8 @@ function cageSetup(){if(!ENV.colG)ENV.colG=new Map();if(!ENV.cols)ENV.cols=[];{c
 // ---- kafes asansör: tek seferlik önbellek mesh (eskisi ~40 çizim çağrısıydı, şimdi 7) ----
 // çelik köşe dikmeleri + çaprazlar, tel örgü yan/arka duvarlar, ahşap taban, makaslı kapı (açılıp kapanır), çatı + makara, kontrol kutusu
 const CAGE={m:null};
+// kafes ölçeği: 4 kişi rahat sığsın (yatayda büyütüldü)
+const CGS=1.34;
 function cageBuild(){const g=()=>({P:[],N:[]}),F=g(),Bm=g(),Wd=g(),Gt=g(),Rf=g(),Yl=g();const X1=[1,0,0],Y1=[0,1,0],Z1=[0,0,1];
   const B=(M,c,hx,hy,hz)=>th2Box(M,c,X1,Y1,Z1,hx,hy,hz);const W=.95,Ht=2.75;
   const Rb=(M,c,ang,hx,hy,hz,ax)=>{const C=Math.cos(ang),S2=Math.sin(ang);if(ax==='z')th2Box(M,c,[C,S2,0],[-S2,C,0],Z1,hx,hy,hz);else th2Box(M,c,[C,0,-S2],Y1,[S2,0,C],hx,hy,hz);};
@@ -6168,7 +6247,7 @@ function cageHang(m,Ht,L){const D=[.1,.1,.095],S=[.16,.15,.13];draw(MB,X(m,M4.T(
     const yaw=Math.atan2(dx,dz),pit=Math.acos(dy/l);draw(MC,X(m,M4.T(mid[0],mid[1],mid[2]),M4.RY(yaw),M4.RX(pit),M4.S(.018,l,.018)),S,Z3,3);}
   draw(MS,X(m,M4.T(0,Ht+.44,0),M4.S(.1,.12,.06)),S,Z3,3);draw(MC,X(m,M4.T(0,Ht+.56,0),M4.S(.07,.14,.07)),D,Z3,3);
   const LL=Math.max(.05,L||1);draw(MC,X(m,M4.T(0,Ht+.63+LL/2,0),M4.S(.03,LL,.03)),[.07,.068,.064],Z3,3);}
-function cageDraw(m,o){if(cageEnvOK()){const W=.95,Ht=2.75;try{const u=envBegin(),PL=envPlanes();const one=(id,M)=>envDrawGroup(u,{a:id,v:'',far:60},[{m:M,x:M[12],z:M[14],cell:-1}],PL);
+function cageDraw(m,o){m=X(m,M4.S(CGS,1,CGS));if(cageEnvOK()){const W=.95,Ht=2.75;try{const u=envBegin(),PL=envPlanes();const one=(id,M)=>envDrawGroup(u,{a:id,v:'',far:60},[{m:M,x:M[12],z:M[14],cell:-1}],PL);
       for(const id of['cage_frame','cage_floor','cage_roof','cage_mesh','cage_stripe'])one(id,m);
       const gk=.12+.88*clamp(o.gate==null?0:o.gate,0,1);one('cage_gate',X(m,M4.T(-W,0,-W-.03),M4.S(gk,1,1)));}catch(e){}
     gl.useProgram(PR.p);gl.bindVertexArray(null);
@@ -6596,7 +6675,7 @@ cv.addEventListener('contextmenu',e=>e.preventDefault());
 // ================= kat başı: kafes tavandaki kuyudan iner =================
 // Yükleme bitince kamera, kafes ve içindeki madenciler tavandaki kuyu ağzından aşağı süzülür, yere oturur (sekme + toz), sonra makaslı kapı açılır.
 function arriveStart(cb){const L=G.lift;if(!L||!pl){if(cb)cb();return;}const top=ceilY(L.x,L.z)-floorY(L.x,L.z);const h=clamp(top-1.95,.9,3.2);
-  const pin=bots.filter(b=>Math.hypot(b.x-L.x,b.z-L.z)<1.2).map(b=>[b,b.x,b.z]);
+  const pin=bots.filter(b=>Math.hypot(b.x-L.x,b.z-L.z)<1.7).map(b=>[b,b.x,b.z]);
   G.arrive={t:0,dur:2.9,h,cb,land:-1,px:pl.x,pz:pl.z,pin};try{sfx('liftRide',.85);}catch(e){}}
 function arriveOff(){const A=G.arrive;if(!A)return 0;if(A.land>=0)return A.land<.35?-Math.sin(A.land/.35*Math.PI)*.045:0;const k=Math.min(1,A.t/A.dur);return A.h*Math.pow(1-k,2.4)+Math.sin(A.t*23)*.006*(1-k);}
 function arriveGate(){const A=G.arrive;if(!A)return 0;if(A.land<0)return 1;return clamp(1-(A.land-.55)/1.0,0,1);}
@@ -6762,7 +6841,7 @@ function sfOK(x,z,r){if(z<1.3)return Math.abs(x)<=.95-r&&z>=-.95+r&&z<=1.3;
     if(dx<0?-dx>a[1]+(b[1]-a[1])*t-r-.12:dx>a[2]+(b[2]-a[2])*t-r-.12)return false;}
   if(SF.arches)for(const A of SF.arches){const ux=x-A.x,uz=z-A.z,u=ux*A.tx+uz*A.tz;if(Math.abs(u)>A.hl+r)continue;if(Math.abs(-ux*A.tz+uz*A.tx)>A.hw-r)return false;}
   for(const c of SF.cols)if(Math.hypot(x-c[0],z-c[1])<c[2]+r)return false;return true;}
-function sfInCage(x,z){return Math.abs(x)<.85&&z>-.85&&z<.8;}
+function sfInCage(x,z){return Math.abs(x)<.85*CGS&&z>-.85*CGS&&z<.8*CGS;}
 function sfBuild(){const g=()=>({P:[],N:[]});const M={hst:g(),haz:g(),rope:g(),duct:g(),cable:g(),sheave:g(),rock:g(),floor:g(),ground:g(),wood:g(),wood2:g(),steel:g(),pine:g(),trunk:g(),dark:g(),cart:g(),cloth:g(),stal:g(),fpine:g(),ftrunk:g(),fbW:g(),fbS:g(),fbT:g(),fbC:g(),fbR:g()};
   const X1=[1,0,0],Y1=[0,1,0],Z1=[0,0,1];const B=(m,c,hx,hy,hz)=>th2Box(m,c,X1,Y1,Z1,hx,hy,hz);
   const tri=(m,a,b,c)=>{const n=v3n(v3x([b[0]-a[0],b[1]-a[1],b[2]-a[2]],[c[0]-a[0],c[1]-a[1],c[2]-a[2]]));m.P.push(...a,...b,...c);for(let k=0;k<3;k++)m.N.push(...n);};
@@ -6791,7 +6870,7 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={hst:g(),haz:g(),rope:g(),d
   {const fH=(x,z)=>{const cx=sfCX(z),w=sfW(z),e=Math.abs(x-cx)/w;return .015+sfN(x*.9+3,z*.9)*.016+sfN(x*2.7,z*2.7)*.007+sfSS(.74,1.02,e)*(.075+sfN(x*.7,z*.7+9)*.04);};
     const nF=(x,z)=>{const e=.08,hx=(fH(x+e,z)-fH(x-e,z))/(2*e),hz=(fH(x,z+e)-fH(x,z-e))/(2*e);return v3n([-hx,1,-hz]);};
     const NX=16,RF=[];for(let z=Z0;z<=Z1z+.001;z+=.4){const zz=Math.min(z,Z1z),cx=sfCX(zz),w=sfW(zz)*1.02,row=[];for(let k=0;k<=NX;k++){const x=cx-w+2*w*k/NX;row.push([x,fH(x,zz),zz]);}RF.push(row);}
-    for(let r=0;r<RF.length-1;r++)for(let k=0;k<NX;k++){const a=RF[r][k],b=RF[r][k+1],c=RF[r+1][k+1],d=RF[r+1][k];const mx=(a[0]+c[0])/2,mz=(a[2]+c[2])/2;if(Math.abs(mx)<1.15&&Math.abs(mz)<1.15)continue;
+    for(let r=0;r<RF.length-1;r++)for(let k=0;k<NX;k++){const a=RF[r][k],b=RF[r][k+1],c=RF[r+1][k+1],d=RF[r+1][k];const mx=(a[0]+c[0])/2,mz=(a[2]+c[2])/2;if(Math.abs(mx)<1.15*CGS&&Math.abs(mz)<1.15*CGS)continue;
       for(const p of[a,b,c,a,c,d]){const n=nF(p[0],p[2]);M.floor.P.push(p[0],p[1],p[2]);M.floor.N.push(n[0],n[1],n[2]);}}}
   // ---- kuyu başı (asansör): makara kirişleri, kasnak, kılavuz raylar, sarı-siyah kuyu ağzı, korkuluk, vinç tamburu ----
   {const IB=(m,c,ax,L,h)=>{// I-profil kiriş: gövde + iki başlık
@@ -6807,18 +6886,18 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={hst:g(),haz:g(),rope:g(),d
     // iki ana kiriş (kaya ceplerine gömülü), kasnak yatakları
     for(const z of[-.26,.26]){const xl=reach(yZ+.11,z,-1),xr=reach(yZ+.11,z,1);IB(M.hst,[(xr-xl)/2,yZ,z],'x',(xl+xr)/2,.2);B(M.hst,[-.4,ys-.04,z],.12,.06,.06);B(M.hst,[-.4,yZ+.105,z],.16,.012,.08);}
     // kılavuz raylar (kafesin iki yanında, kuyunun dibinden kirişe) + kuyu içi bağlantı lamaları
-    for(const sx of[-1,1]){const top=yZ-.1;B(M.hst,[sx*1.0,(top-11)/2,0],.035,(top+11)/2,.05);B(M.hst,[sx*1.035,(top-11)/2,0],.012,(top+11)/2,.09);
-      for(let y=-10;y<top-.4;y+=1.6)B(M.hst,[sx*1.12,y,0],.1,.025,.04);B(M.hst,[sx*1.0,top-.01,0],.06,.02,.3);}
+    for(const sx of[-1,1]){const top=yZ-.1,q=CGS;B(M.hst,[sx*1.0*q,(top-11)/2,0],.035,(top+11)/2,.05);B(M.hst,[sx*(1.0*q+.035),(top-11)/2,0],.012,(top+11)/2,.09);
+      for(let y=-10;y<top-.4;y+=1.6)B(M.hst,[sx*(1.0*q+.12),y,0],.1,.025,.04);B(M.hst,[sx*1.0*q,top-.01,0],.06,.02,.3);}
     // kuyu ağzı: çelik çerçeve; sarı-siyah ikaz şeritli kenar
-    const plate=(x0,x1,z0,z1)=>B(M.hst,[(x0+x1)/2,.03,(z0+z1)/2],(x1-x0)/2,.03,(z1-z0)/2);
+    const q=CGS,plate=(x0,x1,z0,z1)=>B(M.hst,[(x0+x1)/2*q,.03,(z0+z1)/2*q],(x1-x0)/2*q,.03,(z1-z0)/2*q);
     plate(-1.45,1.45,.99,1.42);plate(-1.45,1.45,-1.42,-.99);plate(-1.45,-.99,-.99,.99);plate(.99,1.45,-.99,.99);
-    for(let k=0;k<12;k+=2)B(M.haz,[-1.45+(k+.5)*.2417,.062,1.205],.121,.004,.2);for(const sx of[-1,1])for(let k=0;k<8;k+=2)B(M.haz,[sx*1.22,.062,-.99+(k+.5)*.2475],.21,.004,.124);
-    B(M.haz,[0,.064,1.0],1.45,.006,.012);B(M.haz,[0,.064,1.4],1.45,.006,.012);
+    for(let k=0;k<12;k+=2)B(M.haz,[(-1.45+(k+.5)*.2417)*q,.062,1.205*q],.121*q,.004,.2*q);for(const sx of[-1,1])for(let k=0;k<8;k+=2)B(M.haz,[sx*1.22*q,.062,(-.99+(k+.5)*.2475)*q],.21*q,.004,.124*q);
+    B(M.haz,[0,.064,1.0*q],1.45*q,.006,.012);B(M.haz,[0,.064,1.4*q],1.45*q,.006,.012);
     // yan korkuluklar (boru, sarı boyalı)
-    for(const sx of[-1,1]){for(const z of[-1.25,-.1,1.05])th2Tube(M.haz,[[sx*1.32,.06,z],[sx*1.32,1.1,z]],.024,6);
-      for(const y of[.55,1.08])th2Tube(M.haz,[[sx*1.32,y,-1.25],[sx*1.32,y,1.05]],.022,6);}
+    for(const sx of[-1,1]){for(const z of[-1.25,-.1,1.05])th2Tube(M.haz,[[sx*1.32*q,.06,z*q],[sx*1.32*q,1.1,z*q]],.024,6);
+      for(const y of[.55,1.08])th2Tube(M.haz,[[sx*1.32*q,y,-1.25*q],[sx*1.32*q,y,1.05*q]],.022,6);}
     // sinyal kutusu (kapının sağında) ve zil
-    B(M.hst,[1.42,1.35,1.18],.08,.16,.06);B(M.haz,[1.42,1.35,1.245],.065,.13,.006);th2Tube(M.hst,[[1.42,1.68,1.18],[1.42,1.68,1.3]],.07,10);
+    B(M.hst,[1.42*q,1.35,1.18*q],.08,.16,.06);B(M.haz,[1.42*q,1.35,1.18*q+.065],.065,.13,.006);th2Tube(M.hst,[[1.42*q,1.68,1.18*q],[1.42*q,1.68,1.18*q+.12]],.07,10);
     // vinç (kuyunun solunda, korkuluğun ardında): kaide, tambur, yan diskler, motor + dişli kutusu; halat kasnağın sol kenarına çıkar
     {const wx=-2.15;B(M.hst,[wx,.1,0],.32,.1,.75);for(const sz of[-.5,.5])B(M.hst,[wx,.42,sz],.2,.3,.04);
       th2Tube(M.rope,[[wx,.62,-.44],[wx,.62,.44]],.27,14);for(const sz of[-.46,.46])th2Tube(M.hst,[[wx,.62,sz],[wx,.62,sz+(sz>0?.03:-.03)]],.36,14);
@@ -6834,7 +6913,7 @@ function sfBuild(){const g=()=>({P:[],N:[]});const M={hst:g(),haz:g(),rope:g(),d
   {let prevH=null;for(let z=2.2;z<=33;z+=2.4){const cx=sfCX(z),w=sfW(z),x=cx+w*.7,y=Math.min(2.9,ceilAt(x,z)-.18),h=[x,y,z];
       th2Box(M.hst,[x,y+.06,z],X1,Y1,Z1,.012,.06,.012);if(prevH){const P=[];for(let k=0;k<=6;k++){const t=k/6;P.push([prevH[0]+(h[0]-prevH[0])*t,prevH[1]+(h[1]-prevH[1])*t-Math.sin(t*Math.PI)*.16,prevH[2]+(h[2]-prevH[2])*t]);}th2Tube(M.cable,P,.016,5);}prevH=h;}}
   // kuyu (kafesin altı)
-  B(M.dark,[0,-8,-1.2],1.3,8,.15);B(M.dark,[0,-8,1.2],1.3,8,.15);B(M.dark,[-1.2,-8,0],.15,8,1.3);B(M.dark,[1.2,-8,0],.15,8,1.3);
+  B(M.dark,[0,-8,-1.2*CGS],1.3*CGS,8,.15);B(M.dark,[0,-8,1.2*CGS],1.3*CGS,8,.15);B(M.dark,[-1.2*CGS,-8,0],.15,8,1.3*CGS);B(M.dark,[1.2*CGS,-8,0],.15,8,1.3*CGS);
   // duvar dibinde kaya parçaları, salonda sarkıtlar
   for(let k=0;k<46;k++){const z=Z0+1+sfHash(k,51)*(Z1z-Z0-2),sd=sfHash(k,52)<.5?-1:1,w=sfW(z),r=.25+sfHash(k,53)*.55;if(z<1.6&&Math.abs(sfCX(z))<2)continue;const x=sfCX(z)+sd*(w-.15-r*.4);th2Ell(M.rock,[x,r*.35,z],[1,0,0],[0,1,0],[0,0,1],r*1.2,r*.75,r,7,4,0,.3,k+71);if(z>1.3&&!(Math.abs(z-12.9)<1.9||Math.abs(z-18.5)<1.9||Math.abs(z-24)<1.9))SF.cols.push([x,z,r*.85]);}
   for(let k=0;k<30;k++){const z=24+sfHash(k,61)*9,x=sfCX(z)+(sfHash(k,62)-.5)*sfW(z)*1.3,top=sfHt(z)*(.92-Math.abs(x)/sfW(z)*.25),L=.3+sfHash(k,63)*.9;th2Tube(M.stal,[[x,top+.1,z],[x,top-L,z]],[.07+sfHash(k,64)*.1,.01],6);}
@@ -6939,7 +7018,7 @@ function sfStart(){SF.hk=0;if(!SF.mesh)try{sfBuild();}catch(e){console.error('y�
   SF.on=true;SF.t=0;SF.go=null;SF.gate=0;SF.cy=0;SF.save={x:pl.x,z:pl.z,yaw:pl.yaw,pitch:pl.pitch,bots:bots.filter(b=>!b.remote).map(b=>[b,b.x,b.z,b.face,b.st])};
   // ağzın hemen gerisinde, dışarıya (ormana) bakarak doğ
   pl.x=-.4+Math.random()*1.4;pl.z=31.4+Math.random()*.8;pl.yaw=Math.PI;pl.pitch=.02;pl.lamp=true;pl.carry=null;
-  const spots=[[-.5,-.45],[.5,-.45],[0,-.1]];bots.filter(b=>!b.remote).forEach((b,i)=>{const s=spots[i%3];b.x=s[0];b.z=s[1];b.face=Math.PI;b.st='follow';b.moving=false;b.path=null;});
+  const spots=[[-.62,-.62],[.62,-.62],[-.62,.3]];bots.filter(b=>!b.remote).forEach((b,i)=>{const s=spots[i%3];b.x=s[0];b.z=s[1];b.face=Math.PI;b.st='follow';b.moving=false;b.path=null;});
   G.state='surface';$('hud').classList.add('surf');$('hud').hidden=false;$('touch').hidden=!isTouch;HTL.k='';sfHud(true);sfAmbStart();return true;}
 function sfLeave(){SF.on=false;$('hud').classList.remove('surf');sfAmbStop();const S0=SF.save;if(S0){pl.x=S0.x;pl.z=S0.z;pl.yaw=S0.yaw;pl.pitch=S0.pitch;for(const[b,x,z,f,st]of S0.bots){b.x=x;b.z=z;b.face=f;b.st=st;b.mnY=0;}}
   for(const b of bots)b.mnY=0;HTL.k='';}
@@ -6970,8 +7049,8 @@ function sfTick(dt){if(!SF.on)return;SF.t+=dt;if(SF.t>3.5&&!SF.hk){SF.hk=1;try{r
   for(const b of bots){const y=sfInCage(b.x,b.z)?SF.cy:0;b.mnY=y-floorY(b.x,b.z);}
   sfHud(false);sfAmbTick(dt);}
 // ---- ses: ağızdan giren rüzgar (içeri girdikçe azalır), dışarıdaki ateş, mağara damlaları, yaprak hışırtısı ----
-function sfAmbStart(){if(!AC||!nbuf||SF.amb)return;try{const s=AC.createBufferSource();s.buffer=nbuf;s.loop=true;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=420;const g=AC.createGain();g.gain.value=0;
-  s.connect(f).connect(g).connect(master);s.start();g.gain.setTargetAtTime(.10,AC.currentTime,1.5);SF.amb={s,f,g};}catch(e){}}
+function sfAmbStart(){if(!AC||!nbuf||SF.amb)return;try{const s=AC.createBufferSource();s.buffer=nbufL2||nbuf;s.loop=true;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=420;const g=AC.createGain();g.gain.value=0;
+  s.connect(f).connect(g).connect(master);s.start(0,Math.random()*7);g.gain.setTargetAtTime(.10,AC.currentTime,1.5);SF.amb={s,f,g};}catch(e){}}
 function sfAmbStop(){const A=SF.amb;if(!A)return;SF.amb=null;try{A.g.gain.setTargetAtTime(0,AC.currentTime,.4);A.s.stop(AC.currentTime+1.5);}catch(e){}}
 function sfAmbTick(dt){const A=SF.amb,out=clamp((pl.z-20)/14,0,1);if(A){const w=(.03+.08*out)*(.7+.3*(sfN(SF.t*.3,1.7)*.5+.5));A.g.gain.setTargetAtTime(SF.go?Math.max(0,w*(1-SF.go.t/2)):w,AC.currentTime,.3);A.f.frequency.setTargetAtTime(240+260*out*(sfN(SF.t*.5,4)*.5+.5),AC.currentTime,.3);}
   SF.crT=(SF.crT||0)-dt;if(SF.crT<=0){SF.crT=.08+Math.random()*.35;if(Math.random()<.6*out)sfx('plink',.035*out,.3);}
@@ -7265,7 +7344,7 @@ function uiSnd(k){if(!AC||!sfxBus||AC.state!=='running')return;try{const t=AC.cu
   else{nz(1400,2.5,.045,.14);os(240,170,.08,.07);nz(4200,6,.02,.04);}}catch(e){}}
 const MAU={nodes:null,last:0,dT:2,cT:5,gr:0,hv:null};
 function menuAudTick(dt){MAU.last=performance.now();if(!AC||!nbuf||AC.state!=='running')return;
-  if(!MAU.nodes){try{const s=AC.createBufferSource();s.buffer=nbuf;s.loop=true;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=380;f.Q.value=.6;const g=AC.createGain();g.gain.value=0;s.connect(f).connect(g).connect(master);s.start(0,Math.random());MAU.nodes={s,f,g};}catch(e){return;}}
+  if(!MAU.nodes){try{const s=AC.createBufferSource();s.buffer=nbufL||nbuf;s.loop=true;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=380;f.Q.value=.6;const g=AC.createGain();g.gain.value=0;s.connect(f).connect(g).connect(master);s.start(0,Math.random()*9);MAU.nodes={s,f,g};}catch(e){return;}}
   const N=MAU.nodes,sh=SFM.shot,t=SFM.t,now=AC.currentTime;const base=sh===0?.085:sh===1?.03:.022;
   N.g.gain.setTargetAtTime(base*(.55+.9*(Math.sin(t*.37)*.5+.5)*(Math.sin(t*.13+1)*.5+.5)),now,.5);N.f.frequency.setTargetAtTime(280+300*(Math.sin(t*.21)*.5+.5),now,.6);
   MAU.dT-=dt;if(MAU.dT<=0){MAU.dT=1.2+Math.random()*3.5;sfx('drip',sh===0?.1:.25,(Math.random()-.5)*1.4);}
@@ -7406,7 +7485,10 @@ function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
-window.__kd={__LOOPS:LOOPS,get __progs(){const o={PR:PR.p,PG:PG.p,PSK:PSK.p};try{o.PENV=PENV.p;}catch(e){}return o;},__lab3:()=>{const L=TH2.lab;if(!L||!L.v3)return null;return{zones:L.zones.map(z=>{const P=z.cells.map(c=>ctr(c));const e=z.e!=null?ctr(z.e):(z.from!=null?ctr(z.from):P[0]);return[z.t,z.cells.length,...P[0].map(v=>+v.toFixed(1)),z.hc,Math.min(...P.map(p=>p[0])),Math.min(...P.map(p=>p[1])),Math.max(...P.map(p=>p[0])),Math.max(...P.map(p=>p[1])),+e[0].toFixed(1),+e[1].toFixed(1)];}),doors:(TH2.labDoors||[]).map(D=>[+D.x.toFixed(1),+D.z.toFixed(1),D.gate,!!D.open,blockC[D.b]]),items:TH2.use.filter(i=>/^(silah|mermi|dugme|kol2|kris|bossx|kart|ldoor)$/.test(i.k)).map(i=>[i.k,+i.x.toFixed(1),+i.z.toFixed(1),!!i.done,i.w||i.ki]),le:(TH2.le||[]).map(e=>[e.k,e.st,e.hp,+e.x.toFixed(1),+e.z.toFixed(1),!!e.boss]),mis:th2MisTxt(),done:th2MisDone(),shaft:G.shaft&&[+G.shaft.x.toFixed(1),+G.shaft.z.toFixed(1)],O:ctr(L.O),inv:{gun:RUN.inv.gun,pompa:RUN.inv.pompa,go:RUN.inv.gunOwn,po:RUN.inv.pompaOwn},cells:L.cells.length,ev:TH2.lab3&&TH2.lab3.ev,hp:TH2.lab3&&TH2.lab3.hp};},__lab3Path:()=>{const L=TH2.lab;if(!L||!L.v3)return null;const st=L.tun.length?L.tun[0]:L.O,gl=G.shaft.c;const all=new Set([...L.cells,...L.tun]);const prev=new Map([[st,-1]]);const q=[st];while(q.length){const c=q.shift();if(c===gl)break;for(const[dx,dy]of DIRS){const n=c+dx+dy*GW;if(all.has(n)&&!prev.has(n)){prev.set(n,c);q.push(n);}}}const P=[];let c=gl;while(c!==-1&&c!=null){P.push(ctr(c).map(v=>+v.toFixed(2)).concat([L.area.has(c)?L.area.get(c):-9]));c=prev.get(c);}return P.reverse();},__netStart:(f)=>netHostStart(f),__labT:()=>({le:(TH2.le||[]).map(e=>[e.id,e.k,e.st,Math.round(e.hp)]),ev:TH2.lab3&&TH2.lab3.ev,nest:TH2.lab3&&TH2.lab3.nest&&{w:TH2.lab3.nest.w,done:TH2.lab3.nest.done},doors:(TH2.labDoors||[]).map(D=>D.open?1:0).join(''),inv:[RUN.inv.gun,RUN.inv.gunOwn,RUN.inv.pompa],alarm:TH2.lab3&&+TH2.lab3.alarm.toFixed(1),mis:th2MisTxt()}),__lab3Do:(k,n)=>{const it=TH2.use.filter(i=>i.k===k)[n||0];if(!it)return 'none';if(NET.started)netLog('t2',it.id);const r=th2Do(it,true);return[it.k,!!it.done];},__labHurt:(d)=>plHurt(d,'denek'),__gunFire:(k)=>gunFire(k),__aim:(i,kind)=>{const e=TH2.le[i];if(!e)return null;eye=[pl.x,floorY(pl.x,pl.z)+1.55,pl.z];const dx=e.x-pl.x,dz=e.z-pl.z;pl.yaw=Math.atan2(-dx,-dz);const ty=floorY(e.x,e.z)+(e.k==='yavru'?.45:1.2*(e.sc||1));pl.pitch=Math.atan2(ty-eye[1],Math.hypot(dx,dz));pl.gunT=0;gunFire(kind);return[e.st,+e.hp.toFixed(1)];},__leDmg:(i,d)=>leDamage(TH2.le[i],d),__DEB:DEB,__labOpen:()=>{const k=TH2.use.find(i=>i.k==='kart');if(k&&!k.done)th2Do(k,true);const d=TH2.use.find(i=>i.k==='ldoor');if(d&&!d.done)th2Do(d,true);},__labInfo:()=>{const L=TH2.lab;if(!L)return null;const D=TH2.labDoor;const rc=r=>{let x=0,z=0;for(const c of r.cells){const q=ctr(c);x+=q[0];z+=q[1];}return[x/r.cells.length,z/r.cells.length];};return{door:[D.x,D.z],n:D.n,O:ctr(L.O),Ld:L.Ld||L.Dd,Wd:L.Wd||L.W,v2:!!L.v2,rooms:L.v2?L.rooms.filter(r=>r.cells.length).map(r=>{const P=r.cells.map(c=>ctr(c));return[r.type,...rc(r),r.cells.length,Math.min(...P.map(p=>p[0])),Math.min(...P.map(p=>p[1])),Math.max(...P.map(p=>p[0])),Math.max(...P.map(p=>p[1]))];}):[],cor:L.v2?L.cells.filter(c=>L.area.get(c)===-1).map(c=>{const q=ctr(c);let o=[];for(const[dx,dy]of DIRS)if(L.set.has(c+dx+dy*GW))o.push([dx,dy]);return[q[0],q[1],o];}):[],cells:L.cells.length,ped:(L.ped||[]).length,mon:(TH2.labMon||[]).length,lock:(L.lock||[]).length,mid:L.v2?null:L.W((L.Ld+1)*S/2,(L.b0+L.Wd/2-.5)*S),back:L.v2?null:L.W((L.Ld+.5)*S-1,(L.b0+L.Wd/2-.5)*S),blk:blockC[L.D],anoms:TH2.mis&&TH2.mis.anoms?TH2.mis.anoms.map(a=>[a.x,a.z]):[],mis:th2MisTxt()};},__lab:()=>{const q=TH2.room,r=rooms[q];const L=TH.items.filter(i=>i.k.startsWith("lab"));const cnt={};for(const i of L)cnt[i.k]=(cnt[i.k]||0)+1;return {q,c:r?ctr(r.cy*GW+r.cx):null,cnt,mon:(TH2.labMon||[]).map(m=>[m.x,m.z]),tank:L.filter(i=>i.k==="labT").map(i=>[i.x,i.z]),mesh:Object.keys(TH.mesh).filter(k=>k.startsWith("c3_l")&&TH.mesh[k])};},__HK:()=>({f:HKS.f,t:HKS.t,fired:[...HKS.fired],q:RADIO.q.map(l=>l[0]+":"+l[1].slice(0,30)),cur:RADIO.cur}),__AUD:()=>AUD,__MIM:MIM,__mimPlay:()=>mimPlay(cr),__SMP:SMP,__qte:()=>G.qte,__qteIn:()=>G.qte&&qteIn(G.qte),__bso:(b,x,z,dt)=>botStandoff(b,x,z,dt),__watRip:(x,z,w)=>watRip(x,z,w),__WAT:WAT,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
+window.__kd={__LOOPS:LOOPS,get __progs(){const o={PR:PR.p,PG:PG.p,PSK:PSK.p};try{o.PENV=PENV.p;}catch(e){}return o;},__lab3:()=>{const L=TH2.lab;if(!L||!L.v3)return null;return{zones:L.zones.map(z=>{const P=z.cells.map(c=>ctr(c));const e=z.e!=null?ctr(z.e):(z.from!=null?ctr(z.from):P[0]);return[z.t,z.cells.length,...P[0].map(v=>+v.toFixed(1)),z.hc,Math.min(...P.map(p=>p[0])),Math.min(...P.map(p=>p[1])),Math.max(...P.map(p=>p[0])),Math.max(...P.map(p=>p[1])),+e[0].toFixed(1),+e[1].toFixed(1)];}),doors:(TH2.labDoors||[]).map(D=>[+D.x.toFixed(1),+D.z.toFixed(1),D.gate,!!D.open,blockC[D.b]]),items:TH2.use.filter(i=>/^(silah|mermi|dugme|kol2|kris|bossx|kart|ldoor)$/.test(i.k)).map(i=>[i.k,+i.x.toFixed(1),+i.z.toFixed(1),!!i.done,i.w||i.ki]),le:(TH2.le||[]).map(e=>[e.k,e.st,e.hp,+e.x.toFixed(1),+e.z.toFixed(1),!!e.boss]),mis:th2MisTxt(),done:th2MisDone(),shaft:G.shaft&&[+G.shaft.x.toFixed(1),+G.shaft.z.toFixed(1)],O:ctr(L.O),inv:{gun:RUN.inv.gun,pompa:RUN.inv.pompa,go:RUN.inv.gunOwn,po:RUN.inv.pompaOwn},cells:L.cells.length,ev:TH2.lab3&&TH2.lab3.ev,hp:TH2.lab3&&TH2.lab3.hp};},__lab3Path:()=>{const L=TH2.lab;if(!L||!L.v3)return null;const st=L.tun.length?L.tun[0]:L.O,gl=G.shaft.c;const all=new Set([...L.cells,...L.tun]);const prev=new Map([[st,-1]]);const q=[st];while(q.length){const c=q.shift();if(c===gl)break;for(const[dx,dy]of DIRS){const n=c+dx+dy*GW;if(all.has(n)&&!prev.has(n)){prev.set(n,c);q.push(n);}}}const P=[];let c=gl;while(c!==-1&&c!=null){P.push(ctr(c).map(v=>+v.toFixed(2)).concat([L.area.has(c)?L.area.get(c):-9]));c=prev.get(c);}return P.reverse();},__netStart:(f)=>netHostStart(f),__labT:()=>({le:(TH2.le||[]).map(e=>[e.id,e.k,e.st,Math.round(e.hp)]),ev:TH2.lab3&&TH2.lab3.ev,nest:TH2.lab3&&TH2.lab3.nest&&{w:TH2.lab3.nest.w,done:TH2.lab3.nest.done},doors:(TH2.labDoors||[]).map(D=>D.open?1:0).join(''),inv:[RUN.inv.gun,RUN.inv.gunOwn,RUN.inv.pompa],alarm:TH2.lab3&&+TH2.lab3.alarm.toFixed(1),mis:th2MisTxt()}),__openAll:()=>{for(const g of['card','guard','kris1','kris2','nest','lever','boss'])lab3OpenGate(g);for(const D of TH2.labDoors)lab3DoorLock(D,false);},__colsNear:(x,z,r)=>(ENV.cols||[]).filter(c=>Math.hypot(c.x-x,c.z-z)<r).map(c=>[+c.x.toFixed(2),+c.z.toFixed(2),+(c.r||0).toFixed(2),(c.it&&c.it.a)||c.k||c.id||(c.cage?'cage':'')]),__flood:(r)=>{const L=TH2.lab;if(!L||!L.v3)return null;r=r||.42;const st=ctr(L.tun.length?L.tun[0]:L.O),gl=[G.shaft.x,G.shaft.z];const h=.15;let x0=1e9,z0=1e9,x1=-1e9,z1=-1e9;for(const c of [...L.cells,...L.tun,L.O]){const[x,z]=ctr(c);x0=Math.min(x0,x-1.3);z0=Math.min(z0,z-1.3);x1=Math.max(x1,x+1.3);z1=Math.max(z1,z+1.3);}
+  const W=Math.ceil((x1-x0)/h),H=Math.ceil((z1-z0)/h);const seen=new Uint8Array(W*H);const ok=(i,j)=>{const x=x0+i*h,z=z0+j*h;return !hits(x,z,r)&&envPen(x,z,r)<=1e-4;};
+  let si=Math.round((st[0]-x0)/h),sj=Math.round((st[1]-z0)/h);{let bd=1e9,bi=si,bj=sj;for(let dj=-8;dj<=8;dj++)for(let di=-8;di<=8;di++){if(ok(si+di,sj+dj)&&di*di+dj*dj<bd){bd=di*di+dj*dj;bi=si+di;bj=sj+dj;}}si=bi;sj=bj;}let q=[[si,sj]];seen[sj*W+si]=1;let n=0;const reachCell=new Set();while(q.length){const nq=[];for(const[i,j]of q){n++;reachCell.add(cidx(x0+i*h,z0+j*h));for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const a=i+di,b=j+dj;if(a<0||b<0||a>=W||b>=H||seen[b*W+a])continue;seen[b*W+a]=1;if(ok(a,b))nq.push([a,b]);}}q=nq;}
+  const miss=L.cells.filter(c=>!reachCell.has(c)).map(c=>{const z=L.area.get(c);return[...ctr(c).map(v=>+v.toFixed(1)),z>=0?L.zones[z].t:z];});return{n,goal:reachCell.has(G.shaft.c),miss};},__probe:(x,z,r)=>hits(x,z,r)?'wall':(envPen(x,z,r)>1e-4?'col':'ok'),__lab3fix:()=>TH2.lab3&&TH2.lab3.fix,__sfStart:()=>sfStart(),__lab3Do:(k,n)=>{const it=TH2.use.filter(i=>i.k===k)[n||0];if(!it)return 'none';if(NET.started)netLog('t2',it.id);const r=th2Do(it,true);return[it.k,!!it.done];},__labHurt:(d)=>plHurt(d,'denek'),__gunFire:(k)=>gunFire(k),__aim:(i,kind)=>{const e=TH2.le[i];if(!e)return null;eye=[pl.x,floorY(pl.x,pl.z)+1.55,pl.z];const dx=e.x-pl.x,dz=e.z-pl.z;pl.yaw=Math.atan2(-dx,-dz);const ty=floorY(e.x,e.z)+(e.k==='yavru'?.45:1.2*(e.sc||1));pl.pitch=Math.atan2(ty-eye[1],Math.hypot(dx,dz));pl.gunT=0;gunFire(kind);return[e.st,+e.hp.toFixed(1)];},__leDmg:(i,d)=>leDamage(TH2.le[i],d),__DEB:DEB,__labOpen:()=>{const k=TH2.use.find(i=>i.k==='kart');if(k&&!k.done)th2Do(k,true);const d=TH2.use.find(i=>i.k==='ldoor');if(d&&!d.done)th2Do(d,true);},__labInfo:()=>{const L=TH2.lab;if(!L)return null;const D=TH2.labDoor;const rc=r=>{let x=0,z=0;for(const c of r.cells){const q=ctr(c);x+=q[0];z+=q[1];}return[x/r.cells.length,z/r.cells.length];};return{door:[D.x,D.z],n:D.n,O:ctr(L.O),Ld:L.Ld||L.Dd,Wd:L.Wd||L.W,v2:!!L.v2,rooms:L.v2?L.rooms.filter(r=>r.cells.length).map(r=>{const P=r.cells.map(c=>ctr(c));return[r.type,...rc(r),r.cells.length,Math.min(...P.map(p=>p[0])),Math.min(...P.map(p=>p[1])),Math.max(...P.map(p=>p[0])),Math.max(...P.map(p=>p[1]))];}):[],cor:L.v2?L.cells.filter(c=>L.area.get(c)===-1).map(c=>{const q=ctr(c);let o=[];for(const[dx,dy]of DIRS)if(L.set.has(c+dx+dy*GW))o.push([dx,dy]);return[q[0],q[1],o];}):[],cells:L.cells.length,ped:(L.ped||[]).length,mon:(TH2.labMon||[]).length,lock:(L.lock||[]).length,mid:L.v2?null:L.W((L.Ld+1)*S/2,(L.b0+L.Wd/2-.5)*S),back:L.v2?null:L.W((L.Ld+.5)*S-1,(L.b0+L.Wd/2-.5)*S),blk:blockC[L.D],anoms:TH2.mis&&TH2.mis.anoms?TH2.mis.anoms.map(a=>[a.x,a.z]):[],mis:th2MisTxt()};},__lab:()=>{const q=TH2.room,r=rooms[q];const L=TH.items.filter(i=>i.k.startsWith("lab"));const cnt={};for(const i of L)cnt[i.k]=(cnt[i.k]||0)+1;return {q,c:r?ctr(r.cy*GW+r.cx):null,cnt,mon:(TH2.labMon||[]).map(m=>[m.x,m.z]),tank:L.filter(i=>i.k==="labT").map(i=>[i.x,i.z]),mesh:Object.keys(TH.mesh).filter(k=>k.startsWith("c3_l")&&TH.mesh[k])};},__HK:()=>({f:HKS.f,t:HKS.t,fired:[...HKS.fired],q:RADIO.q.map(l=>l[0]+":"+l[1].slice(0,30)),cur:RADIO.cur}),__AUD:()=>AUD,__MIM:MIM,__mimPlay:()=>mimPlay(cr),__SMP:SMP,__qte:()=>G.qte,__qteIn:()=>G.qte&&qteIn(G.qte),__bso:(b,x,z,dt)=>botStandoff(b,x,z,dt),__watRip:(x,z,w)=>watRip(x,z,w),__WAT:WAT,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
   nbuf=C.createBuffer(1,sr*2,sr);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}
   try{for(const[ty,v,dl]of type)setTimeout(()=>0,0),(dl?(()=>{const t0=C.currentTime;})():0),sfx(ty,v,0);}finally{}const buf=await C.startRendering();[AC,sfxBus,nbuf,master]=sv;return Array.from(buf.getChannelData(0));},__sfR:()=>{sfRender();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},__mR:()=>{sfMenuRender(0);gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},UI:{VC,XT,vcPress,vcRelease,orderSet,noteOpen,crLure,teamRevive,openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get cratesA(){return crates;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
   LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
