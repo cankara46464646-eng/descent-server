@@ -193,6 +193,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 #ldList li.ok{color:#c9c1b2}#ldList li.ok::before{background:#7fc46f;border-color:#7fc46f;box-shadow:0 0 5px rgba(127,196,111,.7)}
 #ldList li.now{color:var(--fg)}#ldList li.now::before{border-color:var(--lamp);animation:ldBlink .7s steps(2) infinite}
 #ldT{margin:6px 0 0;font-size:11px;line-height:1.45;color:#b6ae9f;max-width:42ch;padding:6px 9px;background:rgba(239,184,67,.05);border-left:2px solid rgba(239,184,67,.45);border-radius:0 4px 4px 0}
+#ldT.hk::before{content:"KAYIT DEFTERİ  "}#ldT.hk{color:#d6cdbd;font-size:12px}
 #ldT::before{content:"İPUCU  ";font-family:var(--display);letter-spacing:.2em;font-size:9.5px;color:var(--lamp)}
 @keyframes ldZoom{to{transform:scale(1.12) translate(-1.5%,1%)}}
 @keyframes ldBlink{50%{background:var(--lamp)}}
@@ -669,7 +670,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v72</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v73</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -2324,9 +2325,9 @@ function th2MisTxt(){const m=TH2.mis;if(!m)return null;
     if(run)return `Pompa çalışıyor, su çekiliyor (${Math.max(0,Math.ceil(run.runT||0))} sn). Gürültü her şeyi çağırdı! (${n}/${T})`;return `Kuyu su altında. İki tahliye pompasını çalıştır (${n}/${T}). Suda yürümek ses yapar.`;}
   if(m.k==='cave'){const n=m.parts.filter(p=>p.done).length,T=m.parts.length;if(m.rub.done)return 'Geçit açıldı. Kafese bin, aşağı in.';if(m.rub.planted)return `PATLAYICI KURULDU: ${Math.max(0,Math.ceil(m.rub.boomT||0))} sn! UZAKLAŞ!`;
     if(n<T)return `Kuyuya giden geçit göçük altında. Patlayıcıyı ve fünyeyi bul (${n}/${T}). Spor toplarına basma.`;return 'Parçalar tamam. Rüzgârı izle, göçüğü bul ve patlayıcıyı kur.';}
-  if(m.k==='forest'){const n=m.samples.filter(x=>x.done).length,T=m.samples.length;if(n>=T)return 'Örnekler tamam. Kuyuyu bul ve in.';return `Ormanın farklı köşelerinden nadir kök özü topla (${n}/${T}). Işığa doğru git, kök sarılı duvarı kazma.`;}
-  if(m.k==='ghost'){const n=m.anoms.filter(x=>x.done).length,T=m.anoms.length;if(n>=T)return 'AV BAŞLADI. Üç örnek alındı: kuyuya ulaş, dolaplara saklan!';return `Ölçerle 3 anomali noktasını bul, örnek al (${n}/${T}). Faaliyet: ${(typeof GHO!=='undefined'&&GHO.act)||1}/4`;}
-  if(m.k==='final'){if(!m.taken)return 'Jeot odasındaki Kara Damar Özü\'nü bul ve asansörle yüzeye çıkar.';return 'ÖZ ALINDI! Kaçış başladı: özü asansöre ulaştırın. Taşıyan yavaş, düşerse biri alsın.';}
+  if(m.k==='forest'){const n=m.samples.filter(x=>x.done).length,T=m.samples.length;if(n>=T)return 'Kök özleri tamam, kapaktaki kökler çürüdü. Kuyuyu bul ve in.';return `Kuyu kapağını saran kökleri çürütmek için ormanın köşelerinden kök özü topla (${n}/${T}). Işığa doğru git, kök sarılı duvarı kazma.`;}
+  if(m.k==='ghost'){const n=m.anoms.filter(x=>x.done).length,T=m.anoms.length;if(n>=T)return 'AV BAŞLADI. Kristaller alındı, kafes doldu: kuyuya ulaş, dolaplara saklan!';return `Ölçerle 3 kristal noktasını bul, örnek al: kafesin aküsünü doldurur (${n}/${T}). Faaliyet: ${(typeof GHO!=='undefined'&&GHO.act)||1}/4`;}
+  if(m.k==='final'){if(!m.taken)return 'Kafesi yukarı ancak Kara Damar Özü çıkarır. Kristal odasındaki özü bul ve kafese götür.';return 'ÖZ ALINDI! Kaçış başladı: özü asansöre ulaştırın. Taşıyan yavaş, düşerse biri alsın.';}
   if(m.k==='flood'){const n=th2Vopen(),T=m.valves.length;if(m.pump.drained)return 'Kuyu boşaldı! Rüzgârın sesini izle, kuyuya kaz ve kafesle in.';if(m.pump.on)return `Pompa çalışıyor, kuyu boşalıyor (${Math.max(0,Math.ceil(m.pump.runT||0))} sn). Gürültü her şeyi çağırdı, saklan!`;
     if(n<T)return `Kuyu su dolu, kafes inemez. Duvardaki boruları izle, vanaları aç (${n}/${T}).`;return 'Vanalar açık. Pompayı çalıştır: kuyuyu boşaltır ama çok gürültülü.';}
   if(m.k==='shroom'){const h=th2Limes(),T=m.limes.length;if(m.mass.done)return 'Mantar ağı kurudu. Kafese bin, aşağı in.';if(h<T)return `Kuyunun ağzını dev mantar ağı kapatmış. Kireç çuvallarını topla (${h}/${T}). Spor toplarına basma.`;return 'Kireçler tamam. Rüzgârı izle, kuyuyu bul, kireci mantar ağına dök.';}
@@ -2869,13 +2870,13 @@ const GEMT={
 
 // Her kat: asansörün indiği güvenli iniş odası, kayanın içinde saklı mağaralar, yaratığın yuvası ve bir alt kata inen gizli kuyu.
 const FLOORS=[
-  {ad:'GİRİŞ KATI',hint:'Kabloları izle, beş jeneratörü çalıştır (istediğin sırayla, aynı anda yalnız biri), asansöre dön.',gas:0,water:0,ore:.7,babies:0,drain:1},
-  {ad:'SU BASMIŞ GALERİ',hint:'Kuyu su altında. İki tahliye pompasını çalıştır; su çekilince eski geçit açılır. Suda her adım duyulur.',gas:0,water:.11,ore:.8,babies:1,drain:1,flooded:true},
-  {ad:'MANTAR MAĞARASI',hint:'Geçit göçük altında. Patlayıcı ve fünyeyi bul, göçüğe kur, uzaklaş. Spor toplarına basma.',gas:.11,water:0,ore:.9,babies:1,drain:1,gassy:true,spores:true},
-  {pale:true,ad:'KÖK ORMANI',hint:'Ormanın köşelerinden 3 nadir kök özü topla. Kök sarılı duvarı kazma, tavan çöker.',gas:0,water:0,ore:1,babies:1,drain:1,roots:true},
-  {ad:'SESSİZ GALERİ',hint:'Burada görmediğin bir şey var. Ölçerle 3 anomali bul, örnek al. Yaklaşırsa dolaba saklan.',gas:0,water:0,ore:1.1,babies:0,drain:2,ghost:true},
-  {ad:'YAVRU YUVASI',hint:'Yuva kuyuyu tıkıyor. Kuluçka keselerini patlat; her kese yuvayı daha çok öfkelendirir.',gas:0,water:0,ore:1.2,babies:8,drain:1},
-  {pale:true,ad:'ELMAS DAMARI',hint:'Kara Damar Özü\'nü bul. Aldığın an mağara uyanır: özle birlikte asansöre koş.',gas:0,water:0,ore:2.4,babies:2,drain:1,final:true}];
+  {ad:'GİRİŞ KATI',hint:'Şirket elektriği kesmiş, kafes aşağı inmiyor. Kabloları izle, beş jeneratörü çalıştır (istediğin sırayla, aynı anda yalnız biri), sonra kafese dön.',gas:0,water:0,ore:.7,babies:0,drain:1},
+  {ad:'SU BASMIŞ GALERİ',hint:'Pompalar durunca kuyuyu su bastı. İki tahliye pompasını çalıştır; su çekilince eski geçit açılır. Suda her adım duyulur.',gas:0,water:.11,ore:.8,babies:1,drain:1,flooded:true},
+  {ad:'MANTAR MAĞARASI',hint:'Şirketin patlattığı göçük kuyunun yolunu kesmiş. Patlayıcı ve fünyeyi bul, göçüğe kur, uzaklaş. Spor toplarına basma.',gas:.11,water:0,ore:.9,babies:1,drain:1,gassy:true,spores:true},
+  {pale:true,ad:'KÖK ORMANI',hint:'Kökler kuyunun kapağını sarmış; kök özü onları çürütür. Ormanın köşelerinden 3 kök özü topla. Kök sarılı duvarı kazma, tavan çöker.',gas:0,water:0,ore:1,babies:1,drain:1,roots:true},
+  {ad:'KAYIP EKİBİN KAMPI',hint:'Kafesin aküsü bitmiş; damar kristali onu doldurur. Ölçerle 3 kristal noktasını bul, örnek al. Görünmeyen şey yaklaşırsa dolaba saklan.',gas:0,water:0,ore:1.1,babies:0,drain:2,ghost:true},
+  {ad:'YAVRU YUVASI',hint:'Yaratığın yuvası kuyuyu tıkıyor. Kuluçka keselerini patlat; her kese yuvayı daha çok öfkelendirir.',gas:0,water:0,ore:1.2,babies:8,drain:1},
+  {pale:true,ad:'ELMAS DAMARI',hint:'Kafesi yukarı ancak Kara Damar Özü çıkarır. Özü bul; aldığın an mağara uyanır: özle birlikte kafese koş.',gas:0,water:0,ore:2.4,babies:2,drain:1,final:true}];
 const FL=()=>FLOORS[RUN.floor-1];
 // Her katın kendi kayası, nemi, pusu ve ortam sesi: nerede olduğunu duvara bakınca anlarsın.
 const LOOKS=[
@@ -4586,7 +4587,7 @@ function openCrates(done){const opts=CRATES.filter(c=>c.up?!RUN.up[c.up]:c.miner
     sfx('pickup',1);$('shop').hidden=true;$('hud').hidden=false;done();};}
 function startAscent(){const left=gatherTeam(true);if(left===null)return;G.state='ascend';document.exitPointerLock?.();RUN.time+=G.time;
   G.asc={t:0,dur:34,at:[8,17,26],idx:0,atk:null,cT:0,hT:0,left};$('ascend').hidden=false;$('hud').hidden=false;$('touch').hidden=true;$('hotbar').hidden=true;
-  $('ascS').textContent=left.length?`${left.join(' ve ')} aşağıda kaldı. Kafes gıcırdayarak yükseliyor...`:'Kafes gıcırdayarak yükseliyor...';sfx('liftUp',1.2);sfx('sting',.7,0,false,musBus);}
+  $('ascS').textContent=left.length?`${left.join(' ve ')} aşağıda kaldı. Kafes gıcırdayarak yükseliyor...`:'Kafes gıcırdayarak yükseliyor...';sfx('liftUp',1.2);sfx('sting',.7,0,false,musBus);try{radioSay(HK.asc);}catch(e){}}
 function updateAscend(dt){const A=G.asc;A.t+=dt;A.cT-=dt;A.hT-=dt;
   if(A.cT<=0){A.cT=.85;sfx('liftUp',.8);if(Math.random()<.3)sfx('scrape',.45,(Math.random()-.5),true);}
   A.rT=(A.rT||0)-dt;if(A.rT<=0){A.rT=3.4;sfx('liftRide',.75);}
@@ -4602,10 +4603,10 @@ function updateAscend(dt){const A=G.asc;A.t+=dt;A.cT-=dt;A.hT-=dt;
   if(A.t>=A.dur)victory();}
 function victory(){G.state='end';smpRideStop();document.exitPointerLock?.();caughtHide();$('floorCard').classList.remove('on');$('ascend').hidden=true;$('hud').hidden=true;$('hotbar').hidden=false;$('bStruggle').hidden=true;sfx('nightDone',1.2);
   const n=RUN.alive.length+1,v=cartValue();$('end').classList.add('win');$('endK').textContent='GÜN IŞIĞI';$('endTitle').textContent=n>1?'KURTULDUNUZ':'KURTULDUN';
-  $('endReason').textContent=(n===4?'Dördünüz de gün ışığına çıktınız. ':n===3?`Sen, ${RUN.alive.join(' ve ')} çıktınız; biri aşağıda kaldı. `:n===2?`Sen ve ${RUN.alive[0]} çıktınız; diğerleri aşağıda kaldı. `:'Yüzeye bir tek sen çıktın. Aşağıdan hâlâ sesler geliyor. ')+(v>0?`Vagonda ${tl(v)} değerinde taş var.`:'Elin boş ama hayattasın.');
+  $('endReason').textContent=(n===4?'Dördünüz de gün ışığına çıktınız. ':n===3?`Sen, ${RUN.alive.join(' ve ')} çıktınız; biri aşağıda kaldı. `:n===2?`Sen ve ${RUN.alive[0]} çıktınız; diğerleri aşağıda kaldı. `:'Yüzeye bir tek sen çıktın. Aşağıdan hâlâ sesler geliyor. ')+(v>0?`Vagonda ${tl(v)} değerinde taş var.`:'Elin boş ama hayattasın.')+' Tekin Bey kapağı açıp Kara Damar Özü\'nü aldı, elinize bir zarf tutuşturdu. Arkanızda, kafesin içinde telsiz bir kez daha cızırdadı. Bu sefer konuşan, Tekin\'in sesiydi.';
   $('lNight').textContent='ÇIKAN';$('sNight').textContent=n+' kişi';$('sGem').textContent=tl(runValue());const s=Math.floor(RUN.time);$('sTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
   $('again').hidden=true;$('endRevive').hidden=true;$('restart').textContent='YENİDEN OYNA';$('endFun').innerHTML=funStats();$('end').hidden=false;clearSave();}
-function update(dt){G.time+=dt;audUpdate(dt);if(G.arrive)arriveTick(dt);if(G.state!=='play'&&RUN.floor===1)genTick(dt,null);
+function update(dt){G.time+=dt;audUpdate(dt);try{storyTick(dt);}catch(e){frameErr('story',e);}if(G.arrive)arriveTick(dt);if(G.state!=='play'&&RUN.floor===1)genTick(dt,null);
   if(false){G.babyT-=dt;if(G.babyT<=0){G.babyT=240;if(babies.filter(y=>y.st!=='dead').length<6){const R=rooms[2+Math.floor(Math.random()*Math.max(1,rooms.length-2))]||rooms[1];babies.push({x:(R.cx+.5)*S,z:(R.cy+.5)*S,face:0,st:'wander',path:null,pi:0,repath:0,timer:1,cd:5,walk:0,moving:false,twitch:0,stand:0,hp:2,t:0});sfxAt('babyScreech',(R.cx+.5)*S,(R.cy+.5)*S,.6,80);}}}const live=G.state==='play'||G.state==='dragged'||G.state==='dying'||G.state==='buried'||G.state==='spectate'||G.state==='paleGrab';
   if((G.state==='play'||G.state==='buried')&&G.anger>0)G.threat=Math.min(130,(G.threat||0)+dt*.5*(1+angerEff()*.35));G.noiseLvl=Math.max(0,G.noiseLvl-dt*.9);G.shake=Math.max(0,G.shake-dt);flushChunks();if(G.digInfo){G.digInfo.t-=dt;if(G.digInfo.t<=0)G.digInfo=null;}
   if(G.state==='play')updatePlayer(dt);else if(G.state==='buried')updateBuried(dt);
@@ -5920,7 +5921,7 @@ function ldSurface(g,cw,ch,Y,L0,R0){const gy=ch*.72-Y;if(gy<=-10)return -1;const
   if(Math.sin(t*4)>0){const rl=g.createRadialGradient(cx,top-30,0,cx,top-30,12);rl.addColorStop(0,'rgba(255,60,40,.9)');rl.addColorStop(1,'rgba(255,60,40,0)');g.globalCompositeOperation='lighter';g.fillStyle=rl;g.fillRect(cx-12,top-42,24,24);g.globalCompositeOperation='source-over';}
   g.fillStyle='#2f2c28';g.fillRect(cx-1,top-30,2,14);
   return top-14;}
-function loadShow(floor,o){o=o||{};const F=FLOORS[floor-1]||FLOORS[0];$('ldK').textContent=o.title?o.title[0]:'KAT -'+floor;$('ldN').textContent=o.title?o.title[1]:F.ad;$('ldH').textContent=o.title?o.title[2]:F.hint||'';$('ldT').textContent=LD_TIPS[Math.floor(Math.random()*LD_TIPS.length)];
+function loadShow(floor,o){o=o||{};const F=FLOORS[floor-1]||FLOORS[0];$('ldK').textContent=o.title?o.title[0]:'KAT -'+floor;$('ldN').textContent=o.title?o.title[1]:F.ad;$('ldH').textContent=o.title?o.title[2]:F.hint||'';{const hl=!o.title&&HK[floor]&&HK[floor].load;$('ldT').textContent=hl||LD_TIPS[Math.floor(Math.random()*LD_TIPS.length)];$('ldT').classList.toggle('hk',!!hl);}
   let pp='';for(let i=1;i<=FLOORS.length;i++)pp+=`<i class="${i<floor?'d':i===floor?'c':''}"></i>`;$('ldP').innerHTML=pp;
   Object.assign(LD,{on:true,t:0,t0:performance.now(),tl:0,surf:floor===1&&!!o.surface,hold:floor===1&&o.surface?1e9:0,min:o.min||1.6,max:9,work:o.work,done:o.done,worked:false,floor,d0:o.title?0:ldDepth(floor-1),d1:o.title?0:ldDepth(floor),fin:0,shown:0,bounce:0,
     miners:Math.max(1,Math.min(4,1+((RUN.alive&&RUN.alive.length)||0)+(NET.started?Math.max(0,(NET.humans||1)-1):0)))});
@@ -6145,7 +6146,7 @@ function sfDrawProps(core,trees){if(!ENV.lib||!SF.pg)return;let oc=SF.okCell;if(
   const u=envBegin(),PL=envPlanes();for(const[a,list]of SF.pg){const isT=a.startsWith('f_');if(isT?!trees&&SF_TREE.includes(a):!core&&SF_CORE.includes(a))continue;for(const it of list)it.cell=oc;try{envDrawGroup(u,{a,v:'',far:isT?55:30},list,PL);}catch(e){}}
   gl.useProgram(PR.p);gl.bindVertexArray(null);}
 // ---- giriş / çıkış ----
-function sfStart(){if(!SF.mesh)try{sfBuild();}catch(e){console.error('yüzey',e);return false;}
+function sfStart(){SF.hk=0;if(!SF.mesh)try{sfBuild();}catch(e){console.error('yüzey',e);return false;}
   SF.on=true;SF.t=0;SF.go=null;SF.gate=0;SF.cy=0;SF.save={x:pl.x,z:pl.z,yaw:pl.yaw,pitch:pl.pitch,bots:bots.filter(b=>!b.remote).map(b=>[b,b.x,b.z,b.face,b.st])};
   // ağzın hemen gerisinde, dışarıya (ormana) bakarak doğ
   pl.x=-.4+Math.random()*1.4;pl.z=31.4+Math.random()*.8;pl.yaw=Math.PI;pl.pitch=.02;pl.lamp=true;pl.carry=null;
@@ -6169,7 +6170,7 @@ function sfInCount(){let n=sfInCage(pl.x,pl.z)?1:0,T=1;if(NET.started)for(const 
 function sfHud(force){SF.hudT=(SF.hudT||0)-1;if(!force&&SF.hudT>0)return;SF.hudT=12;const[n,T]=sfInCount();
   $('depN').textContent='Y';$('nightL').textContent='MADEN GİRİŞİ';$('depP').innerHTML='';$('misP').hidden=true;$('misF').textContent='';$('sqL').innerHTML='';
   $('objL').textContent=SF.go?'Kafes iniyor...':T>1?`Mağaranın derinindeki kafese in. Herkes binince iner (${n}/${T} kafeste).`:'Mağaranın derinindeki kafese in. Ekibin seni orada bekliyor.';}
-function sfTick(dt){if(!SF.on)return;SF.t+=dt;G.shake=Math.max(0,(G.shake||0)-dt);sfMove(dt);
+function sfTick(dt){if(!SF.on)return;SF.t+=dt;if(SF.t>3.5&&!SF.hk){SF.hk=1;try{radioSay(HK[0].surf);}catch(e){}}G.shake=Math.max(0,(G.shake||0)-dt);sfMove(dt);
   if(MN.ready)try{mnUpdateBots(dt);}catch(e){}
   const inC=sfInCage(pl.x,pl.z);
   // karar: tek oyunculuda girer girmez; çok oyunculuda oda sahibi herkes kafesteyken 1 sn sonra
@@ -6280,7 +6281,7 @@ function begin(fresh){audioInit();applyAudio();$('how').hidden=$('multi').hidden
 function saveRun(){try{localStorage.setItem('kd_run',JSON.stringify({snap:RUN.snap,up:RUN.up,time:RUN.time||0}));}catch(e){}}
 function clearSave(){try{localStorage.removeItem('kd_run');}catch(e){}}
 function loadSave(){try{const d=JSON.parse(localStorage.getItem('kd_run')||'null');return d&&d.snap&&d.snap.floor>1?d:null;}catch(e){return null;}}
-function showMenu(){document.exitPointerLock?.();try{loopGC(true);}catch(e){}caughtHide();for(const id of['how','multi','bye','end','pause'])$(id).hidden=true;$('hud').hidden=true;$('spec').hidden=true;$('ascend').hidden=true;$('tip').classList.remove('on');$('floorCard').classList.remove('on');
+function showMenu(){document.exitPointerLock?.();try{loopGC(true);}catch(e){}try{radioClear();HKS.f=-1;}catch(e){}caughtHide();for(const id of['how','multi','bye','end','pause'])$(id).hidden=true;$('hud').hidden=true;$('spec').hidden=true;$('ascend').hidden=true;$('tip').classList.remove('on');$('floorCard').classList.remove('on');
   if(!['intro'].includes(G.state)){newGame();G.state='intro';pl.lamp=true;}
   const sv=loadSave();$('contBox').hidden=true;if(sv)$('mContL').textContent='KAT -'+sv.snap.floor;$('start').hidden=false;$('play').focus({preventScroll:true});}
 function subMenu(id){$('start').hidden=true;$(id).hidden=false;const b=$(id).querySelector('.go:not([disabled])');if(b)b.focus({preventScroll:true});}
@@ -6510,8 +6511,73 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&AC&&AC.st
 setTimeout(()=>{try{audioInit();if(AC){applyAudio();if(AC.state!=='running')AC.resume().catch(()=>{});}}catch(e){}},0);
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(!b||b.closest('#touch,#hotbar'))return;if(!b.closest('.screen,#spec,#story'))return;uiSnd(b.classList.contains('back')||b.id==='pX'?'back':'clk');},true);
 document.addEventListener('pointerover',e=>{if(e.pointerType!=='mouse')return;const b=e.target.closest&&e.target.closest('.mb,.crate,.sTabs button,.dScr .go,.seg button');if(b!==MAU.hv){MAU.hv=b;if(b)uiSnd('hov');}});
-const STORY=['Kara Damar Madeni üç gün önce mühürlendi.','Alt katlarda bir göçük oldu. Aşağıda kalanlardan bir daha ses çıkmadı.','Ama telsiz hâlâ cızırdıyor. Ve damarda hâlâ taş var.','Dört kişisiniz. Bir kafes. Yedi kat.','Tek bir kural var: ışığın seni gösterir.'];
-function storyThen(cb){let seen=false;try{seen=localStorage.getItem('kd_story')==='1';localStorage.setItem('kd_story','1');}catch(e){}
+// ================= HİKÂYE: "YANKI" — telsiz konuşmaları, kat başı/ilerleme/bitiş anları, iniş metinleri, final =================
+// Konuşanlar: R = Rıza Usta (telsiz; aslında yaratık onun sesini taklit ediyor), Y = bozulan ses, T = Tekin (Derinkaya, yüzey),
+// K = 3 gün önceki gerçek kayıt, N = ekibin gördüğü (anlatı). Ağdan bir şey gönderilmez: her oyuncu aynı oyun durumundan aynı anları görür.
+const HK_WHO={R:['RIZA USTA · TELSİZ','#e8b04a'],Y:['RIZA USTA?','#d9534a'],T:['TEKİN · DERİNKAYA','#7fb0e0'],K:['KAYIT · ÜÇ GÜN ÖNCE','#c98a6a'],N:['','#a39d92']};
+const HK={
+  0:{surf:[['R','…sesim geliyor mu? Burası Rıza… kafes… kafes hâlâ çalışıyor. Aşağı gelin.'],['R','Yaşıyoruz. Ama çok az kaldık.']]},
+  1:{load:'Şirket madeni mühürlerken elektriği de kesmiş. Güç gelmeden kafes daha aşağı inmez.',
+     start:[['R','Geldiniz mi? Elektriği kestiler, kafes inmiyor.'],['R','Jeneratörler… kabloları izleyin. Ses yapmayın. O, sesi sever.']],
+     p1:[['R','Işıklar titredi! Aferin evlat, devam edin.']],
+     mid:[['T','Kim var orada? Burası Derinkaya. Maden mühürlü, girmek yasak. Hemen yukarı çıkın!'],['R','Onu dinlemeyin. Bizi burada bırakan onlar.']],
+     done:[['R','Güç geldi! Kafes artık iner. Bir alt kat… orayı su basmıştı.']]},
+  2:{load:'Elektrik kesilince pompalar durdu. Üç gündür su yükseliyor.',
+     start:[['R','Pompalar durunca su yükseldi. Biz aşağıdayız, su bize geliyor!'],['R','İki tahliye pompası var. Çalıştırın… ama çok gürültülüdür.']],
+     p1:[['R','Çalıştı! Şimdi saklanın. Gürültüye gelir.']],
+     mid:[['R','Sen… hangisiydin evlat? Sesini bir daha duyayım.']],
+     done:[['N','Su çekildi. Dipte boğulmuş madenciler var. Hepsi yukarı, kuyuya doğru kaçarken ölmüş.'],['R','Aşağı inin. Bekliyoruz.']]},
+  3:{load:'Bu kattaki göçük, mühürden bir saat önce oldu. Tam kuyunun ağzında.',
+     start:[['R','Göçük kaza değildi. Patlayıcı ve fünye bulun, açın yolu.'],['R','Mantarlara basmayın. Grizu var, kıvılcım her şeyi uçurur.']],
+     p1:[['N','Sandığın üstünde Derinkaya mührü var. Göçüğü şirket yapmış: madeni içeridekilerle birlikte kapatmışlar.']],
+     mid:[['T','Dinleyin beni. O telsize cevap vermeyin. Ve en alttaki taşa sakın dokunmayın.']],
+     done:[['R','Yol açık. Az kaldı… çok az.']]},
+  4:{load:'Kökler kuyunun kapağını sarmış. Kök özü onları çürütür.',
+     start:[['R','Kökler her yeri sardı. Özüyle çürür. Üç tane… topla… topla… topla.'],['N','Ağaçların arasında bir şey sizi izliyor. Bakınca duruyor.']],
+     p1:[['N','Kökler kayadan değil, aşağıdaki damardan büyüyor. Sanki bir şeyin damarları.']],
+     mid:[['Y','Gel. Gel. Gel. Gel.']],
+     done:[['R','Kapak çözüldü. Aşağıda kampımız var. Orada… bekliyoruz.']]},
+  5:{load:'Rıza\'nın ekibinin son kampı. Kafesin aküsü burada bitmiş; damar kristali onu doldurabilir.',
+     start:[['N','Kamp boş. Yataklar serili, yemekler yarım kalmış. Kimse yok.'],['R','Kampa geldiniz mi? Biz buradayız. Yanınızdayız.']],
+     p1:[['N','Ölçer çıldırıyor. Kristalin içinden sesler geliyor: madencilerin son sözleri. Bu taş duyduğunu saklıyor.']],
+     mid:[['N','Galeride görünmeyen bir şey dolaşıyor. Ölçer ötünce dolaplara saklanın.']],
+     done:[['K','Burası Rıza. Damarı deldik, altında bir şey vardı. Adamlarımı aldı. Kafesi yukarı gönderiyorum.'],['K','Kimse aşağı inmesin. Telsizden benim sesimi duyarsanız… o ben değilim.'],['Y','Aşağı gelin.']]},
+  6:{load:'Kafes artık yukarı çıkmıyor. Halat aşağıdan bir şeye takılı.',
+     start:[['T','Duydunuz mu? İyi. Yukarı çıkmak istiyorsanız Kara Damar Özü\'nü getirin. Kafesi o çalıştırır. Öz yoksa kapağı açmam.'],['N','Önünüzde yaratığın yuvası. Kuyuyu kuluçka keseleri tıkıyor.']],
+     p1:[['N','Kesenin içinde yarım bir yavru… etrafında baret parçaları.']],
+     mid:[['Y','Neden kaçıyorsun? Ben… senin arkadaşınım.']],
+     done:[['T','Kuyu açıldı. En alta inin, özü alın, kafese koşun. Söz, sizi yukarı alırım.']]},
+  7:{load:'Kara Damar\'ın kalbi. Duvarlar çan gibi çınlıyor.',
+     start:[['N','Kristal odasının önünde Rıza Usta\'nın bareti duruyor. Telsizi hâlâ açık.'],['Y','Sonunda geldiniz. Sizi çok bekledim.']],
+     p1:[['Y','KALBİMİ YUKARI TAŞIYIN.'],['N','Mağara uyandı. KOŞ!']]},
+  asc:[['T','Öz yanınızda mı? Kapağı açıyorum.'],['Y','Yukarıda… o kadar çok ses var ki…']]};
+const RADIO={q:[],cur:null,t:0,el:null};
+function radioEl(){if(RADIO.el)return RADIO.el;const st=document.createElement('style');
+  st.textContent='#radio{position:fixed;left:50%;bottom:calc(118px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(8px);width:min(560px,calc(100vw - 32px));pointer-events:none;z-index:6;opacity:0;transition:opacity .35s,transform .35s;background:rgba(8,7,6,.78);border-left:3px solid var(--rc,#e8b04a);border-radius:0 6px 6px 0;padding:8px 12px 9px;box-shadow:0 6px 24px rgba(0,0,0,.45)}'+
+   '#radio.on{opacity:1;transform:translateX(-50%) translateY(0)}#radio small{display:block;font-family:var(--display,Oswald,sans-serif);letter-spacing:.18em;font-size:10px;color:var(--rc,#e8b04a);margin-bottom:3px}#radio p{margin:0;font-size:13.5px;line-height:1.42;color:#ece5d8}'+
+   '#radio.n p{font-style:italic;color:#c9c1b3}#radio.n small{display:none}#radio.y p{color:#f0c9c2;letter-spacing:.02em;text-shadow:1px 0 rgba(255,40,30,.45),-1px 0 rgba(60,200,255,.25)}@media (max-height:430px){#radio{bottom:calc(92px + env(safe-area-inset-bottom))}}#radio.tc{top:calc(62px + env(safe-area-inset-top));bottom:auto;width:max(280px,min(440px,calc(100vw - 400px)))}#radio.tc p{font-size:12.5px}';
+  document.head.appendChild(st);const d=document.createElement('div');d.id='radio';d.innerHTML='<small></small><p></p>';document.body.appendChild(d);return RADIO.el=d;}
+function radioStatic(k){try{if(!AC||!nbuf||!sfxBus)return;const s=AC.createBufferSource();s.buffer=nbuf;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=1700+Math.random()*900;f.Q.value=.8;const g=AC.createGain();const t=AC.currentTime,v=.11*(k||1);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.02);g.gain.setValueAtTime(v*.6,t+.12);g.gain.linearRampToValueAtTime(0,t+.28);s.connect(f);f.connect(g);g.connect(sfxBus);s.start(t,Math.random()*2);s.stop(t+.32);}catch(e){}}
+function radioSay(lines){if(!lines||!lines.length)return;for(const L of lines)RADIO.q.push(L);}
+function radioClear(){RADIO.q.length=0;RADIO.cur=null;RADIO.t=0;if(RADIO.el)RADIO.el.classList.remove('on');}
+function radioTick(dt){const live=['play','surface','ascend','dragged','buried','spectate','dying','paleGrab'].includes(G.state)&&!(SF.on&&SF.go);
+  if(!live){if(RADIO.cur){RADIO.cur=null;if(RADIO.el)RADIO.el.classList.remove('on');}return;}
+  if(RADIO.cur){RADIO.t-=dt;if(RADIO.t<=0){RADIO.cur=null;RADIO.el.classList.remove('on');RADIO.gap=.55;if(RADIO.wasR)radioStatic(.6);}return;}
+  if(RADIO.gap>0){RADIO.gap-=dt;return;}const L=RADIO.q.shift();if(!L)return;const el=radioEl(),W=HK_WHO[L[0]]||HK_WHO.N;
+  el.querySelector('small').textContent=W[0];el.querySelector('p').textContent=L[1];el.style.setProperty('--rc',W[1]);el.className='on'+(typeof isTouch!=='undefined'&&isTouch?' tc':'')+(L[0]==='N'?' n':L[0]==='Y'?' y':'');
+  RADIO.cur=L;RADIO.t=2.4+L[1].length*.058;RADIO.wasR=L[0]!=='N';if(RADIO.wasR){radioStatic(L[0]==='Y'?1.6:1);sfx('click',.25);}}
+const HKS={f:-1,t:0,fired:new Set()};
+function hkFire(k){const F=RUN.floor;if(HKS.fired.has(k))return;HKS.fired.add(k);const B=HK[F];if(B&&B[k])radioSay(B[k]);}
+function storyTick(dt){if(G.state!=='play'&&G.state!=='spectate')return;const F=RUN.floor;if(HKS.f!==F){HKS.f=F;HKS.t=0;HKS.fired=new Set();}HKS.t+=dt;
+  if(HKS.t>4.6)hkFire('start');if(HKS.t<5)return;let a=0,done=false;
+  if(F===1){a=gensOn();done=!!(G.gens&&G.gens.length)&&a===G.gens.length;}
+  else{const m=TH2.mis;if(!m)return;const tx=th2MisTxt()||'',mm=/\((\d+)\s*\/\s*(\d+)\)/.exec(tx);if(mm)a=+mm[1];
+    if(m.k==='final'){a=m.taken?1:0;}else if(m.k==='cave')a=m.parts.filter(p=>p.done).length;else if(m.k==='flood2')a=m.pumps.filter(p=>p.on).length;
+    done=m.k!=='final'&&th2MisDone();}
+  if(a>=1)hkFire('p1');if(done)hkFire('done');if(HKS.t>150&&!done)hkFire('mid');}
+const STORY=['Kara Damar Madeni. Üç gün önce en alt katta bir göçük oldu.','Derinkaya Madencilik madeni mühürledi. "Kurtarılacak kimse kalmadı" dediler.','Ama dün gece eski maden telsizi cızırdadı. Rıza Usta\'nın sesi: "Yaşıyoruz. Gelin."','Siz onun yetiştirdiği dört madencisiniz. Şirketten habersiz, gece iniyorsunuz.','Aşağıda bir şey var. Işığını gören, sesini duyan seni bulur.'];
+function storyThen(cb){let seen=false;try{seen=localStorage.getItem('kd_story2')==='1';localStorage.setItem('kd_story2','1');}catch(e){}
   if(seen||(navigator.webdriver&&!window.__kdStory)){cb();return;}
   const el=$('story'),T=$('stT');T.innerHTML='';el.classList.remove('out');el.hidden=false;$('start').hidden=true;
   const S={i:0,c:0,typing:false,done:false,acc:0,wait:0,p:null,raf:0};let lt=performance.now();
@@ -6541,6 +6607,7 @@ function fpsTick(now){FPSC.n++;if(!FPSC.t)FPSC.t=now;const d=now-FPSC.t;if(d>=50
 function frameErr(w,e){const k=w+(e&&e.message);if(frameErr.k!==k){frameErr.k=k;frameErr.n=(frameErr.n||0)+1;console.error(w,e);}}
 function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now;if(G.hitK>0)G.hitK=Math.max(0,G.hitK-dt*1.2);try{XT.uiT=(XT.uiT||0)-dt;if(XT.uiT<=0){XT.uiT=.5;vcUI();const sh=$('sndHint');if(sh)sh.hidden=!!(AC&&AC.state==='running');}vcTick(dt);}catch(e){}adaptRes((now-(frame.p||now))/1000);frame.p=now;
   try{jobRun();}catch(e){frameErr('job',e);}
+  try{radioTick(dt);}catch(e){frameErr('radio',e);}
   if(LD.on)try{loadTick(dt);}catch(e){console.warn('load',e);}
   try{netTick(dt);}catch(e){console.warn('net',e);}
   try{if(G.state==='intro'){G.time+=dt;pl.yaw+=dt*.08;}else if(G.state==='ascend'){G.time+=dt;updateAscend(dt);G.shake=Math.max(0,G.shake-dt);updateMusic(dt);}else if(G.state==='surface')sfTick(dt);else if(!['shop','end','descend','pause','load'].includes(G.state))update(dt);}catch(err){frameErr('upd',err);}
@@ -6548,7 +6615,7 @@ function frame(now){fpsTick(now);const dt=Math.min(.05,(now-last)/1000);last=now
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
-window.__kd={__LOOPS:LOOPS,__DEB:DEB,__AUD:()=>AUD,__MIM:MIM,__mimPlay:()=>mimPlay(cr),__SMP:SMP,__qte:()=>G.qte,__qteIn:()=>G.qte&&qteIn(G.qte),__bso:(b,x,z,dt)=>botStandoff(b,x,z,dt),__watRip:(x,z,w)=>watRip(x,z,w),__WAT:WAT,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
+window.__kd={__LOOPS:LOOPS,__DEB:DEB,__HK:()=>({f:HKS.f,t:HKS.t,fired:[...HKS.fired],q:RADIO.q.map(l=>l[0]+":"+l[1].slice(0,30)),cur:RADIO.cur}),__AUD:()=>AUD,__MIM:MIM,__mimPlay:()=>mimPlay(cr),__SMP:SMP,__qte:()=>G.qte,__qteIn:()=>G.qte&&qteIn(G.qte),__bso:(b,x,z,dt)=>botStandoff(b,x,z,dt),__watRip:(x,z,w)=>watRip(x,z,w),__WAT:WAT,__off:async(type,vol,secs)=>{const sv=[AC,sfxBus,nbuf,master];const sr=22050;const C=new OfflineAudioContext(1,Math.ceil(sr*secs),sr);AC=C;const mg=C.createGain();mg.connect(C.destination);master=mg;sfxBus=C.createGain();sfxBus.connect(mg);
   nbuf=C.createBuffer(1,sr*2,sr);const d=nbuf.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;b=(b+.02*w)/1.02;d[i]=w*.6+b*3;}
   try{for(const[ty,v,dl]of type)setTimeout(()=>0,0),(dl?(()=>{const t0=C.currentTime;})():0),sfx(ty,v,0);}finally{}const buf=await C.startRendering();[AC,sfxBus,nbuf,master]=sv;return Array.from(buf.getChannelData(0));},__sfR:()=>{sfRender();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},__mR:()=>{sfMenuRender(0);gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));},UI:{VC,XT,vcPress,vcRelease,orderSet,noteOpen,crLure,teamRevive,openCrates,endGame,victory,showMenu,storyThen,ac:()=>AC&&AC.state,mau:()=>!!MAU.nodes,mmu:()=>[!!MMU.g,MMU.ci,MMU.bn]},get TH2(){return TH2;},th2Ctx,th2Apply,th2Use,th2Bits,th2SideTxt,context:()=>context(),useDown:()=>useDown(),useUp:()=>useUp(),thMesh:()=>thMesh(),th2Reveal:()=>th2Reveal(),th2Pocket:()=>th2Pocket(),get SYS(){return SYS;},get GHO(){return GHO;},CFG,crStunHit,sysStunFire,sysGhostHit,sysEvApply,sysManifest,get gemsA(){return gems;},th2MisTxt,th2Block,th2MisDone,get waterA(){return water;},get roomId(){return roomId;},crV,audFlat,audReady,stepTaps,sfx,get NET(){return NET;},get botsA(){return bots;},struggle,netLog,get CRE(){return CRE;},get babies(){return babies;},HX,hxUpdate,drawHemi,OC,ocUpdate,loadOcu,flareNear,get loot(){return loot;},get cratesA(){return crates;},get blockC(){return blockC;},domeAt,ceilY,get STATS(){return STATS;},get TH(){return TH;},moveC:moveCircle,__perf:(n)=>{RS=1;const t=[];for(let i=0;i<n;i++){const a=performance.now();render();gl.finish();gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4));t.push(performance.now()-a);}t.sort((a,b)=>a-b);return +t[n>>1].toFixed(1);},ENV_TINT,get cartPos(){return cartPos;},ENV,envBuild,envPen,envOnOpen,envAsset,envSurf,get chunks(){return chunks;},los,cellOf,solid,AUD,AUDNET,audPlay,audTick,audEmitter,audReceive,get CRE(){return CRE;},MN,mnEvaluate,mnPack,mnUnpack,toggleCrouch,DZ,paleGrab,get pale(){return pale;},spawnPale,paleLit,botFindWork,step:(n,dt)=>{for(let i=0;i<n;i++)update(dt);},killPlayer,SET,openPause,LK,get bones(){return bones;},digImpact,openCell,emit,explode,doCollapse,checkCollapse,useTool,selectTool,depositGem,goDown,startAscent,updateAscend,FL,noises:()=>noises,G,RUN,cart,get railPath(){return railPath;},get pl(){return pl;},get cr(){return cr;},get bots(){return bots;},get gems(){return gems;},get babies(){return babies;},get eggs(){return eggs;},get flares(){return flares;},get dyns(){return dyns;},get projs(){return projs;},
   LD,loadShow,arriveStart,SF,SFM,sfOK,grab,begin:(...a)=>{begin(...a);ldFinishNow();if(SF.on){sfLeave();G.state='play';arriveStart(()=>showFloorCard());}if(G.arrive){const A=G.arrive;G.arrive=null;for(const[b]of A.pin)b.mnY=0;if(A.cb)A.cb();}},newGame,rooms:()=>rooms,nest:()=>nest,entrance:()=>entrance,grid:()=>grid,feat:()=>feat,gasL:()=>gasL,water:()=>water,support:()=>support,dug:()=>dug};
