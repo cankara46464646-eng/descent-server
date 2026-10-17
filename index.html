@@ -670,7 +670,7 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v74</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v75</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -2209,13 +2209,14 @@ function labCarve(R){const E=rooms[entrance];if(!E)return null;const f=bfsField(
   if(!best)return null;const{O,dx,dy,px,py,Ld,Wd,b0}=best;const D=[I(O)+dx,J(O)+dy],Dc=D[1]*GW+D[0];const cells=[];
   for(let a=0;a<=Ld+1;a++)for(let b=b0-1;b<=b0+Wd;b++){const i=D[0]+dx*a+px*b,j=D[1]+dy*a+py*b,q=j*GW+i;const ins=(a>=1&&a<=Ld&&b>=b0&&b<b0+Wd)||(a===0&&b===0);if(ins)cells.push(q);else LABW[q]=1;}
   for(const q of cells){grid[q]=1;natural[q]=0;dug[q]=0;water[q]=0;oreAt[q]=-1;feat[q]=0;roomId[q]=-1;}blockC[Dc]=1;
+  {let x0=1e9,x1=-1e9,z0=1e9,z1=-1e9;for(const q of cells){if(q===Dc)continue;const i=q%GW,j=(q/GW)|0;x0=Math.min(x0,i*S);x1=Math.max(x1,(i+1)*S);z0=Math.min(z0,j*S);z1=Math.max(z1,(j+1)*S);}LABUP={x0,x1,z0,z1,h:3.2};DISPM.clear();}
   const[Dx,Dz]=ctr(Dc);return{O,D:Dc,dx,dy,px,py,Ld,Wd,b0,cells,set:new Set(cells),Dx,Dz,W:(a,b)=>[Dx+dx*a+px*b,Dz+dy*a+py*b],d3:[dx,0,dy],p3:[px,0,py]};}
 function th2BuildBigLab(L,R,rr,help,own){const{frame,col,fy}=help;TH2.labMon=[];TH2.labLc=null;TH2.lab=L;TH2.card=false;const W=L.W,d3=L.d3,p3=L.p3,nd=[-d3[0],0,-d3[2]],np=[-p3[0],0,-p3[2]];
   const aF=.5*S,aB=(L.Ld+.5)*S,bL=(L.b0-.5)*S,bR=(L.b0+L.Wd-.5)*S,aM=(aF+aB)/2,bM=(bL+bR)/2;
   const C=(a,b)=>cidx(...W(a,b));const ok=(a,b)=>L.set.has(C(a,b));const Y=(x,z)=>fy(x,z);
-  for(const c of L.cells){const[x,z]=ctr(c);TH.items.push({k:'labF',c,x,z,y:Y(x,z)});TH.items.push({k:'labX',c,x,z,y:Y(x,z)});
-    TH.items.push({k:'labL',c,x,y:Math.min(Y(x,z)+2.97,ceilY(x,z)-.06),z,top:Math.min(Y(x,z)+3.02,ceilY(x,z)),a:Math.abs(L.dx)?Math.PI/2:0,ph:R()*TAU,mode:R()<.15?'dead':R()<.3?'flick':'on'});}
-  for(const c of L.cells)for(const[dx,dy]of DIRS){const q=c+dx+dy*GW;if(grid[q])continue;const fr=frame({c,d:[dx,dy]});const a=fr.P(-1.2,.08),b=fr.P(1.2,.08);TH.items.push({k:'labW',c,a,b,n:[fr.n[0],0,fr.n[1]],t:[fr.t[0],0,fr.t[1]],hi:true});}
+  for(const c of L.cells){const[x,z]=ctr(c);const hc=c===L.D?3.02:6.1;TH.items.push({k:'labF',c,x,z,y:Y(x,z)});TH.items.push({k:'labX',c,x,z,y:Y(x,z),hc});
+    TH.items.push({k:'labL',c,x,y:c===L.D?Math.min(Y(x,z)+2.97,ceilY(x,z)-.06):Y(x,z)+4.5,z,top:Math.min(Y(x,z)+hc,ceilY(x,z)),a:Math.abs(L.dx)?Math.PI/2:0,ph:R()*TAU,mode:R()<.15?'dead':R()<.3?'flick':'on'});}
+  for(const c of L.cells)for(const[dx,dy]of DIRS){const q=c+dx+dy*GW;if(grid[q])continue;const fr=frame({c,d:[dx,dy]});const a=fr.P(-1.2,.08),b=fr.P(1.2,.08);TH.items.push({k:'labW',c,a,b,n:[fr.n[0],0,fr.n[1]],t:[fr.t[0],0,fr.t[1]],hi:true,hc:c===L.D?3.02:6.1,pipe:c!==L.D&&R()<.35});}
   // kapı: O|D sınırında çelik perde duvar + sürgülü kanatlar; önünde ölü güvenlikçi ve kartı
   {const[gx,gz]=W(-.5*S,0);TH.items.push({k:'labG',c:L.D,x:gx,z:gz,y:Y(gx,gz),t:p3,n:nd,top:ceilY(gx,gz)});
     for(const s of[-1,1])for(const bb of[.85,1.05])col(...W(-.5*S+.05,s*bb),.2,{});
@@ -2223,8 +2224,8 @@ function th2BuildBigLab(L,R,rr,help,own){const{frame,col,fy}=help;TH2.labMon=[];
     const[bx,bz]=W(-.5*S-1.25,.55);TH.items.push({k:'body',c:L.O,x:bx,z:bz,y:Y(bx,bz),t:d3,n:p3});
     const[kx,kz]=W(-.5*S-.95,.95);th2Add({k:'kart',c:L.O,x:kx,z:kz,y:Y(kx,kz),done:false});}
   // deney tankları arka duvarda (ortadaki kırık), ortada kayışlı deney masası, yan duvarlarda tezgâh+monitör ve numune kafesleri
-  const tB=[bM-1.6,bM,bM+1.6];tB.forEach((b,i)=>{const[x,z]=W(aB-.85,b);if(!ok(aB-.85,b))return;TH.items.push({k:'labT',c:C(aB-.85,b),x,z,y:Y(x,z),br:i===1,seed:(R()*1e9)|0});col(x,z,.5,{});});
-  {const[x,z]=W(aM,bM);TH.items.push({k:'labO',c:C(aM,bM),x,z,y:Y(x,z),t:d3,n:p3,top:Math.min(Y(x,z)+2.95,ceilY(x,z)),seed:(R()*1e9)|0});for(const da of[-.7,0,.7])col(...W(aM+da,bM),.45,{});if(L.Ld<4)TH2.labMon.push({x,z,seen:false});}
+  const tB=[bM-1.6,bM,bM+1.6];tB.forEach((b,i)=>{const[x,z]=W(aB-.85,b);if(!ok(aB-.85,b))return;TH.items.push({k:'labT',c:C(aB-.85,b),x,z,y:Y(x,z),br:i===1,tall:true,seed:(R()*1e9)|0});col(x,z,.5,{});});
+  {const[x,z]=W(aM,bM);TH.items.push({k:'labO',c:C(aM,bM),x,z,y:Y(x,z),t:d3,n:p3,top:Math.min(Y(x,z)+6.1,ceilY(x,z)),seed:(R()*1e9)|0});for(const da of[-.7,0,.7])col(...W(aM+da,bM),.45,{});if(L.Ld<4)TH2.labMon.push({x,z,seen:false});}
   const bench=(a,b,n,t,mon)=>{const[x,z]=W(a,b);if(!ok(a,b))return;const it={k:'labB',c:C(a,b),x,z,y:Y(x,z),t,n,mon,seed:(R()*1e9)|0};TH.items.push(it);col(x,z,.4,{});const[x2,z2]=[x+t[0]*.6,z+t[2]*.6],[x3,z3]=[x-t[0]*.6,z-t[2]*.6];col(x2,z2,.3,{});col(x3,z3,.3,{});
     if(mon){TH2.labMon.push({x,z,seen:false});}};
   bench(aF+1.6,bL+.62,p3,d3,true);if(L.Ld>=4)bench(aF+3.9,bL+.62,p3,d3,true);bench(aF+1.6,bR-.62,np,nd,true);
@@ -2321,7 +2322,7 @@ function labMeshItem(M){const UP=[0,1,0];const Q=(m,a,b,c,d,n)=>{m.P.push(...a,.
     for(let i=0;i<nT;i++)for(let j=0;j<nT;j++){const x0=it.x-h+i*ts,x1=x0+ts,z0=it.z-h+j*ts,z1=z0+ts;
       Q(M.lgrout,[x0,Y(x0,z0)-.007,z0],[x1,Y(x1,z0)-.007,z0],[x1,Y(x1,z1)-.007,z1],[x0,Y(x0,z1)-.007,z1],UP);
       const a=[x0+g,0,z0+g],b=[x1-g,0,z0+g],c=[x1-g,0,z1-g],d=[x0+g,0,z1-g];for(const p of[a,b,c,d])p[1]=Y(p[0],p[2]);Q((i+j)&1?M.ltile:M.ltile2,a,b,c,d,UP);}return true;}
-  if(it.k==='labX'){const h=S/2,nT=4,ts=S/nT,g=.02,Yc=(x,z)=>Math.min(floorY(x,z)+3.02,ceilY(x,z)-.03),DN=[0,-1,0];
+  if(it.k==='labX'){const h=S/2,nT=4,ts=S/nT,g=.02,HC=it.hc||3.02,Yc=(x,z)=>Math.min(floorY(x,z)+HC,ceilY(x,z)-.03),DN=[0,-1,0];
     for(let i=0;i<nT;i++)for(let j=0;j<nT;j++){const x0=it.x-h+i*ts,x1=x0+ts,z0=it.z-h+j*ts,z1=z0+ts;
       Q(M.lsteel,[x0,Yc(x0,z0)+.006,z0],[x1,Yc(x1,z0)+.006,z0],[x1,Yc(x1,z1)+.006,z1],[x0,Yc(x0,z1)+.006,z1],DN);
       const a=[x0+g,0,z0+g],b=[x1-g,0,z0+g],c=[x1-g,0,z1-g],d=[x0+g,0,z1-g];for(const p of[a,b,c,d])p[1]=Yc(p[0],p[2]);Q((i*3+j)%7===0?M.ldark:M.lceil,a,b,c,d,DN);}return true;}
@@ -2351,14 +2352,16 @@ function labMeshItem(M){const UP=[0,1,0];const Q=(m,a,b,c,d,n)=>{m.P.push(...a,.
   if(it.k==='labS'){const a=[Math.cos(it.r),0,Math.sin(it.r)],b=[-a[2],0,a[0]];const y=floorY(it.x,it.z)+.045;
     if(it.s===0){const p=(u,v)=>[it.x+a[0]*u+b[0]*v,y,it.z+a[2]*u+b[2]*v];Q(M.lwhite,p(-.1,-.14),p(.1,-.14),p(.1,.14),p(-.1,.14),UP);}
     else th2Ell(M.lblood,[it.x,y-.02,it.z],a,UP,b,.18+Math.abs(Math.sin(it.r*3))*.3,.004,.12+Math.abs(Math.cos(it.r*5))*.2,10,2,0,.35,5);return true;}
-  if(it.k==='labW'){const[a0,a1]=it.a,[b0,b1]=it.b,n=it.n,t=it.t;const mx=(a0+b0)/2,mz=(a1+b1)/2,fb=floorY(mx,mz);const top=it.hi?Math.min(2.95,ceilY(mx,mz)-fb-.05):Math.min(2.6,ceilY(mx,mz)-fb-.18);if(top<1.1)return false;
+  if(it.k==='labW'){const[a0,a1]=it.a,[b0,b1]=it.b,n=it.n,t=it.t;const mx=(a0+b0)/2,mz=(a1+b1)/2,fb=floorY(mx,mz);const top=it.hi?Math.min((it.hc||3.02)-.07,ceilY(mx,mz)-fb-.05):Math.min(2.6,ceilY(mx,mz)-fb-.18);if(top<1.1)return false;
     const NR=Math.max(2,Math.round((top-.14)/.34)),RH=(top-.14)/NR,NC=6,gp=.012,yb=fb+.13;
     for(let i=0;i<NC;i++){const u0=i/NC,u1=(i+1)/NC;const p0=[a0+(b0-a0)*u0+t[0]*gp,a1+(b1-a1)*u0+t[2]*gp],p1=[a0+(b0-a0)*u1-t[0]*gp,a1+(b1-a1)*u1-t[2]*gp];
       for(let r=0;r<NR;r++){const y0=yb+r*RH+gp,y1=yb+(r+1)*RH-gp;Q(r<2?M.ltileD:(i*7+r*3)%5===0?M.ltile2:M.ltile,[p0[0],y0,p0[1]],[p1[0],y0,p1[1]],[p1[0],y1,p1[1]],[p0[0],y1,p0[1]],n);}}
     const back=[-n[0]*.006,-n[2]*.006];Q(M.lgrout,[a0+back[0],yb,a1+back[1]],[b0+back[0],yb,b1+back[1]],[b0+back[0],yb+NR*RH,b1+back[1]],[a0+back[0],yb+NR*RH,a1+back[1]],n);
     th2Box(M.lsteel,[mx+n[0]*.012,fb+.07,mz+n[2]*.012],t,UP,n,1.18,.07,.018);th2Box(M.lsteel,[mx+n[0]*.012,yb+NR*RH+.025,mz+n[2]*.012],t,UP,n,1.18,.025,.03);
     // duvarda boru ve kablo kanalı
-    th2Box(M.lsteel,[mx+n[0]*.05,yb+NR*RH-.25,mz+n[2]*.05],t,UP,n,1.18,.035,.035);return true;}
+    th2Box(M.lsteel,[mx+n[0]*.05,yb+NR*RH-.25,mz+n[2]*.05],t,UP,n,1.18,.035,.035);
+    if(it.hi&&(it.hc||3)>4){th2Box(M.lsteel,[mx+n[0]*.05,fb+3.05,mz+n[2]*.05],t,UP,n,1.18,.05,.05);if(it.pipe){const px=mx+t[0]*.75+n[0]*.14,pz=mz+t[2]*.75+n[2]*.14;th2Tube(M.lsteel,[[px,fb,pz],[px,yb+NR*RH,pz]],.075,8);for(let y=fb+.8;y<yb+NR*RH;y+=1.4)th2Tube(M.lhaz,[[px,y,pz],[px,y+.08,pz]],.083,8);}}
+    return true;}
   if(it.k==='labL'){const ax=[Math.cos(it.a),0,Math.sin(it.a)],az=[-ax[2],0,ax[0]];const{x,y,z}=it;
     th2Box(M.lsteel,[x,y,z],ax,UP,az,.64,.035,.12);th2Box(it.mode==='dead'?M.lfluoD:it.mode==='flick'?M.lfluoF:M.lfluo,[x,y-.045,z],ax,UP,az,.6,.016,.06);
     for(const s of[-.5,.5])th2Tube(M.lsteel,[[x+ax[0]*s,y+.03,z+ax[2]*s],[x+ax[0]*s,Math.max(y+.1,it.top+.08),z+ax[2]*s]],.006,3);return true;}
@@ -2376,15 +2379,15 @@ function labMeshItem(M){const UP=[0,1,0];const Q=(m,a,b,c,d,n)=>{m.P.push(...a,.
     else{th2Box(M.ldark,P(.42,-.12,1.12),t,UP,n,.28,.19,.035);th2Box(M.lsteel,P(.42,-.15,.96),t,UP,n,.06,.04,.05);th2Box(M.ldark,P(.42,.12,.93),t,UP,n,.22,.008,.08);
       const e=P(.42,-.12+.037,1.12),hw=.25,hh=.16;Q(M.lscr,[e[0]-t[0]*hw,e[1]-hh,e[2]-t[2]*hw],[e[0]+t[0]*hw,e[1]-hh,e[2]+t[2]*hw],[e[0]+t[0]*hw,e[1]+hh,e[2]+t[2]*hw],[e[0]-t[0]*hw,e[1]+hh,e[2]-t[2]*hw],n);}
     return true;}
-  if(it.k==='labT'){const R=envRand(it.seed),{x,y,z}=it,gh=it.br?.55+R()*.5:1.95;
+  if(it.k==='labT'){const R=envRand(it.seed),{x,y,z}=it,gh=it.br?.55+R()*.5:(it.tall?2.8:1.95);
     th2Tube(M.lsteel,[[x,y,z],[x,y+.22,z]],.52,16);th2Tube(M.lsteel,[[x,y+.22,z],[x,y+.26,z]],.47,16);
     if(it.br){// kırık cam: düzensiz kenar + yerde cam kırıkları, dökülmüş sıvı
       for(let k=0;k<12;k++){const a0=k/12*TAU,a1=(k+1)/12*TAU,h0=.26+gh*(.5+R()*.6),h1=.26+gh*(.5+R()*.6);const p=(a,h)=>[x+Math.cos(a)*.46,y+h,z+Math.sin(a)*.46];
         const nn=[Math.cos((a0+a1)/2),0,Math.sin((a0+a1)/2)];Q(M.lglass,p(a0,.26),p(a1,.26),p(a1,h1),p(a0,h0),nn);}
       for(let k=0;k<9;k++){const a=R()*TAU,d=.6+R()*.8,s=.04+R()*.06;th2Box(M.lglass,[x+Math.cos(a)*d,y+.035,z+Math.sin(a)*d],[Math.cos(a),0,Math.sin(a)],UP,[-Math.sin(a),0,Math.cos(a)],s,.004,s*.6);}
       th2Ell(M.lliq,[x+.35,y+.022,z+.2],[1,0,0],UP,[0,0,1],1.05,.006,.8,14,2,0,0,3);}
-    else{th2Tube(M.lglass,[[x,y+.26,z],[x,y+gh,z]],.46,16);th2Tube(M.lliq,[[x,y+.27,z],[x,y+1.45,z]],.43,14);th2Ell(M.ldark,[x,y+.95,z],[1,0,0],UP,[0,0,1],.16,.42,.13,8,6,0,.2,9);
-      th2Tube(M.lsteel,[[x,y+gh,z],[x,y+gh+.12,z]],.5,16);th2Tube(M.lsteel,[[x+.2,y+gh+.12,z],[x+.2,y+2.9,z]],.035,6);}
+    else{th2Tube(M.lglass,[[x,y+.26,z],[x,y+gh,z]],.46,16);th2Tube(M.lliq,[[x,y+.27,z],[x,y+gh-.5,z]],.43,14);th2Ell(M.ldark,[x,y+gh*.5,z],[1,0,0],UP,[0,0,1],.16,.42,.13,8,6,0,.2,9);
+      th2Tube(M.lsteel,[[x,y+gh,z],[x,y+gh+.12,z]],.5,16);th2Tube(M.lsteel,[[x+.2,y+gh+.12,z],[x+.2,y+(it.tall?6.1:2.9),z]],.035,6);}
     return true;}
   return false;};}
 function th2DrawCamp(){const m=TH.mesh;if(!m.c3_cloth&&!m.c3_metal&&!m.c3_ltile)return;const t=G.time;labDraw(m,t);
@@ -3015,7 +3018,8 @@ const glowVAO=(()=>{const vao=gl.createVertexArray();gl.bindVertexArray(vao);con
 const S=2.4, H=4.2, GW=48, GH=48;
 let bones=[];let blockC=new Uint8Array(48*48),DOME=null;let crateHints=[],tunnelCells=[], exitA, exitCells=[], exitDir=[0,0], grid, roomId, safe, natural, oreAt, hpA, feat, dug, support, gasL, water, rooms=[], entrance=0, nest=1, deco=[];
 const solid=(i,j)=>i<0||j<0||i>=GW||j>=GH||!grid[j*GW+i]||blockC[j*GW+i]===1;
-let LABW=new Uint8Array(GW*GH);// laboratuvarın kazılamayan betonarme kabuğu
+let LABW=new Uint8Array(GW*GH),LABUP=null;// LABUP: laboratuvarın yüksek tavanı (dünya dikdörtgeni + yükseklik)
+function labUpAt(x,z){const L=LABUP;if(!L)return 0;const dx=Math.max(L.x0-x,0,x-L.x1),dz=Math.max(L.z0-z,0,z-L.z1),d=Math.hypot(dx,dz);if(d<=.5)return L.h;if(d>=1.7)return 0;const k=(1.7-d)/1.2;return L.h*k*k*(3-2*k);}// laboratuvarın kazılamayan betonarme kabuğu
 const canDig=(i,j)=>i>=1&&j>=1&&i<=GW-2&&j<=GH-2&&!safe[j*GW+i]&&!exitA[j*GW+i]&&!LABW[j*GW+i];
 const cellOf=v=>Math.floor(v/S);
 const ctr=c=>[(c%GW+.5)*S,(((c/GW)|0)+.5)*S];
@@ -3030,9 +3034,9 @@ function disp(x,y,z){const kk=((Math.round(x*64)+8192)*8192+(Math.round(y*64)+10
 function disp0(x,y,z){const f=.5;
   const dx=vnoise(x*f,y*f,z*f)*.38+vnoise(x*2.1,y*2.1,z*2.1)*.1;
   const dz=vnoise(x*f+31.7,y*f,z*f+11.3)*.38+vnoise(x*2.1+5,y*2.1,z*2.1+9)*.1;
-  return [x+dx,y+dyAt(x,y,z)+(y>0&&DOME?domeAt(x,z)*y/H:0),z+dz];}
+  return [x+dx,y+dyAt(x,y,z)+(y>0&&DOME?domeAt(x,z)*y/H:0)+(y>0&&LABUP?labUpAt(x,z)*y/H:0),z+dz];}
 const floorY=(x,z)=>dyAt(x,0,z);
-const ceilY=(x,z)=>H+dyAt(x,H,z)+domeAt(x,z);
+const ceilY=(x,z)=>H+dyAt(x,H,z)+domeAt(x,z)+(LABUP?labUpAt(x,z):0);
 const DIRS=[[1,0],[-1,0],[0,1],[0,-1]];
 
 // Taş türleri: derine indikçe daha değerli ve daha parlak.
@@ -3296,6 +3300,11 @@ const cart={s:0,target:null,rT:0,nT:0};
 const RUN={night:1,cash:0,inv:{},up:{}};
 const STATS={dragged:{},rescued:0,flares:0,gems:0,digs:0,caught:0,screams:0,closest:99,runs:0,fled:0};
 function statsReset(){STATS.dragged={};STATS.rescued=0;STATS.flares=0;STATS.gems=0;STATS.digs=0;STATS.caught=0;STATS.screams=0;STATS.closest=99;STATS.fled=0;}
+// test için kat seçimi (OYNA): 1. kat yüzeyden başlar, diğerleri doğrudan o kata iner
+function floorPick(cb){let el=document.getElementById('flPick');if(!el){const st=document.createElement('style');st.textContent='#flPick{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:rgba(4,4,4,.82);padding:16px}#flPick .bx{width:min(520px,100%);max-height:100%;overflow:auto;background:#141210;border:1px solid rgba(239,184,67,.35);border-radius:10px;padding:14px 14px 10px}#flPick h3{margin:0 0 10px;font-family:var(--display,Oswald,sans-serif);letter-spacing:.2em;font-size:14px;color:#efb843}#flPick .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}#flPick button{all:unset;cursor:pointer;display:block;padding:10px 12px;border-radius:8px;background:#1f1c18;border:1px solid rgba(255,255,255,.08);color:#ece5d8;font-size:13px;line-height:1.3}#flPick button:hover,#flPick button:focus-visible{border-color:#efb843;background:#2a251e}#flPick button small{display:block;color:#efb843;font-size:10px;letter-spacing:.15em}#flPick .x{margin-top:10px;text-align:center;color:#a39d92;font-size:12px}';document.head.appendChild(st);
+    el=document.createElement('div');el.id='flPick';document.body.appendChild(el);}
+  el.innerHTML='<div class="bx"><h3>KAT SEÇ · TEST</h3><div class="g">'+FLOORS.map((F,i)=>`<button data-k="${i+1}"><small>KAT -${i+1}</small>${F.ad}</button>`).join('')+'</div><div class="x"><button data-k="0" style="all:unset;cursor:pointer;color:#a39d92">Vazgeç</button></div></div>';el.hidden=false;el.style.display='flex';
+  el.onclick=e=>{const b=e.target.closest('button');if(!b)return;const k=+b.dataset.k;el.hidden=true;el.style.display='none';if(k)cb(k);};try{el.querySelector('button').focus({preventScroll:true});}catch(e){}}
 function resetRun(){statsReset();RUN.floor=1;RUN.cash=0;RUN.total=0;RUN.time=0;RUN.inv={dyn:0,flare:0,rock:0,beam:0,mantar:0,odun:0};RUN.up={lamp:0,boots:0,pick:0};RUN.alive=['Ahmet','Mehmet','Hasan'];RUN.team=RUN.alive.slice();RUN.cartGems=[];RUN.snap=null;}
 resetRun();
 const quotaOf=n=>6+(n-1)*4;
@@ -3560,7 +3569,7 @@ function sysVM(tid,hm){// birinci şahıs: şok cihazı ve ölçer (endüstriyel
 // ==== SYS END ====
 function newGame(){
   RUN.snap={floor:RUN.floor,inv:{...RUN.inv},cartGems:[...RUN.cartGems],alive:[...RUN.alive]};
-  LABW.fill(0);genCave(); $('gasw').textContent=FL().spores?'SPOR':'GRİZU'; try{envBuild();}catch(e){console.error('giydirme',e);ENV.inst=[];ENV.groups=new Map();ENV.cols=[];ENV.colG=new Map();try{cageSetup();}catch(e2){}} buildCaveMesh();const F=FL();if(ENV.lib)envSurfaces(RUN.floor);
+  LABW.fill(0);LABUP=null;genCave(); $('gasw').textContent=FL().spores?'SPOR':'GRİZU'; try{envBuild();}catch(e){console.error('giydirme',e);ENV.inst=[];ENV.groups=new Map();ENV.cols=[];ENV.colG=new Map();try{cageSetup();}catch(e2){}} buildCaveMesh();const F=FL();if(ENV.lib)envSurfaces(RUN.floor);
   const E=rooms[entrance];const OD=exitDir,PD=[-OD[1],OD[0]];const[cx,cz]=ctr(E.cy*GW+E.cx);
   railPath=[E.cy*GW+E.cx];cart.s=0;cart.target=null;G.cartYaw0=Math.atan2(PD[0],PD[1]);
   G.lift={x:cx+OD[0]*S*1.55,z:cz+OD[1]*S*1.55,yaw:Math.atan2(OD[0],OD[1])};
@@ -6770,7 +6779,7 @@ function storyThen(cb){let seen=false;try{seen=localStorage.getItem('kd_story2')
   $('stSkip').onclick=e=>{e.stopPropagation();fin();};
   next();S.raf=requestAnimationFrame(step);}
 
-$('play').addEventListener('click',()=>{if(loadSave()&&$('contBox').hidden){$('contBox').hidden=false;$('mCont').focus({preventScroll:true});return;}resetRun();clearSave();storyThen(()=>begin());});$('mNew').addEventListener('click',()=>{resetRun();clearSave();storyThen(()=>begin());});$('restart').addEventListener('click',()=>{resetRun();begin();});
+$('play').addEventListener('click',()=>{if(loadSave()&&$('contBox').hidden){$('contBox').hidden=false;$('mCont').focus({preventScroll:true});return;}floorPick(k=>{resetRun();clearSave();RUN.floor=k;storyThen(()=>begin());});});$('mNew').addEventListener('click',()=>{resetRun();clearSave();storyThen(()=>begin());});$('restart').addEventListener('click',()=>{resetRun();begin();});
 $('again').addEventListener('click',()=>{const sn=RUN.snap;if(sn){RUN.floor=sn.floor;RUN.inv={...sn.inv};RUN.cartGems=[...sn.cartGems];RUN.alive=[...sn.alive];}begin();});
 
 if(isTouch)$('keysDesk').hidden=true;
