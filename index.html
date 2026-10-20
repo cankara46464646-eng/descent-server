@@ -585,6 +585,18 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
 #bStruggle.qte.hitok{transform:translate(-50%,-50%) scale(1.06)}
 
 html.rot #rotate{display:none!important}
+#camHud{position:absolute;inset:0;pointer-events:none;display:none;z-index:1}
+#hud.cam2 #camHud{display:block}
+#camHud .cb{position:absolute;width:28px;height:20px;border:0 solid rgba(236,230,217,.32)}
+#camHud .tl{left:calc(8px + var(--sal));top:calc(8px + var(--sat));border-left-width:2px;border-top-width:2px}
+#camHud .tr{right:calc(8px + var(--sar));top:calc(8px + var(--sat));border-right-width:2px;border-top-width:2px}
+#camHud .bl{left:calc(8px + var(--sal));bottom:calc(8px + var(--sab));border-left-width:2px;border-bottom-width:2px}
+#camHud .br{right:calc(8px + var(--sar));bottom:calc(8px + var(--sab));border-right-width:2px;border-bottom-width:2px}
+#camRec{position:absolute;left:50%;top:calc(12px + var(--sat));transform:translateX(-50%);font:600 11px/1 var(--ui,system-ui);letter-spacing:.16em;color:rgba(236,230,217,.72);display:flex;align-items:center;gap:7px;font-variant-numeric:tabular-nums;text-shadow:0 1px 2px #000}
+#camRec em{width:8px;height:8px;border-radius:50%;background:#e2382c;box-shadow:0 0 6px #e2382c;animation:camBl 1.2s steps(2,end) infinite}
+@keyframes camBl{50%{opacity:0}}
+#camNV{display:none;color:#8ef08a;letter-spacing:.2em;margin-left:4px}#hud.nv #camNV{display:inline}
+@media (pointer:coarse){#camRec{top:auto;bottom:calc(30px + var(--sab))}}
 /* +90°: içeriğin solu = telefonun üstü (çentik), sağı = altı (ana ekran çubuğu); -90°: tersi */
 html.rot.r90{--sal:env(safe-area-inset-top,0px);--sar:env(safe-area-inset-bottom,0px);--sat:env(safe-area-inset-right,0px);--sab:env(safe-area-inset-left,0px)}
 html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-top,0px);--sat:env(safe-area-inset-left,0px);--sab:env(safe-area-inset-right,0px)}
@@ -598,6 +610,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
 <div id="buried" hidden><b>GÖÇÜK ALTINDA KALDIN</b><small id="buriedS">Arkadaşların seni kazıyor...</small></div>
 
 <div id="hud" hidden>
+  <div id="camHud" aria-hidden="true"><i class="cb tl"></i><i class="cb tr"></i><i class="cb bl"></i><i class="cb br"></i><b id="camRec"><em></em>REC <span id="camTC">00:00:00</span><span id="camNV">GECE</span></b></div>
   <div class="tl">
     <div class="tlc" id="tlP">
       <div class="tlh">
@@ -678,7 +691,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v79</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v80</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -846,6 +859,9 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
           <div class="sItem"><div class="sl"><b>Grafik kalitesi</b><small>Düşükte pil daha uzun gider</small></div>
             <div class="seg" data-for="sGfx"><button data-v="0">Düşük</button><button data-v="1">Orta</button><button data-v="2">Yüksek</button><button data-v="3">Ultra</button></div>
             <select id="sGfx" hidden><option value="3">Ultra</option><option value="2">Yüksek</option><option value="1">Orta</option><option value="0">Düşük</option></select><output id="oGfx" hidden></output></div>
+          <div class="sItem"><div class="sl"><b>Kamera efekti</b><small>Kumlu el kamerası görüntüsü. Kamera'da lamba kapalıyken yeşil gece görüşü</small></div>
+            <div class="seg" data-for="sCam"><button data-v="0">Kapalı</button><button data-v="1">Hafif</button><button data-v="2">Kamera</button></div>
+            <select id="sCam" hidden><option value="2">Kamera</option><option value="1">Hafif</option><option value="0">Kapalı</option></select></div>
           <div class="sItem"><div class="sl"><b>Titreşim</b><small>Yakalanınca telefon titrer (destekleyen cihazlarda)</small></div><label class="sw"><input type="checkbox" id="sVib"><i></i></label></div>
           <div class="sItem"><div class="sl"><b>FPS göster</b><small>Köşede saniyedeki kare sayısı</small></div><label class="sw"><input type="checkbox" id="sFps"><i></i></label></div>
           <div class="sItem"><div class="sl"><b>Parlaklık</b><small>Karanlıkta zor görüyorsan artır</small></div><div class="rng"><input type="range" id="sBright" min="0.7" max="1.8" step="0.05"><output id="oBright"></output></div></div>
@@ -4858,6 +4874,7 @@ function updatePlayer(dt){
       if(wet){sfx(running?'wrun':'splash',running?.85:.6,(Math.random()-.5)*.3);emit(pl.x,pl.z,(running?16:5)*bt*(pl.crouch?.6:1),pl,'su');}
       else{sfx(inLab(pl.x,pl.z)?'cstep':'step',running?.55:pl.crouch?.12:.28,(Math.random()-.5)*.3);if(!pl.crouch)emit(pl.x,pl.z,(running?(pl.carry?12:10):2.4)*bt,pl,running?'kosu':'temas');}}}
   if(pl.lamp){pl.bat=Math.max(0,pl.bat-dt*FL().drain*DIFF().bat/(RUN.up.lamp?520:320));if(pl.bat<=0){pl.lamp=false;toast('Lambanın pili bitti. Vagonun yanında dolar.');}}
+  else if(CAM.nv>.5){pl.bat=Math.max(0,pl.bat-dt*FL().drain*DIFF().bat/(RUN.up.lamp?1300:800));if(pl.bat<=0)toast('Pil bitti: gece görüşü kapandı. Vagonun yanında dolar.',2.4);}
   if(Math.hypot(cartPos[0]-pl.x,cartPos[1]-pl.z)<3)pl.bat=Math.min(1,pl.bat+dt*.25);
   pl.adapt=pl.lamp?Math.max(0,pl.adapt-dt*2):Math.min(1,pl.adapt+dt*.3);
   if(pl.swing>0){const pv=pl.swing;pl.swing-=dt;if(pv>.28&&pl.swing<=.28)digImpact();}
@@ -6320,8 +6337,9 @@ const BLF=`#version 300 es
 precision mediump float; in vec2 vUV; uniform sampler2D uT; uniform vec2 uD; out vec4 o;
 void main(){vec3 s=texture(uT,vUV).rgb*.227;s+=(texture(uT,vUV+uD*1.385).rgb+texture(uT,vUV-uD*1.385).rgb)*.316;s+=(texture(uT,vUV+uD*3.23).rgb+texture(uT,vUV-uD*3.23).rgb)*.07;o=vec4(s,1.);}`;
 const CPF=`#version 300 es
-precision mediump float; in vec2 vUV; uniform sampler2D uT,uB; uniform float uK; out vec4 o;
-void main(){vec3 c=texture(uT,vUV).rgb; vec3 b=texture(uB,vUV).rgb; o=vec4(c+b*uK*(1.-c*.5),1.);}`;
+precision mediump float; in vec2 vUV; uniform sampler2D uT,uB; uniform float uK,uCA,uNV; out vec4 o;
+void main(){vec2 d=(vUV-.5)*uCA*dot(vUV-.5,vUV-.5)*4.;vec3 c=vec3(texture(uT,vUV+d).r,texture(uT,vUV).g,texture(uT,vUV-d).b); vec3 b=texture(uB,vUV).rgb; c=c+b*uK*(1.-c*.5);
+  float l=dot(c,vec3(.3,.59,.11));vec3 nv=vec3(.42,1.,.46)*pow(l,.8)*1.75;c=mix(c,nv,uNV); o=vec4(c,1.);}`;
 function mkTex(w,h){const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,w,h,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
   for(const[k,v]of[[gl.TEXTURE_MIN_FILTER,gl.LINEAR],[gl.TEXTURE_MAG_FILTER,gl.LINEAR],[gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE],[gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE]])gl.texParameteri(gl.TEXTURE_2D,k,v);return t;}
 function mkFB(t){const f=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,f);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,t,0);return f;}
@@ -6346,8 +6364,33 @@ function postEnd(){if(!POST.active)return;POST.active=false;const w=POST.w,h=POS
   for(let k=0;k<2;k++){gl.bindFramebuffer(gl.FRAMEBUFFER,POST.bF);gl.bindTexture(gl.TEXTURE_2D,POST.aT);gl.uniform2f(PBL.u.uD,(1+k)/POST.bw,0);gl.drawArrays(gl.TRIANGLES,0,3);
     gl.bindFramebuffer(gl.FRAMEBUFFER,POST.aF);gl.bindTexture(gl.TEXTURE_2D,POST.bT);gl.uniform2f(PBL.u.uD,0,(1+k)/POST.bh);gl.drawArrays(gl.TRIANGLES,0,3);}
   gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,w,h);gl.useProgram(PCP.p);gl.bindTexture(gl.TEXTURE_2D,POST.sT);gl.uniform1i(PCP.u.uT,0);
-  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,POST.aT);gl.uniform1i(PCP.u.uB,1);gl.uniform1f(PCP.u.uK,SET.gfx>=3?.95:.7);gl.drawArrays(gl.TRIANGLES,0,3);
+  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,POST.aT);gl.uniform1i(PCP.u.uB,1);gl.uniform1f(PCP.u.uK,SET.gfx>=3?.95:.7);gl.uniform1f(PCP.u.uCA,(SET.cam??2)===2?.012:(SET.cam?.005:0));gl.uniform1f(PCP.u.uNV,CAM.nv);CAM.graded=G.time;gl.drawArrays(gl.TRIANGLES,0,3);
   gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,null);gl.enable(gl.DEPTH_TEST);gl.bindVertexArray(null);}
+// ---- el kamerası efekti: kumlanma, kenar kararması, tarama çizgisi, ışık titremesi; Kamera modunda lamba kapalıyken yeşil gece görüşü ----
+// sahneyi yeniden çizmeden tek tam ekran geçişle: karıştırma (DST_COLOR, SRC_COLOR) → sonuç = sahne × M (M 0..2)
+const CAMF=`#version 300 es
+precision highp float; in vec2 vUV; uniform vec2 uRes; uniform float uT,uK,uNV,uG,uTn; uniform uint uFr; out vec4 o;
+float hs(uvec2 p){uint x=p.x*1973u+p.y*9277u+uFr*26699u;x^=x>>16;x*=0x7feb352du;x^=x>>15;x*=0x846ca68bu;x^=x>>16;return float(x&0xffffu)/65535.;}
+void main(){vec2 q=vUV-.5;float asp=uRes.x/uRes.y;float r=length(q*vec2(asp*.72,1.));
+  float vig=mix(1.,smoothstep(.98,.22,r),.42+.3*uK+.2*uNV);
+  uvec2 pc=uvec2(gl_FragCoord.xy/uG);float n=(hs(pc)+hs(pc+uvec2(7u,3u))-1.);
+  float amp=.05+.045*uK+.12*uNV;
+  float sc=1.-(.03*uK+.05*uNV)*(.5+.5*sin(gl_FragCoord.y/uG*1.5708));
+  vec3 tint=mix(vec3(1.),vec3(.975,1.,.955),uK);tint=mix(tint,vec3(.6,1.2,.66)*1.45,uTn);
+  float fl=1.+(.018*uK+.03*uNV)*sin(uT*29.)*sin(uT*6.7+1.3);
+  vec3 M=tint*vig*sc*fl*(1.+n*amp);
+  o=vec4(clamp(M*.5,0.,1.),1.);}`;
+const CAM={p:null,vao:null,nv:0,fr:0,frT:0,t0:0};
+function camHudSync(){const h=$('hud');if(!h)return;h.classList.toggle('cam2',(SET.cam??2)===2);}
+function camFx(w,h){const now=performance.now(),dt=Math.min(.1,(now-(CAM.last||now))/1000)||.016;CAM.last=now;const k=SET.cam??2;const st=G.state;if(!k||!['play','dragged','dying','buried','spectate','paleGrab','descend','surface','ascend','end'].includes(st)){if(CAM.nv){CAM.nv=0;const hd=$('hud');if(hd)hd.classList.remove('nv');}return;}
+  try{if(!CAM.p){CAM.p=prog(QVS,CAMF);CAM.vao=gl.createVertexArray();gl.bindVertexArray(CAM.vao);const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);gl.bindVertexArray(null);}
+    const nvW=k===2&&pl&&!pl.lamp&&pl.bat>0&&(st==='play'||st==='dragged'||st==='buried'||st==='paleGrab')?1:0;CAM.nv+=(nvW-CAM.nv)*Math.min(1,(dt||.016)*(nvW?2.6:4));
+    const hud=$('hud');const on=CAM.nv>.5;if(hud&&hud.classList.contains('nv')!==on){hud.classList.toggle('nv',on);if(on){sfx('click',.35);sfx('blip',.12);if(!CAM.told&&st==='play'){CAM.told=1;try{toast('Lamba kapalı: kamera gece görüşünde. Yaratık bu ışığı görmez ama pil yavaşça azalır.',3.6);}catch(e){}}}}
+    CAM.frT+=dt||.016;if(CAM.frT>1/30){CAM.frT=0;CAM.fr=(CAM.fr+1)>>>0;}
+    if(k===2){const sec=Math.floor(G.time);if(sec!==CAM.sec){CAM.sec=sec;const el=$('camTC');if(el){const z=n=>String(n).padStart(2,'0');el.textContent=z(Math.floor(sec/3600))+':'+z(Math.floor(sec/60)%60)+':'+z(sec%60);}}}
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,w,h);gl.disable(gl.DEPTH_TEST);gl.depthMask(false);gl.enable(gl.BLEND);gl.blendFunc(gl.DST_COLOR,gl.SRC_COLOR);
+    gl.useProgram(CAM.p.p);const u=CAM.p.u;gl.uniform2f(u.uRes,w,h);gl.uniform1f(u.uT,G.time);gl.uniform1f(u.uK,k===2?1:.45);gl.uniform1f(u.uNV,CAM.nv);gl.uniform1f(u.uTn,CAM.graded===G.time?0:CAM.nv);gl.uniform1f(u.uG,Math.max(1,Math.round(w/1100)));gl.uniform1ui(u.uFr,CAM.fr);
+    gl.bindVertexArray(CAM.vao);gl.drawArrays(gl.TRIANGLES,0,3);gl.bindVertexArray(null);gl.disable(gl.BLEND);gl.depthMask(true);gl.enable(gl.DEPTH_TEST);gl.useProgram(PR.p);}catch(e){if(!CAM.err){CAM.err=1;console.error('kamera efekti',e);}SET.cam=0;}}
 var GQ={bad:0};
 function adaptRes(dt){ftAcc+=dt;ftN++;if(ftAcc>1.2){const a=ftAcc/ftN,minR=SET.gfx>=3?.72:.75;if(a>1/29)RS=Math.max(minR,RS-.05);else if(a<1/45&&RS<1)RS=Math.min(1,RS+.05);
     // çözünürlük en altta ve oyun hâlâ ~28 FPS altındaysa (3 ölçüm üst üste) kaliteyi bir kademe düşür; elle seçilmişse dokunma
@@ -6361,7 +6404,7 @@ function adaptRes(dt){ftAcc+=dt;ftN++;if(ftAcc>1.2){const a=ftAcc/ftN,minR=SET.g
 // duraklatıldığında sahne, durmadan önceki haliyle çizilmeye devam eder
 // görüş konisi testi (küre): kameranın arkasındaki/yanındaki ağır modelleri hiç çizme (madenci modeli ~55 bin üçgen)
 function inView(x,y,z,r){const m=VP;const cx=m[0]*x+m[4]*y+m[8]*z+m[12],cy=m[1]*x+m[5]*y+m[9]*z+m[13],cw=m[3]*x+m[7]*y+m[11]*z+m[15];if(cw<-r)return false;const k=cw+r*2.2;return cx>=-k&&cx<=k&&cy>=-k&&cy<=k;}
-function render(){const s0=G.state;if(s0==='pause')G.state=G.prevState||'play';try{render0();}finally{G.state=s0;postEnd();}}
+function render(){const s0=G.state;if(s0==='pause')G.state=G.prevState||'play';try{render0();}finally{G.state=s0;postEnd();try{camFx(cv.width,cv.height);}catch(e){}}}
 function render0(){
   const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2][SET.gfx]??2)*RS;
   const W=Math.floor(cv.clientWidth*dpr),Hh=Math.floor(cv.clientHeight*dpr);if(cv.width!==W||cv.height!==Hh){cv.width=W;cv.height=Hh;}
@@ -6401,6 +6444,7 @@ function render0(){
   const PP=[],PC=[];
   const cb=X(M4.T(cartPos[0],floorY(cartPos[0],cartPos[1]),cartPos[1]),M4.RY(cartYaw));const cartL=pos(X(cb,M4.T(.62,1.62,.95)));PP.push(...cartL,6);PC.push(.42,.24,.1);
   if(lampOn){PP.push(eye[0]+fwd[0]*1.2,eye[1]-.2,eye[2]+fwd[2]*1.2,7.5);PC.push(.07,.063,.05);}
+  if(CAM.nv>.05){const k=.46*CAM.nv;PP.push(eye[0]+fwd[0]*.6,eye[1],eye[2]+fwd[2]*.6,11);PC.push(k,k,k);}// gece görüşü: kızılötesi ışık (yaratık görmez)
   if(exitCells.length){const[lx,lz]=ctr(exitCells[exitCells.length-1]);PP.push(lx,1.6,lz,6.5);PC.push(.05,.075,.13);}
   for(const b of booms)if(b.t<.9){const k=Math.pow(1-b.t/.9,1.6);PP.push(b.x,1.5,b.z,b.big?30:22);PC.push(4*k,2*k,.6*k);}
   {const ms=(G.mlights||[]).filter(m=>!m.lan).concat((G.shrooms||[]).filter(m=>m.left)).filter(m=>d2(m.x,m.z)<400&&los(eye[0],eye[2],m.x,m.z)).sort((a,b)=>d2(a.x,a.z)-d2(b.x,b.z)).slice(0,2);
@@ -6550,7 +6594,7 @@ function render0(){
 }
 
 // ================= ayarlar =================
-const SET={vc:'ptt',vcv:1,fps:true,sens:1,bright:1,vol:.9,mus:.6,tips:true,gfx:3,btn:1,alpha:1,lefty:false,diff:1};
+const SET={cam:2,vc:'ptt',vcv:1,fps:true,sens:1,bright:1,vol:.9,mus:.6,tips:true,gfx:3,btn:1,alpha:1,lefty:false,diff:1};
 // zorluk: 0 Kolay · 1 Normal · 2 Zor. Çok oyunculuda oda sahibininki geçerli.
 const DIFFS=[{ad:'Kolay',cr:.82,hear:.75,bat:.6,arrive:1.6,ghHits:1,ghAtk:.6,sok:.3},{ad:'Normal',cr:1,hear:1,bat:1,arrive:1,ghHits:0,ghAtk:1,sok:0},{ad:'Zor',cr:1.12,hear:1.15,bat:1.3,arrive:.75,ghHits:0,ghAtk:1.25,sok:-.06}];
 // 4. kattan sonra her kat: yaratık daha hızlı, daha iyi duyar, daha erken iner; pil daha çabuk biter
@@ -6570,6 +6614,7 @@ const SL=[['sBtn','oBtn','btn',v=>Math.round(v*100)+'%'],['sAlpha','oAlpha','alp
 for(const[id,oid,k,f]of SL){const el=$(id);el.value=SET[k];$(oid).textContent=f(SET[k]);el.addEventListener('input',()=>{SET[k]=+el.value;$(oid).textContent=f(SET[k]);applyAudio();applyTouch();saveSet();});}
 const GFXN=['Düşük','Orta','Yüksek','Ultra'];$('sGfx').value=SET.gfx;$('oGfx').textContent='';
 $('sGfx').addEventListener('change',()=>{SET.gfx=+$('sGfx').value;SET.gfxAuto=false;saveSet();});
+camHudSync();$('sCam').value=String(SET.cam??2);$('sCam').addEventListener('change',()=>{SET.cam=+$('sCam').value;saveSet();camHudSync();});
 $('sDiff').value=SET.diff==null?1:SET.diff;$('sDiff').addEventListener('change',()=>{SET.diff=+$('sDiff').value;saveSet();});
 $('sLefty').checked=!!SET.lefty;$('sLefty').addEventListener('change',()=>{SET.lefty=$('sLefty').checked;applyTouch();saveSet();});
 function applyTouch(){const T=$('touch');T.style.setProperty('--bs',SET.btn);T.style.setProperty('--bo',SET.alpha);T.classList.toggle('lefty',!!SET.lefty);}
@@ -7140,7 +7185,7 @@ function sfRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.5,2
     for(const d of SF.dust){const px=eye[0]+((d[0]+t*.03*d[3])%1-.5)*5,py=eye[1]+((d[1]-t*.02*d[3])%1+1)%1*2.6-1.2,pz=eye[2]+((d[2]+t*.025)%1-.5)*5;glw([px,py,pz],.014+d[3]*.012,[.22,.17,.11]);}
     if(cam.eyes>0){const e=cam.eyes,E2=cam.eyeP;glw([E2[0]-.11,E2[1],E2[2]],.09,[1.4*e,.08*e,.04*e]);glw([E2[0]+.11,E2[1],E2[2]],.09,[1.4*e,.08*e,.04*e]);glw(E2,.6,[.18*e,0,0]);}}
   gl.disable(gl.BLEND);gl.depthMask(true);gl.useProgram(PR.p);
-  postEnd();}
+  postEnd();try{camFx(cv.width,cv.height);}catch(e){}}
 // ---- ana menü arka planı: giriş mağarasında yavaş sinematik çekimler (ağızdan orman, galeri boyunca iniş, kafes odası) ----
 const SFM={t:0,shot:0,st:0};
 const SF_SHOTS=[
