@@ -39,3 +39,9 @@ kovalarken kısa patlamalar; kazarken vokal yerine kaya yırtma.
 ## Ağ
 Her ses başlangıcı 4 baytlık olaydır: `[yayıcı id, kategori, varyant, ses]`. Varyantı sunucu seçer,
 istemciler `audReceive(paket)` ile aynı dosyayı yerel olarak çalar. Dosya ya da ses verisi gönderilmez.
+
+### v81 ses düzeltmesi
+Ana yaratığın acı ve saldırı sesleri (yapay 40–60 Hz çırpınmalı "böcek çığlığı") gerçek kayıtlardan yeniden kuruldu:
+Owlbear/Harpy/Rock Golem/Hell Hound acı ve saldırı kayıtları, pesleştirilip katmanlandı. Yavruların vızıldayan sesleri
+Harpy/Wight/Owlbear kayıtlarıyla (hafif tizleştirilmiş) değiştirildi. Derisiz/DENEK-0 acı ve ölüm sesleri Orc (insanımsı)
++ Wight katmanı. Eski dosyalar yedeklendi. Betik: gtools/build_vox.py

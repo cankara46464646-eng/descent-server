@@ -15,3 +15,5 @@ Kazma (dig_*, dig_ore_*, dig_hard_*): Freesound "Pickaxe Striking Rock" (Benbonc
   döküntü kuyruğu: OpenGameArt "Breaking Rock" — CC0. Karışım: gtools/build_steps.py
 - cstep_* (laboratuvar beton/fayans ayak sesleri): OpenGameArt "Footsteps on different surfaces" (boots/tile) — swuing "footstep-concrete" (freesound 38873) ve ceberation "Squeaky footstep" (freesound 235524) türevleri — CC-BY 3.0
 - gun9_* / gunSG_* (laboratuvar tabanca / pompalı): OpenGameArt "Prepared SFX Library" (Bersa, Ruger Mark III, Mossberg, Model 12 kayıtları) — CC0. Kısa iç mekân yansıması eklendi: gtools/build_guns.py
+- scrLo_* / scrHi_* / yelLo_* / yelHi_* / grLo_* / grHi_* (insan çığlık, bağırış, inleme): OpenGameArt "male grunt/yelling sounds" — HaelDB (CC0 / OGA-BY 3.0 çift lisans; CC0 seçildi). Kırpma ve ses seviyesi: gtools/build_vox.py
+- yvScr_* / yvDie_* (yavru çığlık/ölüm), sting_* (korkutma vuruşu): Epic Stock Media "Evolved Game Creatures 2" (Harpy, Wight, Owlbear, Wraith) — paket EULA'sı; derin darbe sentezi. gtools/build_vox.py
