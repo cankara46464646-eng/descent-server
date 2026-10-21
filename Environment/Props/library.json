@@ -3158,6 +3158,58 @@
      256
     ]
    ]
+  },
+  {
+   "id": "flashlight_m0",
+   "group": "flashlight",
+   "category": "Props",
+   "path": "flashlight_m0/",
+   "source": "procedural:gtools/make_flashlight.py",
+   "desc": "Siyah alüminyum uzun el feneri",
+   "dims_m": [
+    0.06,
+    0.06,
+    0.3
+   ],
+   "tris": [
+    2458,
+    2458,
+    2458
+   ],
+   "verts": 2520,
+   "lengthAxis": "z",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 182,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     256,
+     256
+    ],
+    [
+     768,
+     0,
+     256,
+     256
+    ]
+   ]
   }
  ],
  "surfaces": [],
