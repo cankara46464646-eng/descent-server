@@ -1089,7 +1089,7 @@ async function skLoad(dir,DZ,low){
   DZ.ta=tex(a,3,gl.SRGB8_ALPHA8);DZ.tn=tex(n,4,gl.RGBA8);gl.activeTexture(gl.TEXTURE0);DZ.ready=true;
 }
 async function loadDerisiz(){try{await skLoad('derisiz',DZ);}catch(e){console.warn('Derisiz modeli yüklenemedi, yedek gövde kullanılacak:',e);}}
-loadDerisiz();
+if(!KH.on)loadDerisiz();
 // Dinleyen: kör, sesle avlanan uzun yaratık (Tripo modeli, Mixamo iskeleti; klipler: run walk idle turn grab scare)
 const DN={ready:false,scale:2.55,def:'idle'};
 async function loadDinleyen(){try{await skLoad('dinleyen',DN);}catch(e){console.warn('Dinleyen modeli yüklenemedi:',e);}}
@@ -1564,7 +1564,7 @@ async function envInit(){try{const r=await fetchT(ENV.base+'library.json',15000)
 // ---- statik mesh (KDM3) + PBR doku yükleme; her asset ilk ihtiyaçta bir kez yüklenir ----
 function envAsset(id){if(!ENV.lib)return null;let a=ENV.A[id];if(a)return a.ready?a:null;a=ENV.A[id]={ready:false};const e=ENV.byId[id];if(!e){a.bad=true;return null;}
   const b=ENV.base+e.path,half=SET.gfx<=1,alpha=e.tags.includes('alpha');
-  Promise.all([fetch(b+'mesh.txt').then(r=>{if(!r.ok)throw new Error(id);return r.text();}),envTexSet(e.texPath?ENV.base+e.texPath:b,half,alpha)]).then(([txt,TX])=>jq(()=>{
+  Promise.all([fetch(b+'mesh.txt').then(r=>{if(!r.ok)throw new Error(id);return r.text();}),envTexSet(e.texPath?ENV.base+e.texPath:b,half,alpha,e.atlas)]).then(([txt,TX])=>jq(()=>{
     const buf=b64buf(txt),dv=new DataView(buf),hl=dv.getUint32(4,true),H=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,8,hl)));let o=8+hl;
     const take=n=>{const q=o;o+=n+((4-n%4)%4);return q;};const S2=H.sizes,nv=H.nv;
     const vao=gl.createVertexArray();gl.bindVertexArray(vao);
@@ -1582,7 +1582,10 @@ function envAsset(id){if(!ENV.lib)return null;let a=ENV.A[id];if(a)return a.read
     a.noLod=e.tags.includes('lining');a.r=Math.hypot(...H.dims)/2;a.ready=true;})).catch(err=>{a.bad=true;a.err=String(err&&err.stack||err);console.warn('env asset',id,String(err));});
   return null;}
 ENV.TX={};
-function envTexSet(p,half,alpha){if(ENV.TX[p])return ENV.TX[p];
+function envTexSet(p,half,alpha,atlas){if(ENV.TX[p])return ENV.TX[p];
+  if(atlas)return ENV.TX[p]=loadImg(p+'tex.jpg').then(im=>jq(()=>{const cut=r=>{const s=half?.5:1;const c=document.createElement('canvas');c.width=Math.max(4,Math.round(r[2]*s));c.height=Math.max(4,Math.round(r[3]*s));c.getContext('2d',{willReadFrequently:true}).drawImage(im,r[0],r[1],r[2],r[3],0,0,c.width,c.height);return c;};
+    const ia=cut(atlas[0]),na=cut(atlas[1]),ra=cut(atlas[2]);let A=ia;if(alpha&&atlas[3]){const oa=cut(atlas[3]);const w=ia.width,h=ia.height,ox=oa.getContext('2d',{willReadFrequently:true}),O=ox.getImageData(0,0,Math.min(w,oa.width),Math.min(h,oa.height)).data;const ad=ia.getContext('2d',{willReadFrequently:true}).getImageData(0,0,w,h);for(let i=0,j=0;i<ad.data.length;i+=4,j+=4)ad.data[i+3]=O[j]??255;A=ad;}
+    return {ta:mnTex(A,true),tn:mnTex(na,false),tr:mnTex(ra,false)};}));
   return ENV.TX[p]=Promise.all([envImg(p+'albedo.jpg',half),envImg(p+'normal.jpg',half),envImg(p+'rma.jpg',half),alpha?envImg(p+'opacity.jpg',half):null]).then(async([ia,na,ra,oa])=>{
     let A=ia;if(oa)A=await jq(()=>{let A;const w=ia.width,h=ia.height,cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d',{willReadFrequently:true});
       cx.drawImage(oa,0,0,w,h);const O=cx.getImageData(0,0,w,h).data;cx.clearRect(0,0,w,h);cx.drawImage(ia,0,0,w,h);A=cx.getImageData(0,0,w,h);for(let i=0;i<A.data.length;i+=4)A.data[i+3]=O[i];return A;});
@@ -6699,7 +6702,7 @@ async function loadHemiplex(){try{const R=await pcLoadRig('yaratik/','hemiplex.t
   R.mid=[['MiddleLeg2_L',1],['MiddleLeg2_R',-1]].map(([n,s])=>({c:chain(n),sd:s}));
   Object.assign(HX,R);HX.ready=true;
 }catch(e){console.warn('Hemiplex yüklenemedi (eski yaratık gövdesi kullanılacak):',e);}}
-loadHemiplex();
+if(!KH.on)loadHemiplex();
 
 // ---- genel adım motoru: legs[k] {home:[x,0,z] model cm zemin teması, g: çapraz grup}; h.feet[k].p dünyada basılı nokta ----
 // Duruşta ayak dünyada sabit (kayma yok). Ev noktası (gövdeye göre ideal yer) adım boyundan uzaklaşınca, karşı grup havada değilse adım atar.
@@ -7630,7 +7633,7 @@ function loadShow(floor,o){o=o||{};const F=KH.on?(CH_F[floor-1]||CH_F[0]):FLOORS
 function ldWork(){LD.worked=true;try{if(LD.work)LD.work();}catch(e){console.error('yükleme',e);}if(LD.on)G.state='load';}
 // testler ve acil durum: beklemeden bitir
 function ldFinishNow(){if(!LD.on)return;if(!LD.worked)ldWork();$('load').hidden=true;LD.on=false;LD.cx=null;$('hud').hidden=false;if(G.state==='load')G.state='play';const d=LD.done;LD.done=null;if(d)d();}
-function ldNeeds(){const F=FLOORS[LD.floor-1]||{};const L=[['Mağara kazılıyor',LD.worked],['Madenciler',typeof MN==='undefined'||!!MN.ready],['Yaratık',typeof HX==='undefined'||!!HX.ready]];
+function ldNeeds(){const F=FLOORS[LD.floor-1]||{};const L=[['Mağara kazılıyor',LD.worked],['Madenciler',typeof MN==='undefined'||!!MN.ready],['Yaratık',KH.on?(typeof DN==='undefined'||!!DN.ready):(typeof HX==='undefined'||!!HX.ready)]];
   if(F.pale&&!F.roots)L.push(['Derisiz',!!DZ.ready]);if(F.roots)L.push(['Öcü',!!OC.ready]);
   let au=true;if(AC){if(!AUD.ready)au=false;else{const k=Object.keys(AUD.load);au=!k.length||k.filter(u=>AUD.buf[u]).length>=k.length*.8;}}L.push(['Sesler',au]);
   if(ENV.lib&&ENV.groups&&LD.worked&&!LD.surf){let n=0,r=0;for(const g of ENV.groups.values()){n++;const a=ENV.A[g.a];if(a&&(a.ready||a.bad))r++;}const sf=(ENV_FS[LD.floor-1]||ENV_FS[0]||[]).slice(0,2).every(id=>{const q=ENV.S[id];return !q||q.ready||q.bad;})&&(!ENV.props||(PROP_FLOOR[LD.floor]||[]).concat(typeof CAGE_P!=='undefined'?CAGE_P:[]).every(id=>{envAsset(id);const q=ENV.A[id];return !q||q.ready||q.bad;}));L.push(['Maden donanımı',(!n||r>=n)&&sf||LD.t>14]);}
