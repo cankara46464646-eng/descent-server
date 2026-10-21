@@ -23,3 +23,11 @@ Dinleyen (v84) – dn_*:
   "Evolved Game Creatures 2" (Wraith, Wight, Orc, Owlbear) — paket EULA'sı.
 - dn_sting_*: OpenGameArt "String and piano horror stings" (congusbongus, CC0) + eski sting_0 + parazit patlaması.
 Karışım: gtools/build_dn.py
+Hikâye modu eşya sesleri (v85) – gtools/build_foley.py:
+- wood_* (destek kerestesi): Kenney "Impact Sounds" impactWood_heavy + impactPlank_medium — CC0
+- paper_* (sayfa): Kenney "RPG Audio" bookFlip — CC0
+- door_* (çelik kapı): OpenGameArt "100 CC0 metal and wood SFX" metal_slam/metal_close + Kenney impactMetal + lift_gate — CC0
+- creak_* (tavan gıcırtısı): Kenney "RPG Audio" creak (pes) — CC0
+- pick_* (eşya alma): Kenney "RPG Audio" handleSmallLeather / cloth — CC0
+- kick_* (tekme): Kenney "Impact Sounds" impactPunch_heavy + impactSoft_heavy — CC0
+- pour_* (benzin dökme): yukarıdaki CC0 damla kayıtları (pes) + water_spray — CC0 / EULA
