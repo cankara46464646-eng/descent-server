@@ -1,0 +1,51 @@
+name: Poly Haven doku indir (CC0)
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: 'virgülle ayrılmış Poly Haven doku id listesi'
+        required: true
+      res:
+        description: 'çözünürlük (1k/2k)'
+        default: '1k'
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: İndir
+        env:
+          IDS: ${{ github.event.inputs.ids }}
+          RES: ${{ github.event.inputs.res }}
+        run: |
+          python3 - <<'PY'
+          import os,json,urllib.request
+          H={'User-Agent':'descent-game-asset-fetch'}
+          def get(u):
+              return urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=60).read()
+          os.makedirs('pt',exist_ok=True)
+          M=json.loads(get('https://api.polyhaven.com/assets?t=textures'))
+          open('pt/_textures.json','w').write(json.dumps({k:{'name':v.get('name'),'categories':v.get('categories'),'tags':v.get('tags')} for k,v in M.items()},indent=0))
+          R=os.environ.get('RES','1k')
+          for aid in [x.strip() for x in os.environ['IDS'].split(',') if x.strip()]:
+              d='pt/'+aid;os.makedirs(d,exist_ok=True)
+              try:
+                  open(d+'/thumb.png','wb').write(get('https://cdn.polyhaven.com/asset_img/thumbs/%s.png?width=512&height=512'%aid))
+                  F=json.loads(get('https://api.polyhaven.com/files/'+aid))
+                  for key in ['Diffuse','nor_gl','Rough','AO','Displacement','arm']:
+                      if key in F and R in F[key]:
+                          e=F[key][R];f=e.get('jpg') or e.get('png')
+                          if f:open(d+'/'+key+'.'+('jpg' if 'jpg' in e else 'png'),'wb').write(get(f['url']))
+                  print('OK',aid,list(F.keys()))
+              except Exception as ex:
+                  print('FAIL',aid,ex)
+          PY
+          find pt -type f | head -200
+          zip -qr ph-tex.zip pt
+      - name: Yayınla
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete ph-tex -y --cleanup-tag -R ${{ github.repository }} || true
+          gh release create ph-tex ph-tex.zip -t "Poly Haven doku (CC0)" -n "Poly Haven CC0 dokular" -R ${{ github.repository }}
