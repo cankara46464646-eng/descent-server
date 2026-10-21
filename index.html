@@ -692,7 +692,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v89</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v90</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -5838,8 +5838,13 @@ const CH_SETUP={
    const cand=[];const f=bfsField(rooms[entrance].cy*GW+rooms[entrance].cx);
    for(let c=0;c<GW*GH;c++){if(!grid[c]||safe[c]||f[c]<6)continue;const i=c%GW,j=(c/GW)|0;const open=DIRS.filter(([dx,dy])=>!solid(i+dx,j+dy)).length;if(open===1||roomId[c]>=1)cand.push(c);}
    chShuffle(cand);const P=[];for(const gap of[7,5,3,1])for(const c of cand){if(P.length>=8)break;if(P.includes(c)||P.some(q=>Math.abs((q%GW)-(c%GW))+Math.abs(((q/GW)|0)-((c/GW)|0))<gap))continue;if(!chWallSpot(c))continue;P.push(c);}
-   P.forEach((c,i)=>{const w=chWallSpot(c);if(!w)return;add('page',{x:w.x+w.n[0]*.27,z:w.z+w.n[1]*.27,yaw:w.yaw,y:1.35+chR()*.3,r:1.7,lbl:'Sayfayı al',pg:i});
-     KH.decor.push({a:['wardrobe','bookshelf','bed','dresser','suitcase','medbox','gasmask','toolchest'][i%8],x:w.x-w.n[0]*.25,z:w.z-w.n[1]*.25,yaw:w.yaw,sc:1,near:c});});
+   // bodrumda duvar yüzeyi .22 m içeride: sayfa duvarın önünde kalsın (içine gömülmesin)
+   P.forEach((c,i)=>{const w=chWallSpot(c);if(!w)return;const po=KH.flat?.02:.27;add('page',{x:w.x+w.n[0]*po,z:w.z+w.n[1]*po,yaw:w.yaw,y:1.35+chR()*.3,r:1.7,lbl:'Sayfayı al',pg:i});
+     // uzun dolap/kitaplık sayfanın önünü kapatmasın: duvar boyunca yana kaydır (yan hücre açıksa), yer yoksa alçak eşya
+     let a=['wardrobe','bookshelf','bed','dresser','suitcase','medbox','gasmask','toolchest'][i%8],tx=0,tz=0;
+     if(a==='wardrobe'||a==='bookshelf'){const tl=[w.n[1],-w.n[0]],ci=c%GW,cj=(c/GW)|0,sA=!solid(ci+tl[0],cj+tl[1]),sB=!solid(ci-tl[0],cj-tl[1]);
+       if(sA||sB){const sg=sA?.8:-.8;tx=tl[0]*sg;tz=tl[1]*sg;}else a='dresser';}
+     KH.decor.push({a,x:w.x-w.n[0]*.25+tx,z:w.z-w.n[1]*.25+tz,yaw:w.yaw,sc:1,near:c});});
    KH.pageOrder=chShuffle([0,1,2,3,4,5,6,7]);},
  4:add=>{// kod: dört rakam, her biri bir işaretle; ipuçları belgede ve ekranlarda
    const D=[chRi(1,9),chRi(0,9),chRi(0,9),chRi(0,9)];const SYM=chShuffle(['△','○','□','✕']);KH.code={d:D,sym:SYM,ord:chShuffle(SYM.slice()),got:[0,0,0,0],entry:''};
@@ -5997,8 +6002,9 @@ function chGenDone(g){const n=G.gens.filter(q=>q.on).length,T=G.gens.length||5;e
 // ---- birinci şahıs: sağ elde fener (madencinin kendi kolu, iskeletle), sol elde taş / kereste / bidon ----
 // fener ve ışığı dönüşlerde hafif geriden gelir (KH.lagY/lagP); ışık konisi biraz geniş
 // tutuş (ölçülerek ayarlandı): yumruk feneri arka yarısından kavrar, bilek düz, başparmak gövdeye yatık; el ekranın sağ altında, ön kol ekran dışında kalır
-KH.fpTorch='flashlight';KH.fpT={A:[0,-.2,-.35],k:1.05,x:13,y:-32,z:40,hd:[-.32,.11,1],roll:22,curl:72,fr:.7,off:9,tl:1.3,pole:[-1,-.9,-.5],
-  th:[1,0,0,-30,0,1,0,0,0,0,1,-40],th2:[0,1,0,54],th3:[0,1,0,54],lx:-24,ly:-33,lz:30,lpalm:[8,-3,.5]};
+KH.fpTorch='flashlight';// el: yumruk feneri arka kısmından kavrar, ön kol fenerin hizasında sağ alttan gelir (avuç alttan tutmaz, el ters durmaz)
+KH.fpT={A:[0,-.2,-.35],k:1.05,x:22.5,y:-26.1,z:43.8,hd:[-.32,.11,1],ha:[0,0,-1],roll:0,curl:72,fr:.7,off:13,tl:1.3,pole:[-1,-.9,-.5],
+  th:[1,0,0,60,0,1,0,-60,0,0,1,-40],th2:[0,1,0,33],th3:[0,1,0,33],lx:-24,ly:-33,lz:30,lpalm:[8,-3,.5]};
 function chLag(){const now=performance.now();const dt=Math.min(.1,Math.max(0,(now-(KH.lagT||now))/1000));KH.lagT=now;
   if(KH.lY==null||!isFinite(KH.lY)){KH.lY=pl.yaw;KH.lP=pl.pitch;}let dy=pl.yaw-KH.lY;dy=Math.atan2(Math.sin(dy),Math.cos(dy));const k=1-Math.exp(-dt/.085);KH.lY+=dy*k;KH.lP+=(pl.pitch-KH.lP)*k;
   let ry=KH.lY-pl.yaw;ry=Math.atan2(Math.sin(ry),Math.cos(ry));KH.lagY=clamp(ry,-.4,.4);KH.lagP=clamp(KH.lP-pl.pitch,-.3,.3);}
@@ -6008,7 +6014,7 @@ function chFPPose(P0,T,torch,left,br,boneM){const ey=FPA.ey,dz=FPA.dz,dy=FPA.dy;
   const P=P0||mnPoseNew();P.look=[0,0];armPose(P,'l',76*DEG,3*DEG,14*DEG,2*DEG);armPose(P,'r',76*DEG,3*DEG,14*DEG,2*DEG);let hdm=null;
   if(torch){fingers(P,'r',(T.curl||75)*DEG);for(const[n,q]of[['c_thumb1.r',T.th],['c_thumb2.r',T.th2],['c_thumb3.r',T.th3]])if(q){let Q=qI();for(let k=0;k+3<q.length;k+=4)Q=qMul(Q,qAx(q[k],q[k+1],q[k+2],q[k+3]*DEG));setR(P,n,Q);}
     const R=cm(T.x,T.y+br,T.z);P.arms.r={...R,w:1,pole:T.pole};const hd=vnorm(T.hd);hdm=[-hd[0],hd[1],hd[2]];const roll=(T.roll||0)*DEG;
-    P.hw={'hand.r':(pe,pw)=>qAlign([0,0,1],[-1,0,0],hdm,qRot(qAx(hdm[0],hdm[1],hdm[2],roll),vsub(pw,pe)))};}
+    P.hw={'hand.r':(pe,pw)=>qAlign(T.ha||[0,0,1],T.hw||[-1,0,0],hdm,qRot(qAx(hdm[0],hdm[1],hdm[2],roll),vsub(pw,pe)))};}
   if(left){fingers(P,'l',70*DEG);const L=cm(T.lx,T.ly+br,T.lz);P.arms.l={...L,w:1};}
   P.hold='mine';const r=mnSolve(P,boneM);const out={r};if(!torch)return out;const bi=MN.bi;
   const hp=r.Pp[bi['hand.r']],hq=r.Dq[bi['hand.r']];let palm=v3(hp,qRot(hq,T.palm||FPA.palm));const dir=hdm.slice();
@@ -6396,7 +6402,7 @@ function chBoot(){try{chUIBuild();}catch(e){console.error('ch ui',e);}try{const 
   const bl=$('bLamp');if(bl){const sp=bl.querySelector('span');if(sp)sp.textContent='FENER';bl.setAttribute('aria-label','El fenerini aç kapa');}const dp=document.querySelector('.dep small');if(dp)dp.textContent='BÖLÜM';
   const bt=$('batBox');if(bt)bt.title='Fener pili';}catch(e){}
   try{cineCSS();document.fonts&&document.fonts.load('46px KDHand');document.fonts&&document.fonts.load('26px KDType');}catch(e){}}
-window.__kh={KH,DNL,ASC,DN,MZ,MUZ,chFPThumbFit:T=>chFPThumbFit(T),get MN(){return MN;},get NM(){return NM;},get FPA(){return FPA;},drawSKx:(e,amb,exp)=>drawSK(e,DN,{amb,exp}),chCineFix:()=>chCineFix(),get CINE_IMG(){return CINE_IMG;},get CINE(){return CINE;},get AUD(){return AUD;},get SMP(){return SMP;},sfx:(...a)=>sfx(...a),sfxAt:(...a)=>sfxAt(...a),get SFK(){return SFK;},genComplete,arriveSkip:()=>{if(G.arrive){G.arrive=null;}},sfGo,sfDescendDone,get SF(){return SF;},chInit,chCellsFar,chWallSpot,bfsField,get entrance(){return entrance;},get exitDir(){return exitDir;},get G(){return G;},get pl(){return pl;},dnSpawnAt,dnRelocate,chAscendStart,chDoorOpen,chFuel,dnDie,chCtx,chPlayers,get grid(){return grid;},get rooms(){return rooms;},ctr,cidx,get gens(){return G.gens;},get shaft(){return G.shaft;},get lift(){return G.lift;},chKeyPress,chSelect,useDown,useUp:()=>{useHeld=false;},setUse:v=>{useHeld=v;},context,goDown,chDo,ENV,envAsset,get supports(){return supports;},openCell,get RUN(){return RUN;}};
+window.__kh={KH,DNL,ASC,DN,MZ,MUZ,chFPThumbFit:T=>chFPThumbFit(T),chFPPose:(...q)=>chFPPose(...q),get MN(){return MN;},get NM(){return NM;},get FPA(){return FPA;},drawSKx:(e,amb,exp)=>drawSK(e,DN,{amb,exp}),chCineFix:()=>chCineFix(),get CINE_IMG(){return CINE_IMG;},get CINE(){return CINE;},get AUD(){return AUD;},get SMP(){return SMP;},sfx:(...a)=>sfx(...a),sfxAt:(...a)=>sfxAt(...a),get SFK(){return SFK;},genComplete,arriveSkip:()=>{if(G.arrive){G.arrive=null;}},sfGo,sfDescendDone,get SF(){return SF;},chInit,chCellsFar,chWallSpot,bfsField,get entrance(){return entrance;},get exitDir(){return exitDir;},get G(){return G;},get pl(){return pl;},dnSpawnAt,dnRelocate,chAscendStart,chDoorOpen,chFuel,dnDie,chCtx,chPlayers,get grid(){return grid;},get rooms(){return rooms;},ctr,cidx,get gens(){return G.gens;},get shaft(){return G.shaft;},get lift(){return G.lift;},chKeyPress,chSelect,useDown,useUp:()=>{useHeld=false;},setUse:v=>{useHeld=v;},context,goDown,chDo,ENV,envAsset,get supports(){return supports;},openCell,get RUN(){return RUN;}};
 // "Nasıl oynanır" yeni oyuna göre
 function chHowRewrite(){const sec=k=>document.querySelector(`#how section[data-p="${k}"]`);const card=(t,s)=>`<div class="hCard"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg></i><div><b>${t}</b><span>${s}</span></div></div>`;
   const tabs=document.querySelectorAll('#how .sTabs button');const tl=['TEMEL','DİNLEYEN','BÖLÜMLER','KONTROL'];tabs.forEach((b,i)=>{const sv=b.querySelector('svg');b.textContent=tl[i]||b.textContent;if(sv)b.prepend(sv);});
