@@ -1,0 +1,13 @@
+Kara Damar – müzik katmanları (v84). Hepsi OpenGameArt.org'dan; düzenleme: döngüleme, seviye eşitleme,
+telefon hoparlörü için alçak frekanslara harmonik ekleme (gtools/build_mus.py).
+
+orman_a.mp3  – "The Depths of Hell" (Ambience Pack 1: Sci-Fi Horror), Joth — CC0
+orman_b.mp3  – "Tension and Distress", allen yatsura — CC0
+agiz.mp3     – "Abandoned Passages Horror Ambience Loop", congusbongus — CC0
+               + "Nuclear Cave (Loop)", Hazmat Harry — CC0
+yatak.mp3    – "Dark Cavern Ambient", Paul Wortmann — CC0
+               + "Loopable Dungeon Ambience", JaggedStone — CC0
+gerilim.mp3  – "Horror Cliché", Indieteur — CC0
+kova.mp3     – "Dark Ambience Loop", Iwan Gabovitch (qubodup) — CC-BY 3.0
+               https://opengameart.org/content/dark-ambience-loop
+sabah.mp3    – "Haunting Piano", Emma_MA — CC0

@@ -17,3 +17,9 @@ Kazma (dig_*, dig_ore_*, dig_hard_*): Freesound "Pickaxe Striking Rock" (Benbonc
 - gun9_* / gunSG_* (laboratuvar tabanca / pompalı): OpenGameArt "Prepared SFX Library" (Bersa, Ruger Mark III, Mossberg, Model 12 kayıtları) — CC0. Kısa iç mekân yansıması eklendi: gtools/build_guns.py
 - scrLo_* / scrHi_* / yelLo_* / yelHi_* / grLo_* / grHi_* (insan çığlık, bağırış, inleme): OpenGameArt "male grunt/yelling sounds" — HaelDB (CC0 / OGA-BY 3.0 çift lisans; CC0 seçildi). Kırpma ve ses seviyesi: gtools/build_vox.py
 - yvScr_* / yvDie_* (yavru çığlık/ölüm), sting_* (korkutma vuruşu): Epic Stock Media "Evolved Game Creatures 2" (Harpy, Wight, Owlbear, Wraith) — paket EULA'sı; derin darbe sentezi. gtools/build_vox.py
+Dinleyen (v84) – dn_*:
+- dn_step_* / dn_drag_*: yukarıdaki CC0 ayak sesleri (step_*) pes edilip ağırlaştırıldı, alçak gövde vuruşu eklendi.
+- dn_breath_*, dn_crack_*, dn_shh_*, dn_chase_*, dn_radio_* (telsiz süzgeci), dn_scare_*: Epic Stock Media
+  "Evolved Game Creatures 2" (Wraith, Wight, Orc, Owlbear) — paket EULA'sı.
+- dn_sting_*: OpenGameArt "String and piano horror stings" (congusbongus, CC0) + eski sting_0 + parazit patlaması.
+Karışım: gtools/build_dn.py
