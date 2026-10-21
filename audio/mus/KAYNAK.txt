@@ -11,3 +11,14 @@ gerilim.mp3  – "Horror Cliché", Indieteur — CC0
 kova.mp3     – "Dark Ambience Loop", Iwan Gabovitch (qubodup) — CC-BY 3.0
                https://opengameart.org/content/dark-ambience-loop
 sabah.mp3    – "Haunting Piano", Emma_MA — CC0
+
+v86 – tek seferlik parçalar ve orman ortamı:
+cit.mp3       – "Dark Horror Ambient Piano Choir" (Eternal Terror), ISAo (airyluvs.com) — OGA-BY 3.0
+                https://opengameart.org/node/111684
+magara.mp3    – "Horror Soundtrack (8 Tracks) - The Hangar" amb_02, Kenten Fina — CC-BY 3.0
+                https://opengameart.org/node/17262
+orman_amb.mp3 – "Forest Ambience", TinyWorlds — CC0
+                + "Wind Loop", InspectorJ (Jonathan Shaw), döngü: AntumDeluge — CC-BY 3.0
+                https://opengameart.org/content/wind-loop
+cirsir.mp3    – "Crickets Ambient Noise – loopable", Wolfgang_ — CC0
+(orman_a, orman_b, agiz artık kullanılmıyor.)

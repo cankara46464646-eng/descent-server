@@ -31,3 +31,9 @@ Hikâye modu eşya sesleri (v85) – gtools/build_foley.py:
 - pick_* (eşya alma): Kenney "RPG Audio" handleSmallLeather / cloth — CC0
 - kick_* (tekme): Kenney "Impact Sounds" impactPunch_heavy + impactSoft_heavy — CC0
 - pour_* (benzin dökme): yukarıdaki CC0 damla kayıtları (pes) + water_spray — CC0 / EULA
+- fstep_* (orman patikası): Kenney "Impact Sounds" footstep_grass + CC0 toprak adımları (step_*) — CC0
+- cgstep_* (kafes tabanı): Kenney footstep_wood + impactMetal — CC0
+- crow_* (karga): OpenGameArt "Crow caw" (zeroisnotnull) ve "Crows singing" (IgnasD) — CC0
+- flap_0 (kanat): OpenGameArt "Large Wings Flap" (AntumDeluge) — CC0
+- twig_* (dal çıtırtısı): Kenney impactWood_light (pes yukarı) — CC0
+- howl_0 (uzak uluma): Epic Stock Media EGC2 Hell Hound Howl (pes, uzak yankı) — EULA
