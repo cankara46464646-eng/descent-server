@@ -416,10 +416,1526 @@
     "metal": true
    },
    "kb": 18
+  },
+  {
+   "id": "torch_m0",
+   "group": "torch",
+   "category": "Props",
+   "path": "torch_m0/",
+   "source": "polyhaven:small_plastic_torch#small_plastic_torch",
+   "desc": "El feneri (sarı plastik)",
+   "dims_m": [
+    0.1,
+    0.06,
+    0.23
+   ],
+   "tris": [
+    13156,
+    5229,
+    2334
+   ],
+   "verts": 8181,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 432
+  },
+  {
+   "id": "torch6v_m0",
+   "group": "torch6v",
+   "category": "Props",
+   "path": "torch6v_m0/",
+   "source": "polyhaven:pastic_torch_6v#pastic_torch_6v",
+   "desc": "6V fener pili (yedek pil)",
+   "dims_m": [
+    0.14,
+    0.14,
+    0.22
+   ],
+   "tris": [
+    4131,
+    1391,
+    973
+   ],
+   "verts": 3153,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 189
+  },
+  {
+   "id": "jerry_g",
+   "group": "jerry_g",
+   "category": "Props",
+   "path": "jerry_g/",
+   "source": "polyhaven:metal_jerrycan_green#metal_jerrycan_green",
+   "desc": "Yeşil askeri benzin bidonu",
+   "dims_m": [
+    0.36,
+    0.5,
+    0.17
+   ],
+   "tris": [
+    9636,
+    4131,
+    1482
+   ],
+   "verts": 6736,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 396
+  },
+  {
+   "id": "powerbox",
+   "group": "powerbox",
+   "category": "Props",
+   "path": "powerbox/",
+   "source": "polyhaven:power_box_01#power_box_01",
+   "desc": "Elektrik panosu (asansör kumandası)",
+   "dims_m": [
+    0.46,
+    0.5,
+    0.4
+   ],
+   "tris": [
+    21272,
+    8111,
+    3446
+   ],
+   "verts": 20452,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 837
+  },
+  {
+   "id": "propane",
+   "group": "propane",
+   "category": "Props",
+   "path": "propane/",
+   "source": "polyhaven:propane_tank#propane_tank",
+   "desc": "Propan tüpü",
+   "dims_m": [
+    0.34,
+    0.55,
+    0.34
+   ],
+   "tris": [
+    5238,
+    2150,
+    895
+   ],
+   "verts": 4461,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 250
+  },
+  {
+   "id": "barrel_r",
+   "group": "barrel_r",
+   "category": "Props",
+   "path": "barrel_r/",
+   "source": "polyhaven:Barrel_01#Barrel_01",
+   "desc": "Kırmızı varil",
+   "dims_m": [
+    0.56,
+    0.88,
+    0.56
+   ],
+   "tris": [
+    2682,
+    1196,
+    443
+   ],
+   "verts": 2052,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 202
+  },
+  {
+   "id": "barrel_b",
+   "group": "barrel_b",
+   "category": "Props",
+   "path": "barrel_b/",
+   "source": "polyhaven:barrel_03#barrel_03",
+   "desc": "Mavi varil",
+   "dims_m": [
+    0.63,
+    0.93,
+    0.64
+   ],
+   "tris": [
+    1473,
+    561,
+    505
+   ],
+   "verts": 1126,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 143
+  },
+  {
+   "id": "oiltin",
+   "group": "oiltin",
+   "category": "Props",
+   "path": "oiltin/",
+   "source": "polyhaven:oil_tin#oil_tin",
+   "desc": "Yağ tenekesi",
+   "dims_m": [
+    0.11,
+    0.21,
+    0.15
+   ],
+   "tris": [
+    2834,
+    1133,
+    775
+   ],
+   "verts": 1771,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 111
+  },
+  {
+   "id": "canrust",
+   "group": "canrust",
+   "category": "Props",
+   "path": "canrust/",
+   "source": "polyhaven:can_rusted#can_rusted",
+   "desc": "Paslı teneke",
+   "dims_m": [
+    0.12,
+    0.15,
+    0.12
+   ],
+   "tris": [
+    3520,
+    1493,
+    1127
+   ],
+   "verts": 1908,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 131
+  },
+  {
+   "id": "tyre",
+   "group": "tyre",
+   "category": "Props",
+   "path": "tyre/",
+   "source": "polyhaven:old_tyre#old_tyre",
+   "desc": "Eski lastik",
+   "dims_m": [
+    0.6,
+    0.6,
+    0.16
+   ],
+   "tris": [
+    2880,
+    1155,
+    793
+   ],
+   "verts": 2090,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 164
+  },
+  {
+   "id": "toolcart",
+   "group": "toolcart",
+   "category": "Props",
+   "path": "toolcart/",
+   "source": "polyhaven:tool_cart#tool_cart",
+   "desc": "Alet arabası",
+   "dims_m": [
+    1.27,
+    0.96,
+    0.75
+   ],
+   "tris": [
+    29394,
+    7882,
+    5188
+   ],
+   "verts": 22478,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 973
+  },
+  {
+   "id": "storecart",
+   "group": "storecart",
+   "category": "Props",
+   "path": "storecart/",
+   "source": "polyhaven:industrial_storage_cart#industrial_storage_cart",
+   "desc": "Endüstriyel dolap arabası",
+   "dims_m": [
+    1.6,
+    1.38,
+    1.1
+   ],
+   "tris": [
+    18902,
+    5532,
+    3282
+   ],
+   "verts": 17224,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 789
+  },
+  {
+   "id": "rack",
+   "group": "rack",
+   "category": "Props",
+   "path": "rack/",
+   "source": "polyhaven:worn_metal_rack#worn_metal_rack",
+   "desc": "Paslı metal raf",
+   "dims_m": [
+    0.92,
+    1.9,
+    0.6
+   ],
+   "tris": [
+    6372,
+    1622,
+    788
+   ],
+   "verts": 7224,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 337
+  },
+  {
+   "id": "cbox",
+   "group": "cbox",
+   "category": "Props",
+   "path": "cbox/",
+   "source": "polyhaven:cardboard_box_01#cardboard_box_01",
+   "desc": "Karton kutu",
+   "dims_m": [
+    0.39,
+    0.34,
+    0.52
+   ],
+   "tris": [
+    16952,
+    6989,
+    2768
+   ],
+   "verts": 8757,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 481
+  },
+  {
+   "id": "crate_w1",
+   "group": "crate_w1",
+   "category": "Props",
+   "path": "crate_w1/",
+   "source": "polyhaven:wooden_crate_01#wooden_crate_01",
+   "desc": "Ahşap sandık",
+   "dims_m": [
+    0.83,
+    0.35,
+    0.41
+   ],
+   "tris": [
+    6576,
+    2820,
+    1141
+   ],
+   "verts": 4686,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 295
+  },
+  {
+   "id": "pickaxe",
+   "group": "pickaxe",
+   "category": "Props",
+   "path": "pickaxe/",
+   "source": "polyhaven:picke_dirty_01#picke_dirty_01",
+   "desc": "Kazma",
+   "dims_m": [
+    0.55,
+    1.12,
+    0.07
+   ],
+   "tris": [
+    6196,
+    2488,
+    965
+   ],
+   "verts": 3578,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 234
+  },
+  {
+   "id": "sledge2",
+   "group": "sledge2",
+   "category": "Props",
+   "path": "sledge2/",
+   "source": "polyhaven:sledgehammer_01#sledgehammer_01",
+   "desc": "Balyoz",
+   "dims_m": [
+    0.21,
+    1.01,
+    0.09
+   ],
+   "tris": [
+    2596,
+    862,
+    458
+   ],
+   "verts": 1603,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 139
+  },
+  {
+   "id": "spade",
+   "group": "spade",
+   "category": "Props",
+   "path": "spade/",
+   "source": "polyhaven:rusted_spade_01#rusted_spade_01",
+   "desc": "Paslı kürek",
+   "dims_m": [
+    0.17,
+    1.1,
+    0.05
+   ],
+   "tris": [
+    11436,
+    2405,
+    2018
+   ],
+   "verts": 6639,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 361
+  },
+  {
+   "id": "cement",
+   "group": "cement",
+   "category": "Props",
+   "path": "cement/",
+   "source": "polyhaven:cement_bag#cement_bag",
+   "desc": "Çimento torbası",
+   "dims_m": [
+    0.46,
+    0.18,
+    0.7
+   ],
+   "tris": [
+    844,
+    346,
+    346
+   ],
+   "verts": 538,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 82
+  },
+  {
+   "id": "handtruck",
+   "group": "handtruck",
+   "category": "Props",
+   "path": "handtruck/",
+   "source": "polyhaven:hand_truck#hand_truck",
+   "desc": "El arabası",
+   "dims_m": [
+    0.59,
+    1.4,
+    0.69
+   ],
+   "tris": [
+    13220,
+    5117,
+    2124
+   ],
+   "verts": 14262,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 596
+  },
+  {
+   "id": "ladder_w",
+   "group": "ladder_w",
+   "category": "Props",
+   "path": "ladder_w/",
+   "source": "polyhaven:wooden_ladder#wooden_ladder",
+   "desc": "Ahşap merdiven",
+   "dims_m": [
+    0.96,
+    1.33,
+    0.5
+   ],
+   "tris": [
+    8492,
+    458,
+    458
+   ],
+   "verts": 7226,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 361
+  },
+  {
+   "id": "bed",
+   "group": "bed",
+   "category": "Props",
+   "path": "bed/",
+   "source": "polyhaven:old_bed_frame#old_bed_frame",
+   "desc": "Eski demir karyola",
+   "dims_m": [
+    0.9,
+    1.2,
+    2.0
+   ],
+   "tris": [
+    49990,
+    19334,
+    7148
+   ],
+   "verts": 35560,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 1542
+  },
+  {
+   "id": "suitcase_m0",
+   "group": "suitcase",
+   "category": "Props",
+   "path": "suitcase_m0/",
+   "source": "polyhaven:vintage_suitcase#vintage_suitcase_01",
+   "desc": "Eski bavul",
+   "dims_m": [
+    1.61,
+    0.57,
+    0.24
+   ],
+   "tris": [
+    8237,
+    3391,
+    2075
+   ],
+   "verts": 6538,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 345
+  },
+  {
+   "id": "suitcase_m1",
+   "group": "suitcase",
+   "category": "Props",
+   "path": "suitcase_m1/",
+   "source": "polyhaven:vintage_suitcase#vintage_suitcase_02",
+   "desc": "Eski bavul",
+   "dims_m": [
+    1.61,
+    0.57,
+    0.24
+   ],
+   "tris": [
+    8237,
+    3422,
+    2060
+   ],
+   "verts": 6538,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 349
+  },
+  {
+   "id": "gasmask",
+   "group": "gasmask",
+   "category": "Props",
+   "path": "gasmask/",
+   "source": "polyhaven:old_gas_mask#old_gas_mask",
+   "desc": "Gaz maskesi",
+   "dims_m": [
+    0.21,
+    1.13,
+    0.31
+   ],
+   "tris": [
+    18900,
+    8118,
+    2683
+   ],
+   "verts": 13175,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 606
+  },
+  {
+   "id": "bookshelf",
+   "group": "bookshelf",
+   "category": "Props",
+   "path": "bookshelf/",
+   "source": "polyhaven:wooden_bookshelf_worn#wooden_bookshelf_worn",
+   "desc": "Yıpranmış kitaplık",
+   "dims_m": [
+    1.37,
+    2.06,
+    0.58
+   ],
+   "tris": [
+    10106,
+    2400,
+    1729
+   ],
+   "verts": 6479,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 408
+  },
+  {
+   "id": "wardrobe",
+   "group": "wardrobe",
+   "category": "Props",
+   "path": "wardrobe/",
+   "source": "polyhaven:painted_wooden_cabinet_02#painted_wooden_cabinet_02",
+   "desc": "Boyalı uzun dolap (saklanma)",
+   "dims_m": [
+    1.0,
+    2.57,
+    0.72
+   ],
+   "tris": [
+    966,
+    426,
+    249
+   ],
+   "verts": 1048,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 123
+  },
+  {
+   "id": "dresser",
+   "group": "dresser",
+   "category": "Props",
+   "path": "dresser/",
+   "source": "polyhaven:painted_wooden_cabinet#painted_wooden_cabinet",
+   "desc": "Boyalı dolap",
+   "dims_m": [
+    1.19,
+    1.18,
+    0.62
+   ],
+   "tris": [
+    2227,
+    885,
+    351
+   ],
+   "verts": 2022,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 184
+  },
+  {
+   "id": "medbox",
+   "group": "medbox",
+   "category": "Props",
+   "path": "medbox/",
+   "source": "polyhaven:medical_box#medical_box",
+   "desc": "İlk yardım kutusu",
+   "dims_m": [
+    0.53,
+    0.1,
+    0.35
+   ],
+   "tris": [
+    3718,
+    1594,
+    582
+   ],
+   "verts": 3302,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 216
+  },
+  {
+   "id": "clipboard",
+   "group": "clipboard",
+   "category": "Props",
+   "path": "clipboard/",
+   "source": "polyhaven:clipboard#clipboard",
+   "desc": "Klipsli pano",
+   "dims_m": [
+    0.23,
+    0.04,
+    0.34
+   ],
+   "tris": [
+    6176,
+    2394,
+    947
+   ],
+   "verts": 4608,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 247
+  },
+  {
+   "id": "tv1",
+   "group": "tv1",
+   "category": "Props",
+   "path": "tv1/",
+   "source": "polyhaven:Television_01#Television_01",
+   "desc": "Eski televizyon",
+   "dims_m": [
+    0.6,
+    0.46,
+    0.47
+   ],
+   "tris": [
+    1918,
+    775,
+    403
+   ],
+   "verts": 1976,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 168
+  },
+  {
+   "id": "tv2",
+   "group": "tv2",
+   "category": "Props",
+   "path": "tv2/",
+   "source": "polyhaven:television_02#television_02",
+   "desc": "Tüplü monitör",
+   "dims_m": [
+    0.4,
+    0.41,
+    0.35
+   ],
+   "tris": [
+    2310,
+    851,
+    402
+   ],
+   "verts": 2119,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 161
+  },
+  {
+   "id": "desk",
+   "group": "desk",
+   "category": "Props",
+   "path": "desk/",
+   "source": "polyhaven:metal_office_desk#metal_office_desk",
+   "desc": "Metal ofis masası",
+   "dims_m": [
+    2.0,
+    0.79,
+    0.95
+   ],
+   "tris": [
+    6898,
+    2010,
+    1031
+   ],
+   "verts": 6070,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 297
+  },
+  {
+   "id": "radio_m0",
+   "group": "radio",
+   "category": "Props",
+   "path": "radio_m0/",
+   "source": "polyhaven:vintage_radio_transceiver#vintage_radio_transceiver",
+   "desc": "Eski telsiz",
+   "dims_m": [
+    0.57,
+    0.43,
+    0.41
+   ],
+   "tris": [
+    14034,
+    5513,
+    2176
+   ],
+   "verts": 15507,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 832
+  },
+  {
+   "id": "radio_m1",
+   "group": "radio",
+   "category": "Props",
+   "path": "radio_m1/",
+   "source": "polyhaven:vintage_radio_transceiver#vintage_radio_transceiver_accessories",
+   "desc": "Eski telsiz",
+   "dims_m": [
+    0.57,
+    0.43,
+    0.41
+   ],
+   "tris": [
+    28316,
+    9863,
+    3999
+   ],
+   "verts": 30928,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 1349
+  },
+  {
+   "id": "clock_m0",
+   "group": "clock",
+   "category": "Props",
+   "path": "clock_m0/",
+   "source": "polyhaven:wall_clock#wall_clock",
+   "desc": "Duvar saati",
+   "dims_m": [
+    0.32,
+    0.32,
+    0.05
+   ],
+   "tris": [
+    3130,
+    988,
+    408
+   ],
+   "verts": 3139,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 181
+  },
+  {
+   "id": "drawers",
+   "group": "drawers",
+   "category": "Props",
+   "path": "drawers/",
+   "source": "polyhaven:drawer_cabinet#drawer_cabinet",
+   "desc": "Çekmeceli raf",
+   "dims_m": [
+    1.14,
+    1.88,
+    0.49
+   ],
+   "tris": [
+    26406,
+    3449,
+    3449
+   ],
+   "verts": 20013,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 794
+  },
+  {
+   "id": "toolchest",
+   "group": "toolchest",
+   "category": "Props",
+   "path": "toolchest/",
+   "source": "polyhaven:metal_tool_chest#metal_tool_chest",
+   "desc": "Alet sandığı",
+   "dims_m": [
+    0.69,
+    0.65,
+    0.41
+   ],
+   "tris": [
+    13360,
+    4285,
+    2301
+   ],
+   "verts": 11073,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 487
+  },
+  {
+   "id": "elbox",
+   "group": "elbox",
+   "category": "Props",
+   "path": "elbox/",
+   "source": "polyhaven:utility_box_02#utility_box_02",
+   "desc": "Yeşil elektrik dolabı (tuş takımı)",
+   "dims_m": [
+    0.92,
+    1.12,
+    0.43
+   ],
+   "tris": [
+    6268,
+    2127,
+    1041
+   ],
+   "verts": 5068,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 291
+  },
+  {
+   "id": "gate",
+   "group": "gate",
+   "category": "Props",
+   "path": "gate/",
+   "source": "polyhaven:large_iron_gate#large_iron_gate",
+   "desc": "Büyük demir kapı",
+   "dims_m": [
+    2.95,
+    2.93,
+    0.1
+   ],
+   "tris": [
+    38140,
+    7739,
+    6860
+   ],
+   "verts": 23219,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 1209
+  },
+  {
+   "id": "cassette_m0",
+   "group": "cassette",
+   "category": "Props",
+   "path": "cassette_m0/",
+   "source": "polyhaven:cassette_player#cassette_player_body",
+   "desc": "Teyp",
+   "dims_m": [
+    0.13,
+    0.24,
+    0.05
+   ],
+   "tris": [
+    3474,
+    1534,
+    777
+   ],
+   "verts": 2649,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 167
+  },
+  {
+   "id": "cassette_m1",
+   "group": "cassette",
+   "category": "Props",
+   "path": "cassette_m1/",
+   "source": "polyhaven:cassette_player#cassette_player_flap",
+   "desc": "Teyp",
+   "dims_m": [
+    0.13,
+    0.24,
+    0.05
+   ],
+   "tris": [
+    320,
+    133,
+    120
+   ],
+   "verts": 282,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 71
+  },
+  {
+   "id": "cassette_m2",
+   "group": "cassette",
+   "category": "Props",
+   "path": "cassette_m2/",
+   "source": "polyhaven:cassette_player#cassette_player_tape",
+   "desc": "Teyp",
+   "dims_m": [
+    0.13,
+    0.24,
+    0.05
+   ],
+   "tris": [
+    1036,
+    357,
+    357
+   ],
+   "verts": 772,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 97
+  },
+  {
+   "id": "crane_m0",
+   "group": "crane",
+   "category": "Props",
+   "path": "crane_m0/",
+   "source": "polyhaven:overhead_crane#overhead_crane_trim",
+   "desc": "Tavan vinci",
+   "dims_m": [
+    12.49,
+    5.13,
+    4.0
+   ],
+   "tris": [
+    31897,
+    7906,
+    5110
+   ],
+   "verts": 23735,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 1245
+  },
+  {
+   "id": "crane_m1",
+   "group": "crane",
+   "category": "Props",
+   "path": "crane_m1/",
+   "source": "polyhaven:overhead_crane#overhead_crane",
+   "desc": "Tavan vinci",
+   "dims_m": [
+    12.49,
+    5.13,
+    4.0
+   ],
+   "tris": [
+    58067,
+    7359,
+    7359
+   ],
+   "verts": 53841,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 2402
+  },
+  {
+   "id": "compressor_m0",
+   "group": "compressor",
+   "category": "Props",
+   "path": "compressor_m0/",
+   "source": "polyhaven:old_military_compressor#old_military_compressor",
+   "desc": "Eski motor/kompresör",
+   "dims_m": [
+    0.6,
+    1.18,
+    1.68
+   ],
+   "tris": [
+    78786,
+    26194,
+    13680
+   ],
+   "verts": 58183,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512,
+    "metal": true
+   },
+   "kb": 2589
+  },
+  {
+   "id": "ladder_s",
+   "group": "ladder_s",
+   "category": "Props",
+   "path": "ladder_s/",
+   "source": "polyhaven:ladder_sectioned_01#ladder_sectioned_01",
+   "desc": "Seyyar merdiven",
+   "dims_m": [
+    0.66,
+    2.13,
+    0.18
+   ],
+   "tris": [
+    29140,
+    4418,
+    4418
+   ],
+   "verts": 23114,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 943
+  },
+  {
+   "id": "searchlight_m0",
+   "group": "searchlight",
+   "category": "Props",
+   "path": "searchlight_m0/",
+   "source": "polyhaven:portable_searchlight#portable_searchlight",
+   "desc": "Projektör",
+   "dims_m": [
+    0.17,
+    0.19,
+    0.25
+   ],
+   "tris": [
+    17278,
+    7194,
+    3075
+   ],
+   "verts": 10514,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 521
   }
  ],
  "surfaces": [],
  "decals": [],
- "totalKB": 4198,
+ "totalKB": 30073,
  "license": "CC0 (Poly Haven, polyhaven.com)"
 }

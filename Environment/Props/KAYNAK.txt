@@ -1,2 +1,4 @@
-Modeller: Poly Haven (polyhaven.com) — CC0: portable_generator, metal_jerrycan, wooden_military_crate, old_military_crate, wooden_crate_02, utility_box_01, wooden_lantern_01.
-Dönüştürücü: /tmp/snd/tools/ph_build.py (glTF -> KDM3 + albedo/normal/rma).
+Modeller: Poly Haven (polyhaven.com) — CC0. İlk set: portable_generator, metal_jerrycan, wooden_military_crate, old_military_crate, wooden_crate_02, utility_box_01, wooden_lantern_01.
+Hikâye modu seti (v83): small_plastic_torch, pastic_torch_6v, metal_jerrycan_green, power_box_01, propane_tank, Barrel_01, barrel_03, oil_tin, can_rusted, old_tyre, tool_cart, industrial_storage_cart, worn_metal_rack, cardboard_box_01, wooden_crate_01, picke_dirty_01, sledgehammer_01, rusted_spade_01, cement_bag, hand_truck, wooden_ladder, old_bed_frame, vintage_suitcase, old_gas_mask, wooden_bookshelf_worn, painted_wooden_cabinet, painted_wooden_cabinet_02, medical_box, clipboard, Television_01, television_02, metal_office_desk, vintage_radio_transceiver, wall_clock, drawer_cabinet, metal_tool_chest, utility_box_02, large_iron_gate, cassette_player, overhead_crane, old_military_compressor, ladder_sectioned_01, portable_searchlight.
+Dönüştürücü: ph_build.py / ph_build2.py (glTF -> KDM3 + albedo/normal/rma).
+Dinleyen (dinleyen/): oyuncunun tasarımı, Tripo3D ile üretildi; Mixamo iskeleti; koşu klibi Tripo, diğer klipler yöntemsel.
