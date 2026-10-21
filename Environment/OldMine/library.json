@@ -1904,6 +1904,57 @@
    "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
    "kb": 371,
    "used": false
+  },
+  {
+   "id": "stone_masonry",
+   "kind": "wall",
+   "source": "polyhaven:castle_wall_slates",
+   "desc": "Harçlı moloz taş örgü duvar (Poly Haven castle_wall_slates, CC0)",
+   "path": "Surfaces/stone_masonry/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.1299,
+    0.1299,
+    0.1299
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 876,
+   "used": true,
+   "license": "CC0 (Poly Haven)"
+  },
+  {
+   "id": "planks_old",
+   "kind": "wall",
+   "source": "polyhaven:old_planks_02",
+   "desc": "Eski dikey tahta kaplama (Poly Haven old_planks_02, CC0)",
+   "path": "Surfaces/planks_old/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.0653,
+    0.0653,
+    0.0653
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 431,
+   "used": true,
+   "license": "CC0 (Poly Haven)"
+  },
+  {
+   "id": "plaster_brick",
+   "kind": "wall",
+   "source": "polyhaven:rough_plaster_brick",
+   "desc": "Dökülmüş sıvalı tuğla duvar (Poly Haven rough_plaster_brick, CC0)",
+   "path": "Surfaces/plaster_brick/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.109,
+    0.109,
+    0.109
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 771,
+   "used": true,
+   "license": "CC0 (Poly Haven)"
   }
  ],
  "decals": [

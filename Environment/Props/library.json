@@ -3210,10 +3210,210 @@
      256
     ]
    ]
+  },
+  {
+   "id": "rk_face1",
+   "group": "rk_face1",
+   "category": "Props",
+   "path": "rk_face1/",
+   "source": "polyhaven:rock_face_01",
+   "desc": "Kırık kaya yüzü (duvar çıkıntısı)",
+   "dims_m": [
+    4.93,
+    3.56,
+    3.81
+   ],
+   "tris": [
+    5054,
+    1775,
+    1775
+   ],
+   "verts": 2759,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512
+   },
+   "kb": 405,
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     512,
+     512
+    ]
+   ]
+  },
+  {
+   "id": "rk_face2",
+   "group": "rk_face2",
+   "category": "Props",
+   "path": "rk_face2/",
+   "source": "polyhaven:rock_face_02",
+   "desc": "Katmanlı kaya yüzü (duvar çıkıntısı)",
+   "dims_m": [
+    2.71,
+    2.47,
+    2.13
+   ],
+   "tris": [
+    7314,
+    2958,
+    2958
+   ],
+   "verts": 4018,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512
+   },
+   "kb": 492,
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     512,
+     512
+    ]
+   ]
+  },
+  {
+   "id": "rk_b07",
+   "group": "rk_b07",
+   "category": "Props",
+   "path": "rk_b07/",
+   "source": "polyhaven:rock_07",
+   "desc": "Köşeli koyu kaya bloğu",
+   "dims_m": [
+    0.17,
+    0.14,
+    0.32
+   ],
+   "tris": [
+    3602,
+    1659,
+    1659
+   ],
+   "verts": 2022,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512
+   },
+   "kb": 286,
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     512,
+     512
+    ]
+   ]
+  },
+  {
+   "id": "rk_b09",
+   "group": "rk_b09",
+   "category": "Props",
+   "path": "rk_b09/",
+   "source": "polyhaven:rock_09",
+   "desc": "Kırık koyu kaya parçası",
+   "dims_m": [
+    0.07,
+    0.03,
+    0.14
+   ],
+   "tris": [
+    2879,
+    1364,
+    1364
+   ],
+   "verts": 1616,
+   "lengthAxis": "x",
+   "collision": "none",
+   "tags": [
+    "rock"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 512
+   },
+   "kb": 258,
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     512,
+     512
+    ]
+   ]
   }
  ],
  "surfaces": [],
  "decals": [],
- "totalKB": 30073,
+ "totalKB": 31696,
  "license": "CC0 (Poly Haven, polyhaven.com)"
 }

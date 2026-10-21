@@ -37,3 +37,12 @@ Hikâye modu eşya sesleri (v85) – gtools/build_foley.py:
 - flap_0 (kanat): OpenGameArt "Large Wings Flap" (AntumDeluge) — CC0
 - twig_* (dal çıtırtısı): Kenney impactWood_light (pes yukarı) — CC0
 - howl_0 (uzak uluma): Epic Stock Media EGC2 Hell Hound Howl (pes, uzak yankı) — EULA
+v88 gerçek kayıtlı eşya sesleri – gtools/build_foley2.py:
+- canup_* / slosh_* (benzin bidonu: sap + içinde çalkalanan sıvı): Kenney RPG Audio metalLatch, Impact Sounds impactTin — CC0;
+  OpenGameArt "6 short water splashes" (ezwa, kesim qubodup) — CC0; "Water Sounds" (Vinrax) — CC-BY 3.0
+- flsw_* (el feneri düğmesi): Kenney "51 UI sound effects" switch kayıtları — CC0
+- pant_* (koşudan sonra yorgun nefes): OpenGameArt "breathing tired" (mikeask) — CC0
+- batin_* (pil), toolup_* (kazma alma), capclk_* (depo kapağı): Kenney (CC0) + OpenGameArt "100 CC0 metal and wood SFX" (tools) — CC0
+- clang_* (demir kapıya vuruş): OpenGameArt "100 CC0 metal and wood SFX" metal_slam + Kenney impactMetal — CC0
+- rockfall_* / crumble_* (göçük, döküntü): OpenGameArt "Falling Rock" (spookymodem) — CC-BY 3.0; "Breaking Rock" — CC0
+- scrm_* (uzaktan metal inlemesi): OpenGameArt "Metal Interactions" (qubodup) — CC0
