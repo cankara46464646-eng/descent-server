@@ -46,3 +46,7 @@ v88 gerçek kayıtlı eşya sesleri – gtools/build_foley2.py:
 - clang_* (demir kapıya vuruş): OpenGameArt "100 CC0 metal and wood SFX" metal_slam + Kenney impactMetal — CC0
 - rockfall_* / crumble_* (göçük, döküntü): OpenGameArt "Falling Rock" (spookymodem) — CC-BY 3.0; "Breaking Rock" — CC0
 - scrm_* (uzaktan metal inlemesi): OpenGameArt "Metal Interactions" (qubodup) — CC0
+
+v91 – Zırhlı (dönüşmüş Rıza Usta) sesleri (zr_*.mp3):
+zr_roar, zr_pain, zr_breath, zr_groan – Epic Stock Media, "Evolved Game Creatures 2" (Orc / Humanoid Troll Tribal Creature), Dinleyen ile aynı lisans (EULA); kalınlaştırma, kırpma
+zr_step – oyunun mevcut adım kayıtları (cstep, CC0) kalınlaştırıldı + clang (CC0) metal şıngırtısı

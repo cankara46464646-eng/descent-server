@@ -3410,10 +3410,277 @@
      512
     ]
    ]
+  },
+  {
+   "id": "vsi",
+   "group": "vsi",
+   "category": "Props",
+   "path": "vsi/",
+   "source": "polyhaven:vintage_spacecraft_instrument#vintage_spacecraft_instrument",
+   "desc": "Yeşil analog kumanda kutusu (asansör paneli)",
+   "dims_m": [
+    0.41,
+    0.27,
+    0.2
+   ],
+   "tris": [
+    12945,
+    5366,
+    2277
+   ],
+   "verts": 13415,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 621,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "sconce",
+   "group": "sconce",
+   "category": "Props",
+   "path": "sconce/",
+   "source": "polyhaven:industrial_caged_sconce#industrial_caged_sconce",
+   "desc": "Kafesli endüstriyel duvar lambası",
+   "dims_m": [
+    0.21,
+    0.38,
+    0.21
+   ],
+   "tris": [
+    4936,
+    1660,
+    683
+   ],
+   "verts": 4528,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 273,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     256,
+     256
+    ],
+    [
+     768,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "clfence_m0",
+   "group": "clfence",
+   "category": "Props",
+   "path": "clfence_m0/",
+   "source": "polyhaven:modular_chainlink_fence#modular_chainlink_fence_posts",
+   "desc": "Tel örgü çit paneli (2 m)",
+   "dims_m": [
+    0.93,
+    2.37,
+    0.05
+   ],
+   "tris": [
+    3008,
+    658,
+    446
+   ],
+   "verts": 2688,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 238,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "clfence_m1",
+   "group": "clfence",
+   "category": "Props",
+   "path": "clfence_m1/",
+   "source": "polyhaven:modular_chainlink_fence#modular_chainlink_fence_wire",
+   "desc": "Tel örgü çit paneli (2 m)",
+   "dims_m": [
+    0.86,
+    2.35,
+    0.0
+   ],
+   "tris": [
+    20,
+    20,
+    20
+   ],
+   "verts": 18,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop",
+    "alpha"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 336,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ],
+    [
+     1280,
+     0,
+     512,
+     512
+    ]
+   ]
+  },
+  {
+   "id": "clpost",
+   "group": "clpost",
+   "category": "Props",
+   "path": "clpost/",
+   "source": "polyhaven:modular_chainlink_fence#modular_chainlink_fence_posts",
+   "desc": "Tel örgü çit direği",
+   "dims_m": [
+    0.15,
+    2.52,
+    0.15
+   ],
+   "tris": [
+    1134,
+    332,
+    171
+   ],
+   "verts": 977,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 178,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
   }
  ],
  "surfaces": [],
  "decals": [],
- "totalKB": 31696,
+ "totalKB": 33342,
  "license": "CC0 (Poly Haven, polyhaven.com)"
 }
