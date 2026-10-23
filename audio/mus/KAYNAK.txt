@@ -7,7 +7,9 @@ agiz.mp3     – "Abandoned Passages Horror Ambience Loop", congusbongus — CC0
                + "Nuclear Cave (Loop)", Hazmat Harry — CC0
 yatak.mp3    – "Dark Cavern Ambient", Paul Wortmann — CC0
                + "Loopable Dungeon Ambience", JaggedStone — CC0
-gerilim.mp3  – "Horror Cliché", Indieteur — CC0
+gerilim.mp3  – v92: "Dark Cavern Ambient 001", Paul Wortmann — CC0
+               + "The Depths of Hell" (Ambience Pack 1: Sci-Fi Horror), Joth — CC0 (melodisiz, karanlık ambiyans)
+               (eski: "Horror Cliché", Indieteur — CC0, artık kullanılmıyor)
 kova.mp3     – "Dark Ambience Loop", Iwan Gabovitch (qubodup) — CC-BY 3.0
                https://opengameart.org/content/dark-ambience-loop
 sabah.mp3    – "Haunting Piano", Emma_MA — CC0
@@ -18,7 +20,8 @@ cit.mp3       – "Dark Horror Ambient Piano Choir" (Eternal Terror), ISAo (airy
 magara.mp3    – v91: madene giriş parçası değişti: "Abandoned Passages Horror Ambience Loop", congusbongus — CC0
                 + "Nuclear Cave (Loop)", Hazmat Harry — CC0 (agiz.mp3'ten 44 sn, giriş/çıkış sönümlü)
                 (eski: "The Hangar", Kenten Fina — CC-BY 3.0, artık kullanılmıyor)
-orman_amb.mp3 – "Forest Ambience", TinyWorlds — CC0
+orman_amb.mp3 – v92: kuş sesleri ayıklandı (yalnızca 700 Hz altı yaprak hışırtısı + rüzgâr)
+                "Forest Ambience", TinyWorlds — CC0
                 + "Wind Loop", InspectorJ (Jonathan Shaw), döngü: AntumDeluge — CC-BY 3.0
                 https://opengameart.org/content/wind-loop
 cirsir.mp3    – "Crickets Ambient Noise – loopable", Wolfgang_ — CC0
