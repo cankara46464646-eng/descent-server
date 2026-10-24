@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="tr">
 <meta charset="utf-8">
+<style id="kdBootCss">body::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#030303;pointer-events:none;opacity:1;transition:opacity .7s ease}html.kdReady body::before{opacity:0}html:not(.kdReady) body>*{visibility:hidden!important}</style>
+<script>setTimeout(function(){document.documentElement.classList.add("kdReady")},9000)</script>
 <title>Descent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -692,7 +694,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v93</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v94</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -6279,7 +6281,7 @@ const KH_TIPS=['Ona baktığın sürece kıpırdamaz. Arkanı döndüğün an ge
 // mağaraya girince maden parçası BİR KEZ çalar (orman parçası kısılır). Geri dönsen de yeniden başlamaz.
 function chForestMus(dt){if(!AC||!SF.on)return;mzInit();const t=AC.currentTime,z=pl.z,E=SF.ev||(SF.ev={});
   const out=z>SFK.zm+.4&&!SF.go,dk=1-(SF.kMin??1);
-  mz('orman_amb',out?.55+.25*dk:(!SF.go&&z>SFK.zm-7?.16:0),out?2:3);mz('cirsir',out?clamp(dk*1.25-.2,0,.55):0,3);mz('yatak',0,3);mz('gerilim',0,3);mz('kova',0,2);
+  mz('orman_amb',out?.5+.12*dk:(!SF.go&&z>SFK.zm-7?.14:0),out?2:3);mz('cirsir',out?clamp(dk*1.25-.2,0,.55):0,3);mz('yatak',0,3);mz('gerilim',0,3);mz('kova',0,2);
   if(mDrone)mDrone.g.gain.setTargetAtTime(0,t,1.5);
   if(SF.dawn||KH.final){mz('cit',0,3);mz('magara',0,3);mz('cirsir',0,3);mz('orman_amb',.5,3);mz('sabah',.8,2.5);return;}
   mz('sabah',0,2);
@@ -7996,6 +7998,9 @@ function cineVid(S){const el=$('cine');if(!el)return;let v=$('cnVid');
 {const _ce=cineEnd;cineEnd=function(){try{cineVid(null);}catch(e){}return _ce.apply(this,arguments);};}
 // hikâye başlarken ilk kayıtları hemen iste
 {const _cs=cineStart;cineStart=function(cb){try{kytCineFix();}catch(e){console.warn('kayıt eşleme',e);}try{['c_orman','c_telsiz','c_kamyon','c_agiz','c_dinleyen'].forEach(n=>kytGet(n).catch(()=>{}));}catch(e){}return _cs.apply(this,arguments);};}
+// ---- açılış perdesi: sayfa ve tebeşir menüsü tamamen hazır olunca kalkar (eski menü bir an görünüp kaybolmasın) ----
+function kdBootDone(){const go=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.classList.add('kdReady'))));
+  const F=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();Promise.race([F,new Promise(r=>setTimeout(r,1800))]).then(()=>setTimeout(go,120),go);}
 // ==== HİKÂYE END ====
 // ================= Çok oyunculu: claude.ai "room" yeteneği (oda kodu, 4 kişi, botlar boşluğu doldurur) =================
 // Taşıma: her oyuncunun "presence" nesnesi (4 KiB, ~30/sn birleştirilerek gönderilir). Herkes kendi durumunu ve son olaylarını
@@ -9764,7 +9769,7 @@ function sfHud(force){SF.hudT=(SF.hudT||0)-1;if(!force&&SF.hudT>0)return;SF.hudT
 function sfForestTick(dt){const E=SF.ev||(SF.ev={}),z=pl.z,say2=l=>{if(KH.on)return;try{radioSay(l);}catch(e){}};if(SF.go)return;
   if(!E.team&&SF.t>12&&z>SFK.zm+20&&bots.some(q=>!q.remote)){E.team=1;say2([['E',pick(['Kafesteyiz. Patikayı izle, hava kararmadan gel.','Biz aşağıdayız, kafeste. Çabuk ol, karanlık basıyor.'])]]);}
   if(!E.gate&&z<SFK.gate+5){E.gate=1;say2([['N','Derinkaya\'nın çiti. Kapının kilidi kırılmış… içeriden zorlanmış gibi.']]);}
-  if(!KH.on&&!E.crow&&z<SFK.gate-12){E.crow=1;sfx('crow',.5,-.6);setTimeout(()=>{try{sfx('flutter',.5,-.4);sfx('crow',.35,-.8);}catch(e){}},500);}
+  if(!E.crow&&z<SFK.gate-12){E.crow=1;sfx('crow',.5,-.6);setTimeout(()=>{try{sfx('flutter',.5,-.4);sfx('crow',.35,-.8);}catch(e){}},500);}
   if(!E.snap&&z<SFK.gate-20){E.snap=1;sfx('twig',.7,(Math.random()<.5?-1:1)*.7,true);}
   if(!E.howl&&z<70){E.howl=1;sfx('howl',.32,0,true);G.shake=Math.max(G.shake||0,.06);}
   if(KH.on&&!E.dark&&z<104&&!pl.hasLamp){E.dark=1;toast('Hava karardı. Fenerim yok… mağaranın ağzındaki kurtarma dolabında olmalı.',3.6);}
@@ -9792,7 +9797,7 @@ function sfAmbTick(dt){const A=SF.amb,out=clamp((pl.z-20)/14,0,1),k=Math.min(SF.
   SF.drT=(SF.drT||0)-dt;if(SF.drT<=0){SF.drT=1.5+Math.random()*4;if(pl.z<27)sfx('drip',.25,(Math.random()-.5)*1.4);}
   SF.ruT=(SF.ruT||0)-dt;if(SF.ruT<=0){SF.ruT=3+Math.random()*6;if(out>.3&&!(KH.on&&MZ.on))sfx('rustle',.12*out,(Math.random()-.5)*1.6);}
   // orman: alacakaranlıkta kuşlar, gece cırcır böcekleri ve baykuş
-  if(out>.6&&!SF.go&&!KH.on){SF.brT=(SF.brT==null?2:SF.brT)-dt;if(SF.brT<=0){SF.brT=2.2+Math.random()*5;if(Math.random()<k*.9)sfx('bird',.09+Math.random()*.09,(Math.random()-.5)*1.6);}
+  if(out>.6&&!SF.go&&!(KH.on&&MZ.on)){SF.brT=(SF.brT==null?2:SF.brT)-dt;if(SF.brT<=0){SF.brT=2.2+Math.random()*5;if(Math.random()<k*.9)sfx('bird',.09+Math.random()*.09,(Math.random()-.5)*1.6);}
     SF.ckT=(SF.ckT||0)-dt;if(SF.ckT<=0){SF.ckT=.3+Math.random()*.8;if(Math.random()<(1-k)*.85)sfx('cricket',.04+Math.random()*.05,(Math.random()-.5)*1.8);}
     SF.owT=(SF.owT==null?10:SF.owT)-dt;if(SF.owT<=0){SF.owT=13+Math.random()*15;if(k<.75)sfx('owl',.16,(Math.random()-.5)*1.4,true);}}}
 // ---- çizim ----
@@ -10502,7 +10507,7 @@ $('again').addEventListener('click',()=>{const sn=RUN.snap;if(sn){RUN.floor=sn.f
 if(isTouch)$('keysDesk').hidden=true;
 
 // arka planda menü için sahne
-newGame();G.state='intro';pl.lamp=true;showMenu();
+newGame();G.state='intro';pl.lamp=true;showMenu();try{kdBootDone();}catch(e){document.documentElement.classList.add('kdReady');}
 let last=performance.now();
 const START_EL=document.getElementById('start');
 var FPSC={n:0,t:0,el:null};function fpsShow(){const e=$('fps');if(e)e.hidden=SET.fps===false;}
