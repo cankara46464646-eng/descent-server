@@ -3677,10 +3677,1551 @@
      256
     ]
    ]
+  },
+  {
+   "id": "grail",
+   "group": "grail",
+   "category": "Props",
+   "path": "grail/",
+   "source": "procedural geometry + polyhaven:rusty_metal_04",
+   "desc": "Kuyu kılavuz rayı (paslı I profil, 2 m, cıvatalı)",
+   "dims_m": [
+    0.13,
+    2.0,
+    0.148
+   ],
+   "tris": [
+    156,
+    76,
+    28
+   ],
+   "verts": 312,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 163,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "giron",
+   "group": "giron",
+   "category": "Props",
+   "path": "giron/",
+   "source": "procedural geometry + polyhaven:rusty_metal_04",
+   "desc": "Köşebent (paslı L profil, 2 m, perçinli)",
+   "dims_m": [
+    0.065,
+    2.0,
+    0.065
+   ],
+   "tris": [
+    136,
+    26,
+    26
+   ],
+   "verts": 384,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 12,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ],
+   "texPath": "../Props/grail/"
+  },
+  {
+   "id": "gshoe",
+   "group": "gshoe",
+   "category": "Props",
+   "path": "gshoe/",
+   "source": "procedural geometry + polyhaven:rusty_metal_04",
+   "desc": "Kafes kılavuz pabucu (U kanal, raya geçer)",
+   "dims_m": [
+    0.2,
+    0.32,
+    0.129
+   ],
+   "tris": [
+    92,
+    66,
+    66
+   ],
+   "verts": 216,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 8,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ],
+   "texPath": "../Props/grail/"
+  },
+  {
+   "id": "k_cand1",
+   "group": "k_cand1",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:brass_candleholders#brass_candleholders_01",
+   "desc": "Pirinç şamdan (tek mum)",
+   "dims_m": [
+    0.1,
+    0.35,
+    0.1
+   ],
+   "tris": [
+    2364,
+    763,
+    382
+   ],
+   "verts": 1759,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "k_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     256,
+     256
+    ],
+    [
+     256,
+     0,
+     256,
+     256
+    ],
+    [
+     512,
+     0,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "k_cand2_m2",
+   "group": "k_cand2",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:brass_candleholders#brass_candleholders_02",
+   "desc": "Pirinç şamdan (üç kollu)",
+   "dims_m": [
+    0.26,
+    0.26,
+    0.1
+   ],
+   "tris": [
+    6588,
+    2898,
+    1079
+   ],
+   "verts": 5146,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "k_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     256,
+     256
+    ],
+    [
+     768,
+     512,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "k_cand2_m3",
+   "group": "k_cand2",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:brass_candleholders#brass_candleholders_candles",
+   "desc": "Pirinç şamdan (üç kollu)",
+   "dims_m": [
+    0.23,
+    0.14,
+    0.02
+   ],
+   "tris": [
+    792,
+    329,
+    255
+   ],
+   "verts": 549,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop",
+    "candle"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "flames": [
+    [
+     -0.1063,
+     0.3639,
+     -0.0002
+    ],
+    [
+     -0.0001,
+     0.3794,
+     -0.0004
+    ],
+    [
+     0.1072,
+     0.3623,
+     -0.0002
+    ]
+   ],
+   "texFile": "k_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     512,
+     512
+    ],
+    [
+     512,
+     1024,
+     256,
+     256
+    ],
+    [
+     768,
+     1024,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "k_cand3",
+   "group": "k_cand3",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:brass_candleholders#brass_candleholders_03",
+   "desc": "Büyük pirinç şamdan (sunak)",
+   "dims_m": [
+    0.41,
+    0.81,
+    0.36
+   ],
+   "tris": [
+    32104,
+    12550,
+    5129
+   ],
+   "verts": 21666,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "k_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     512,
+     512
+    ],
+    [
+     512,
+     1024,
+     512,
+     512
+    ],
+    [
+     1024,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_lantch_m0",
+   "group": "k_lantch",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:lantern_chandelier_01#lantern_chandelier_01",
+   "desc": "Fenerli avize (pirinç, eski)",
+   "dims_m": [
+    0.58,
+    0.88,
+    0.57
+   ],
+   "tris": [
+    5759,
+    2414,
+    2165
+   ],
+   "verts": 5566,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "k_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     1536,
+     512,
+     512
+    ],
+    [
+     512,
+     1536,
+     512,
+     512
+    ],
+    [
+     1024,
+     1536,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_chand",
+   "group": "k_chand",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:Chandelier_02#Chandelier_02",
+   "desc": "Altı kollu pirinç avize",
+   "dims_m": [
+    0.68,
+    0.85,
+    0.62
+   ],
+   "tris": [
+    20710,
+    8839,
+    3441
+   ],
+   "verts": 14610,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "k_tex2.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_statue",
+   "group": "k_statue",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:gothic_statue#gothic_statue",
+   "desc": "Taç giymiş, zincirli aziz heykeli (Azize Barbara)",
+   "dims_m": [
+    1.48,
+    1.74,
+    1.56
+   ],
+   "tris": [
+    27739,
+    10828,
+    4117
+   ],
+   "verts": 23314,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex0.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1536,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_cab",
+   "group": "k_cab",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:GothicCabinet_01#GothicCabinet_01",
+   "desc": "Gotik ahşap dolap (kutsal eşya odası; saklanma)",
+   "dims_m": [
+    1.72,
+    2.36,
+    1.12
+   ],
+   "tris": [
+    12170,
+    4740,
+    1713
+   ],
+   "verts": 12922,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex0.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     1024,
+     512,
+     512
+    ],
+    [
+     1536,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_commode",
+   "group": "k_commode",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:GothicCommode_01#GothicCommode_01",
+   "desc": "Gotik çekmeceli komodin",
+   "dims_m": [
+    1.2,
+    1.21,
+    0.58
+   ],
+   "tris": [
+    3897,
+    1682,
+    774
+   ],
+   "verts": 3495,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex2.jpg",
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_doorF",
+   "group": "k_doorF",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:large_castle_door#large_castle_door",
+   "desc": "Kilise ana kapısı: kasa",
+   "dims_m": [
+    2.01,
+    2.96,
+    0.13
+   ],
+   "tris": [
+    880,
+    307,
+    96
+   ],
+   "verts": 946,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1536,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_doorR",
+   "group": "k_doorR",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:large_castle_door#large_castle_door",
+   "desc": "Kilise ana kapısı: sağ kanat",
+   "dims_m": [
+    0.97,
+    2.79,
+    0.27
+   ],
+   "tris": [
+    6321,
+    1186,
+    1050
+   ],
+   "verts": 5276,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1536,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_doorL",
+   "group": "k_doorL",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:large_castle_door#large_castle_door",
+   "desc": "Kilise ana kapısı: sol kanat",
+   "dims_m": [
+    0.96,
+    2.79,
+    0.16
+   ],
+   "tris": [
+    5439,
+    1184,
+    917
+   ],
+   "verts": 4609,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1536,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_bench",
+   "group": "k_bench",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:painted_wooden_bench#painted_wooden_bench",
+   "desc": "Boyalı eski ahşap bank (kilise sırası)",
+   "dims_m": [
+    1.16,
+    0.89,
+    0.5
+   ],
+   "tris": [
+    630,
+    232,
+    178
+   ],
+   "verts": 677,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex2.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     512,
+     512
+    ],
+    [
+     512,
+     1024,
+     512,
+     512
+    ],
+    [
+     1024,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_chair",
+   "group": "k_chair",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:WoodenChair_01#WoodenChair_01",
+   "desc": "Gotik oyma sandalye (rahip kürsüsü)",
+   "dims_m": [
+    0.69,
+    2.27,
+    0.66
+   ],
+   "tris": [
+    19992,
+    7569,
+    3180
+   ],
+   "verts": 13327,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex2.jpg",
+   "atlas": [
+    [
+     0,
+     1536,
+     512,
+     512
+    ],
+    [
+     512,
+     1536,
+     512,
+     512
+    ],
+    [
+     1024,
+     1536,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_goblet",
+   "group": "k_goblet",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:brass_goblets#brass_goblets_01",
+   "desc": "Pirinç kadeh",
+   "dims_m": [
+    0.15,
+    0.27,
+    0.15
+   ],
+   "tris": [
+    3072,
+    1304,
+    685
+   ],
+   "verts": 1946,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "k_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     256,
+     256,
+     256
+    ],
+    [
+     256,
+     256,
+     256,
+     256
+    ],
+    [
+     512,
+     256,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "k_table",
+   "group": "k_table",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:WoodenTable_03#WoodenTable_03",
+   "desc": "Eski ahşap büfe (sunak masası)",
+   "dims_m": [
+    1.33,
+    0.83,
+    0.58
+   ],
+   "tris": [
+    2298,
+    967,
+    388
+   ],
+   "verts": 3262,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "k_crow",
+   "group": "k_crow",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:crowbar_01#crowbar_01",
+   "desc": "Levye",
+   "dims_m": [
+    0.04,
+    0.56,
+    0.13
+   ],
+   "tris": [
+    2300,
+    842,
+    410
+   ],
+   "verts": 1402,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "k_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     1536,
+     512,
+     512
+    ],
+    [
+     512,
+     1536,
+     256,
+     256
+    ],
+    [
+     768,
+     1536,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "k_vase",
+   "group": "k_vase",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "polyhaven:antique_ceramic_vase_01#antique_ceramic_vase_01",
+   "desc": "Eski seramik vazo",
+   "dims_m": [
+    0.26,
+    0.44,
+    0.26
+   ],
+   "tris": [
+    9408,
+    3277,
+    1132
+   ],
+   "verts": 5024,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "k_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     512,
+     256,
+     256
+    ],
+    [
+     256,
+     512,
+     256,
+     256
+    ],
+    [
+     512,
+     512,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "k_bell",
+   "group": "k_bell",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "procedural geometry + polyhaven",
+   "desc": "Kilise çanı (bronz, ağız çapı 0.92 m)",
+   "dims_m": [
+    0.92,
+    0.772,
+    0.92
+   ],
+   "tris": [
+    4332,
+    2428,
+    2428
+   ],
+   "verts": 2558,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ],
+   "texFile": "k_tex5.jpg"
+  },
+  {
+   "id": "k_clap",
+   "group": "k_clap",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "procedural geometry + polyhaven",
+   "desc": "Çan dili",
+   "dims_m": [
+    0.11,
+    0.663,
+    0.11
+   ],
+   "tris": [
+    380,
+    255,
+    255
+   ],
+   "verts": 251,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ],
+   "texFile": "k_tex5.jpg"
+  },
+  {
+   "id": "k_link",
+   "group": "k_link",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "procedural geometry + polyhaven",
+   "desc": "Zincir halkası (paslı demir)",
+   "dims_m": [
+    0.06,
+    0.097,
+    0.017
+   ],
+   "tris": [
+    280,
+    187,
+    187
+   ],
+   "verts": 168,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop",
+    "lining"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     256,
+     256
+    ]
+   ],
+   "texFile": "k_tex5.jpg"
+  },
+  {
+   "id": "k_lock",
+   "group": "k_lock",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "procedural geometry + polyhaven",
+   "desc": "Asma kilit (paslı demir)",
+   "dims_m": [
+    0.09,
+    0.125,
+    0.039
+   ],
+   "tris": [
+    192,
+    143,
+    143
+   ],
+   "verts": 152,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     256,
+     256
+    ]
+   ],
+   "texFile": "k_tex5.jpg"
+  },
+  {
+   "id": "k_rope",
+   "group": "k_rope",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "procedural geometry + polyhaven",
+   "desc": "Çan ipi (üç bükümlü jüt, 1 m)",
+   "dims_m": [
+    0.034,
+    1.008,
+    0.036
+   ],
+   "tris": [
+    1728,
+    1242,
+    1242
+   ],
+   "verts": 1029,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "prop",
+    "lining"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "atlas": [
+    [
+     0,
+     1024,
+     512,
+     512
+    ],
+    [
+     512,
+     1024,
+     512,
+     512
+    ],
+    [
+     1024,
+     1024,
+     256,
+     256
+    ]
+   ],
+   "texFile": "k_tex5.jpg"
+  },
+  {
+   "id": "k_key",
+   "group": "k_key",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "procedural geometry + polyhaven",
+   "desc": "Eski demir anahtar",
+   "dims_m": [
+    0.053,
+    0.191,
+    0.012
+   ],
+   "tris": [
+    288,
+    171,
+    154
+   ],
+   "verts": 250,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     256,
+     256
+    ]
+   ],
+   "texFile": "k_tex5.jpg"
+  },
+  {
+   "id": "k_slab",
+   "group": "k_slab",
+   "category": "Props",
+   "path": "kilise/",
+   "pack": "../Props/kilise/pack.json",
+   "texPath": "../Props/kilise/",
+   "source": "procedural geometry + polyhaven",
+   "desc": "Mezar taşı levhası (kireçtaşı)",
+   "dims_m": [
+    0.9,
+    0.12,
+    1.9
+   ],
+   "tris": [
+    12,
+    4,
+    4
+   ],
+   "verts": 24,
+   "lengthAxis": "y",
+   "collision": "none",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "atlas": [
+    [
+     0,
+     1536,
+     512,
+     512
+    ],
+    [
+     512,
+     1536,
+     512,
+     512
+    ],
+    [
+     1024,
+     1536,
+     256,
+     256
+    ]
+   ],
+   "texFile": "k_tex5.jpg"
   }
  ],
  "surfaces": [],
  "decals": [],
- "totalKB": 33342,
+ "totalKB": 33525,
  "license": "CC0 (Poly Haven, polyhaven.com)"
 }

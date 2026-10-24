@@ -694,7 +694,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v94</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v96</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -957,7 +957,7 @@ uniform vec3 uRA, uRB, uFA, uFB, uFogC, uHazeC, uVein, uWetT; uniform float uWet
 uniform int uNS; uniform vec4 uSP[4]; uniform vec4 uSD[4]; uniform vec3 uSC[4];
 uniform int uNP; uniform vec4 uPP[10]; uniform vec3 uPC[10];
 uniform vec4 uRip[4]; uniform float uOutK;
-uniform float uHasAO, uAlphaK, uAlphaT, uTri, uTS, uTSat; uniform sampler2D uTA0, uTN0, uTA1, uTN1, uTA2, uTN2; uniform vec3 uTM0, uTM1, uTM2;
+uniform float uHasAO, uAlphaK, uAlphaT, uTri, uTS, uTSat; uniform sampler2D uTA0, uTN0, uTA1, uTN1, uTA2, uTN2, uTA3, uTN3; uniform vec3 uTM0, uTM1, uTM2, uTM3; uniform float uF2;
 // triplanar: albedo(+yükseklik A) ve normal(xy)+pürüzlülük(B)+AO(A) paketli dokular; normal için "whiteout" karışımı
 vec4 tpA(sampler2D T, vec3 p, vec3 w){ vec4 c=vec4(0.); if(w.x>.01)c+=texture(T,p.zy)*w.x; if(w.y>.01)c+=texture(T,p.xz)*w.y; if(w.z>.01)c+=texture(T,p.xy)*w.z; return c; }
 vec3 tpN(sampler2D T, vec3 p, vec3 n, vec3 w, out vec2 ra){ vec3 r=vec3(0.); ra=vec2(0.);
@@ -987,8 +987,8 @@ void main(){
         if(reg>.01){ a1=tpA(uTA1,p,w); n1=tpN(uTN1,p,Ng,w,r1); }
         float hb=reg<.01?0.:reg>.99?1.:clamp((reg-.5)*3.+(a1.a-a0.a)*1.6+.5,0.,1.);
         det=mix(a0.rgb/uTM0,a1.rgb/uTM1,hb)*(1.-gW); tn=mix(n0,n1,hb)*(1.-gW); ra=mix(r0,r1,hb)*(1.-gW); }
-      if(gW>.005){ vec4 g=texture(uTA2,p.xz); vec4 gn=texture(uTN2,p.xz); vec2 xy=vec2(gn.x*2.-1.,1.-gn.y*2.);
-        vec3 q=vec3(xy+Ng.xz, sqrt(max(0.,1.-dot(xy,xy)))*Ng.y); det+=g.rgb/uTM2*gW; tn+=normalize(q.xzy)*gW; ra+=gn.zw*gW; }
+      if(gW>.005){ vec4 g=texture(uTA2,p.xz); vec4 gn=texture(uTN2,p.xz); vec3 gm=uTM2; if(uF2>.5){ float fk=smoothstep(.3,.7,reg); if(fk>.01){ vec4 g3=texture(uTA3,p.xz*.8); vec4 n3b=texture(uTN3,p.xz*.8); g=mix(g,g3,fk); gn=mix(gn,n3b,fk); gm=mix(gm,uTM3,fk); } } vec2 xy=vec2(gn.x*2.-1.,1.-gn.y*2.);
+        vec3 q=vec3(xy+Ng.xz, sqrt(max(0.,1.-dot(xy,xy)))*Ng.y); det+=g.rgb/gm*gW; tn+=normalize(q.xzy)*gW; ra+=gn.zw*gW; }
       N=normalize(tn); float lum=dot(det,vec3(.299,.587,.114)); det=clamp(mix(vec3(lum),det,uTSat),0.,3.);
       base=mix(mix(uRA,uRB,f)*1.08,mix(uFA,uFB,f),gW)*det; ao*=mix(1.,ra.y,.8); trough=ra.x; }
     else {
@@ -1063,7 +1063,7 @@ precision mediump float; in vec2 vC; uniform vec3 uCol; out vec4 o;
 void main(){ float r=length(vC); float a=exp(-r*r*5.)*(1.-smoothstep(.85,1.,r)); o=vec4(uCol*a,a); }`;
 const FSO=FS.replace('if(alb4.a<.42) discard;','');const PR=prog(VS,FSO), PG=prog(GVS,GFS), PSK=prog(SKVS,FSO);
 gl.useProgram(PR.p);gl.uniform1i(PR.u.uAlb,3);gl.uniform1i(PR.u.uNrm,4);gl.uniform1i(PR.u.uRMt,5);
-['uTA0','uTN0','uTA1','uTN1','uTA2','uTN2'].forEach((n,k)=>gl.uniform1i(PR.u[n],8+k));
+['uTA0','uTN0','uTA1','uTN1','uTA2','uTN2'].forEach((n,k)=>gl.uniform1i(PR.u[n],8+k));['uTA3','uTN3'].forEach((n,k)=>{if(PR.u[n]!=null)gl.uniform1i(PR.u[n],14+k);});
 gl.useProgram(PSK.p);gl.uniform1i(PSK.u.uBones,2);gl.uniform1i(PSK.u.uAlb,3);gl.uniform1i(PSK.u.uNrm,4);gl.uniform1i(PSK.u.uRMt,5);
 
 // ================= Derisiz modeli (TLLStalker): yükleme, animasyon, çizim =================
@@ -1568,7 +1568,7 @@ async function envInit(){try{const r=await fetchT(ENV.base+'library.json',15000)
 // ---- statik mesh (KDM3) + PBR doku yükleme; her asset ilk ihtiyaçta bir kez yüklenir ----
 function envAsset(id){if(!ENV.lib)return null;let a=ENV.A[id];if(a)return a.ready?a:null;a=ENV.A[id]={ready:false};const e=ENV.byId[id];if(!e){a.bad=true;return null;}
   const b=ENV.base+e.path,half=SET.gfx<=1,alpha=e.tags.includes('alpha');
-  Promise.all([fetch(b+'mesh.txt').then(r=>{if(!r.ok)throw new Error(id);return r.text();}),envTexSet(e.texPath?ENV.base+e.texPath:b,half,alpha,e.atlas)]).then(([txt,TX])=>jq(()=>{
+  Promise.all([envMeshTxt(e,b,id),envTexSet(e.texPath?ENV.base+e.texPath:b,half,alpha,e.atlas,e.texFile)]).then(([txt,TX])=>jq(()=>{
     const buf=b64buf(txt),dv=new DataView(buf),hl=dv.getUint32(4,true),H=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,8,hl)));let o=8+hl;
     const take=n=>{const q=o;o+=n+((4-n%4)%4);return q;};const S2=H.sizes,nv=H.nv;
     const vao=gl.createVertexArray();gl.bindVertexArray(vao);
@@ -1586,8 +1586,8 @@ function envAsset(id){if(!ENV.lib)return null;let a=ENV.A[id];if(a)return a.read
     a.noLod=e.tags.includes('lining');a.r=Math.hypot(...H.dims)/2;a.ready=true;})).catch(err=>{a.bad=true;a.err=String(err&&err.stack||err);console.warn('env asset',id,String(err));});
   return null;}
 ENV.TX={};
-function envTexSet(p,half,alpha,atlas){if(ENV.TX[p])return ENV.TX[p];
-  if(atlas)return ENV.TX[p]=loadImg(p+'tex.jpg').then(im=>jq(()=>{const cut=r=>{const s=half?.5:1;const c=document.createElement('canvas');c.width=Math.max(4,Math.round(r[2]*s));c.height=Math.max(4,Math.round(r[3]*s));c.getContext('2d',{willReadFrequently:true}).drawImage(im,r[0],r[1],r[2],r[3],0,0,c.width,c.height);return c;};
+function envTexSet(p,half,alpha,atlas,tf){const K=tf?p+tf+'#'+atlas[0].join(','):p;if(ENV.TX[K])return ENV.TX[K];
+  if(atlas)return ENV.TX[K]=loadImg(p+(tf||'tex.jpg')).then(im=>jq(()=>{const cut=r=>{const s=half?.5:1;const c=document.createElement('canvas');c.width=Math.max(4,Math.round(r[2]*s));c.height=Math.max(4,Math.round(r[3]*s));c.getContext('2d',{willReadFrequently:true}).drawImage(im,r[0],r[1],r[2],r[3],0,0,c.width,c.height);return c;};
     const ia=cut(atlas[0]),na=cut(atlas[1]),ra=cut(atlas[2]);let A=ia;if(alpha&&atlas[3]){const oa=cut(atlas[3]);const w=ia.width,h=ia.height,ox=oa.getContext('2d',{willReadFrequently:true}),O=ox.getImageData(0,0,Math.min(w,oa.width),Math.min(h,oa.height)).data;const ad=ia.getContext('2d',{willReadFrequently:true}).getImageData(0,0,w,h);for(let i=0,j=0;i<ad.data.length;i+=4,j+=4)ad.data[i+3]=O[j]??255;A=ad;}
     return {ta:mnTex(A,true),tn:mnTex(na,false),tr:mnTex(ra,false)};}));
   return ENV.TX[p]=Promise.all([envImg(p+'albedo.jpg',half),envImg(p+'normal.jpg',half),envImg(p+'rma.jpg',half),alpha?envImg(p+'opacity.jpg',half):null]).then(async([ia,na,ra,oa])=>{
@@ -1606,15 +1606,15 @@ function envSurf(id){if(!ENV.lib)return null;let s=ENV.S[id];if(s)return s.ready
     const ta=await jq(()=>mnTex(A,true)),tn=await jq(()=>mnTex(Nd,false));if(ENV.S[id]!==s){gl.deleteTexture(ta);gl.deleteTexture(tn);return;}s.ta=ta;s.tn=tn;s.mean=e.meanLinear;s.ready=true;}).catch(err=>{s.bad=true;console.warn('env surface',id,err);});
   return null;}
 // bu katın yüzeyleri yüklenir, bir alt katınkiler önceden istenir; ikisinde de olmayan yüzey dokuları GPU'dan silinir (mobil bellek)
-function envSurfaces(f){const L=ENV_FS[f-1]||ENV_FS[0],Nx=ENV_FS[f]||[];const keep=new Set([L[0],L[1],L[2]||'rock_drilled',...Nx]);
+function envSurfaces(f){const L=ENV_FS[f-1]||ENV_FS[0],Nx=ENV_FS[f]||[];const keep=new Set([L[0],L[1],L[2]||'rock_drilled',...(L[3]?[L[3]]:[]),...Nx]);
   for(const id in ENV.S){const s=ENV.S[id];if(!keep.has(id)&&s.ready){gl.deleteTexture(s.ta);gl.deleteTexture(s.tn);delete ENV.S[id];}}
-  envSurf(L[0]);envSurf(L[2]||'rock_drilled');envSurf(L[1]);ENV.surfFloor=f;setTimeout(()=>{for(const id of Nx)envSurf(id);},4000);}
+  envSurf(L[0]);envSurf(L[2]||'rock_drilled');envSurf(L[1]);if(L[3])envSurf(L[3]);ENV.surfFloor=f;setTimeout(()=>{for(const id of Nx)envSurf(id);},4000);}
 function envDecalTex(id){if(!ENV.lib)return null;let d=ENV.D[id];if(d)return d.ready?d:null;d=ENV.D[id]={ready:false};const e=ENV.byId['D:'+id];if(!e){d.bad=true;return null;}
   Promise.all([envImg(ENV.base+e.path+'albedo.jpg'),envImg(ENV.base+e.path+'opacity.jpg')]).then(([ia,oa])=>jq(()=>{const w=ia.width,h=ia.height,cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d',{willReadFrequently:true});
     cx.drawImage(oa,0,0,w,h);const O=cx.getImageData(0,0,w,h).data;cx.clearRect(0,0,w,h);cx.drawImage(ia,0,0,w,h);const A=cx.getImageData(0,0,w,h);for(let i=0;i<A.data.length;i+=4)A.data[i+3]=O[i];
     d.ta=mnTex(A,true);d.ready=true;})).catch(err=>{d.bad=true;console.warn('env decal',id,err);});return null;}
 // mağara hücresinin "insan eliyle işlenmiş" oranı (duvar dokusu seçimi): aktif bölge ya da insanın kazdığı hücre
-const envRegCell=c=>KH.flat?flatReg(c):c>=0&&c<GW*GH&&((ENV.act&&ENV.act[c])||(dug[c]&&!natural[c]))?1:0;
+const envRegCell=c=>KH.regF?KH.regF(c):KH.flat?flatReg(c):c>=0&&c<GW*GH&&((ENV.act&&ENV.act[c])||(dug[c]&&!natural[c]))?1:0;
 function envRegAt(x,z){const fx=x/S-.5,fz=z/S-.5,i=Math.floor(fx),j=Math.floor(fz),u=fx-i,v=fz-j;
   const g=(a,b)=>a<0||b<0||a>=GW||b>=GH?0:envRegCell(b*GW+a);return lerp(lerp(g(i,j),g(i+1,j),u),lerp(g(i,j+1),g(i+1,j+1),u),v);}
 
@@ -1635,7 +1635,7 @@ function envBuild(){const t0=performance.now();
     if(KH.on&&chGreen()){const rr=roomId[c]>=0?rooms[roomId[c]]:null;r=roomId[c]===nest?3:de>27?1:0;if(rr&&rr.gal>=1)r=0;}if(safe[c])r=0;ENV.rg[c]=r;if(r===0)ENV.act[c]=1;}
   // --- dokunulmayacak hücreler ---
   const EX=new Uint8Array(N);const ex8=(c,rad)=>{for(let dj=-rad;dj<=rad;dj++)for(let di=-rad;di<=rad;di++){const i=I(c)+di,j=J(c)+dj;if(i>=0&&j>=0&&i<GW&&j<GH)EX[j*GW+i]=1;}};
-  for(let c=0;c<N;c++)if(exitA[c])ex8(c,1);for(const g of G.gens)ex8(g.c,1);if(G.shaft)ex8(G.shaft.c,1);ex8(ec,0);for(const cab of G.cables||[])for(const c of cab)EX[c]=1;
+  for(let c=0;c<N;c++)if(exitA[c])ex8(c,1);for(const g of G.gens)ex8(g.c,1);if(G.shaft)ex8(G.shaft.c,1);ex8(ec,0);for(const cab of G.cables||[])for(const c of cab)EX[c]=1;if(KH.on&&KH.exF)KH.exF(EX);
   const OD=exitDir,PD=[-OD[1],OD[0]],[ecx,ecz]=ctr(ec),lift=[ecx+OD[0]*S*1.55,ecz+OD[1]*S*1.55];
   const busy=(c,dx,dy)=>{const n=(J(c)+dy)*GW+I(c)+dx;return n<0||n>=N||oreAt[n]>=0||feat[n]===3;};
   // --- yol iskeleti: hücre merkezleri + açık komşu merkezlerine giden çizgiler; hiçbir engel buna 0.42 m'den fazla yaklaşamaz ---
@@ -1961,6 +1961,7 @@ function envTriBind(){const sf=KH.on?(CHD().surf||CHD().look+1):RUN.floor;const 
   const a=ENV.lib&&envSurf(L[0]),b=ENV.lib&&envSurf(L[2]||'rock_drilled'),c=ENV.lib&&envSurf(L[1]);const on=SET.gfx>=1&&a&&b&&c&&!ENV.noTri;
   gl.uniform1f(U('uTri'),on?1:0);if(!on)return false;const T=[a,b,c];
   for(let k=0;k<3;k++){gl.activeTexture(gl.TEXTURE8+k*2);gl.bindTexture(gl.TEXTURE_2D,T[k].ta);gl.activeTexture(gl.TEXTURE9+k*2);gl.bindTexture(gl.TEXTURE_2D,T[k].tn);}
+  {const d=L[3]&&ENV.lib&&envSurf(L[3]);if(d){gl.activeTexture(gl.TEXTURE14);gl.bindTexture(gl.TEXTURE_2D,d.ta);gl.activeTexture(gl.TEXTURE15);gl.bindTexture(gl.TEXTURE_2D,d.tn);gl.uniform3fv(U('uTM3'),d.mean);gl.uniform1f(U('uF2'),1);}else gl.uniform1f(U('uF2'),0);}
   gl.activeTexture(gl.TEXTURE0);gl.uniform1f(U('uTS'),1/(KH.flat?3.2:2.2));gl.uniform1f(U('uTSat'),KH.flat?.92:.55);gl.uniform3fv(U('uTM0'),a.mean);gl.uniform3fv(U('uTM1'),b.mean);gl.uniform3fv(U('uTM2'),c.mean);return true;}
 // ================= Temalı katlar: 5. kat KÖK ORMANI, 3. kat MANTAR MAĞARASI =================
 // Aynı ızgara/harita üreticisi; tema yalnızca giydirme, ışık, palet ve bir kural değişikliği getirir.
@@ -3683,16 +3684,16 @@ const cellOf=v=>Math.floor(v/S);
 const ctr=c=>[(c%GW+.5)*S,(((c/GW)|0)+.5)*S];
 const isSafe=(x,z)=>{const i=cellOf(x),j=cellOf(z);return i>=0&&j>=0&&i<GW&&j<GH&&safe[j*GW+i]===1;};
 function ampY(y){return y<.01?.1:y>H-.01?.85:.22;}
-function dyAt(x,y,z){const v=vnoise(x*.5+7,y*.5,z*.5+3)*ampY(y)*(KH.flat?.015:1);const r=LABUP?v*(1-labFlat(x,z)):v;return NM&&NM.on?r+nmDy(x,y,z):KH.flat&&y>H-.01?r+flatCeil(x,z):r;}
+function dyAt(x,y,z){const v=vnoise(x*.5+7,y*.5,z*.5+3)*ampY(y)*(KH.flat?.015:KH.flatF?Math.max(.015,KH.flatF(x,z)):1);const r=LABUP?v*(1-labFlat(x,z)):v;return (NM&&NM.on?r+nmDy(x,y,z):KH.flat&&y>H-.01?r+flatCeil(x,z):r)+(KH.elev?KH.elev(x,y,z):0);}
 function domeAt(x,z){if(!DOME)return 0;const d=Math.hypot(x-DOME.x,z-DOME.z);if(d>=DOME.r)return 0;const k=clamp((DOME.r-d)/(DOME.r*.62),0,1);return DOME.h*k*k*(3-2*k)*(1+.14*vnoise(x*.35,9.1,z*.35));}
 // aynı köşe noktası parça kurulurken ~6 kez hesaplanıyordu: kat başına önbellek (kat değişince/kubbe değişince temizlenir)
 const DISPM=new Map();
 function disp(x,y,z){const kk=((Math.round(x*64)+8192)*8192+(Math.round(y*64)+1024))*32768+(Math.round(z*64)+8192);let c=DISPM.get(kk);
   if(!c){c=disp0(x,y,z);if(DISPM.size>400000)DISPM.clear();DISPM.set(kk,c);}return [c[0],c[1],c[2]];}
-function disp0(x,y,z){const f=.5,lf=(LABUP?1-labFlat(x,z):1)*(KH.flat?.05:1);
+function disp0(x,y,z){const f=.5,lf=(LABUP?1-labFlat(x,z):1)*(KH.flat?.05:KH.flatF?KH.flatF(x,z):1);
   const dx=(vnoise(x*f,y*f,z*f)*.38+vnoise(x*2.1,y*2.1,z*2.1)*.1)*lf;
   const dz=(vnoise(x*f+31.7,y*f,z*f+11.3)*.38+vnoise(x*2.1+5,y*2.1,z*2.1+9)*.1)*lf;
-  const _p=[x+dx,y+dyAt(x,y,z)+(y>0&&DOME?domeAt(x,z)*y/H:0)+(y>0&&LABUP?labUpAt(x,z)*y/H:0),z+dz];return NM&&NM.on?nmDisp(x,y,z,_p):KH.flat?flatInset(x,y,z,_p):_p;}
+  const _p=[x+dx,y+dyAt(x,y,z)+(y>0&&DOME?domeAt(x,z)*y/H:0)+(y>0&&LABUP?labUpAt(x,z)*y/H:0),z+dz];return NM&&NM.on?nmDisp(x,y,z,_p):(KH.flat||(KH.flatF&&KH.flatF(x,z)<.2))?flatInset(x,y,z,_p):_p;}
 const floorY=(x,z)=>dyAt(x,0,z);
 const ceilY=(x,z)=>H+dyAt(x,H,z)+domeAt(x,z)+(LABUP?labUpAt(x,z):0);
 const DIRS=[[1,0],[-1,0],[0,1],[0,-1]];
@@ -3963,7 +3964,7 @@ function floorPick(cb){let el=document.getElementById('flPick');if(!el){const st
     el=document.createElement('div');el.id='flPick';document.body.appendChild(el);}
   el.innerHTML='<div class="bx"><h3>KAT SEÇ · TEST</h3><div class="g">'+FLOORS.map((F,i)=>`<button data-k="${i+1}"><small>KAT -${i+1}</small>${F.ad}</button>`).join('')+'</div><div class="x"><button data-k="0" style="all:unset;cursor:pointer;color:#a39d92">Vazgeç</button></div></div>';el.hidden=false;el.style.display='flex';
   el.onclick=e=>{const b=e.target.closest('button');if(!b)return;const k=+b.dataset.k;el.hidden=true;el.style.display='none';if(k)cb(k);};try{el.querySelector('button').focus({preventScroll:true});}catch(e){}}
-function resetRun(){statsReset();RUN.floor=1;RUN.cash=0;RUN.total=0;RUN.time=0;RUN.inv={dyn:0,flare:0,rock:0,beam:0,mantar:0,odun:0,gun:0,pompa:0,gunOwn:0,pompaOwn:0};RUN.up={lamp:0,boots:0,pick:0};RUN.alive=KH.on?[]:['Ahmet','Mehmet','Hasan'];RUN.lamp=false;RUN.bat=1;RUN.noSurf=false;RUN.team=RUN.alive.slice();RUN.cartGems=[];RUN.snap=null;}
+function resetRun(){statsReset();RUN.floor=1;RUN.cash=0;RUN.total=0;RUN.time=0;RUN.inv={dyn:0,flare:0,rock:0,beam:0,mantar:0,odun:0,gun:0,pompa:0,gunOwn:0,pompaOwn:0};RUN.up={lamp:0,boots:0,pick:0};RUN.alive=KH.on?[]:['Ahmet','Mehmet','Hasan'];RUN.lamp=false;RUN.bat=1;RUN.noSurf=false;RUN.k6cp=null;RUN.team=RUN.alive.slice();RUN.cartGems=[];RUN.snap=null;}
 resetRun();
 const quotaOf=n=>6+(n-1)*4;
 const angerEff=()=>G.anger>0?G.anger+Math.min(6,G.time/300*.7):0;
@@ -4285,7 +4286,7 @@ function goDown(){const left=gatherTeam();if(left===null)return;G.state='descend
   RUN.time+=G.time;const back=teamRevive();const lostTxt=back.length?`${back.join(' ve ')} yeni katta ekibe yeniden katıldı.`:'';
   setTimeout(()=>{RUN.floor++;(KH.on?(f=>f()):openCrates)(()=>loadShow(RUN.floor,{min:2.4,work:()=>{newGame();renderHotbar();},done:()=>arriveStart(()=>showFloorCard(lostTxt))}));},1100);}
 // ================= hareket & algı =================
-function hits(x,z,r){if(KH.flat)r+=.22;const c0=cellOf(x-r),c1=cellOf(x+r),r0=cellOf(z-r),r1=cellOf(z+r);
+function hits(x,z,r){if(KH.flat||(KH.flatF&&KH.flatF(x,z)<.2))r+=.22;const c0=cellOf(x-r),c1=cellOf(x+r),r0=cellOf(z-r),r1=cellOf(z+r);
   for(let j=r0;j<=r1;j++)for(let i=c0;i<=c1;i++)if(solid(i,j)){const nx=clamp(x,i*S,i*S+S),nz=clamp(z,j*S,j*S+S);if((x-nx)**2+(z-nz)**2<r*r)return true;}return false;}
 // giydirme çarpıştırıcıları yalnızca insanlara (oyuncu, botlar) uygulanır; yaratıklar ızgara navigasyonuyla aynen hareket eder
 function moveCircle(e,dx,dz,r,avoidSafe){const ox=e.x,oz=e.z;const hum=ENV.cols.length&&(e===pl||!!e.name);let p0=hum?envPen(ox,oz,r):0;
@@ -5588,7 +5589,9 @@ const CH_DEF=[null,
   {no:4,id:'kapan',ad:'KAPAN',look:4,seed:[0x7e57ab1e,777],
    hint:'Pompa istasyonunun demir kapısı arkandan kilitlendi. Atölye, depo ve kumanda odasındaki ekranlardan, saatten ve belgeden dört haneli kodu çöz. Kapı açılınca koridordan kafese koş.'},
   {no:5,id:'cikis',ad:'ÇIKIŞ',look:6,seed:[0x5afe0a75,1888],
-   hint:'Ana kuyunun vinci duruyor. Makine dairesinde motoru çalıştır, sonra kafese koş. Şafak sökmeden yukarıda ol.'}];
+   hint:'Ana kuyunun vinci duruyor. Makine dairesinde motoru çalıştır, sonra kafese koş. Şafak sökmeden yukarıda ol.'},
+  {no:6,id:'kilise',ad:'KİLİSE',look:6,seed:[0x0c1e5e6a,1888],
+   hint:'Halat koptu. Kafes 1888 katına çakıldı. Rıza Usta\'nın tebeşir oklarını izle: eski kaçış tüneli Azize Barbara Kilisesi\'nin mahzenine çıkıyor. Kapı içeriden zincirli. Çan onu aşağı çeker.'}];
 const CH_F=CH_DEF.slice(1).map(d=>({ad:d.ad,hint:d.hint,gas:0,water:0,ore:0,babies:0,drain:1,ch:d.no}));
 const CHD=()=>CH_DEF[RUN.floor]||CH_DEF[1];
 // bölüm içi rastgelelik (eşya yerleri): tohum NET ile aynı → herkeste aynı yerler
@@ -5761,12 +5764,13 @@ function chConnect(c0,keepLast){const f=chNet();if(f[c0]>=0)return[];const i0=c0
   return keep;}
 function chPostGen(){const n=RUN.floor;chSeed=((G.floorSeed||1)^(nseed*2654435761)^(n*97))>>>0;
   // tavan: mağaralarda yüksek; 3. bölümün yapılmış galerilerinde düz ve daha alçak
-  KH.flat=n===3;H=n===3?3.2:5.3;hsSet();NM.on=false;
+  KH.flat=n===3;H=n===3?3.2:n===6?4.2:5.3;hsSet();NM.on=false;
   gems=[];oreAt.fill(-1);feat.fill(0);G.pregas=[];for(let c=0;c<GW*GH;c++){water[c]=0;gasL[c]=0;dug[c]=0;}
   KH.dig=new Set();KH.door=null;
   // kafes koridoru: büyük kafes için üç hücre genişliğinde
   {const E=rooms[entrance],OD=exitDir,PD=[-OD[1],OD[0]];for(let d=0;d<=3;d++)for(const s of[-1,1]){const i=E.cx+OD[0]*d+PD[0]*s,j=E.cy+OD[1]*d+PD[1]*s;if(d<=2)chCarve(i,j,0);}for(let c=0;c<GW*GH;c++)if(roomId[c]===0)safe[c]=1;}
   if(n===4){chGenKapan();return;}
+  if(n===6){chGenKilise();return;}
   if(n===3){chGenGaleri();// kafes kilitli eski kuyu: girişe en uzak dikdörtgen odanın ortasında
     let best=null,bd=-1;for(const id of KH.galRooms||[]){const r=rooms[id];if(!r)continue;const d=(r.kind==='kuyu'?1000:0)+Math.hypot(r.cx-rooms[entrance].cx,r.cy-rooms[entrance].cy);if(d>bd){bd=d;best=r;}}
     if(best){const c=best.cy*GW+best.cx;const[x,z]=ctr(c);G.shaft={c,x,z};}return;}
@@ -5830,7 +5834,7 @@ function chInit(){const n=RUN.floor;dnReset();deco=[];bones=[];try{radioClear();
   const cells=chShuffle(chCellsFar(6,40,c=>!G.gens.some(g=>Math.abs((g.c%GW)-(c%GW))+Math.abs(((g.c/GW)|0)-((c/GW)|0))<3)));let nb=0;
   for(const c of cells){if(nb>=2)break;const w=chWallSpot(c);if(!w)continue;add('bat',{x:w.x-w.n[0]*.15,z:w.z-w.n[1]*.15,yaw:w.yaw,a:'torch6v',sc:1.1,r:1.6,lbl:'Yedek pili al'});nb++;}
   // hikâye
-  KH.spawnT=n===1?1e9:n===2?50:n===3?1e9:n===4?1e9:35;
+  KH.spawnT=n===1?1e9:n===2?50:n===3?1e9:n===4?1e9:n===6?1e9:35;
   renderHotbar();}
 function chToolIdx(id){return TOOLS.findIndex(t=>t.id===id);}
 const CH_SETUP={
@@ -5894,7 +5898,7 @@ const CH_SETUP={
    KH.decor.push({a:'crane',x:nx,z:nz-.2,yaw:0,sc:.32,y:2.6},{a:'toolcart',x:nx+2.2,z:nz+.6,yaw:1.2,sc:1},{a:'barrel_r',x:nx-2.1,z:nz+1,yaw:.4,sc:1},{a:'searchlight',x:nx+1.4,z:nz-1.5,yaw:2.3,sc:2});}};
 // ---- dekor: her bölümde odalara gerçekçi eşyalar (çarpışma kutularıyla) ----
 const CH_DEC={1:['barrel_r','barrel_b','propane','oiltin','canrust','tyre','toolcart','storecart','rack','cbox','crate_w1','powerbox'],2:['cement','spade','sledge2','handtruck','ladder_w','crate_w1','barrel_b','tyre','cbox'],3:['barrel_b','crate_wood','rack','cbox','canrust','oiltin','suitcase','crate_w1','toolchest','barrel_r','gasmask','medbox','bed'],4:[],5:['barrel_r','barrel_b','propane','tyre','storecart','ladder_s','toolchest','crate_w1']};
-function chDecor(n){const L=CH_DEC[n]||[];if(!L.length&&n!==4)return;const cells=!L.length?[]:chShuffle(chCellsFar(3,46,c=>roomId[c]!==0&&!G.gens.some(g=>g.c===c)&&!(G.shaft&&G.shaft.c===c)&&!KH.dig.has(c)));let k=0,used=new Set();
+function chDecor(n){const L=CH_DEC[n]||[];if(!L.length&&n!==4&&n!==6)return;const cells=!L.length?[]:chShuffle(chCellsFar(3,46,c=>roomId[c]!==0&&!G.gens.some(g=>g.c===c)&&!(G.shaft&&G.shaft.c===c)&&!KH.dig.has(c)));let k=0,used=new Set();
   for(const c of cells){if(k>=(n===1?22:n===3?28:16))break;if(used.has(c))continue;const w=chWallSpot(c);if(!w)continue;const i=c%GW,j=(c/GW)|0;if(DIRS.filter(([dx,dy])=>!solid(i+dx,j+dy)).length<2)continue;// dar tünelde yolu kapatma
     const a=L[k%L.length];KH.decor.push({a,x:w.x-w.n[0]*.18,z:w.z-w.n[1]*.18,yaw:w.yaw+(chR()-.5)*.5,sc:1,near:c});used.add(c);for(const[dx,dy]of DIRS)used.add((j+dy)*GW+i+dx);k++;}
   // kafesin yanında asansör panosu
@@ -5974,7 +5978,7 @@ function chFuel(gi,by){const g=G.gens[gi];if(!g||g.fuel)return;g.fuel=true;netLo
 // ---- her kare ----
 function chTick(dt){KH.t+=dt;const n=RUN.floor;
   // gerilim: bölüm ilerlemesi
-  const prog=n===1?(G.gens.filter(g=>g.on).length+G.gens.filter(g=>g.fuel).length*.25)/(G.gens.length*1.25):n===2?(KH.digArr&&KH.digArr.length?KH.digN/KH.digArr.length:0):n===3?KH.pages/8:n===4?(KH.door&&KH.door.open?1:KH.code?KH.code.got.filter(x=>x).length/5:0):KH.winch;
+  const prog=n===1?(G.gens.filter(g=>g.on).length+G.gens.filter(g=>g.fuel).length*.25)/(G.gens.length*1.25):n===2?(KH.digArr&&KH.digArr.length?KH.digN/KH.digArr.length:0):n===3?KH.pages/8:n===4?(KH.door&&KH.door.open?1:KH.code?KH.code.got.filter(x=>x).length/5:0):n===6?KH.T:KH.winch;
   KH.T+=(clamp(prog,0,1)-KH.T)*Math.min(1,dt*.5);
   const H=!NET.started||NET.host;
   if(H)chDirector(dt);
@@ -6254,7 +6258,7 @@ function chHudTL(){const n=RUN.floor,D=CHD();let obj='',a=-1,b=0;
   else if(n===4){const g=KH.code?KH.code.got.filter(x=>x).length:0;a=g;b=4;obj=KH.door&&KH.door.open?'Koridordan kafese koş! Arada bir arkana bak.':'Ekranlardan, saatten ve belgeden kodu çöz; kapıyı aç.';}
   else if(n===5){a=Math.round(KH.winch*100);b=100;obj=KH.winch>=1?'Motor çalışıyor. Ana kuyunun kafesine koş!':'Makine dairesinde vinç motorunu çalıştır.';}
   const k=n+'|'+obj+'|'+a+'/'+b;if(k===HTL.k)return;HTL.k=k;
-  $('depN').textContent=String(n);$('nightL').textContent=D.ad;let pp='';for(let i=1;i<=5;i++)pp+=`<i class="${i<n?'d':i===n?'c':''}"></i>`;$('depP').innerHTML=pp;$('objL').textContent=obj;
+  $('depN').textContent=String(n);$('nightL').textContent=D.ad;let pp='';for(let i=1;i<=CH_DEF.length-1;i++)pp+=`<i class="${i<n?'d':i===n?'c':''}"></i>`;$('depP').innerHTML=pp;$('objL').textContent=obj;
   const has=a>=0&&b>0;$('misF').textContent=has?(n===5?a+'%':`${a}/${b}`):'';$('misP').hidden=!has;if(has){$('misPf').style.width=Math.round(a/b*100)+'%';$('misP').classList.toggle('done',a>=b);}$('sqL').innerHTML='';}
 function chHudExtra(){const s=$('chSta');if(s){const v=pl.sta==null?1:pl.sta;s.style.opacity=v<.98&&(G.state==='play'||G.state==='surface')?1:0;s.firstChild.style.width=(v*100).toFixed(0)+'%';s.classList.toggle('low',!!pl.tired);}
   sS('batf','width',(pl.bat*100).toFixed(0)+'%');sT('batN',Math.round(pl.bat*100));$('batBox').hidden=!pl.hasLamp;$('batBox').classList.toggle('off',!pl.lamp);$('batBox').classList.toggle('low',pl.bat<.2);
@@ -6322,7 +6326,7 @@ function chUIBuild(){if($('chPage'))return;const st=document.createElement('styl
   addEventListener('keydown',e=>{if(G.chUI==='key'){if(/^[0-9]$/.test(e.key))chKeyPress(e.key);else if(e.key==='Backspace')chKeyPress('<');else if(e.key==='Escape')chKeyClose();e.stopPropagation();}
     else if((G.chUI==='page'||G.chUI==='clue')&&(e.key==='Escape'||e.key===' '||e.code==='KeyE')){chPageClose();chClueClose();}},true);}
 // ---------------- menü: bölüm seçimi ----------------
-function chProgress(){if(KH.testAll)return 5;try{return Math.max(1,Math.min(5,+localStorage.getItem('kd_ch')||1));}catch(e){return 1;}}
+function chProgress(){const M=CH_DEF.length-1;if(KH.testAll)return M;try{return Math.max(1,Math.min(M,+localStorage.getItem('kd_ch')||1));}catch(e){return 1;}}
 function chSelect(cb){const best=chProgress();if(KH.ch1){KH.ch1=false;cb(1);return;}const fl=KH.forceList;KH.forceList=false;if(best<=1&&!fl){cb(1);return;}let el=$('chSel');if(!el){el=document.createElement('div');el.id='chSel';document.body.appendChild(el);}
   el.innerHTML='<div class="bx"><h3>BÖLÜM SEÇ</h3><div class="g">'+CH_DEF.slice(1).map(d=>`<button data-k="${d.no}" ${d.no>best?'disabled':''}><b>${d.no}</b><span>${d.ad}<small>${d.no>best?'Kilitli':d.no===1?'Ormandan başla (giriş + 1. bölüm)':esc(d.hint.split('. ')[0])+'.'}</small></span></button>`).join('')+'</div><div style="margin-top:12px;text-align:right"><button data-k="0" style="all:unset;cursor:pointer;color:#a39d92;font-size:13px">Vazgeç</button></div></div>';
   el.hidden=false;el.style.display='flex';el.onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const k=+b.dataset.k;el.hidden=true;el.style.display='none';if(k)cb(k);};try{el.querySelector('button:not([disabled])').focus({preventScroll:true});}catch(e){}}
@@ -6932,11 +6936,11 @@ function muGameStart(floor){if(floor>1){RUN.lamp=true;RUN.noSurf=true;RUN.bat=1;
 function muLobbyExtra(hostP){
   for(const s of document.querySelectorAll('#mSeats .seat.bot')){s.classList.remove('bot');s.classList.add('empty');s.innerHTML='<i>·</i><span><b>Boş yer</b><small>BEKLENİYOR</small></span>';}
   let box=$('muChap');if(!box){const col=document.querySelector('#muRoom .muCol');if(!col)return;box=document.createElement('div');box.id='muChap';col.appendChild(box);
-    box.addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(!b||b.disabled||!NET.host||NET.started)return;NET.chap=Math.max(1,Math.min(5,+b.dataset.k));try{sfx('switch',.4);}catch(_){}netPush(true);netLobbyRender();});}
+    box.addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(!b||b.disabled||!NET.host||NET.started)return;NET.chap=Math.max(1,Math.min(CH_DEF.length-1,+b.dataset.k));try{sfx('switch',.4);}catch(_){}netPush(true);netLobbyRender();});}
   const best=chProgress();const hc=hostP&&hostP.rm&&hostP.rm.ch;let cur=NET.host?(NET.chap||1):((hc|0)||1);if(NET.host&&cur>best){cur=best;NET.chap=cur;}
   const D=CH_DEF[cur]||CH_DEF[1];const H=NET.host&&!NET.started;
   box.innerHTML='<div class="row"><small class="lbl">BÖLÜM</small>'+(H?`<button type="button" class="ar" data-k="${cur-1}" ${cur<=1?'disabled':''} aria-label="Önceki bölüm">‹</button>`:'')+
-    `<span class="cur"><b>${cur}</b>${esc(D.ad)}</span>`+(H?`<button type="button" class="ar" data-k="${cur+1}" ${cur>=Math.min(5,best)?'disabled':''} aria-label="Sonraki bölüm">›</button>`:'')+'</div>'+
+    `<span class="cur"><b>${cur}</b>${esc(D.ad)}</span>`+(H?`<button type="button" class="ar" data-k="${cur+1}" ${cur>=Math.min(CH_DEF.length-1,best)?'disabled':''} aria-label="Sonraki bölüm">›</button>`:'')+'</div>'+
     '<p class="chH">'+(NET.host?'':'Oda sahibi seçer · ')+esc(D.hint.split('. ')[0])+'.'+(cur===1?' Hikâye girişiyle başlar.':'')+'</p>';}
 // ---------------- 3. bölüm: sayfalar daha kolay bulunsun ----------------
 // her sayfanın önünde tavandan sarkan bir ampul yanar (koridorun ucundan görülür), sayfa hafifçe parlar,
@@ -7603,17 +7607,33 @@ function cageRails(m,o){const m0=X(m,M4.S(1/CGS,1/CGY,1/CGS)),r=.95*CGS-.1,y0=.2
     for(const h of[.36,.72,1.08]){plank([-r,y0+h,-r-.05],[-r+w,y0+h,-r-.05],.72,h*9);plank([-r+w,y0+h,-r-.09],[-r+2*w,y0+h,-r-.09],.72,h*7);}
     put('post_a',X(m0,M4.T(-r+w,y0-.02,-r-.07),M4.S(.45,1.2/2.56,.45)));put('post_a',X(m0,M4.T(-r+2*w,y0-.02,-r-.09),M4.S(.45,1.2/2.56,.45)));
     // köşe dikmeleri (üstte kiriş yok) ve taban kirişleri
-    for(const sx of[-1,1])for(const sz of[-1,1])put('post_a',X(m0,M4.T(sx*R2,y0-.12,sz*R2),M4.RY(sx*.7+sz*.3),M4.S(.95,PH/2.56,.95)));
+    // köşe dikmeleri: paslı demir I profil (eski kafeslerde çerçeve demirdir), aralarda ahşap
+    for(const sx of[-1,1])for(const sz of[-1,1])put('grail',X(m0,M4.T(sx*R2,y0-.12,sz*R2),M4.RY(sx*sz>0?Math.PI/4:-Math.PI/4),M4.S(1.5,PH/2,1.5)),'iron');
     for(const s of[-1,1]){bm('beam_a',1.98,[-R2,y0-.08,s*R2],[0,y0-.08,s*R2],.75);bm('beam_a',1.98,[0,y0-.08,s*R2],[R2,y0-.08,s*R2],.75);
       bm('beam_a',1.98,[s*R2,y0-.08,-R2],[s*R2,y0-.08,0],.75);bm('beam_a',1.98,[s*R2,y0-.08,0],[s*R2,y0-.08,R2],.75);}
     // arka yüzde çapraz destek
     const zb=R2+.03,top=y0+2.7;bm('beam_c',1.69,[-R2,y0+.12,zb],[R2,top,zb],.9);bm('beam_c',1.69,[R2,y0+.12,zb+.06],[-R2,top,zb+.06],.9);
+    // köşelerde paslı demir köşebentler (dikmenin dış köşesini sarar) ve raya geçen kılavuz pabuçları (her dikmede alt + üst)
+    {const t=.007,c=R2+.097+t;for(const sx of[-1,1])for(const sz of[-1,1]){const th=sx>0?(sz>0?Math.PI:-Math.PI/2):(sz>0?Math.PI/2:0);
+      for(const yy of[y0+.08,y0+2.55])put('gshoe',X(m0,M4.T(sx*(R2+.1),yy,sz*R2),M4.RY(sx*Math.PI/2)),'iron');}}
     // arka sol dikmede eski kafesli lamba
     put('lamp',X(m0,M4.T(-R2+.17,y0+2.28,R2-.17),M4.RY(Math.PI*.75),M4.S(1.3,1.3,1.3)),'lamp');
     const u=envBegin(),PL=envPlanes();for(const g of GR.values())envDrawGroup(u,{a:g.a,v:g.v,far:60},g.L,PL);gl.useProgram(PR.p);gl.bindVertexArray(null);}
   // lambanın camı: soluk, sıcak bir ışık (parıltı)
   draw(MS,X(m0,M4.T(-R2+.25,y0+2.3,R2-.25),M4.S(.045,.06,.045)),[.3,.26,.18],[1.1,.78,.38],3);
   try{cagePanel(m0,r,y0);}catch(e){frameErr('asansör paneli',e);}}
+// kafes inip çıkarken raylar yerinde durur: aşağı/yukarı gittiği belli olur. yb..yt: rayların alt/üst ucu (dünya yüksekliği)
+function cageRailsW(x,z,yaw,yb,yt,collar){if(typeof ENV==='undefined'||!ENV.lib||!envAsset('grail'))return;const R2=.95*CGS-.1+.09,rx=R2+.1+.1;
+  const M0=X(M4.T(x,0,z),M4.RY(yaw)),L=[],B=[],C=[];
+  for(const sx of[-1,1])for(const sz of[-1,1]){for(let y=yb;y<yt-.05;y+=2){const h=Math.min(2,yt-y);const m=X(M0,M4.T(sx*rx,y,sz*R2),M4.RY(sx*Math.PI/2),M4.S(1.25,h/2,1.25));L.push({m,x:m[12],z:m[14],cell:-1});}}
+  // ahşap bağlantılar: her yanda iki rayı arkadan birleştirir, kayaya gömülü (2.5 m'de bir)
+  if(envAsset('beam_a'))for(const sx of[-1,1])for(let y=Math.ceil((yb+.6)/2.5)*2.5;y<yt-.3;y+=2.5){for(const hz of[-1,1]){const m=X(M0,M4.T(sx*(rx+.16),y,hz*R2/2),M4.RY(Math.PI/2),M4.S(R2/1.98*1.06,.75,.75));B.push({m,x:m[12],z:m[14],cell:-1});}}
+  // tavandaki kuyu ağzı: kalın kereste bilezik
+  if(collar!=null&&envAsset('beam_a'))for(const s of[-1,1])for(const k of[-1,1]){const a=X(M0,M4.T(k*R2*.5,collar-.1,s*(R2+.35)),M4.S(R2/1.98*1.12,1.2,1.2));C.push({m:a,x:a[12],z:a[14],cell:-1});
+      const b=X(M0,M4.T(s*(R2+.45),collar-.1,k*R2*.5),M4.RY(Math.PI/2),M4.S(R2/1.98*1.12,1.2,1.2));C.push({m:b,x:b[12],z:b[14],cell:-1});}
+  const u=envBegin(),PL=envPlanes();envDrawGroup(u,{a:'grail',v:'iron',far:70},L,PL);if(B.length)envDrawGroup(u,{a:'beam_a',v:'',far:60},B,PL);if(C.length)envDrawGroup(u,{a:'beam_a',v:'',far:60},C,PL);
+  gl.useProgram(PR.p);gl.bindVertexArray(null);}
+ENV_TINT.iron=()=>[.95,.9,.85];
 // ---- asansör kontrol paneli (kafesin içinde, sağ yanda): gerçek kumanda dolabı modeli ----
 // her karede dünyadaki yeri kaydedilir: bağlam (KULLAN) yalnız panelin önünde asansörü çalıştırır
 const CPAN=new Map();
@@ -7642,6 +7662,10 @@ function sfLiftPress(){KH.cpT=G.time+.35;try{sfx('switch',.7);sfx('click',.5);}c
 // kafesteki iniş butonuna basıldığında da düğme çöksün (yeraltı katları)
 {const _gd=goDown;goDown=function(){if(KH.on&&!KH.dep&&!KH.depDone){KH.cpT=G.time+.35;try{sfx('switch',.7);}catch(e){}}return _gd.apply(this,arguments);};}
 window.__cpan=CPAN;window.__ctx=()=>context();
+// kafes ve ray modelleri bölüm/yüzey başlarken istenir: ilk inişte raylar eksik görünmesin
+function cageAssetsPre(){try{if(typeof ENV==='undefined'||!ENV.lib)return;for(const a of['grail','gshoe','beam_a','beam_c','post_a','lamp','elbox','vsi'])envAsset(a);}catch(e){}}
+{const _s=sfStart;sfStart=function(){const r=_s.apply(this,arguments);cageAssetsPre();return r;};}
+{const _ci=chInit;chInit=function(){const r=_ci.apply(this,arguments);cageAssetsPre();return r;};}
 // ---------------- yükleme ekranı: kara tahta + tebeşir çizimi ----------------
 // solda: tebeşirle çizilmiş kuyu, aşağı kayan kaya duvarları ve tahkimat kirişleri, derinlik yazıları; ortada üstü açık kafes, içinde fenerli madenci
 // arkada: ana menüdeki kara tahta dokusu ve bölüme göre silik bir tebeşir eskizi (orman/ağız, göçük, sayfalar, Rıza'nın gözleri, vinç ve şafak)
@@ -7942,7 +7966,7 @@ const KYT={url:{},p:{},q:[],busy:false,ext:(()=>{try{const v=document.createElem
 function kytGet(n){if(KYT.url[n])return Promise.resolve(KYT.url[n]);if(KYT.p[n])return KYT.p[n];
   KYT.p[n]=fetch('kayit/'+n+'.'+KYT.ext).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>KYT.url[n]=URL.createObjectURL(b)).catch(e=>{KYT.p[n]=null;throw e;});return KYT.p[n];}
 // menüde boştayken hepsini sırayla indir (toplam ~4 MB)
-const KYT_ALL=['yukleme_1','c_orman','c_telsiz','c_kamyon','c_agiz','c_dinleyen','yukleme_2','yukleme_3','yukleme_4','yukleme_5'];
+const KYT_ALL=['yukleme_1','c_orman','c_telsiz','c_kamyon','c_agiz','c_dinleyen','yukleme_2','yukleme_3','yukleme_4','yukleme_5','yukleme_6'];
 setTimeout(function pre(){const n=KYT_ALL.find(k=>!KYT.url[k]&&!KYT.p[k]);if(!n)return;kytGet(n).catch(()=>{}).finally(()=>setTimeout(pre,400));},6000);
 function kytPlay(v,n){v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');v.poster='kayit/'+n+'.jpg';
   const go=u=>{if(v._n!==n)return;if(v.src!==u){v.src=u;}try{v.currentTime=0;}catch(e){}const q=v.play();if(q&&q.catch)q.catch(()=>{});};
@@ -7973,7 +7997,7 @@ function ldVidOn(floor){const el=$('load');if(!el)return;let v=$('ldVid');
   if(!v){v=document.createElement('video');v.id='ldVid';v.loop=true;v.preload='auto';v.setAttribute('aria-hidden','true');el.insertBefore(v,el.firstChild);
     const g=document.createElement('div');g.id='ldGr';g.style.backgroundImage=`url(${kytNoise()})`;el.insertBefore(g,v.nextSibling);
     const r=document.createElement('div');r.id='ldRec';r.innerHTML='<i></i><span></span>';el.appendChild(r);}
-  const n='yukleme_'+clamp(floor|0,1,5);el.classList.add('kdV');$('ldRec').querySelector('span').textContent=`KAYIT ${String(floor).padStart(2,'0')} · ${(CHD().ad||'').toLocaleUpperCase('tr')}`;kytPlay(v,n);}
+  const n='yukleme_'+clamp(floor|0,1,6);el.classList.add('kdV');$('ldRec').querySelector('span').textContent=`KAYIT ${String(floor).padStart(2,'0')} · ${(CHD().ad||'').toLocaleUpperCase('tr')}`;kytPlay(v,n);}
 {const _ls=loadShow;loadShow=function(floor,o){const r=_ls.apply(this,arguments);try{if(KH.on&&!(o&&o.title))ldVidOn(floor);}catch(e){console.warn('yükleme kaydı',e);}return r;};}
 // yükleme kapanınca kaydı durdur (pil)
 setInterval(()=>{try{const v=$('ldVid');if(v&&!v.paused&&($('load').hidden||!LD.on)){v.pause();}}catch(e){}},700);
@@ -8001,6 +8025,509 @@ function cineVid(S){const el=$('cine');if(!el)return;let v=$('cnVid');
 // ---- açılış perdesi: sayfa ve tebeşir menüsü tamamen hazır olunca kalkar (eski menü bir an görünüp kaybolmasın) ----
 function kdBootDone(){const go=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.classList.add('kdReady'))));
   const F=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();Promise.race([F,new Promise(r=>setTimeout(r,1800))]).then(()=>setTimeout(go,120),go);}
+// ---------------- v96: 6. bölüm KİLİSE — kafes kopar, 1888 katı, kaçış tüneli, mahzen, Azize Barbara Kilisesi, çan, zincirler, şafak ----------------
+// Kat yerleşimi elle çizilir (ızgara hücreleri). Zemin yüksekliği hücre köşelerinde tanımlıdır (tünel ve merdiven gerçekten yokuş çıkar):
+// maden 0 m → mahzen +3 m → kilise +6.5 m. Tavan da hücre başına: nef ~9 m, çan kulesi ~19 m, mahzen 3 m.
+// Kilise duvarları dökülmüş sıvalı taş, zemin aşınmış taş döşeme (Poly Haven, CC0); mahzen ve tünel kayaya oyulmuş.
+// Dinleyen önce yalnız görünür (sessiz): koridorun ucunda, arkanda, mumlar söner. Çan çalınca çığlık atıp mahzene, ölülerinin başına iner;
+// çan susunca (ya da zincir sesi çanı bastırınca) geri gelir ve avlanır. Üç zincir kırılır, kapı itilir: şafak.
+const K6={on:false};
+const K6B={tower:[18,3,19,4],narthex:[21,3,25,4],nave:[21,6,25,15],chapel:[18,8,19,10],sacristy:[27,11,29,14],sanct:[22,16,24,17],crypt:[21,23,28,27],room:[17,35,23,40],niche:[19,41,21,42],gal:[24,37,31,38],old:[32,35,35,39],west:[12,38,16,39]};
+const K6D={tower:[20,4],nart:[23,5],chapel:[20,9],sacr:[26,12],land:[25,17],gate:[25,22],door:[23,2]};
+const K6ST=[[25,18],[25,19],[25,20],[25,21]];// merdiven (kuzeyden güneye iner)
+const K6TN=[[20,26],[19,26],[19,27],[19,28],[18,28],[18,29],[18,30],[18,31],[19,31],[19,32],[19,33],[20,33],[20,34]];// kaçış tüneli (mahzenden madene)
+const K6EC=6.5,K6EK=3.0;
+// hücre başına: zemin yüksekliği (E), tavan farkı (C), düzlük (F: 1 doğal kaya … .05 yapılmış duvar), bölge (R: 1 kilise)
+let K6E=null,K6C=null,K6F=null,K6R=null,K6CE=null,K6CC=null,K6CF=null;
+const k6x=i=>(i+.5)*S,k6z=j=>(j+.5)*S;
+function k6In(B,i,j){return i>=B[0]&&i<=B[2]&&j>=B[1]&&j<=B[3];}
+function chGenKilise(){const N=GW*GH;grid.fill(0);roomId.fill(-1);safe.fill(0);natural.fill(0);exitA.fill(0);blockC.fill(0);exitCells=[];tunnelCells=[];rooms=[];G.gens=[];G.cables=[];G.shaft=null;
+  K6E=new Float32Array(N);K6C=new Float32Array(N);K6F=new Float32Array(N).fill(1);K6R=new Uint8Array(N);
+  const cell=(i,j,id,e,c,f,r,nat)=>{const q=j*GW+i;grid[q]=1;natural[q]=nat?1:0;if(id!=null&&id>=0)roomId[q]=id;K6E[q]=e;K6C[q]=c;K6F[q]=f;K6R[q]=r;return q;};
+  const box=(B,id,e,c,f,r,nat)=>{for(let j=B[1];j<=B[3];j++)for(let i=B[0];i<=B[2];i++)cell(i,j,id,e,c,f,r,nat);};
+  const room=(B,e,c,f,r,nat,kind)=>{const id=rooms.length;box(B,id,e,c,f,r,nat);rooms.push({cx:Math.round((B[0]+B[2])/2),cy:Math.round((B[1]+B[3])/2),kind});return id;};
+  // 0: kafesin düştüğü oda (giriş, güvenli), kafes güneydeki nişte
+  room(K6B.room,0,.3,1,0,1,'crash');entrance=0;exitDir=[0,1];box(K6B.niche,0,0,1.2,1,0,1);
+  const nestId=room(K6B.old,0,0,1,0,1,'old');nest=nestId;
+  room(K6B.gal,0,-.4,1,0,1,'gal');room(K6B.west,0,-.5,1,0,1,'west');
+  // kaçış tüneli: mahzenden (3 m) madene (0 m) yavaşça iner
+  K6TN.forEach(([i,j],k)=>{cell(i,j,-1,K6EK*(1-k/(K6TN.length-1)),-1.6,1,0,1);tunnelCells.push(j*GW+i);});
+  // mahzen: kayaya oyulmuş, alçak; iki kaya ayak
+  const cr=room(K6B.crypt,K6EK,-1.2,.32,0,0,'crypt');for(const[i,j]of[[23,25],[26,25]]){const q=j*GW+i;grid[q]=0;roomId[q]=-1;}
+  // demir kapı (anahtar) + merdiven + sahanlık
+  {const[i,j]=K6D.gate;const q=cell(i,j,-1,K6EK,-1.2,.32,0,0);blockC[q]=1;K6.gateC=q;}
+  K6ST.forEach(([i,j],k)=>cell(i,j,-1,K6EC-(k+1)*(K6EC-K6EK)/(K6ST.length+1),-.6,.05,1,0));
+  {const[i,j]=K6D.land;cell(i,j,-1,K6EC,-.5,.05,1,0);}
+  // kilise
+  room(K6B.sanct,K6EC,3.8,.05,1,0,'sanct');room(K6B.nave,K6EC,4.8,.05,1,0,'nave');room(K6B.narthex,K6EC,1.3,.05,1,0,'narthex');
+  room(K6B.tower,K6EC,14.8,.05,1,0,'tower');room(K6B.chapel,K6EC,.6,.05,1,0,'chapel');room(K6B.sacristy,K6EC,0,.05,1,0,'sacristy');
+  for(const k of['tower','nart','chapel','sacr']){const[i,j]=K6D[k];cell(i,j,-1,K6EC,k==='nart'?-.3:-.8,.05,1,0);}
+  // ana kapı: hücre açık ama kapalı (zincirli); dışarısı yok
+  {const[i,j]=K6D.door;const q=cell(i,j,-1,K6EC,-.6,.05,1,0);blockC[q]=1;K6.doorC=q;}
+  for(let c=0;c<N;c++)if(roomId[c]===0)safe[c]=1;
+  // köşe değerleri: zemin = komşu açık hücrelerin ortalaması, tavan = en yükseği (yüksek oda düz kalır), düzlük = ortalama
+  const W1=GW+1;K6CE=new Float32Array(W1*(GH+1));K6CC=new Float32Array(W1*(GH+1));K6CF=new Float32Array(W1*(GH+1)).fill(1);
+  for(let j=0;j<=GH;j++)for(let i=0;i<=GW;i++){let n=0,e=0,cm=-99,f=0;for(const[di,dj]of[[-1,-1],[0,-1],[-1,0],[0,0]]){const a=i+di,b=j+dj;if(a<0||b<0||a>=GW||b>=GH)continue;const q=b*GW+a;if(!grid[q])continue;n++;e+=K6E[q];f+=K6F[q];if(K6C[q]>cm)cm=K6C[q];}
+    const k=j*W1+i;if(n){K6CE[k]=e/n;K6CC[k]=cm;K6CF[k]=f/n;}else{K6CE[k]=NaN;K6CC[k]=NaN;K6CF[k]=1;}}
+  // tanımsız köşe (yalnız kayaya bakan): en yakın tanımlıdan
+  for(let pass=0;pass<3;pass++)for(let j=0;j<=GH;j++)for(let i=0;i<=GW;i++){const k=j*W1+i;if(!isNaN(K6CE[k]))continue;let n=0,e=0,c=0;for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const a=i+di,b=j+dj;if(a<0||b<0||a>GW||b>GH)continue;const q=b*W1+a;if(isNaN(K6CE[q]))continue;n++;e+=K6CE[q];c+=K6CC[q];}if(n){K6CE[k]=e/n;K6CC[k]=c/n;}}
+  for(let k=0;k<K6CE.length;k++)if(isNaN(K6CE[k])){K6CE[k]=0;K6CC[k]=0;}
+  K6.room=Object.fromEntries(rooms.map((r,i)=>[r.kind,i]).filter(x=>x[0]));}
+// köşelerden ikili doğrusal
+function k6Bil(A,x,z){const fx=x/S,fz=z/S,i=Math.floor(fx),j=Math.floor(fz),u=fx-i,v=fz-j,W1=GW+1;if(i<0||j<0||i>=GW||j>=GH)return 0;const k=j*W1+i;
+  return (A[k]*(1-u)+A[k+1]*u)*(1-v)+(A[k+W1]*(1-u)+A[k+W1+1]*u)*v;}
+function k6Elev(x,y,z){return k6Bil(K6CE,x,z)+(y>H-.01?k6Bil(K6CC,x,z):0);}
+function k6Flat(x,z){return clamp(k6Bil(K6CF,x,z),.05,1);}
+function k6Reg(c){if(c<0||c>=GW*GH)return 0;if(grid[c])return K6R[c];const i=c%GW,j=(c/GW)|0;for(const[dx,dy]of DIRS){const q=(j+dy)*GW+i+dx;if(q>=0&&q<GW*GH&&grid[q]&&K6R[q])return 1;}return 0;}
+function k6Exc(EX){for(let c=0;c<GW*GH;c++)if(grid[c]&&(K6R[c]||roomId[c]===K6.room.crypt||c===K6.gateC||c===K6.doorC))EX[c]=1;}
+function k6Zone(x,z){const c=cidx(x,z);if(c<0||c>=GW*GH)return 'mine';if(K6R[c])return 'church';if(roomId[c]===K6.room.crypt||c===K6.gateC)return 'crypt';if(tunnelCells.includes(c))return 'tunnel';return 'mine';}
+// ---- görünüm + yüzeyler: kaya / kilise sıvası; zemin kaya tozu / taş döşeme ----
+ENV_FS.push(['rock_grey','ground_dark','church_wall','church_floor']);
+LOOKS.push({ra:[.06,.058,.056],rb:[.2,.19,.185],fa:[.05,.046,.042],fb:[.15,.14,.13],fog:[.0011,.0013,.0019],fd:.085,wet:.18,wt:[.5,.5,.52],haze:.03,hc:[.025,.035,.05],drip:.15});
+CH_DEF[6].look=LOOKS.length-1;CH_DEF[6].surf=ENV_FS.length;
+// ---- eşya boyutları, çok parçalı modeller ----
+Object.assign(CHA,{k_cand2:['k_cand2_m2','k_cand2_m3'],k_lantch:['k_lantch_m0'],k_door:['k_doorF','k_doorL','k_doorR']});
+Object.assign(CH_DIM,{k_cab:[1.72,2.36,1.12],k_commode:[1.2,1.21,.58],k_table:[1.33,.83,.58],k_bench:[1.16,.89,.5],k_statue:[1.48,1.74,1.56],k_chair:[.69,2.27,.66]});
+// ---- isimler: 1888 göçüğünde ölenler (ocakta çalışan İtalyan, Rum ve yerli madenciler) ----
+const K6N=['GIUSEPPE MARCHETTI','YORGO KALOGERAKIS','HÜSEYİN OĞLU MEHMED','LUIGI BARONE','DİMİTRİ PAPAS','HALİL OĞLU OSMAN','ANTONIO FERRARI','NİKOLA STAVRU','KARA AHMED','PIETRO GALLI','VASİL ANDONOV','ALİ RIZA','MATTEO RUSSO','STELYO MİHALİS','DERVİŞ OĞLU MUSTAFA','CARLO BIANCHI','PANAYOT YANNİ','İSMAİL OĞLU HASAN'];
+function k6Name(){let n='';try{n=(NET.name||localStorage.getItem('kd_name')||'').trim();}catch(e){}if(!n||/^Madenci\d*$/i.test(n))return null;return chUp(n).slice(0,16);}
+// ---- dokulu dörtgenler: tebeşir yazıları (maden), mezar taşı ve anıt yazıları (kazınmış), çan ipi etiketi ----
+const K6T={prog:null,u:null,vao:null,list:[],tex:new Map()};
+function k6Prog(){if(K6T.prog)return;
+  const vs=`#version 300 es
+in vec3 aP;in vec2 aU;uniform mat4 uVP,uM;out vec2 vU;out vec3 vW;void main(){vec4 w=uM*vec4(aP,1.);vW=w.xyz;vU=aU;gl_Position=uVP*w;}`;
+  const fs=`#version 300 es
+precision mediump float;in vec2 vU;in vec3 vW;uniform sampler2D uT;uniform float uK,uA;uniform vec3 uEye,uFogC,uTint;uniform float uFog;out vec4 o;
+void main(){vec4 c=texture(uT,vU);if(c.a<uA)discard;float d=length(vW-uEye);float f=1.-exp(-d*uFog);o=vec4(mix(c.rgb*uK*uTint,uFogC,clamp(f,0.,1.)),1.);}`;
+  const sh=(t,s)=>{const q=gl.createShader(t);gl.shaderSource(q,s);gl.compileShader(q);if(!gl.getShaderParameter(q,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(q));return q;};
+  const p=gl.createProgram();gl.attachShader(p,sh(gl.VERTEX_SHADER,vs));gl.attachShader(p,sh(gl.FRAGMENT_SHADER,fs));gl.bindAttribLocation(p,0,'aP');gl.bindAttribLocation(p,1,'aU');gl.linkProgram(p);
+  K6T.prog=p;K6T.u={};for(const n of['uVP','uM','uT','uK','uA','uEye','uFogC','uFog','uTint'])K6T.u[n]=gl.getUniformLocation(p,n);
+  const v=gl.createVertexArray();gl.bindVertexArray(v);const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-.5,-.5,0,0,1, .5,-.5,0,1,1, .5,.5,0,1,0, -.5,-.5,0,0,1, .5,.5,0,1,0, -.5,.5,0,0,0]),gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,20,0);gl.enableVertexAttribArray(1);gl.vertexAttribPointer(1,2,gl.FLOAT,false,20,12);gl.bindVertexArray(null);K6T.vao=v;}
+function k6Tex(key,W,Hh,fn){let t=K6T.tex.get(key);if(t)return t;const c=document.createElement('canvas');c.width=W;c.height=Hh;const x=c.getContext('2d');fn(x,W,Hh);
+  t=gl.createTexture();gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,t);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);K6T.tex.set(key,t);return t;}
+// kireçtaşı yüzeyi (Poly Haven marble_01'in bir karosu, atlasın içinden) — yüklenene kadar düz taş rengi
+let K6LIME=null;function k6Lime(){if(K6LIME!==null)return K6LIME;K6LIME=false;const im=new Image();im.onload=()=>{K6LIME=im;for(const k of[...K6T.tex.keys()])if(k.startsWith('slab:')){gl.deleteTexture(K6T.tex.get(k));K6T.tex.delete(k);}};im.src=ENV.base+'../Props/kilise/k_tex5.jpg';return false;}
+function k6Engrave(x,W,Hh,lines,o){o=o||{};const L=k6Lime();
+  if(L)x.drawImage(L,0,1536,512,512,0,0,W,Hh);else{x.fillStyle='#b4ab98';x.fillRect(0,0,W,Hh);}
+  x.fillStyle='rgba(40,36,30,.18)';x.fillRect(0,0,W,Hh);// kir, yaş
+  for(let i=0;i<900;i++){x.fillStyle=`rgba(${30+Math.random()*30|0},${28+Math.random()*25|0},20,${Math.random()*.08})`;const r=1+Math.random()*4;x.fillRect(Math.random()*W,Math.random()*Hh,r,r);}
+  const g=x.createRadialGradient(W/2,Hh/2,Math.min(W,Hh)*.2,W/2,Hh/2,Math.max(W,Hh)*.7);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(20,16,10,.45)');x.fillStyle=g;x.fillRect(0,0,W,Hh);
+  // çerçeve oyuğu
+  x.strokeStyle='rgba(30,26,20,.55)';x.lineWidth=W*.012;const m=W*.06;x.strokeRect(m,m,W-2*m,Hh-2*m);x.strokeStyle='rgba(255,250,235,.18)';x.lineWidth=W*.006;x.strokeRect(m+W*.008,m+W*.008,W-2*m,Hh-2*m);
+  let y=o.y0||Hh*.18;for(const l of lines){let sz=l.sz||W*.07;const F=q=>`${l.b?'700':'600'} ${q|0}px Georgia,"Times New Roman",serif`;x.font=F(sz);while(sz>12&&x.measureText(l.t).width>W*.8){sz*=.92;x.font=F(sz);}x.textAlign='center';x.textBaseline='middle';
+    // kazınmış harf: koyu oyuk + alt kenarda ışık
+    x.fillStyle='rgba(255,248,230,.28)';x.fillText(l.t,W/2+sz*.03,y+sz*.05);x.fillStyle='rgba(28,24,18,.82)';x.fillText(l.t,W/2,y);y+=sz*(l.gap||1.45);}
+  if(o.crack){x.strokeStyle='rgba(20,16,12,.7)';x.lineWidth=2;x.beginPath();let px=W*.2,py=0;x.moveTo(px,py);for(let k=0;k<9;k++){px+=(Math.random()-.4)*W*.12;py+=Hh/9;x.lineTo(px,py);}x.stroke();}}
+function k6Chalk(x,W,Hh,str,size,seed){x.clearRect(0,0,W,Hh);const R=envRand(seed||7);x.strokeStyle='rgba(236,233,222,1)';x.fillStyle='rgba(236,233,222,1)';x.lineCap='round';x.lineJoin='round';
+  const lines=str.split('\n');let y=size*.9;for(const l of lines){if(l==='→'||l==='↑'||l==='←'){k6Arrow(x,W/2,y,size*1.4,l,R);y+=size*1.4;continue;}const w=chScrawlW(l,size);chScrawl(x,l,(W-w)/2,y,size,R,{wild:1.1});y+=size*1.15;}}
+function k6Arrow(x,cx,cy,s,dir,R){const a=dir==='→'?0:dir==='←'?Math.PI:-Math.PI/2;const p=(u,v)=>[cx+Math.cos(a)*u-Math.sin(a)*v,cy+Math.sin(a)*u+Math.cos(a)*v];
+  const seg=(A,B)=>{x.lineWidth=s*.07;x.beginPath();x.moveTo(...A);for(let k=1;k<=6;k++){const t=k/6;x.lineTo(A[0]+(B[0]-A[0])*t+(R()-.5)*s*.04,A[1]+(B[1]-A[1])*t+(R()-.5)*s*.04);}x.stroke();};
+  for(let q=0;q<2;q++){seg(p(-s*.55,0),p(s*.5,0));seg(p(s*.5,0),p(s*.15,-s*.3));seg(p(s*.5,0),p(s*.15,s*.3));}}
+// ışık: el feneri konisi + yakındaki yanan mum + az ortam
+function k6Lit(px,py,pz){let k=.035;
+  if(chLampLit()){const dx=px-eye[0],dy=py-eye[1],dz=pz-eye[2],d=Math.hypot(dx,dy,dz)||1;const cp=Math.cos(pl.pitch||0),f=[-Math.sin(pl.yaw)*cp,Math.sin(pl.pitch||0),-Math.cos(pl.yaw)*cp];
+    const c=(dx*f[0]+dy*f[1]+dz*f[2])/d,F=KH.lampFk||0,cone=Math.cos(.54-.3*F);if(c>cone-.08){const e=clamp((c-cone+.08)/.12,0,1);k+=1.0*e*clamp(1-d/(27+23*F),0,1)*(1+.45*F);}}
+  for(const C of K6.cands||[]){if(!C.lit)continue;const d=Math.hypot(C.x-px,C.y-py,C.z-pz);if(d<4.5)k+=.5*C.k*clamp(1-d/4.5,0,1)**1.6;}
+  return Math.min(1.2,k);}
+function k6QuadsDraw(){if(!K6.on||!gl)return;const L=K6.quads||[];if(!L.length)return;try{k6Prog();}catch(e){if(!K6.qErr){K6.qErr=1;console.warn('kilise yazı',e);}return;}
+  const u=K6T.u,LK2=SCN&&SCN.LKs;gl.useProgram(K6T.prog);gl.uniformMatrix4fv(u.uVP,false,VP);gl.uniform3fv(u.uEye,eye);gl.uniform3fv(u.uFogC,LK2?LK2.fog:[0,0,0]);gl.uniform1f(u.uFog,LK2?(LK2.fd||.05)*.6:.05);
+  gl.uniform1i(u.uT,0);gl.bindVertexArray(K6T.vao);gl.activeTexture(gl.TEXTURE0);
+  for(const q of L){if(Math.hypot(q.x-eye[0],q.z-eye[2])>26)continue;const t=k6Tex(q.key,q.W,q.H,q.fn);gl.bindTexture(gl.TEXTURE_2D,t);gl.uniformMatrix4fv(u.uM,false,q.m);gl.uniform1f(u.uK,k6Lit(q.x,q.y,q.z)*(q.k||1));gl.uniform1f(u.uA,q.a??.4);gl.uniform3fv(u.uTint,q.tint||[1,1,1]);gl.drawArrays(gl.TRIANGLES,0,6);}
+  gl.bindVertexArray(null);gl.useProgram(PR.p);}
+// ---- bölüm kurulumu (chInit içinden): eşyalar, mumlar, yazılar ----
+CH_SETUP[6]=add=>{const EC=K6EC,EK=K6EK,P=Math.PI,Hf=P/2;
+  K6.on=true;K6.t=0;K6.key=false;K6.gate=0;K6.gateK=0;K6.crow=false;K6.pages=0;K6.bellT=-99;K6.bellA=0;K6.bellPh=0;K6.ringN=0;K6.lureT=0;K6.hunt=false;K6.chains=[0,0,0];K6.door=0;K6.doorK=0;K6.ended=false;K6.ev={};K6.seenDoor=false;K6.app=null;K6.appN=0;K6.cpUsed=false;
+  K6.quads=[];K6.cands=[];K6.wins=[];K6.ropeY=0;
+  const dec=(a,x,z,yaw,sc,y,o)=>{const d={a,x,z,yaw:yaw||0,sc:sc||1,...(y!=null?{y}:{}),...(o||{})};KH.decor.push(d);return d;};
+  const B=K6B,X0=i=>i*S,X1=i=>(i+1)*S;
+  // -- maden: Rıza Usta'nın tebeşir okları (tünele), 1888'den kalanlar --
+  const chalk=(x,hy,z,yaw,str,w,h,size,seed)=>{const y=floorY(x,z)+hy;K6.quads.push({key:'ch:'+str+seed,W:512,H:Math.round(512*h/w),fn:(c,W,Hh)=>k6Chalk(c,W,Hh,str,size*W/512,seed),x,y,z,m:X(M4.T(x,y,z),M4.RY(yaw),M4.S(w,h,1)),a:.35,tint:[.95,.95,.92]});};
+  {const zN=X0(B.room[1])+.26;chalk(k6x(21.6),1.75,zN,0,'R.U.\n↑\nKİLİSE',1.1,1.3,120,11);}
+  chalk(X1(B.room[2])-.26,1.6,k6z(36),-Hf,'1888\n→',.9,.8,110,12);
+  // tünel boyunca: dönemeçlerde ok
+  chalk(X0(18)+.2,1.55,k6z(30),Hf,'↑',.6,.6,150,13);
+  chalk(X1(19)-.2,1.5,k6z(27.2),-Hf,'R.\n↑',.6,.8,130,14);
+  // eski ocak: 1888 madencilerinin eşyaları; duvarda gün sayan çentikler
+  const O=B.old;dec('helmet',k6x(33),k6z(36),.6,1,.02);dec('lamp',k6x(34.3),k6z(38.4),2.1,1.2,.0);dec('pickaxe_a',k6x(32.4),k6z(38.6),1.3,1,.02,{lay:1});dec('cart_frame',k6x(34.6),k6z(36.2),.25,1);dec('pile_gravel',k6x(35),k6z(39),.4,.9);
+  chalk(X1(O[2])-.26,1.5,k6z(37),-Hf,'IIII IIII IIII\nIIII IIII IIII\nIIII II',1.3,.75,70,15);
+  // -- mahzen: mezar taşları (zeminde), rahibin lahdi (anahtar + yanan mum), kendi adın --
+  const nm=k6Name();const slabs=[];const sx=[k6x(22),k6x(24.5),k6x(27.5)],sz=[k6z(23.4),k6z(26.8)];
+  let ni=0;for(const z of sz)for(const x of sx){if(Math.abs(x-k6x(25))<1&&z<k6z(24))continue;slabs.push([x,z]);}
+  slabs.forEach(([x,z],k)=>{const me=k===2;const name=me?(nm||'SON MADENCİ'):K6N[(k*5+3)%K6N.length];const yaw=(chR()-.5)*.08;
+    dec('k_slab',x,z,yaw,1,-.09);
+    const lines=me?[{t:'✝',sz:60},{t:name,sz:name.length>12?46:56,b:1},{t:'1861 — 1888',sz:40},{t:'SENİ BEKLİYORUZ',sz:34}]:[{t:'✝',sz:60},{t:name,sz:name.length>14?40:48,b:1},{t:'— 1888 —',sz:38},{t:'REQUIESCAT IN PACE',sz:26}];
+    K6.quads.push({key:'slab:'+k+name,W:320,H:640,fn:(c,W,Hh)=>k6Engrave(c,W,Hh,lines,{y0:Hh*.2,crack:k%3===1}),x,y:floorY(x,z)+.035,z,m:X(M4.T(x,floorY(x,z)+.034,z),M4.RY(yaw+Math.PI),M4.RX(-Hf),M4.S(.86,1.86,1)),a:0,tint:[.66,.63,.58]});
+    add('slab',{x,z,yaw:0,r:1.5,lbl:'Mezar taşını oku',name,me});});
+  // rahibin lahdi (kuzeydoğu köşe), üstünde anahtar ve üç kollu şamdan
+  const lx=k6x(27.6),lz=k6z(24.6),ly=floorY(lx,lz);dec('k_slab',lx,lz,Hf,1,0,{sy:6.5});chCol(lx-.5,lz,.5);chCol(lx+.5,lz,.5);
+  K6.quads.push({key:'slab:pr',W:640,H:320,fn:(c,W,Hh)=>k6Engrave(c,W,Hh,[{t:'P. LORENZO VITALE',sz:44,b:1},{t:'PARROCO · 1831 — 1888',sz:30},{t:'«NON APRITE»',sz:34}],{y0:Hh*.3}),x:lx,y:ly+.79,z:lz,m:X(M4.T(lx,ly+.785,lz),M4.RY(Math.PI),M4.RX(-Hf),M4.S(1.86,.86,1)),a:0,tint:[.66,.63,.58]});
+  add('key6',{x:lx-.45,z:lz+.05,yaw:.4,r:1.6,lbl:'Anahtarı al',y:.79});
+  K6.cands.push({x:lx+.55,y:ly+.78,z:lz-.1,lit:true,k:1,a:'k_cand2',yaw:2.6,ph:3.1,fl:[]});
+  dec('crate_wood',k6x(21.5),k6z(26.8),.3,1);dec('k_bench',k6x(22.2),k6z(24.9),1.9,1,.0,{tip:1});
+  // demir kapı: merdivenin dibinde (mahzen tarafından anahtarla açılır)
+  {const[gi,gj]=K6D.gate;add('gate6',{x:k6x(gi),z:(gj+1)*S+.25,yaw:0,r:2.2,lbl:'Demir kapı'});}
+  // -- kilise --
+  // ana kapı (kuzey duvarı, nartekste): üç zincir + asma kilit
+  const dX=k6x(23),dZ=3*S;K6.doorP={x:dX,z:dZ};
+  [1.02,1.38,1.74].forEach((h,k)=>add('chain6',{x:dX+(k-1)*.18,z:dZ+.42,yaw:0,r:1.9,lbl:'Zincir',ci:k,y:h}));
+  add('door6',{x:dX,z:dZ+.55,yaw:0,r:2.2,lbl:'Kapıyı it'});
+  // çan ipi: kulenin ortasında
+  K6.bellP={x:19*S,z:4*S};add('rope6',{x:K6.bellP.x+.25,z:K6.bellP.z,yaw:0,r:1.6,lbl:'Çanın ipi'});
+  // günlük sayfaları: yan şapel (anıt), kutsal eşya odası, sunak
+  add('diary',{x:k6x(18.1),z:k6z(9),yaw:Hf,r:1.7,lbl:'Günlük sayfasını oku',pg:0,y:1.02});
+  add('diary',{x:k6x(28.9),z:k6z(13.4),yaw:-Hf,r:1.7,lbl:'Günlük sayfasını oku',pg:1,y:.86});
+  add('diary',{x:k6x(23)+.12,z:k6z(16)+1.15,yaw:P,r:1.8,lbl:'Günlük sayfasını oku',pg:2,y:1.055});
+  // levye: kutsal eşya odasında, dolabın yanında duvara dayalı
+  add('crow',{x:k6x(29)+.62,z:k6z(11.5),yaw:-Hf+.2,r:1.7,lbl:'Levyeyi al',y:.0});
+  // şapel: 1888 anıtı (duvarda büyük levha, isimler), komodinde yanan mumlar
+  {const x=X0(B.chapel[0])+.27,z=k6z(9),Lb=[{t:'1888',sz:70,b:1}];for(let k=0;k<12;k++)Lb.push({t:K6N[k],sz:28,gap:1.34});Lb.push({t:'… VE ADI BİLİNMEYEN 41 KİŞİ',sz:24});
+    K6.quads.push({key:'slab:mem',W:400,H:820,fn:(c,W,Hh)=>k6Engrave(c,W,Hh,Lb,{y0:Hh*.1}),x,y:EC+1.95,z,m:X(M4.T(x,EC+1.95,z),M4.RY(Hf),M4.S(1.15,2.35,1)),a:0,tint:[.7,.67,.62]});
+    dec('k_slab',x-.02,z,Hf,1,1.95-.0,{sy:.25,sx:1.3,sz2:1.32,rx:-Hf,wall:1});
+    dec('k_commode',k6x(18.25),k6z(9),Hf,.8,0);K6.cands.push({x:k6x(18.25),y:floorY(k6x(18.25),k6z(9))+.97,z:k6z(9)+.38,lit:true,k:1,a:'k_cand2',yaw:Hf,ph:1.4,fl:[]});
+    add('slab',{x,z,yaw:0,r:1.9,lbl:'Anıtı oku',name:'1888',mem:1});}
+  // kutsal eşya odası: gotik dolap (saklanma), masa (sayfa), komodin
+  dec('k_cab',k6x(29)+.25,k6z(12.6),-Hf,.88,0,{hide:true});dec('k_table',k6x(28.9),k6z(13.4),-Hf,1,0);dec('k_commode',k6x(27.5),k6z(14)+.55,P,.85,0);
+  // sunak: taş masa, büyük şamdan, kadeh, vazo; arkada azize heykeli; yanlarda yanan mumlar
+  const aX=k6x(23),aZ=k6z(16)+1.15,aY=floorY(aX,aZ);dec('k_table',aX,aZ,0,1.25,0);chCol(aX-.45,aZ,.5);chCol(aX+.45,aZ,.5);
+  dec('k_cand3',aX-.55,aZ,0,1,1.04);dec('k_goblet',aX+.38,aZ+.08,.3,1,1.04);dec('k_vase',aX+.66,aZ-.05,1,1,1.04);
+  const sZ=18*S-1.05;dec('k_slab',aX,sZ,0,1,0,{sy:7.5,sx:1.1,sz2:.62});dec('k_statue',aX,sZ,P,1.12,.9);chCol(aX,sZ,.7);
+  K6.cands.push({x:aX+.08,y:aY+1.04,z:aZ-.06,lit:true,k:1,a:'k_cand2',yaw:P,ph:2.2,fl:[]});K6.cands.push({x:aX+1.05,y:aY+.6,z:sZ-.45,lit:true,k:1,a:'k_cand2',yaw:P+.3,ph:4.1,fl:[]});
+  dec('k_slab',aX+1.05,sZ-.45,0,1,0,{sy:5,sx:.45,sz2:.22});
+  dec('k_chair',k6x(24)+.6,k6z(16),-Hf+.3,.78,0);
+  // nef: sıralar (bazıları devrik), fenerli avizeler (biri yere düşmüş)
+  for(let r=0;r<9;r++){const z=k6z(7)+r*2.25;for(const sd of[-1,1]){for(const q of[0,1]){const x=k6x(23)+sd*(2.0+q*1.2);const roll=chR();
+      if(roll<.12)continue;const o={};if(roll<.26){o.tip=1;}const yw=(sd<0?0:P)+(roll<.4?(chR()-.5)*.5:(chR()-.5)*.06);dec('k_bench',x,z+(chR()-.5)*.2,yw,1,0,o);}}}
+  for(let k=0;k<3;k++){const z=k6z(8)+k*6.2;if(k===1){dec('k_lantch',k6x(23)+.7,z+.4,.5,1,0,{lie:1});continue;}K6.lamps=(K6.lamps||[]);K6.lamps.push({x:k6x(23),z,ph:k*1.7});}
+  // tavan kirişleri, panjurlu (tahtayla kapatılmış) pencereler
+  K6.beams=[];for(let k=0;k<5;k++)K6.beams.push(k6z(6.4)+k*5.1);
+  for(const z of[k6z(7.5),k6z(10.5),k6z(13.5)])for(const sd of[-1,1]){K6.wins.push({x:sd<0?X0(21)+.24:X1(25)-.24,z,yaw:sd<0?Hf:-Hf,sd});}
+  K6.wins.push({x:X0(18)+.24,z:k6z(10),yaw:Hf,sd:-1,small:1});
+  {const RN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV'];for(let k=0;k<14;k++){const sd=k<7?1:-1,q=k<7?k:13-k;const z=k6z(6.8)+q*3.2+(q>2?.9:0);const x=sd>0?X1(25)-.25:X0(21)+.25;if(Math.abs(z-k6z(12))<1.3&&sd>0)continue;if(Math.abs(z-k6z(9))<1.3&&sd<0)continue;
+      const y=floorY(x,z)+2.25;K6.quads.push({key:'slab:st'+k,W:256,H:320,fn:(c,W,Hh)=>k6Engrave(c,W,Hh,[{t:'✝',sz:70},{t:RN[k],sz:64,b:1}],{y0:Hh*.3}),x,y,z,m:X(M4.T(x,y,z),M4.RY(sd>0?-Hf:Hf),M4.S(.42,.52,1)),a:0});}}
+  K6.cross={x:k6x(23),z:18*S-.3};
+  // kule: kırık merdiven, yere düşmüş tahtalar
+  dec('ladder_w',X0(18)+.55,k6z(3.3),Hf,1.2,0,{tilt:.32});dec('plank_scrap',k6x(18.6),k6z(4.2),1.1,1.3,.02);dec('plank_scrap',k6x(19.3),k6z(3.6),2.3,1.1,.02);
+  // narteks: kapının iki yanında
+  dec('k_bench',k6x(21.6),k6z(3.4),Hf,1,0);dec('crate_wood',k6x(25.3),k6z(3.3),.4,1);
+  // mumların alev noktaları (k_cand2_m3: üç mum)
+  const fl=(ENV.byId.k_cand2_m3&&ENV.byId.k_cand2_m3.flames)||[[-.106,.364,0],[0,.379,0],[.107,.362,0]];
+  for(const C of K6.cands){const m=X(M4.T(C.x,C.y,C.z),M4.RY(C.yaw));C.m=m;C.fl=fl.map(p=>{const q=X(m,M4.T(p[0],p[1]+.012,p[2]));return[q[12],q[13],q[14]];});}
+  // kontrol noktası: kilise (yeniden denemede merdivenin başından, kapı açık)
+  if(RUN.k6cp==='church'){K6.cpUsed=true;K6.key=true;K6.gate=1;K6.gateK=1;blockC[K6.gateC]=0;for(const it of KH.items)if(it.k==='key6'||it.k==='slab')it.gone=it.k==='key6';
+    const[li,lj]=K6D.land;pl.x=k6x(li)-.6;pl.z=k6z(lj);pl.yaw=Math.PI/2;K6.wake=null;K6.ev.crypt=1;K6.ev.church=1;}
+  else{K6.wake={t:0};pl.pitch=.62;pl.yaw+=.4;}
+  KH.spawnT=1e9;};
+// eşya etiketleri, kullanma, basılı tutma
+{const _l=chLabel;chLabel=function(it){if(RUN.floor!==6)return _l.apply(this,arguments);switch(it.k){
+  case 'slab':return{label:it.lbl,kind:'ch'};
+  case 'key6':return{label:it.lbl,kind:'ch'};
+  case 'gate6':return K6.gate?null:K6.key?{label:'Demir kapıyı anahtarla aç',kind:'ch'}:{label:'Demir kapı kilitli. Anahtar lazım.',kind:'none'};
+  case 'diary':return{label:it.lbl,kind:'ch'};
+  case 'crow':return{label:it.lbl,kind:'ch'};
+  case 'rope6':{if(!K6.seenDoor&&!K6.crow)return{label:'Kalın, eski bir ip. Yukarıda, karanlıkta çan.',kind:'none'};const cd=G.time-(K6.ringLocal??-99)<7;return cd?{label:'Çan hâlâ sallanıyor…',kind:'none'}:{label:'Çanın ipini çek (basılı tut)',kind:'ch',hold:2.2};}
+  case 'chain6':{if(K6.chains[it.ci])return null;if(!K6.crow)return{label:'Kapı içeriden zincirli. Kırmak için levye lazım.',kind:'none'};return{label:`Zinciri levyeyle kır (basılı tut) ${K6.chains.filter(x=>x).length}/3`,kind:'ch',hold:2.5};}
+  case 'door6':return K6.chains.every(x=>x)&&!K6.door?{label:'Kapıyı it! (basılı tut)',kind:'ch',hold:1.8}:null;}
+  return null;};}
+{const _al=chApplyLocal;chApplyLocal=function(it){if(RUN.floor!==6)return _al.apply(this,arguments);k6Use(it,true);};}
+{const _d=chDo;chDo=function(it,who){if(RUN.floor!==6)return _d.apply(this,arguments);k6Use(it,!who,who);};}
+function k6Use(it,me,who){const H=!NET.started||NET.host;
+  switch(it.k){
+  case 'slab':if(me)k6SlabRead(it);break;
+  case 'key6':if(it.gone)return;it.gone=true;K6.key=true;if(me){sfx('toolUp',.8);toast('Paslı, ağır bir anahtar. Lahdin üstünde, mumların yanındaydı… biri bırakmış.',3.4);}if(H)netLog('cx','k6','key');k6Ev('keyScare');break;
+  case 'gate6':if(K6.gate||!K6.key)return;k6GateOpen();if(H)netLog('cx','k6','gate');break;
+  case 'diary':if(me)k6PageShow(it.pg);if(!it.read){it.read=1;K6.pages=Math.max(K6.pages,it.pg+1);}break;
+  case 'crow':if(it.gone)return;it.gone=true;K6.crow=true;if(me){sfx('toolUp',.85);toast('Levye. Zincirleri kırar. Ama çok ses çıkar.',3);}if(H)netLog('cx','k6','crow');k6Ev('crowScare');break;}}
+// basılı tutma: çan ipi, zincir, kapı
+{const _h=chHoldTick;chHoldTick=function(dt){const it=KH.holdIt;_h.apply(this,arguments);if(RUN.floor!==6||!it||KH.holdIt!==it)return;
+  const p0=KH.holdT-dt;
+  if(it.k==='rope6'){if(Math.floor(p0/.55)!==Math.floor(KH.holdT/.55))sfx('creak',.45,(Math.random()-.5)*.4);K6.ropeY=Math.sin(KH.holdT*2.9)*.35;}
+  if(it.k==='chain6'){if(Math.floor(p0/.42)!==Math.floor(KH.holdT/.42)){sfx('clang',.42+Math.random()*.2,(Math.random()-.5)*.3);emit(pl.x,pl.z,14,pl,'zincir');}}
+  if(it.k==='door6'){if(Math.floor(p0/.6)!==Math.floor(KH.holdT/.6)){sfx('creak',.8);G.shake=Math.max(G.shake,.12);}K6.doorK=Math.max(K6.doorK,KH.holdT/KH.holdMax*.08);}
+  if(KH.holdT>=KH.holdMax){KH.holdIt=null;KH.holdT=0;const H=!NET.started||NET.host;
+    if(it.k==='rope6'){K6.ringLocal=G.time;if(H)k6Ring(null);else{netLog('ci','k6','ring');k6RingFx();}}
+    else if(it.k==='chain6'){if(H)k6Chain(it.ci);else{netLog('ci','k6','ch',it.ci);K6.chains[it.ci]=1;k6ChainFx(it.ci);}}
+    else if(it.k==='door6'){if(H)k6DoorOpen();else netLog('ci','k6','door');}}};}
+// basılı tutma çubuğu
+{const _he=chHudExtra;chHudExtra=function(){_he.apply(this,arguments);if(RUN.floor!==6)return;const hi=KH.holdIt;if(hi&&['rope6','chain6','door6'].includes(hi.k)){sS('hold','opacity','1');sS('holdf','width',(KH.holdT/KH.holdMax*100).toFixed(1)+'%');}
+  const cy=$('carry');if(cy&&K6.crow&&!pl.can&&!K6.ended){cy.hidden=false;cy.textContent='Elinde levye.';cy.style.color='#c9c2b2';}};}
+// ---- olaylar ----
+function k6GateOpen(){if(K6.gate)return;K6.gate=1;blockC[K6.gateC]=0;const[i,j]=K6D.gate;sfxAt('creak',k6x(i),(j+1)*S,1,30);setTimeout(()=>sfxAt('clang',k6x(i),(j+1)*S,.9,30),500);
+  if(!RUN.k6cp){RUN.k6cp='church';}}
+function k6Ring(who){K6.bellT=G.time;K6.ringN++;K6.bellA=Math.min(1.25,K6.bellA+.85);K6.lureT=G.time+24;netLog('cx','k6','ring',K6.ringN);k6RingFx();
+  if(!K6.hunt){K6.hunt=true;KH.chase=true;k6Release();}else if(DNL.e){DNL.e.lure=true;}}
+function k6RingFx(){K6.bellT=G.time;K6.bellA=Math.min(1.25,Math.max(K6.bellA,.85));K6.ropeY=.5;G.shake=Math.max(G.shake,.18);if(!K6.ev.firstRing){K6.ev.firstRing=1;setTimeout(()=>{sfx('dnScare',1,0,false,musBus);sfx('dnChase',1);G.shake=.45;toast('Çığlık… sonra aşağıya, mahzene doğru koşan ayak sesleri.',3.4);},1400);}}
+function k6Chain(ci){if(K6.chains[ci])return;K6.chains[ci]=1;netLog('cx','k6','ch',ci);k6ChainFx(ci);const n=K6.chains.filter(x=>x).length;
+  emit(K6.doorP.x,K6.doorP.z+.6,30,null,'zincir');
+  // iki zincirden sonra çan onu tutamaz: zincir sesi çanınkini bastırır
+  if(n>=2&&K6.lureT>G.time){K6.lureT=G.time+2.5;}
+  if(!K6.hunt){K6.hunt=true;KH.chase=true;k6Release(true);}}
+function k6ChainFx(ci){sfx('clang',1);setTimeout(()=>sfx('clang',.7),120);sfx('thump',.5);G.shake=Math.max(G.shake,.25);const n=K6.chains.filter(x=>x).length;
+  toast(n>=3?'Son zincir düştü. Kapıyı it!':n===2?'İkinci zincir… Bu ses çanı bastırdı. Geliyor!':'Bir zincir koptu. Ses kilisede yankılandı.',2.6);}
+function k6DoorOpen(){if(K6.door)return;K6.door=1;netLog('cx','k6','door');k6EndStart();}
+// Dinleyen'i salıver: çan çalınca narteksten fırlar, nefin içinden mahzene koşar (yemlenmiş: oyunculara bakmaz)
+function k6Release(noLure){const H=!NET.started||NET.host;if(!H)return;
+  const sp=noLure?k6FarSpawn():[k6x(24.2),k6z(4.1)];dnSpawnAt(sp[0],sp[1],0);const e=DNL.e;if(!e)return;e.lure=!noLure;DNL.act=1;DNL.relT=999;DNL.unseenT=0;netLog('cx','dn',1);}
+function k6FarSpawn(){const[x,z]=[k6x(24.5),k6z(24.5)];return[x,z];}
+// ---- Dinleyen: sessiz evrede yalnız görünür (ghost), yemlenince mahzene iner, sonra avlanır ----
+{const _m=dnMove;dnMove=function(e,dt){if(RUN.floor!==6)return _m.apply(this,arguments);
+  if(e.ghost){e.moving=false;return;}
+  if(e.lure&&K6.lureT>G.time){const T=[k6x(24.5),k6z(25)];const d=Math.hypot(T[0]-e.x,T[1]-e.z);DNL.heard={x:T[0],z:T[1],k:.1,t:G.time};
+    if(d<2.2){e.moving=false;e.tx=T[0];e.tz=T[1];if(G.time>(e.wailT||0)){e.wailT=G.time+5+Math.random()*4;sfxAt('dnBreath',e.x,e.z,1,16);}return;}
+    e.tx=T[0];e.tz=T[1];const sp=4.6;DNL.spd=sp;e.repath-=dt;if(e.repath<=0||!e.path){e.repath=.6;pathTo(e,T[0],T[1],false);}
+    const ox=e.x,oz=e.z;if(e.path&&e.pi<e.path.length)followPath(e,dt,sp);else{const k=Math.min(1,sp*dt/(d||1));moveCircle(e,(T[0]-e.x)*k,(T[1]-e.z)*k,.38);}
+    const mv=Math.hypot(e.x-ox,e.z-oz);e.moving=mv>.002;if(mv>.002)e.face=turnTo(e.face,Math.atan2(-(e.x-ox),-(e.z-oz)),dt*12);return;}
+  if(e.lure&&K6.lureT<=G.time){e.lure=false;DNL.heard=null;sfxAt('dnCrack',e.x,e.z,1,30);}
+  return _m.apply(this,arguments);};}
+// yemlenmişken ve hayalet evrede gözle donma kuralı yok: koşarken bakılsa da durmaz (yanından geçer)
+{const _t=dnTick;dnTick=function(dt){const e=DNL.e;if(RUN.floor===6&&e&&e.lure&&K6.lureT>G.time&&(!NET.started||NET.host)){const s=DNL.seenMe;_t.apply(this,arguments);if(e.frz||DNL.obsAny){e.frz=false;dnMove(e,dt);dzPlay(e,'run',1);dzTick(e,dt);}return;}return _t.apply(this,arguments);};}
+{const _dd=dnDir2;dnDir2=function(dt,e,d){if(RUN.floor===6&&(e.ghost||e.lure||!K6.hunt))return;return _dd.apply(this,arguments);};}
+// hayalet: belirir, bakınca ya da yaklaşınca fener titrer ve yok olur
+function k6Apparition(x,z,face,o){o=o||{};if(K6.hunt||DNL.e)return false;dnSpawnAt(x,z,face);const e=DNL.e;if(!e)return false;e.ghost=true;e.face=face;e.forcePose=o.pose||{c:'idle',t:Math.random()*5,roll:(Math.random()<.5?-1:1)*.6};
+  K6.app={t:0,seen:0,max:o.dur||9,near:o.near||7,x,z};K6.appN++;if(NET.started&&NET.host)netLog('cx','dn',1);return true;}
+function k6AppTick(dt){const A=K6.app;if(!A)return;const e=DNL.e;if(!e||!e.ghost){K6.app=null;return;}A.t+=dt;if(DNL.seenMe)A.seen+=dt;
+  const d=Math.hypot(e.x-pl.x,e.z-pl.z);
+  if(A.seen>.9||A.t>A.max||d<A.near){if(DNL.seenMe||d<A.near){KH.flk=.28;sfx('lampBuzz',.7);sfx('dnStatic',.5);}DNL.e=null;DNL.on=false;K6.app=null;if(NET.started&&NET.host)netLog('cx','dn',0);}}
+// ---- senaryo: yere göre korkular ----
+function k6Ev(k){if(K6.ev[k])return;K6.ev[k]=1;const H=!NET.started||NET.host;
+  if(k==='keyScare'){// mahzenin mumu söner, merdivenin başında biri
+    setTimeout(()=>{for(const C of K6.cands)if(Math.hypot(C.x-pl.x,C.z-pl.z)<6){C.lit=false;sfx('dnShh',.8);}},700);
+    setTimeout(()=>{sfx('dnStep',.7,-.4);setTimeout(()=>sfx('dnStep',.6,-.3),380);},2200);}
+  if(k==='crowScare'){// çan kendi kendine bir kez çalar, kapının önünde arkanda nefes
+    setTimeout(()=>{K6.bellA=Math.max(K6.bellA,.22);K6.bellT=G.time;sfx('bellToll',.55,0,false,musBus);},1600);
+    setTimeout(()=>{sfx('dnBreath',.9,.3);G.shake=Math.max(G.shake,.08);},5200);}}
+function k6Script(dt){const z=k6Zone(pl.x,pl.z);const H=!NET.started||NET.host;
+  if(z==='tunnel'&&!K6.ev.tun){K6.ev.tun=1;setTimeout(()=>{sfx('dnDrag',.7,(Math.random()-.5)*.6);},2500);}
+  if(z==='crypt'&&!K6.ev.crypt){K6.ev.crypt=1;sfx('dnSting',.5,0,false,musBus);}
+  if(z==='church'&&!K6.ev.church){K6.ev.church=1;setTimeout(()=>{sfx('boom',.5,0,false,musBus);},600);}
+  // nefin kuzey ucunda: kapıyı ilk görünce
+  if(!K6.seenDoor&&Math.hypot(pl.x-K6.doorP.x,pl.z-K6.doorP.z)<6.5){K6.seenDoor=true;toast('Kapı içeriden zincirlenmiş. Üç zincir, üç kilit.',3.2);}
+  if(!H||K6.hunt)return;
+  // görünmeler: kilisede 3, mahzende 1 (her biri bir kez, aralıklı)
+  K6.appT=(K6.appT??18)-dt;if(K6.appT>0||K6.app)return;
+  const fx=-Math.sin(pl.yaw),fz=-Math.cos(pl.yaw);
+  const tryAt=(cands,o)=>{for(const[x,zz]of chShuffle(cands.slice())){const dx=x-pl.x,dz=zz-pl.z,dd=Math.hypot(dx,dz);if(dd<o.min||dd>o.max)continue;if(o.front&&(dx*fx+dz*fz)/dd<.88)continue;if(o.back&&(dx*fx+dz*fz)/dd>-.6)continue;if(!los(pl.x,pl.z,x,zz)||hits(x,zz,.4))continue;
+      return k6Apparition(x,zz,Math.atan2(-(pl.x-x),-(pl.z-zz)),o);}return false;};
+  let ok=false;
+  if(z==='church'&&K6.appN<4){const C=[];for(let j=4;j<=17;j++)for(let i=18;i<=29;i++){const q=j*GW+i;if(grid[q]&&K6R[q]&&!blockC[q])C.push([k6x(i),k6z(j)]);}
+    ok=K6.appN%2===0?tryAt(C,{min:11,max:22,front:1,dur:8,near:8}):tryAt(C,{min:4.5,max:7,back:1,dur:4,near:3,pose:{c:'scare',t:.9,roll:.5}});
+    if(ok&&K6.appN%2===0)sfx('dnSting',.8,0,false,musBus);else if(ok){sfxAt('dnBreath',DNL.e.x,DNL.e.z,1.2,12);}}
+  else if(z==='crypt'&&!K6.ev.capp){const C=[[k6x(28),k6z(27)],[k6x(21),k6z(23)],[k6x(24.5),k6z(27)]];ok=tryAt(C,{min:7,max:16,front:1,near:6,dur:7});if(ok)K6.ev.capp=1;}
+  K6.appT=ok?28+Math.random()*16:4;}
+// ---- her kare ----
+{const _t=chTick;chTick=function(dt){_t.apply(this,arguments);if(RUN.floor!==6||!K6.on)return;try{k6Tick(dt);}catch(e){frameErr('k6',e);}};}
+function k6Tick(dt){K6.t+=dt;const H=!NET.started||NET.host;
+  // uyanma: kamera yerden kalkar (kafes kuyunun dibine çakılmış)
+  if(K6.wake){const W=K6.wake;W.t+=dt;if(!W.s0){W.s0=1;sfx('k6Ring',.5);DNL.stat=.6;}if(W.t>4.2)K6.wake=null;}
+  // kapı/demir kapı animasyonu
+  K6.gateK+=((K6.gate?1:0)-K6.gateK)*Math.min(1,dt*1.1);K6.doorK+=((K6.door?1:K6.doorK>.0?K6.doorK:0)-K6.doorK)*Math.min(1,dt*(K6.door?.9:2));
+  // çan: sönümlü salınım + vuruşlar (dil gövdeye çarptığında)
+  if(K6.bellA>.005){K6.bellPh+=dt*2.6;const s=Math.sin(K6.bellPh);const pv=K6.prevS??s;if(Math.sign(s)!==Math.sign(pv)&&K6.bellA>.12){const d=Math.hypot(K6.bellP.x-pl.x,K6.bellP.z-pl.z);sfx('bellToll',clamp(K6.bellA,.2,1)*clamp(1.15-d/60,.35,1),clamp((K6.bellP.x-pl.x)/20,-.6,.6),false,musBus);
+      if(H&&K6.hunt)emit(K6.bellP.x,K6.bellP.z,70,null,'çan');}K6.prevS=s;K6.bellA*=Math.exp(-dt*.085);}
+  K6.ropeY*=Math.exp(-dt*2.5);
+  // ip sallanışı (çan sallanırken ip de oynar)
+  // mumlar: titreme
+  for(const C of K6.cands){C.k=C.lit?.85+.15*Math.sin(G.time*13+C.ph)*Math.sin(G.time*3.7+C.ph*2):0;}
+  if(H)k6AppTick(dt);k6Script(dt);
+  // yem süresi bitti: avlanır; kilisede her yerden duyar
+  if(K6.hunt){const e=DNL.e;KH.chase=!(e&&e.lure&&K6.lureT>G.time);}
+  // ilerleme (müzik ve yaratık hızı)
+  const n=K6.chains.filter(x=>x).length;const prog=K6.hunt?.62+n*.08:K6.crow?.34:K6.gate?.24:K6.key?.18:k6Zone(pl.x,pl.z)==='mine'?.06:.12;KH.T+=(prog-KH.T)*Math.min(1,dt*.5);
+  // kilise ortamı: rüzgâr uğultusu, gıcırtı; madende damla
+  K6.ambT=(K6.ambT??3)-dt;if(K6.ambT<=0){const z=k6Zone(pl.x,pl.z);K6.ambT=z==='church'?3+Math.random()*5:5+Math.random()*7;const a=Math.random()*TAU,r=6+Math.random()*10;
+    if(z==='church')sfxAt(Math.random()<.55?'k6Wind':'creak',pl.x+Math.cos(a)*r,pl.z+Math.sin(a)*r,Math.random()<.5?.5:.32,30);else if(z==='crypt')sfxAt('drip',pl.x+Math.cos(a)*r,pl.z+Math.sin(a)*r,.4,20);else sfxAt(Math.random()<.5?'drip':'crumble',pl.x+Math.cos(a)*r,pl.z+Math.sin(a)*r,.3,22);}
+  if(K6.endT!=null)k6EndTick(dt);}
+// ---- günlük sayfaları ----
+const K6P=['14 Kasım 1888\n\nKuyudan dört adam çıktı.\nKilisemize sığındılar.\nKapıyı içeriden zincirledik.\n\nAşağıda kalanların sesleri\nhâlâ geliyor. Onları çağıran\nşey de geliyor.\n— P. Vitale',
+  '16 Kasım 1888\n\nŞirketin adamları ocağı\nmühürledi. Ölüleri saymadılar.\n\nÇan çalınca o şey mezarlara\niner, ölülerinin başında bekler.\nÇan susunca geri gelir.',
+  '17 Kasım 1888\n\nZincirleri ancak çan\nçalarken kırın. Ses onu\nkandırır, ama uzun sürmez.\nZincirin sesini de duyar.\n\nSonra kapıyı itin. Koşun.\nArkanıza bakmayın.'];
+function k6PageShow(i){const el=$('chPage');if(!el)return;document.exitPointerLock?.();const cv=el.querySelector('canvas');try{chPageDraw(cv,K6P[i%3],i);}catch(e){}
+  el.querySelector('small').textContent=`PEDER VITALE'NİN GÜNLÜĞÜ · ${i+1}/3`;el.hidden=false;el.classList.add('on');sfx('paper',.9);G.chUI='page';clearTimeout(chPageShow.t);chPageShow.t=setTimeout(chPageClose,9000);}
+function k6SlabRead(it){if(it.mem){toast('1888. Kırk bir kişinin adı yok. Altta kazınmış bir satır: «Çan onları çağırır.»',4);return;}
+  if(it.me){const nm=k6Name();toast(nm?`Taşta senin adın yazıyor: ${nm}. 1861 — 1888. «Seni bekliyoruz.»`:'Taşta bir isim yok. Yalnız: «Son madenci. Seni bekliyoruz.» Toz yeni silinmiş.',4.2);
+    if(!K6.ev.myName){K6.ev.myName=1;setTimeout(()=>{sfx('dnSting',.9,0,false,musBus);DNL.stat=Math.max(DNL.stat,.5);sfx('dnRadio',.8);},900);}return;}
+  toast(`${it.name} · 1888. «Requiescat in pace.»`,2.6);}
+// ---- HUD hedefi ----
+function k6Hud(){if(K6.ended)return['Şafak.',-1,0];const z=k6Zone(pl.x,pl.z);const n=K6.chains.filter(x=>x).length;
+  if(!K6.gate){if(z==='crypt'||K6.key)return[K6.key?'Demir kapıyı anahtarla aç. Merdiven yukarı çıkıyor.':'Mahzenin demir kapısı kilitli. Anahtarı bul.',-1,0];return['Kafes kuyunun dibine çakıldı. Rıza\'nın tebeşir oklarını izle.',-1,0];}
+  if(K6.chains.every(x=>x))return['Kapıyı it! Arkana bakma.',3,3];
+  if(K6.hunt)return[K6.lureT>G.time?'Çan onu aşağı çekti. Zincirleri kır, şimdi!':'Geliyor! Zincirleri kır ya da saklan. Çan onu yine aşağı çeker.',n,3];
+  if(!K6.crow)return[K6.seenDoor?'Kapı içeriden zincirli. Zincirleri kıracak bir şey bul.':'Kiliseden çıkış yolu bul.',-1,0];
+  return['Önce çanı çal: onu aşağı gönder. Sonra üç zinciri kır.',n,3];}
+// ---- çizim: çan, ip, zincirler, kapı, demir kapı, avizeler, kirişler, tahtalı pencereler ----
+function k6Draw(){if(!K6.on||!ENV.lib)return;const u=envBegin(),PL=envPlanes(),G2=new Map();const put=(id,m,v)=>{if(!envAsset(id))return;const k=id+'|'+(v||'');let g=G2.get(k);if(!g){g={a:id,v:v||'',L:[]};G2.set(k,g);}g.L.push({m,x:m[12],z:m[14],cell:-1});};
+  const EC=K6EC,EK=K6EK,ex=eye[0],ez=eye[2],near=(x,z,r)=>Math.hypot(x-ex,z-ez)<(r||40);
+  // çan (kule tepesinde): boyunduruk + salınım
+  if(near(K6.bellP.x,K6.bellP.z,45)){const bx=K6.bellP.x,bz=K6.bellP.z,by=EC+14.2;const sw=Math.sin(K6.bellPh)*K6.bellA*.55;
+    const Mh=X(M4.T(bx,by,bz),M4.RX(sw));const sc=1.36;put('k_bell',X(Mh,M4.T(0,-.95*sc,0),M4.S(sc,sc,sc)),'bronze');
+    // dil: gövdeden biraz geride kalarak sallanır
+    put('k_clap',X(M4.T(bx,by-.05,bz),M4.RX(sw*.55),M4.T(0,-.06,0),M4.S(1.32,1.32,1.32)),'bronze');
+    // boyunduruk (ağır ahşap) ve kulenin iki duvarına oturan kirişler
+    put('beam_a',X(M4.T(bx,by+.05,bz),M4.RX(sw),M4.RY(Math.PI/2),M4.S(1.5/1.98,2.4,2.4)));
+    for(const s of[-1,1])put('beam_a',X(M4.T(bx,by-.1,bz+s*.5),M4.S(4.8/1.98,1.6,1.6)));
+    // kol ve ip: ipin ucu kolun ucundan aşağı iner
+    const arm=X(Mh,M4.T(0,.05,.95));put('grail',X(Mh,M4.T(0,.1,0),M4.RX(Math.PI/2),M4.S(.6,.48,.6)),'iron');
+    const top=[arm[12],arm[13],arm[14]],bot=[bx+.25,EC+1.05+K6.ropeY,bz];const L=top[1]-bot[1];const n=Math.ceil(L);
+    for(let k=0;k<n;k++){const t0=k/n,t1=(k+1)/n,swy=Math.sin(G.time*.7+k*.3)*.02*(1-t0);const a=[top[0]+(bot[0]-top[0])*t0+swy,top[1]-L*t0,top[2]+(bot[2]-top[2])*t0],b=[top[0]+(bot[0]-top[0])*t1+swy,top[1]-L*t1,top[2]+(bot[2]-top[2])*t1];
+      const dx=b[0]-a[0],dy=b[1]-a[1],dz=b[2]-a[2],l=Math.hypot(dx,dy,dz);put('k_rope',X(M4.T(b[0],b[1],b[2]),M4.RX(Math.atan2(-dz,-dy)),M4.RZ(Math.atan2(dx,-dy)),M4.S(1.4,l*1.03,1.4)));}
+    // ipin ucunda düğüm (sarılmış kalın kısım)
+    put('k_rope',X(M4.T(bot[0],bot[1]-.18,bot[2]),M4.S(2.2,.2,2.2)));}
+  // ana kapı: kasa + iki kanat (sonda açılır), zincirler ve kilitler
+  if(near(K6.doorP.x,K6.doorP.z,40)){const D=K6.doorP,fy0=EC;const m=X(M4.T(D.x,fy0-.02,D.z+.07),M4.S(1.2,1.0,1.0));const o=clamp(K6.doorK,0,1);
+    put('k_doorF',m);put('k_doorL',X(m,M4.T(-.97,0,0),M4.RY(-o*1.55),M4.T(.97,0,0)));put('k_doorR',X(m,M4.T(.97,0,0),M4.RY(o*1.55),M4.T(-.97,0,0)));
+    // zincirler: iki kanadın halkaları arasında sarkan halkalar + ortada asma kilit
+    [1.02,1.38,1.74].forEach((h,k)=>{if(K6.chains[k]&&K6.door)return;const y=fy0+h,z0=D.z+.36;const br=K6.chains[k];const pts=[];const N=13;
+      for(let q=0;q<=N;q++){const t=q/N;const x=D.x-.62+1.24*t;let yy=y-Math.sin(t*Math.PI)*.09;let zz=z0+Math.sin(t*Math.PI)*.04;if(br){// kırık: iki yana sarkar
+          if(t<.5){const a=(.5-t)*2;yy=y-(1-a)*.75;zz=z0;}else{const a=(t-.5)*2;yy=y-(1-a)*.75;zz=z0;}}pts.push([br?(t<.5?D.x-.62+.05*(t*2):D.x+.62-.05*((1-t)*2)):x,yy,zz]);}
+      for(let q=0;q<N;q++){const a=pts[q],b=pts[q+1];const dx=b[0]-a[0],dy=b[1]-a[1];const ang=Math.atan2(dy,dx);put('k_link',X(M4.T((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2),M4.RZ(ang-Math.PI/2),M4.RY(q%2?Math.PI/2:0),M4.S(1.25,1.25,1.25)),'iron');}
+      if(!br)put('k_lock',X(M4.T(D.x+(k-1)*.18,y-.07,z0+.03),M4.RY(.1*(k-1))),'iron');else put('k_lock',X(M4.T(D.x+(k-1)*.3,fy0+.03,z0+.25),M4.RX(Math.PI/2),M4.RZ(k)),'iron');});}
+  // mahzenin demir kapısı (menteşeden açılır)
+  {const[gi,gj]=K6D.gate;const gx=gi*S+.1,gz=(gj+1)*S-.05;if(near(gx,gz,30)){const m=X(M4.T(gx,EK-.02,gz),M4.RY(-K6.gateK*1.7),M4.T(1.1,0,0),M4.S(.76,.8,1));put('gate',m,'steel');}}
+  // avizeler: kirişlere zincirle asılı, ağır salınım
+  for(const L of K6.lamps||[]){if(!near(L.x,L.z,36))continue;const top=EC+8.7,y=EC+5.9;const sw=Math.sin(G.time*.37+L.ph)*.035;const m=X(M4.T(L.x,top,L.z),M4.RZ(sw),M4.T(0,y-top,0));put('k_lantch_m0',m);
+    for(let k=0;k<30;k++){const yy=(top-y-.92)*(k/30)+.92;put('k_link',X(m,M4.T(0,yy,0),M4.RY(k%2?Math.PI/2:0),M4.S(1.1,1.1,1.1)),'iron');}}
+  // tavan kirişleri: nefi enine geçen ağır kirişler (her biri 6 parça)
+  for(const z of K6.beams||[]){if(!near(23*S,z,36))continue;for(let k=0;k<6;k++){const x=21*S+.95+k*1.98+((k*37)%5-2)*.01;put('beam_a',X(M4.T(x,EC+8.75+((k*13)%3-1)*.02,z),M4.RY(((k*7)%3-1)*.01),M4.S(1,1.6,1.6)));}}
+  // tahtayla kapatılmış pencereler: duvarda kemerli oyuk yerine çapraz çakılmış kalaslar
+  for(const W of K6.wins){if(!near(W.x,W.z,30))continue;const m=X(M4.T(W.x,EC+(W.small?2.6:3.4),W.z),M4.RY(W.yaw));const h=W.small?1.6:2.6,w=W.small?.9:1.3;
+    const nb=W.small?5:8;for(let k=0;k<nb;k++){const y=-h/2+.14+k*(h-.28)/(nb-1);if((k*7+(W.small?1:0))%5===3)continue;put('beam_c',X(m,M4.T(((k*31)%7-3)*.015,y,.02),M4.RZ(((k*17)%5-2)*.035),M4.S((w+.3)/1.69,2.1,.32)),'board');}
+    put('beam_c',X(m,M4.T(0,0,.06),M4.RZ(Math.atan2(h,w)*.92),M4.S(Math.hypot(w,h)*.95/1.69,1.9,.38)),'board');
+    // pencerenin taş söveleri (koyu, oyuk hissi)
+    put('beam_a',X(m,M4.T(0,-h/2-.12,.02),M4.S((w+.5)/1.98,1.4,.5)),'board');}
+  // sunağın üstünde ahşap haç (iki ağır kalas), duvara asılı
+  if(K6.cross&&near(K6.cross.x,K6.cross.z,32)){const C=K6.cross,y=EC+4.9;put('beam_a',X(M4.T(C.x,y,C.z+.02),M4.RZ(Math.PI/2),M4.S(2.6/1.98,1.3,.9)),'board');put('beam_a',X(M4.T(C.x,y+.55,C.z-.02),M4.S(1.5/1.98,1.3,.9)),'board');}
+  // mumlar (şamdan + mum)
+  for(const C of K6.cands){if(!near(C.x,C.z,30))continue;for(const id of chParts(C.a))put(id,C.m);}
+  for(const g of G2.values())envDrawGroup(u,{a:g.a,v:g.v,far:70},g.L,PL);gl.useProgram(PR.p);gl.bindVertexArray(null);
+  k6QuadsDraw();}
+// dekor çiziminde özel yerleşimler (devrik bank, duvara dayalı merdiven, yatık avize, taş lahit/sunak ölçüleri)
+{const _p=chProps;chProps=function(add){if(RUN.floor!==6)return _p.apply(this,arguments);if(!KH.on||!pl)return;const near=(x,z,r)=>Math.hypot(x-pl.x,z-pl.z)<(r||34);
+  for(const d of KH.decor){if(!near(d.x,d.z))continue;if(!chAssetOK(d.a))continue;const y=(d.y||0)+floorY(d.x,d.z);let m=X(M4.T(d.x,y,d.z),M4.RY(d.yaw||0));
+    if(d.tip)m=X(m,M4.T(0,.24,0),M4.RX(Math.PI/2*.98));if(d.tilt)m=X(m,M4.RX(-d.tilt));if(d.lie)m=X(m,M4.T(0,.2,0),M4.RZ(1.35));if(d.lay)m=X(m,M4.T(0,.05,0),M4.RZ(Math.PI/2));
+    if(d.a==='k_slab'){if(d.wall)m=X(M4.T(d.x,y,d.z),M4.RY(d.yaw),M4.RX(-Math.PI/2),M4.S(d.sx||1,d.sy||1,d.sz2||1),M4.T(0,-.06,0));else m=X(m,M4.S(d.sx||1,d.sy||1,d.sz2||1));}
+    else m=X(m,M4.S(d.sc,d.sc,d.sc));d.m=m;for(const id of chParts(d.a))add(id,m,cidx(d.x,d.z),d.a==='k_slab'?'lime':d.a==='k_bench'?'pew':'');}
+  for(const it of KH.items){if(it.gone||!near(it.x,it.z))continue;const y=(it.y||0)+floorY(it.x,it.z);
+    if(it.k==='key6'&&chAssetOK('k_key'))add('k_key',X(M4.T(it.x,y+.012,it.z),M4.RY(it.yaw),M4.RZ(Math.PI/2)),cidx(it.x,it.z),'iron');
+    if(it.k==='crow'&&chAssetOK('k_crow'))add('k_crow',X(M4.T(it.x,y,it.z),M4.RY(it.yaw),M4.RX(-.28)),cidx(it.x,it.z));
+    if(it.k==='diary')K6.pq=1;}};}
+// sayfalar (günlük): duvara/masaya bırakılmış kâğıt (sayfa dokusu yeniden kullanılır)
+function k6PagesDraw(){if(!K6.on||!gl)return;const P=KH.items.filter(it=>it.k==='diary'&&Math.hypot(it.x-eye[0],it.z-eye[2])<18);if(!P.length)return;try{chNoteTex();}catch(e){return;}
+  const N=NOTE_TX,u=N.u,L=SCN&&SCN.LKs;gl.useProgram(N.prog);gl.uniformMatrix4fv(u.uVP,false,VP);gl.uniform3fv(u.uEye,eye);gl.uniform3fv(u.uFogC,L?L.fog:[0,0,0]);gl.uniform1f(u.uFog,L?(L.fd||.05)*.6:.05);
+  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,N.tex);gl.uniform1i(u.uT,0);gl.bindVertexArray(N.vao);
+  for(const it of P){const y=floorY(it.x,it.z)+(it.y||1),k=(it.pg+5)%8;const m=X(M4.T(it.x,y,it.z),M4.RY(it.yaw),M4.RX(-Math.PI/2+.02),M4.RZ(.3*(it.pg-1)),M4.S(.21,.29,1));
+    gl.uniformMatrix4fv(u.uM,false,m);gl.uniform4fv(u.uR,[(k%4)*.25,((k/4)|0)*.5,.25,.5]);gl.uniform1f(u.uK,k6Lit(it.x,y,it.z)*(it.read?.8:1.05));gl.drawArrays(gl.TRIANGLES,0,6);}
+  gl.bindVertexArray(null);gl.useProgram(PR.p);}
+{const _d=chDrawExtra;chDrawExtra=function(){_d();if(RUN.floor!==6)return;try{k6Draw();}catch(e){frameErr('k6d',e);gl.useProgram(PR.p);}try{k6PagesDraw();}catch(e){gl.useProgram(PR.p);}};}
+// ---- ışık: mumlar (en yakın üç küme, görüş hattında), sonda açılan kapıdan şafak ----
+function k6Lights(PP,PC){if(!K6.on)return;const L=[];for(const C of K6.cands){if(!C.lit)continue;const d=Math.hypot(C.x-eye[0],C.z-eye[2]);if(d>24)continue;L.push([d,C]);}L.sort((a,b)=>a[0]-b[0]);
+  let n=0;for(const[,C]of L){if(n>=3||PP.length>=36)break;if(!los(eye[0],eye[2],C.x,C.z))continue;const k=C.k;PP.push(C.x,C.y+.45,C.z,5.5);PC.push(.62*k,.38*k,.14*k);n++;}
+  if(K6.doorK>.05&&PP.length<40){const D=K6.doorP,k=clamp(K6.doorK,0,1);PP.push(D.x,K6EC+1.6,D.z-.3,14+k*12);PC.push(1.6*k,1.45*k,1.25*k);}}
+function k6Glows(glow){if(!K6.on)return;const t=G.time;
+  for(const C of K6.cands){if(!C.lit||Math.hypot(C.x-eye[0],C.z-eye[2])>26)continue;for(const p of C.fl){const f=C.k*(.9+.1*Math.sin(t*23+p[0]*40));glow([p[0],p[1]+.02,p[2]],.018,[1.6*f,1.05*f,.42*f]);glow([p[0],p[1]+.012,p[2]],.05,[.32*f,.17*f,.05*f]);}glow([C.x,C.y+.42,C.z],.5,[.05*C.k,.028*C.k,.01*C.k]);}
+  // tahtaların arasından sızan ay ışığı: ince soğuk çizgiler
+  for(const W of K6.wins){const d=Math.hypot(W.x-eye[0],W.z-eye[2]);if(d>34)continue;const nx=Math.sin(W.yaw),nz=Math.cos(W.yaw);const h=W.small?1.6:2.6;
+    for(let k=0;k<(W.small?3:5);k++){const y=K6EC+(W.small?2.6:3.4)-h/2+.42+k*(h-.62)/((W.small?3:5)-1)+.08;const f=.55+.45*Math.sin(t*.3+k*1.7+W.z);
+      for(let q=-2;q<=2;q++)glow([W.x+nx*.02+(nz)*q*.22,y,W.z+nz*.02-(nx)*q*.22],.06,[.028*f,.04*f,.07*f]);}}
+  if(Math.hypot(K6.bellP.x-eye[0],K6.bellP.z-eye[2])<14){const bx=K6.bellP.x,bz=K6.bellP.z,y0=K6EC+15.6;for(const[sx,sz]of[[1,0],[-1,0],[0,1],[0,-1]])for(let q=0;q<5;q++){const f=.6+.4*Math.sin(t*.4+q+sx*2);glow([bx+sx*2.05+(sz?(q-2)*.42:0),y0+(q%2)*.6,bz+sz*2.05+(sx?(q-2)*.42:0)],.75,[.09*f,.12*f,.2*f]);}glow([bx,y0+.9,bz],3.2,[.03,.04,.07]);}
+  if(K6.doorK>.05){const D=K6.doorP,k=clamp(K6.doorK,0,1);for(let q=0;q<6;q++)glow([D.x+(q-2.5)*.3,K6EC+.3+q*.45,D.z+.02],.9+k*.6,[.5*k,.46*k,.4*k]);glow([D.x,K6EC+1.5,D.z-.5],3+k*4,[.25*k,.23*k,.2*k]);}}
+{const _l=chBulbLights;chBulbLights=function(PP,PC){_l.apply(this,arguments);if(RUN.floor===6)try{k6Lights(PP,PC);}catch(e){}};}
+{const _g=chBulbGlows;chBulbGlows=function(glow){_g.apply(this,arguments);if(RUN.floor===6)try{k6Glows(glow);}catch(e){}};}
+// ---- giydirme (envBuild sonunda): maden kısmı genel giydirmeyle, kilise/mahzen burada ----
+{const _fd=flatDress;flatDress=function(C){if(RUN.floor===6){try{k6Dress(C);}catch(e){console.error('kilise giydirme',e);}return;}return _fd.apply(this,arguments);};}
+function k6Dress(C){const{R,rr,pick,chance,add,col,fy,decal}=C;const ok=id=>!!ENV.byId[id];const N=GW*GH;const I=c=>c%GW,J=c=>(c/GW)|0;
+  // kilise zemini: dökülmüş sıva parçaları, toz; duvar diplerinde küçük taşlar
+  for(let c=0;c<N;c++){if(!grid[c]||!K6R[c]||blockC[c])continue;const[x,z]=ctr(c);if(chance(.45))decal(pick(['grit_scatter_a','grit_scatter_b']),x+rr(-.8,.8),z+rr(-.8,.8),rr(1.1,1.9));if(chance(.25))decal('stain',x+rr(-.6,.6),z+rr(-.6,.6),rr(.9,1.6));
+    for(const[dx,dy]of DIRS){if(!solid(I(c)+dx,J(c)+dy)||!chance(.5))continue;const t=[-dy,dx];for(let q=0;q<1+Math.floor(R()*2);q++){const u=rr(-1,1),px=x+dx*(S/2-.42)+t[0]*u,pz=z+dy*(S/2-.42)+t[1]*u;const id=pick(['rk_b07','rk_b09']);if(!ok(id))continue;const e=ENV.byId[id],s=rr(.07,.2)/Math.max(...e.dims_m);
+      add(id,X(M4.T(px,fy(px,pz)-.02,pz),M4.RY(R()*TAU),M4.RX(rr(-.5,.5)),M4.S(s,s*.7,s)),{fr:.05}).cell=c;}}}
+  // mahzen: kaya döküntüsü, toz, birkaç devrik tahta
+  for(let c=0;c<N;c++){if(!grid[c]||roomId[c]!==K6.room.crypt)continue;const[x,z]=ctr(c);if(chance(.5))decal(pick(['grit_scatter_a','grit_scatter_b','coal_scatter_a']),x+rr(-.8,.8),z+rr(-.8,.8),rr(1.2,2));}
+  // merdiven: ahşap basamaklar (rampaya eşit aralıkla çakılmış kalaslar)
+  for(const[i,j]of K6ST.concat([K6D.land])){const x=k6x(i);for(let q=0;q<4;q++){const z=j*S+q*S/4+.3;const y=fy(x,z);add('beam_c',X(M4.T(x,y+.05,z),M4.RY(0),M4.S(1.9/1.69,.55,.9)),{fr:.1}).cell=j*GW+i;}}
+  // kaçış tüneli: el yapımı, eğri büğrü eski dikmeler (1888)
+  K6TN.forEach(([i,j],k)=>{if(k%3!==1||!ok('post_c'))return;const[x,z]=ctr(j*GW+i);const prv=K6TN[Math.max(0,k-1)],nx=K6TN[Math.min(K6TN.length-1,k+1)];const ax=Math.abs(nx[0]-prv[0])>Math.abs(nx[1]-prv[1])?'x':'z';const lat=ax==='x'?[0,1]:[1,0];
+    for(const s of[-1,1]){const px=x+lat[0]*s*.85,pz=z+lat[1]*s*.85;const f=fy(px,pz);add('post_c',X(M4.T(px,f-.05,pz),M4.RZ(s*.06),M4.RY(R()*TAU),M4.S(.7,(ceilY(px,pz)-f-.2)/2.32,.7)),{fr:.12}).cell=j*GW+i;}});}
+// ---- arayüz: hedef ----
+{const _h=chHudTL;chHudTL=function(){if(RUN.floor!==6||!K6.on)return _h.apply(this,arguments);const[obj,a,b]=k6Hud();const D=CHD();const k='6|'+obj+'|'+a+'/'+b;if(k===HTL.k)return;HTL.k=k;
+  $('depN').textContent='6';$('nightL').textContent=D.ad;let pp='';for(let i=1;i<=6;i++)pp+=`<i class="${i<6?'d':'c'}"></i>`;$('depP').innerHTML=pp;$('objL').textContent=obj;
+  const has=a>=0&&b>0;$('misF').textContent=has?`${a}/${b}`:'';$('misP').hidden=!has;if(has){$('misPf').style.width=Math.round(a/b*100)+'%';$('misP').classList.toggle('done',a>=b);}$('sqL').innerHTML='';};}
+// ---- bölüm başı: kafes iniş animasyonu yok, yerde uyanılır ----
+{const _a=arriveStart;arriveStart=function(cb){if(KH.on&&RUN.floor===6){G.arrive=null;if(cb)setTimeout(cb,200);return;}return _a.apply(this,arguments);};}
+{const _o=arriveOff;arriveOff=function(){if(KH.on&&RUN.floor===6&&K6.wake){const k=clamp((K6.wake.t-.8)/3,0,1);return -1.28*(1-k*k*(3-2*k))+Math.sin(G.time*1.3)*.01*(1-k);}return _o.apply(this,arguments);};}
+// çakılmış kafes: eğik, kapısı yarı açık; raylar kopmuş (çizilmez)
+{const _dc=drawCage;drawCage=function(x,z,yaw,lampCol,gate,yoff){if(KH.on&&RUN.floor===6&&G.lift&&x===G.lift.x&&z===G.lift.z){const m=X(M4.T(x,floorY(x,z)-.12,z),M4.RY(yaw),M4.RZ(.075),M4.RX(-.05));cageDraw(m,{lamp:[.03,.02,.01],gate:.55,spin:0});return;}return _dc.apply(this,arguments);};}
+{const _cr=cageRailsW;cageRailsW=function(){if(KH.on&&RUN.floor===6)return;return _cr.apply(this,arguments);};}
+// ---- ağ: durum eşitleme ----
+{const _o=chWorldOut;chWorldOut=function(w){_o.apply(this,arguments);if(RUN.floor===6&&K6.on)w.k6=[K6.key?1:0,K6.gate,K6.crow?1:0,K6.ringN,K6.chains.join(''),K6.door,Math.max(0,r2(K6.lureT-G.time)),K6.hunt?1:0,r2(K6.bellA)];};}
+{const _i=chWorldIn;chWorldIn=function(w,dt){_i.apply(this,arguments);const k=w.k6;if(!k||RUN.floor!==6||!K6.on)return;if(k[0])K6.key=true;if(k[1]&&!K6.gate)k6GateOpen();if(k[2])K6.crow=true;
+  if(k[3]>K6.ringN){K6.ringN=k[3];k6RingFx();}const ch=String(k[4]||'');for(let i=0;i<3;i++)if(ch[i]==='1'&&!K6.chains[i]){K6.chains[i]=1;k6ChainFx(i);}
+  if(k[5]&&!K6.door){K6.door=1;k6EndStart();}K6.lureT=G.time+(+k[6]||0);if(k[7])K6.hunt=true;if(k[8]>K6.bellA+.2)K6.bellA=k[8];
+  const E=DNL.e;if(E&&K6.hunt){E.ghost=false;}};}
+{const _a=chNetApply;chNetApply=function(rec,a){if(RUN.floor===6&&(a[0]==='ci'||a[0]==='cx')&&a[1]==='k6'){const k=a[2];
+    if(a[0]==='ci'&&NET.host){if(k==='ring')k6Ring(rec.peer);else if(k==='ch')k6Chain(a[3]|0);else if(k==='door'&&K6.chains.every(x=>x))k6DoorOpen();}
+    else if(a[0]==='cx'&&!NET.host){if(k==='key')K6.key=true;else if(k==='gate')k6GateOpen();else if(k==='crow')K6.crow=true;else if(k==='ring'){K6.ringN=Math.max(K6.ringN,a[3]|0);k6RingFx();}else if(k==='ch'){if(!K6.chains[a[3]]){K6.chains[a[3]]=1;k6ChainFx(a[3]);}}else if(k==='door'){if(!K6.door){K6.door=1;k6EndStart();}}}
+    return;}
+  if(RUN.floor===6&&a[0]==='cx'&&a[1]==='dn'&&!NET.host&&a[2]===0){DNL.e=null;DNL.on=false;return;}
+  return _a.apply(this,arguments);};}
+// ---- son: kapı açılır, şafak dolar, beyaza söner, son yazılar, jenerik ----
+function k6EndStart(){if(K6.endT!=null)return;K6.endT=0;K6.ended=true;DNL.e=null;DNL.on=false;KH.chase=false;sfx('creak',1);setTimeout(()=>sfx('doorSlam',.8),900);sfx('dnScare',.9,0,false,musBus);G.shake=.3;
+  let w=$('k6White');if(!w){w=document.createElement('div');w.id='k6White';w.style.cssText='position:fixed;inset:0;background:#f4efe4;opacity:0;pointer-events:none;z-index:60;transition:opacity 2.2s ease';document.body.appendChild(w);}
+  try{localStorage.setItem('kd_ch','6');localStorage.setItem('kd_win','1');}catch(e){}}
+function k6EndTick(dt){K6.endT+=dt;const t=K6.endT;const w=$('k6White');
+  if(t>.2)K6.doorK=Math.min(1,K6.doorK+dt*.8);
+  if(t>1.6&&!K6.e1){K6.e1=1;if(w)w.style.opacity='1';try{mz('sabah',.7,3);}catch(e){}}
+  if(t>4.2&&!K6.e2){K6.e2=1;DNL.e=null;DNL.on=false;KH.chase=false;k6Credits();}}
+function k6Credits(){let c=$('k6End');if(!c){c=document.createElement('div');c.id='k6End';document.body.appendChild(c);const st=document.createElement('style');st.textContent=`#k6End{position:fixed;inset:0;z-index:61;display:flex;align-items:center;justify-content:center;background:#050505;opacity:0;transition:opacity 1.6s ease;pointer-events:none}
+#k6End.on{opacity:1;pointer-events:auto}#k6End p{max-width:min(560px,86vw);text-align:center;color:#e8e0cf;font:500 clamp(17px,4.4vw,24px)/1.5 Georgia,"Times New Roman",serif;letter-spacing:.02em;opacity:0;transition:opacity 1.4s ease;position:absolute;margin:0 auto;left:0;right:0}#k6End p.on{opacity:1}#k6End small{display:block;margin-top:10px;font:600 11px/1 "KDType",ui-monospace,monospace;letter-spacing:.24em;color:#9c968a}`;document.head.appendChild(st);}
+  const nm=k6Name();const L=['Şafak.','Kapıdan çıktık. Arkamızda çan bir kez daha çaldı.','Kimse ipe dokunmuyordu.',nm?`Telsiz cızırdadı. Kendi sesim, uzaktan:<br>«…${esc(nm)}… seni bekliyoruz…»`:'Telsiz cızırdadı. Kendi sesim, uzaktan:<br>«…seni bekliyoruz…»'];
+  c.innerHTML=L.map(l=>`<p>${l}</p>`).join('');requestAnimationFrame(()=>c.classList.add('on'));const P=[...c.querySelectorAll('p')];let k=0;
+  const nx=()=>{P.forEach(p=>p.classList.remove('on'));if(k<P.length){const p=P[k++];setTimeout(()=>p.classList.add('on'),400);if(k===P.length){setTimeout(()=>{sfx('dnRadio',.7);sfx('radio',.5);},1400);}setTimeout(nx,k===1?2600:4200);}else{setTimeout(()=>{c.classList.remove('on');const w=$('k6White');if(w)w.style.opacity='0';chEndScreen(true);},900);}};nx();
+  try{radioClear();subsClear();}catch(e){}}
+{const _e=chEndScreen;chEndScreen=function(win){_e.apply(this,arguments);if(win&&RUN.floor===6){$('endK').textContent='ŞAFAK';$('endTitle').textContent='KARA DAMAR · SON';
+  const nm=k6Name();$('endReason').textContent='Azize Barbara Kilisesi\'nden çıktın. Çan arkanda bir kez daha çaldı. Telsiz hâlâ cızırdıyor: "…'+(nm||'gel')+'…"';}};}
+// ---- 5. bölüm sonu: kafes yukarı çıkarken halat kopar, eski kata düşülür → 6. bölüm ----
+{const _a=chAscTick;chAscTick=function(dt){if(!(KH.on&&RUN.floor===5))return _a.apply(this,arguments);
+  const k=ASC.t/ASC.dur;if(!ASC.snap&&((ASC.kicks>=3&&k>=.74&&!ASC.q)||k>=.96)){ASC.q=null;ASC.snap={t:0,y0:ASC.y};ASC.done=true;sfx('k6Snap',1);G.shake=.9;sfx('dnScare',.7,0,false,musBus);}
+  if(!ASC.snap)return _a.apply(this,arguments);
+  const A=ASC.snap;A.t+=dt;G.time+=dt;
+  // önce bir sarsıntı (halat inler), yarım saniye asılı kalır, sonra serbest düşüş
+  if(A.t<.55){ASC.y=A.y0-A.t*.4;G.shake=Math.max(G.shake,.5);}else{const f=A.t-.55;ASC.y=A.y0-.22-4.9*f*f;G.shake=Math.max(G.shake,.35+f*.4);if(!A.s1){A.s1=1;sfx('liftRide',1);sfx('k6Wind',1);}}
+  DNL.stat=Math.min(1,(DNL.stat||0)*.9+.1+(A.t>.55?.25:0));chStatAud(dt);
+  if(A.t>2.0&&!A.f){A.f=1;$('fade').style.transition='none';$('fade').style.opacity=1;sfx('collapse',1);sfx('thump',1);G.shake=1;setTimeout(()=>{$('fade').style.transition='';},60);}
+  if(A.t>3.4&&!A.go){A.go=1;ASC.on=false;ASC.snap=null;$('chQte').classList.remove('on');KH.chase=false;DNL.e=null;DNL.on=false;
+    if(!NET.started){RUN.floor=6;RUN.lamp=true;RUN.noSurf=true;RUN.k6cp=null;G.state='descend';loadShow(6,{min:2.6,work:()=>{newGame();renderHotbar();},done:()=>arriveStart(()=>showFloorCard(''))});}
+    else if(NET.host){RUN.k6cp=null;G.state='descend';netHostStart(6);}else{G.state='descend';}}};}
+// ---- sesler (sentez): çan, halat kopması, rüzgâr, kulak çınlaması ----
+let K6RV=null;function k6Rev(){if(K6RV)return K6RV;try{K6RV=AC.createConvolver();K6RV.buffer=makeIR(5.8,1.7);const g=AC.createGain();g.gain.value=.65;K6RV.connect(g).connect(musBus||sfxBus);}catch(e){K6RV=AC.createGain();K6RV.connect(sfxBus);}return K6RV;}
+Object.assign(CH_SFX,{
+  // kilise çanı: uyumsuz kısmi tonlar (hum, prime, tierce, quint, nominal ve üstleri), her biri kendi sönümüyle; hafif vuruş (çiftli tonlar)
+  bellToll:(vol,pan,muff,bus)=>{const t=AC.currentTime,o=out(vol,pan,muff,bus);const rv=k6Rev();const wet=AC.createGain();wet.gain.value=.8;wet.connect(rv);
+    const f0=171;const P=[[.5,.9,13],[1,.75,9],[1.183,.55,6],[1.506,.3,5],[2,.62,4.2],[2.514,.26,3],[2.662,.18,2.4],[3.011,.2,2.2],[4.166,.12,1.4],[5.433,.08,1],[6.796,.05,.7]];
+    for(const[r,a,d]of P){for(const dt2 of[0,.35*r]){const os=AC.createOscillator();os.type='sine';os.frequency.value=f0*2*r+dt2;const g=AC.createGain();const pk=a*vol*(dt2?.45:.55)*.5;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(pk,t+.004+.002*r);g.gain.exponentialRampToValueAtTime(.0001,t+d);os.connect(g);g.connect(o);g.connect(wet);os.start(t);os.stop(t+d+.1);}}
+    const s=AC.createBufferSource();s.buffer=nbuf;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=2900;f.Q.value=1.2;const g=AC.createGain();env(g,t,.001,.09,.35*vol);s.connect(f).connect(g);g.connect(o);g.connect(wet);s.start(t,Math.random());s.stop(t+.15);},
+  // halat kopması: gerilmiş çelik halatın kırbaç sesi (inen ton + çıtırtı), ardından boşluk
+  k6Snap:(vol,pan,muff,bus)=>{const t=AC.currentTime,o=out(vol,pan,muff,bus);const rv=chRev();const wet=AC.createGain();wet.gain.value=.5;wet.connect(rv);
+    for(const[f1,f2,a]of[[520,60,.6],[780,95,.35],[1300,140,.2]]){const os=AC.createOscillator();os.type='sawtooth';os.frequency.setValueAtTime(f1,t);os.frequency.exponentialRampToValueAtTime(f2,t+.55);const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2400;const g=AC.createGain();env(g,t,.002,.6,a*vol);os.connect(lp).connect(g);g.connect(o);g.connect(wet);os.start(t);os.stop(t+.7);}
+    for(let k=0;k<5;k++){const tk=t+k*.03;const s=AC.createBufferSource();s.buffer=nbuf;const f=AC.createBiquadFilter();f.type='highpass';f.frequency.value=1800;const g=AC.createGain();env(g,tk,.001,.06,.6*vol);s.connect(f).connect(g);g.connect(o);s.start(tk,Math.random());s.stop(tk+.1);}},
+  // tahtaların arasından uğuldayan rüzgâr
+  k6Wind:(vol,pan,muff,bus)=>{const t=AC.currentTime,o=out(vol,pan,muff,bus);const s=AC.createBufferSource();s.buffer=nbuf;s.loop=true;const f=AC.createBiquadFilter();f.type='bandpass';f.Q.value=6;f.frequency.setValueAtTime(380+Math.random()*200,t);f.frequency.linearRampToValueAtTime(620+Math.random()*300,t+1.6);f.frequency.linearRampToValueAtTime(300,t+3.6);
+    const g=AC.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.5*vol,t+1.2);g.gain.linearRampToValueAtTime(.0001,t+3.8);s.connect(f).connect(g).connect(o);s.start(t,Math.random()*2);s.stop(t+4);},
+  // uyanınca kulak çınlaması
+  k6Ring:(vol,pan,muff,bus)=>{const t=AC.currentTime,o=out(vol,pan,muff,bus);const os=AC.createOscillator();os.type='sine';os.frequency.value=6400;const g=AC.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08*vol,t+.3);g.gain.exponentialRampToValueAtTime(.0001,t+4.5);os.connect(g).connect(o);os.start(t);os.stop(t+4.6);}});
+// ---- modeller: tek paket dosyası (pack.json) ve ortak atlas sayfaları ----
+function envMeshTxt(e,b,id){if(e.pack){const P=ENV.PK||(ENV.PK={});const u=ENV.base+e.pack;const p=P[u]||(P[u]=fetch(u).then(r=>{if(!r.ok)throw new Error(u);return r.json();}).catch(err=>{delete P[u];throw err;}));
+    return p.then(J=>{const t=J[id];if(!t)throw new Error(id);return t;});}
+  return fetch(b+'mesh.txt').then(r=>{if(!r.ok)throw new Error(id);return r.text();});}
+{const _li=loadImg;const C=new Map();loadImg=function(src){if(/\/kilise\//.test(src)){if(!C.has(src))C.set(src,_li(src).catch(e=>{C.delete(src);throw e;}));return C.get(src);}return _li.apply(this,arguments);};}
+// bölüm başlarken kilise modellerini erkenden iste
+{const _ci=chInit;chInit=function(){const r=_ci.apply(this,arguments);if(RUN.floor===6)try{for(const id of['k_bell','k_clap','k_rope','k_link','k_lock','k_slab','k_doorF','k_doorL','k_doorR','k_bench','k_lantch_m0','k_cand2_m2','k_cand2_m3','k_cand3','k_statue','k_cab','k_commode','k_table','k_chair','k_goblet','k_vase','k_crow','k_key','gate','beam_a','beam_c','grail'])envAsset(id);}catch(e){}return r;};}
+// bölüm başında kuyu yolculuğundan kalan her şey temizlenir (çok oyunculuda istemci, kopma anında yeni bölüme geçebilir)
+{const _ci=chInit;chInit=function(){try{ASC.on=false;ASC.snap=null;ASC.done=false;$('chQte')&&$('chQte').classList.remove('on');}catch(e){}return _ci.apply(this,arguments);};}
+// bölüm değişince kilise kapanır
+{const _pg=chPostGen;chPostGen=function(){K6.on=false;KH.elev=null;KH.flatF=null;KH.regF=null;KH.exF=null;const r=_pg.apply(this,arguments);if(RUN.floor===6){KH.elev=k6Elev;KH.flatF=k6Flat;KH.regF=k6Reg;KH.exF=k6Exc;}return r;};}
+{const _m=chMusic;chMusic=function(dt){if(RUN.floor===6&&K6.on&&K6.ended){try{mzInit();mz('sabah',.75,3);mz('yatak',0,1);mz('gerilim',0,1);mz('kova',0,.8);}catch(e){}return;}return _m.apply(this,arguments);};}
+ENV_TINT.board=()=>[.62,.55,.48];ENV_TINT.lime=()=>[.4,.38,.35];ENV_TINT.pew=()=>[.5,.36,.3];
 // ==== HİKÂYE END ====
 // ================= Çok oyunculu: claude.ai "room" yeteneği (oda kodu, 4 kişi, botlar boşluğu doldurur) =================
 // Taşıma: her oyuncunun "presence" nesnesi (4 KiB, ~30/sn birleştirilerek gönderilir). Herkes kendi durumunu ve son olaylarını
@@ -8754,7 +9281,7 @@ function cageBuild(){const g=()=>({P:[],N:[]}),F=g(),Bm=g(),Wd=g(),Gt=g(),Rf=g()
   const mk=M=>M.P.length?mesh(M.P,M.N):null;CAGE.m={F:mk(F),Bm:mk(Bm),Wd:mk(Wd),Gt:mk(Gt),Rf:mk(Rf),Yl:mk(Yl)};}
 // o: {lamp:[r,g,b], gate:0 açık…1 kapalı, spin:makara açısı, cable:ip uzunluğu}
 // dokulu kafes (yeşil boyalı paslı çelik, kabartmalı zemin sacı, tel örgü, oluklu sac çatı); yüklenene kadar eski çizim
-const CAGE_P=['cage_frame','cage_floor','cage_roof','cage_mesh','cage_gate','cage_stripe'];
+const CAGE_P=KH.on?['cage_floor']:['cage_frame','cage_floor','cage_roof','cage_mesh','cage_gate','cage_stripe'];
 function cageEnvOK(){if(!ENV.lib||!ENV.props)return false;let ok=true;for(const id of CAGE_P)if(!envAsset(id))ok=false;return ok;}
 // kafes askısı: tavan kasnağına çıkan halat için askı kirişi + dört zincir + kilit (yüzeydeki kuyu başında)
 function cageHang(m,Ht,L){const D=[.1,.1,.095],S=[.16,.15,.13];draw(MB,X(m,M4.T(0,Ht+.05,0),M4.S(1.7,.07,.1)),D,Z3,3);draw(MB,X(m,M4.T(0,Ht+.05,0),M4.S(.1,.07,1.7)),D,Z3,3);
@@ -8922,7 +9449,7 @@ function render0(){
   else if(G.state==='dnDie'&&KH.dieCam){const C=KH.dieCam,e=KH.zrDie&&ZRL.e?ZRL.e:DNL.e,k=Math.min(1,KH.dieT/1.1);eye=[C.x,C.y-k*.25,C.z];const hp=e&&e.headPos||[C.x-Math.sin(C.yaw),C.y+.5,C.z-Math.cos(C.yaw)];yaw=Math.atan2(-(hp[0]-C.x),-(hp[2]-C.z));pitch=Math.atan2(hp[1]-eye[1],Math.hypot(hp[0]-C.x,hp[2]-C.z))*k+C.pitch*(1-k);roll=Math.sin(KH.dieT*7)*.05*k;}
   else if(G.state==='faint'&&KH.faint){const F=KH.faint,u=F.up||0;eye=[pl.x,floorY(pl.x,pl.z)+.24+u*1.36,pl.z];yaw=F.yaw;pitch=F.pitch*(1-u);roll=F.roll*(1-u)+Math.sin(G.time*1.1)*.025*(1-u);}
   else if(G.state==='chAsc'){eye=[ASC.x+Math.sin(G.time*1.7)*.02,floorY(ASC.x,ASC.z)+1.6+ASC.y+Math.sin(G.time*9)*.012,ASC.z];}
-  else{eye=[pl.x,floorY(pl.x,pl.z)+1.6-(pl.crouchK||0)*.55+Math.sin(pl.bob)*.035+(G.arrive||(KH.on&&KH.dep)?arriveOff():0),pl.z];const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll+=R[2];pitch+=R[3];}
+  else{eye=[pl.x,floorY(pl.x,pl.z)+1.6-(pl.crouchK||0)*.55+Math.sin(pl.bob)*.035+(G.arrive||(KH.on&&(KH.dep||(typeof K6!=='undefined'&&K6.wake)))?arriveOff():0),pl.z];const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll+=R[2];pitch+=R[3];}
   if(G.hitK>0){const k=G.hitK*G.hitK,tt=performance.now()/1000;yaw+=(Math.sin(tt*37)*.07+Math.sin(tt*23.3)*.04)*k;pitch+=(Math.sin(tt*31+1)*.06+Math.sin(tt*17+2)*.03)*k;roll+=(Math.sin(tt*29+2)*.14+Math.sin(tt*13)*.06)*k;
     eye=[eye[0]+Math.sin(tt*41)*.06*k,eye[1]-.1*k+Math.sin(tt*47)*.05*k,eye[2]+Math.sin(tt*43+1)*.06*k];}
   eye=[eye[0]+(Math.random()-.5)*sk,eye[1]+(Math.random()-.5)*sk,eye[2]+(Math.random()-.5)*sk];
@@ -8985,10 +9512,12 @@ function render0(){
   else{for(let i=0;i<railPath.length-1;i++){const a=ctr(railPath[i]),b=ctr(railPath[i+1]);drawRailSeg(a[0],a[1],b[0],b[1]);}}}
   drawCart(cb,envOK);
   // varış: kafes kapalı gelir, yerine oturur (küçük sekme), sonra makaslı kapı açılır
+  if(KH.on)try{const L=G.lift;cageRailsW(L.x,L.z,L.yaw,floorY(L.x,L.z)-1.9,ceilY(L.x,L.z)+2.2,ceilY(L.x,L.z));}catch(e){frameErr('ray',e);}
   drawCage(G.lift.x,G.lift.z,G.lift.yaw,RUN.floor===1?(gensOn()===G.gens.length?[.1,.9,.2]:gensOn()?[.95,.55,.05]:[.9,.1,.05]):FL().final?[.95,.7,.15]:[.25,.2,.12],arriveGate(),arriveOff());
   // kuyu ağzı: kafesin indiği tavan deliği + ahşap bilezik
   {const L=G.lift,c4=[[-1,-1],[1,-1],[1,1],[-1,1]].map(([a,b])=>ceilY(L.x+a*1.1,L.z+b*1.1));const cy=Math.min(ceilY(L.x,L.z),...c4)-.04;const m=X(M4.T(L.x,cy,L.z),M4.RY(L.yaw));
-    draw(MB,X(m,M4.S(2.25,.04,2.25)),[0,0,0],Z3,0);for(const sd of[-1,1]){draw(MB,X(m,M4.T(0,-.08,sd*1.18),M4.S(2.6,.18,.18)),[.17,.11,.06],Z3,4);draw(MB,X(m,M4.T(sd*1.18,-.08,0),M4.S(.18,.18,2.6)),[.15,.1,.055],Z3,4);}}
+    if(KH.on){draw(MB,X(m,M4.S(5.4,.04,5.4)),[0,0,0],Z3,0);}else{draw(MB,X(m,M4.S(2.25,.04,2.25)),[0,0,0],Z3,0);for(const sd of[-1,1]){draw(MB,X(m,M4.T(0,-.08,sd*1.18),M4.S(2.6,.18,.18)),[.17,.11,.06],Z3,4);draw(MB,X(m,M4.T(sd*1.18,-.08,0),M4.S(.18,.18,2.6)),[.15,.1,.055],Z3,4);}}}
+  if(KH.on&&G.shaft&&d2(G.shaft.x,G.shaft.z)<900)try{const Q=G.shaft,yw=Q.yaw!=null?Q.yaw:Math.atan2(Q.x-pl.x,Q.z-pl.z)+Math.PI;cageRailsW(Q.x,Q.z,yw,floorY(Q.x,Q.z)-1.9,ceilY(Q.x,Q.z)+(ASC.on?14:2.2),ceilY(Q.x,Q.z));}catch(e){frameErr('ray2',e);}
   if(G.shaft&&d2(G.shaft.x,G.shaft.z)<900)drawCage(G.shaft.x,G.shaft.z,G.shaft.yaw!=null?G.shaft.yaw:Math.atan2(G.shaft.x-pl.x,G.shaft.z-pl.z)+Math.PI,[.95,.7,.15],KH.on&&ASC.on?1:0,KH.on&&ASC.on?ASC.y:0);
   for(const g of G.gens)if(d2(g.x,g.z)<900)drawGen(g);
   for(const cab of G.cables)for(let i=0;i<cab.length-1;i++){const a=cab[i],b=cab[i+1];if(!grid[a]&&!grid[b])continue;const[ax,az]=ctr(a),[bx,bz]=ctr(b);if(d2(ax,az)>900)continue;
@@ -9359,8 +9888,8 @@ function ldSurface(g,cw,ch,Y,L0,R0){const gy=ch*.72-Y;if(gy<=-10)return -1;const
   if(Math.sin(t*4)>0){const rl=g.createRadialGradient(cx,top-30,0,cx,top-30,12);rl.addColorStop(0,'rgba(255,60,40,.9)');rl.addColorStop(1,'rgba(255,60,40,0)');g.globalCompositeOperation='lighter';g.fillStyle=rl;g.fillRect(cx-12,top-42,24,24);g.globalCompositeOperation='source-over';}
   g.fillStyle='#2f2c28';g.fillRect(cx-1,top-30,2,14);
   return top-14;}
-function loadShow(floor,o){o=o||{};try{if((floor===1&&o.surface)||(KH.on&&floor===CH_DEF.length-1))sfPreload();}catch(e){}const F=KH.on?(CH_F[floor-1]||CH_F[0]):FLOORS[floor-1]||FLOORS[0];$('ldK').textContent=o.title?o.title[0]:KH.on?'BÖLÜM '+floor:'KAT -'+floor;$('ldN').textContent=o.title?o.title[1]:F.ad;$('ldH').textContent=o.title?o.title[2]:F.hint||'';{const hl=!KH.on&&!o.title&&HK[floor]&&HK[floor].load;const TP=KH.on?KH_TIPS:LD_TIPS;$('ldT').textContent=hl||TP[Math.floor(Math.random()*TP.length)];$('ldT').classList.toggle('hk',!!hl);}
-  let pp='';for(let i=1;i<=(KH.on?5:FLOORS.length);i++)pp+=`<i class="${i<floor?'d':i===floor?'c':''}"></i>`;$('ldP').innerHTML=pp;
+function loadShow(floor,o){o=o||{};try{if(floor===1&&o.surface)sfPreload();}catch(e){}const F=KH.on?(CH_F[floor-1]||CH_F[0]):FLOORS[floor-1]||FLOORS[0];$('ldK').textContent=o.title?o.title[0]:KH.on?'BÖLÜM '+floor:'KAT -'+floor;$('ldN').textContent=o.title?o.title[1]:F.ad;$('ldH').textContent=o.title?o.title[2]:F.hint||'';{const hl=!KH.on&&!o.title&&HK[floor]&&HK[floor].load;const TP=KH.on?KH_TIPS:LD_TIPS;$('ldT').textContent=hl||TP[Math.floor(Math.random()*TP.length)];$('ldT').classList.toggle('hk',!!hl);}
+  let pp='';for(let i=1;i<=(KH.on?CH_DEF.length-1:FLOORS.length);i++)pp+=`<i class="${i<floor?'d':i===floor?'c':''}"></i>`;$('ldP').innerHTML=pp;
   Object.assign(LD,{on:true,t:0,t0:performance.now(),tl:0,surf:floor===1&&!!o.surface,hold:floor===1&&o.surface?1e9:0,min:o.min||1.6,max:floor===1&&o.surface?26:9,work:o.work,done:o.done,worked:false,floor,d0:o.title?0:ldDepth(floor-1),d1:o.title?0:ldDepth(floor),fin:0,shown:0,bounce:0,
     miners:Math.max(1,Math.min(4,1+((RUN.alive&&RUN.alive.length)||0)+(NET.started?Math.max(0,(NET.humans||1)-1):0)))});
   const el=$('load');el.classList.remove('out');el.hidden=false;$('hud').hidden=true;$('ldF').style.width='0%';$('ldM').textContent=LD.d0+' m';
@@ -10045,7 +10574,7 @@ function sfRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.4,1
   if(cam||!KH.on)for(const p of SF.lanterns)draw(MS,X(M4.T(p[0],p[1],p[2]),M4.S(.07,.1,.07)),[.3,.25,.15],[1.4,.9,.35],3);
   {const lf=.92+.08*Math.sin(t*9.1);draw(MS,X(M4.T(SF.lamp[0],SF.lamp[1]+.08,SF.lamp[2]),M4.S(.06,.08,.06)),[.3,.25,.15],[1.5*lf,1*lf,.4*lf],3);}
   // kafes (önü galeriye bakar)
-  {const sv=SF.sheave||[-.4,3.5,0,.4];cageDraw(X(M4.T(0,SF.cy,0),M4.RY(Math.PI)),{lamp:[.1,.9,.2],gate:SF.gate,hang:true,cable:sv[1]-(SF.cy+2.75+.63)});
+  {const sv=SF.sheave||[-.4,3.5,0,.4];if(KH.on)try{cageRailsW(0,0,Math.PI,-11,Math.min(4.2,sv[1]+.3),null);}catch(e){frameErr('sray',e);}cageDraw(X(M4.T(0,SF.cy,0),M4.RY(Math.PI)),{lamp:[.1,.9,.2],gate:SF.gate,hang:true,cable:sv[1]-(SF.cy+2.75+.63)});
     if(m.sheave)draw(m.sheave,X(M4.T(sv[0],sv[1],sv[2]),M4.RZ(SF.cy/sv[3])),[.26,.075,.05],Z3,3);}
   // ekip (botlar ve diğer oyuncular)
   if(!cam)for(const b of bots){if(b.st==='buried'||b.away||(b.remote&&!b.sf))continue;if(MN.ready&&b.boneM&&b.ap){if(inView(b.x,(b.mnY||0)+floorY(b.x,b.z)+.9,b.z,1.3))drawMinerModel(b);}}

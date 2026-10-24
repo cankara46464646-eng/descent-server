@@ -1955,6 +1955,40 @@
    "kb": 771,
    "used": true,
    "license": "CC0 (Poly Haven)"
+  },
+  {
+   "id": "church_wall",
+   "kind": "wall",
+   "source": "polyhaven:plaster_stone_wall_01",
+   "desc": "Kilise iç duvarı: dökülmüş sıva altında taş örgü (Poly Haven plaster_stone_wall_01, CC0)",
+   "path": "Surfaces/church_wall/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.151,
+    0.151,
+    0.151
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 526,
+   "used": true,
+   "license": "CC0 (Poly Haven)"
+  },
+  {
+   "id": "church_floor",
+   "kind": "floor",
+   "source": "polyhaven:medieval_blocks_05",
+   "desc": "Kilise zemini: aşınmış iri taş döşeme (Poly Haven medieval_blocks_05, CC0)",
+   "path": "Surfaces/church_floor/",
+   "tile_m": 2.0,
+   "meanLinear": [
+    0.0988,
+    0.0988,
+    0.0988
+   ],
+   "tex": "albedo.jpg 1024 (cavity), normal.jpg 1024, rha.jpg 512 (R=roughness G=height B=AO)",
+   "kb": 825,
+   "used": true,
+   "license": "CC0 (Poly Haven)"
   }
  ],
  "decals": [
