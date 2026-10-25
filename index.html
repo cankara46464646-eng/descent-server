@@ -694,7 +694,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v96</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v97</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -1557,12 +1557,13 @@ const ENV_FS=[['rock_layered','ground_dark'],['rock_grey','ground_coal'],['rock_
 const ENV_MAT={def:{spec:.1,gloss:20,wrap:.12},metal:{spec:.3,gloss:40,wrap:0},plant:{spec:.05,gloss:14,wrap:.55}};
 function envRand(s){let a=s>>>0;return()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
 async function envImg(src,half){const im=await loadImg(src);if(half&&window.createImageBitmap){try{return await createImageBitmap(im,{resizeWidth:Math.max(64,im.width>>1),resizeHeight:Math.max(64,im.height>>1),resizeQuality:'high'});}catch(e){}}return im;}
+async function fetchR(u,T){let e;for(const ms of T){try{const r=await fetchT(u,ms);if(r.ok)return r;e=new Error(u+' '+r.status);if(r.status===404)break;}catch(x){e=x;}await new Promise(z=>setTimeout(z,700));}throw e;}
 function fetchT(u,ms){const c=window.AbortController?new AbortController():null;const t=setTimeout(()=>{try{c&&c.abort();}catch(e){}},ms||8000);return fetch(u,c?{signal:c.signal}:undefined).finally(()=>clearTimeout(t));}
-async function envInit(){try{const r=await fetchT(ENV.base+'library.json',15000);if(!r.ok)throw new Error('library '+r.status);const lib=await r.json();
+async function envInit(){try{const pF=fetchR('Environment/Forest/library.json',[10000,20000]),pP=fetchR('Environment/Props/library.json',[12000,25000,40000]);pF.catch(()=>{});pP.catch(()=>{});const r=await fetchR(ENV.base+'library.json',[15000,25000,40000]);if(!r.ok)throw new Error('library '+r.status);const lib=await r.json();
   // ikinci kütüphane: Environment/Forest (Kök Ormanı). Yüklenemezse orman katı prosedürel köklerle devam eder.
-  try{const r2=await fetchT('Environment/Forest/library.json',7000);if(r2.ok){const F2=await r2.json();for(const a of F2.assets){a.path='../Forest/'+a.path;if(a.texPath)a.texPath='../Forest/'+a.texPath;lib.assets.push(a);}ENV.forest=true;}}catch(e){console.warn('Orman kütüphanesi yüklenemedi:',e);}
+  try{const r2=await pF;if(r2.ok){const F2=await r2.json();for(const a of F2.assets){a.path='../Forest/'+a.path;if(a.texPath)a.texPath='../Forest/'+a.texPath;lib.assets.push(a);}ENV.forest=true;}}catch(e){console.warn('Orman kütüphanesi yüklenemedi:',e);}
   // üçüncü kütüphane: Environment/Props (Poly Haven CC0 — jeneratör, bidon, dolap, sandık, fener)
-  try{const r3=await fetchT('Environment/Props/library.json',7000);if(r3.ok){const P3=await r3.json();for(const a of P3.assets){a.path='../Props/'+a.path;lib.assets.push(a);}ENV.props=true;}}catch(e){console.warn('Eşya kütüphanesi yüklenemedi:',e);}
+  try{const r3=await pP;if(r3.ok){const P3=await r3.json();for(const a of P3.assets){a.path='../Props/'+a.path;lib.assets.push(a);}ENV.props=true;}}catch(e){console.warn('Eşya kütüphanesi yüklenemedi:',e);}
   ENV.lib=lib;for(const a of ENV.lib.assets)ENV.byId[a.id]=a;if(ENV.props&&typeof CAGE_P!=='undefined')setTimeout(()=>{for(const id of CAGE_P)envAsset(id);},0);for(const s of ENV.lib.surfaces)ENV.byId['S:'+s.id]=s;for(const d of ENV.lib.decals)ENV.byId['D:'+d.id]=d;
   if(pl){envSurfaces(KH.on?(CHD().surf||CHD().look+1):RUN.floor);for(const g of ENV.groups.values())envAsset(g.a);for(const id in (ENV.Dm||{}))envDecalTex(id);}}catch(e){console.warn('Çevre kütüphanesi yüklenemedi (oyun eski görünümle devam eder):',e);}}
 // ---- statik mesh (KDM3) + PBR doku yükleme; her asset ilk ihtiyaçta bir kez yüklenir ----
@@ -1583,17 +1584,18 @@ function envAsset(id){if(!ENV.lib)return null;let a=ENV.A[id];if(a)return a.read
     gl.bindVertexArray(null);
     a.vao=vao;a.H=H;a.qs=H.qs;a.qo=H.qo;a.it=H.idx32?gl.UNSIGNED_INT:gl.UNSIGNED_SHORT;a.bs=H.idx32?4:2;a.off=[0,H.lods[0],H.lods[0]+H.lods[1]];
     a.ta=TX.ta;a.tn=TX.tn;a.tr=TX.tr;a.alpha=alpha;a.m=alpha?ENV_MAT.plant:e.tags.includes('metal')||e.tex.metal?ENV_MAT.metal:ENV_MAT.def;
-    a.noLod=e.tags.includes('lining');a.r=Math.hypot(...H.dims)/2;a.ready=true;})).catch(err=>{a.bad=true;a.err=String(err&&err.stack||err);console.warn('env asset',id,String(err));});
+    a.noLod=e.tags.includes('lining');a.r=Math.hypot(...H.dims)/2;a.ready=true;})).catch(err=>{a.bad=true;a.err=String(err&&err.stack||err);console.warn('env asset',id,String(err));{const RT=ENV.AR||(ENV.AR={});const n=RT[id]=(RT[id]||0)+1;if(n<4)setTimeout(()=>{if(ENV.A[id]===a)delete ENV.A[id];},3000*n);}});
   return null;}
 ENV.TX={};
 function envTexSet(p,half,alpha,atlas,tf){const K=tf?p+tf+'#'+atlas[0].join(','):p;if(ENV.TX[K])return ENV.TX[K];
   if(atlas)return ENV.TX[K]=loadImg(p+(tf||'tex.jpg')).then(im=>jq(()=>{const cut=r=>{const s=half?.5:1;const c=document.createElement('canvas');c.width=Math.max(4,Math.round(r[2]*s));c.height=Math.max(4,Math.round(r[3]*s));c.getContext('2d',{willReadFrequently:true}).drawImage(im,r[0],r[1],r[2],r[3],0,0,c.width,c.height);return c;};
     const ia=cut(atlas[0]),na=cut(atlas[1]),ra=cut(atlas[2]);let A=ia;if(alpha&&atlas[3]){const oa=cut(atlas[3]);const w=ia.width,h=ia.height,ox=oa.getContext('2d',{willReadFrequently:true}),O=ox.getImageData(0,0,Math.min(w,oa.width),Math.min(h,oa.height)).data;const ad=ia.getContext('2d',{willReadFrequently:true}).getImageData(0,0,w,h);for(let i=0,j=0;i<ad.data.length;i+=4,j+=4)ad.data[i+3]=O[j]??255;A=ad;}
-    return {ta:mnTex(A,true),tn:mnTex(na,false),tr:mnTex(ra,false)};}));
+    const T3={ta:mnTex(A,true),tn:mnTex(na,false),tr:mnTex(ra,false)};for(const c of[ia,na,ra])try{c.width=c.height=0;}catch(e){}return T3;}));
   return ENV.TX[p]=Promise.all([envImg(p+'albedo.jpg',half),envImg(p+'normal.jpg',half),envImg(p+'rma.jpg',half),alpha?envImg(p+'opacity.jpg',half):null]).then(async([ia,na,ra,oa])=>{
     let A=ia;if(oa)A=await jq(()=>{let A;const w=ia.width,h=ia.height,cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d',{willReadFrequently:true});
       cx.drawImage(oa,0,0,w,h);const O=cx.getImageData(0,0,w,h).data;cx.clearRect(0,0,w,h);cx.drawImage(ia,0,0,w,h);A=cx.getImageData(0,0,w,h);for(let i=0;i<A.data.length;i+=4)A.data[i+3]=O[i];return A;});
     const ta=await jq(()=>mnTex(A,true)),tn=await jq(()=>mnTex(na,false)),tr=await jq(()=>mnTex(ra,false));return {ta,tn,tr};});}
+{const _ts=envTexSet;envTexSet=function(p,half,alpha,atlas,tf){const K=tf?p+tf+'#'+atlas[0].join(','):p;const had=ENV.TX[K];const r=_ts.apply(this,arguments);if(!had&&r&&r.catch)r.catch(()=>{if(ENV.TX[K]===r)delete ENV.TX[K];});return r;};}
 // ---- mağara yüzeyleri: albedo+yükseklik ve normal+pürüzlülük+AO tek dokularda paketlenir (triplanar, 2 doku/yüzey) ----
 function envSurf(id){if(!ENV.lib)return null;let s=ENV.S[id];if(s)return s.ready?s:null;s=ENV.S[id]={ready:false};const e=ENV.byId['S:'+id];if(!e){s.bad=true;return null;}
   const b=ENV.base+e.path,half=SET.gfx<=1;
@@ -1603,7 +1605,7 @@ function envSurf(id){if(!ENV.lib)return null;let s=ENV.S[id];if(s)return s.ready
     const A=await jq(()=>px(ia)),R=(await jq(()=>px(ra))).data,Nn=(await jq(()=>px(na))).data;const Ad=A.data;
     const Nd=await jq(()=>{for(let i=0;i<Ad.length;i+=4)Ad[i+3]=R[i+1];
       const Nd=new ImageData(w,h),nd=Nd.data;for(let i=0;i<nd.length;i+=4){nd[i]=Nn[i];nd[i+1]=Nn[i+1];nd[i+2]=R[i];nd[i+3]=R[i+2];}return Nd;});
-    const ta=await jq(()=>mnTex(A,true)),tn=await jq(()=>mnTex(Nd,false));if(ENV.S[id]!==s){gl.deleteTexture(ta);gl.deleteTexture(tn);return;}s.ta=ta;s.tn=tn;s.mean=e.meanLinear;s.ready=true;}).catch(err=>{s.bad=true;console.warn('env surface',id,err);});
+    const ta=await jq(()=>mnTex(A,true)),tn=await jq(()=>mnTex(Nd,false));if(ENV.S[id]!==s){gl.deleteTexture(ta);gl.deleteTexture(tn);return;}try{cv.width=cv.height=0;}catch(_e){}s.ta=ta;s.tn=tn;s.mean=e.meanLinear;s.ready=true;}).catch(err=>{s.bad=true;console.warn('env surface',id,err);const RT=ENV.SR||(ENV.SR={});const n=RT[id]=(RT[id]||0)+1;if(n<4)setTimeout(()=>{if(ENV.S[id]===s)delete ENV.S[id];},3000*n);});
   return null;}
 // bu katın yüzeyleri yüklenir, bir alt katınkiler önceden istenir; ikisinde de olmayan yüzey dokuları GPU'dan silinir (mobil bellek)
 function envSurfaces(f){const L=ENV_FS[f-1]||ENV_FS[0],Nx=ENV_FS[f]||[];const keep=new Set([L[0],L[1],L[2]||'rock_drilled',...(L[3]?[L[3]]:[]),...Nx]);
@@ -3552,7 +3554,9 @@ function th2Use(c){const it=c.it;if(it.k!=='bat')netLog('t2',it.id);th2Do(it,tru
 function th2Apply(id){const it=TH2.use&&TH2.use[id];if(it)th2Do(it,false);}
 
 // ---- çevre modülü sonu ----
-envInit();
+ENV.libP=envInit().finally(()=>{ENV.libDone=true;if(ENV.lib&&!ENV.props)setTimeout(envPropsRetry,15000);});
+// eşya kütüphanesi yine de inmediyse arka planda tekrar denenir (sonraki modeller/kafes gelir)
+async function envPropsRetry(){if(ENV.props||!ENV.lib)return;try{const r3=await fetchT('Environment/Props/library.json',40000);if(!r3.ok)throw new Error(r3.status);const P3=await r3.json();for(const a of P3.assets){a.path='../Props/'+a.path;ENV.lib.assets.push(a);ENV.byId[a.id]=a;const q=ENV.A[a.id];if(q&&q.bad)delete ENV.A[a.id];}ENV.props=true;if(typeof CAGE_P!=='undefined')for(const id of CAGE_P)envAsset(id);}catch(e){setTimeout(envPropsRetry,20000);}}
 
 function dzSample(ci,t,out,M){const DZ=M||DZG;const c=DZ.clips[ci],nb=DZ.nb,D=c.data,last=c.frames-1;let f=t*c.fps;
   if(c.loop){f%=last;if(f<0)f+=last;}else f=Math.min(Math.max(f,0),last);
@@ -8109,9 +8113,9 @@ function k6Tex(key,W,Hh,fn){let t=K6T.tex.get(key);if(t)return t;const c=documen
   t=gl.createTexture();gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,t);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);gl.generateMipmap(gl.TEXTURE_2D);
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);K6T.tex.set(key,t);return t;}
 // kireçtaşı yüzeyi (Poly Haven marble_01'in bir karosu, atlasın içinden) — yüklenene kadar düz taş rengi
-let K6LIME=null;function k6Lime(){if(K6LIME!==null)return K6LIME;K6LIME=false;const im=new Image();im.onload=()=>{K6LIME=im;for(const k of[...K6T.tex.keys()])if(k.startsWith('slab:')){gl.deleteTexture(K6T.tex.get(k));K6T.tex.delete(k);}};im.src=ENV.base+'../Props/kilise/k_tex5.jpg';return false;}
+let K6LIME=null;function k6Lime(){if(K6LIME!==null)return K6LIME;K6LIME=false;const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(im,0,1536,512,512,0,0,256,256);K6LIME=c;for(const k of[...K6T.tex.keys()])if(k.startsWith('slab:')){gl.deleteTexture(K6T.tex.get(k));K6T.tex.delete(k);}};im.src=ENV.base+'../Props/kilise/k_tex5.jpg';return false;}
 function k6Engrave(x,W,Hh,lines,o){o=o||{};const L=k6Lime();
-  if(L)x.drawImage(L,0,1536,512,512,0,0,W,Hh);else{x.fillStyle='#b4ab98';x.fillRect(0,0,W,Hh);}
+  if(L)x.drawImage(L,0,0,256,256,0,0,W,Hh);else{x.fillStyle='#b4ab98';x.fillRect(0,0,W,Hh);}
   x.fillStyle='rgba(40,36,30,.18)';x.fillRect(0,0,W,Hh);// kir, yaş
   for(let i=0;i<900;i++){x.fillStyle=`rgba(${30+Math.random()*30|0},${28+Math.random()*25|0},20,${Math.random()*.08})`;const r=1+Math.random()*4;x.fillRect(Math.random()*W,Math.random()*Hh,r,r);}
   const g=x.createRadialGradient(W/2,Hh/2,Math.min(W,Hh)*.2,W/2,Hh/2,Math.max(W,Hh)*.7);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(20,16,10,.45)');x.fillStyle=g;x.fillRect(0,0,W,Hh);
@@ -8519,7 +8523,8 @@ Object.assign(CH_SFX,{
 function envMeshTxt(e,b,id){if(e.pack){const P=ENV.PK||(ENV.PK={});const u=ENV.base+e.pack;const p=P[u]||(P[u]=fetch(u).then(r=>{if(!r.ok)throw new Error(u);return r.json();}).catch(err=>{delete P[u];throw err;}));
     return p.then(J=>{const t=J[id];if(!t)throw new Error(id);return t;});}
   return fetch(b+'mesh.txt').then(r=>{if(!r.ok)throw new Error(id);return r.text();});}
-{const _li=loadImg;const C=new Map();loadImg=function(src){if(/\/kilise\//.test(src)){if(!C.has(src))C.set(src,_li(src).catch(e=>{C.delete(src);throw e;}));return C.get(src);}return _li.apply(this,arguments);};}
+// atlas sayfası bir kez çözülür; 12 sn kullanılmazsa bırakılır (telefon belleği)
+{const _li=loadImg;const C=new Map();loadImg=function(src){if(/\/kilise\//.test(src)){let E=C.get(src);if(!E){E={p:_li(src).catch(e=>{C.delete(src);throw e;}),t:0};C.set(src,E);}clearTimeout(E.t);E.t=setTimeout(()=>C.delete(src),12000);return E.p;}return _li.apply(this,arguments);};}
 // bölüm başlarken kilise modellerini erkenden iste
 {const _ci=chInit;chInit=function(){const r=_ci.apply(this,arguments);if(RUN.floor===6)try{for(const id of['k_bell','k_clap','k_rope','k_link','k_lock','k_slab','k_doorF','k_doorL','k_doorR','k_bench','k_lantch_m0','k_cand2_m2','k_cand2_m3','k_cand3','k_statue','k_cab','k_commode','k_table','k_chair','k_goblet','k_vase','k_crow','k_key','gate','beam_a','beam_c','grail'])envAsset(id);}catch(e){}return r;};}
 // bölüm başında kuyu yolculuğundan kalan her şey temizlenir (çok oyunculuda istemci, kopma anında yeni bölüme geçebilir)
@@ -8528,6 +8533,39 @@ function envMeshTxt(e,b,id){if(e.pack){const P=ENV.PK||(ENV.PK={});const u=ENV.b
 {const _pg=chPostGen;chPostGen=function(){K6.on=false;KH.elev=null;KH.flatF=null;KH.regF=null;KH.exF=null;const r=_pg.apply(this,arguments);if(RUN.floor===6){KH.elev=k6Elev;KH.flatF=k6Flat;KH.regF=k6Reg;KH.exF=k6Exc;}return r;};}
 {const _m=chMusic;chMusic=function(dt){if(RUN.floor===6&&K6.on&&K6.ended){try{mzInit();mz('sabah',.75,3);mz('yatak',0,1);mz('gerilim',0,1);mz('kova',0,.8);}catch(e){}return;}return _m.apply(this,arguments);};}
 ENV_TINT.board=()=>[.62,.55,.48];ENV_TINT.lime=()=>[.4,.38,.35];ENV_TINT.pew=()=>[.5,.36,.3];
+// ---------------- v97: Rıza Usta'nın (zırhlı) saldırısı — parazit/pikselleşme yok; 3.04 sn boyunca vurur, ekran sarsılır ----------------
+// Dinleyen'in yakalaması (parazit, donan görüntü) ondan ayrı kalsın: Rıza Usta seni duvara çarpar, yumruklar, yere düşersin.
+const ZRK={T:3.04,B:[.08,.55,1.02,1.46,1.9,2.32,2.7]};
+function zrAttackStart(){const e=ZRL.e;KH.zrB=0;KH.zrJ=[0,0,0];KH.zrFall=0;DNL.stat=0;KH.dieCam={x:pl.x,z:pl.z,y:floorY(pl.x,pl.z)+1.55,yaw:pl.yaw,pitch:pl.pitch};
+  if(e){const dd=1.05;e.x=pl.x-Math.sin(pl.yaw)*dd;e.z=pl.z-Math.cos(pl.yaw)*dd;if(hits(e.x,e.z,.2)){e.x=pl.x-Math.sin(pl.yaw)*.8;e.z=pl.z-Math.cos(pl.yaw)*.8;}e.face=Math.atan2(-(pl.x-e.x),-(pl.z-e.z));e.st='grab';e.stT=0;e.an=null;dzPlay(e,'grab',1.25);}
+  sfx('zrRoar',1.25);G.shake=Math.max(G.shake,.6);try{chMusDie();}catch(er){}}
+function zrAttackFx(t,dt){DNL.stat=0;KH.flk=0;const J=KH.zrJ||(KH.zrJ=[0,0,0]);
+  for(let i=0;i<ZRK.B.length;i++)if(t>=ZRK.B[i]&&(KH.zrB||0)<=i){KH.zrB=i+1;const last=i===ZRK.B.length-1;
+    hitFx(last?1:.9);G.shake=Math.max(G.shake,last?1.1:.85);sfx('thump',1);if(i%2===0)sfx('clang',.5,(Math.random()-.5)*.6);sfx(i%3===1?'zrPain':'zrBreath',.75);
+    J[0]+=(Math.random()<.5?-1:1)*(.22+Math.random()*.2);J[1]+=-.08-(Math.random()*.16);J[2]+=(Math.random()<.5?-1:1)*(.2+Math.random()*.22);
+    const e=ZRL.e;if(e&&e.st==='grab'&&Math.random()<.5)dzPlay(e,'grab',1.3);
+    try{if(SET.vib!==false&&navigator.vibrate)navigator.vibrate(last?[160,60,260]:[110]);}catch(_){}}
+  for(let k=0;k<3;k++)J[k]*=Math.exp(-dt*3.2);
+  // son vuruşlarda yere yığılırsın; görüntü kararır
+  KH.zrFall=clamp((t-2.25)/.75,0,1);const f=$('fade');if(f&&t>2.2)f.style.opacity=String(Math.min(.85,(t-2.2)/.84*.85));}
+// ölüm
+zrDie=function(){if(chFaintOK())return chFaintStart('zirhli');if(G.state==='dnDie'||G.state==='end')return;
+  G.state='dnDie';G.cause='zirhli';KH.zrDie=1;KH.dieT=0;KH.dieDone=false;STATS.caught++;document.exitPointerLock?.();useHeld=false;zrAttackStart();netLog('dd','zirhli');$('tip').classList.remove('on');};
+zrDieTick=function(dt){if(KH.faintSeq)return;KH.dieT+=dt;const t=KH.dieT;zrAttackFx(t,dt);
+  if(t>ZRK.T&&!KH.dieDone){KH.dieDone=true;$('fade').style.opacity=1;setTimeout(()=>{KH.zrDie=0;KH.zrSt=0;KH.zrJ=null;KH.zrFall=0;DNL.stat=0;chAfterDeath();},500);}};
+// bayılma (bölümdeki tek hak): aynı saldırı, sonunda yerde uyanırsın
+{const _fs=chFaintStart;chFaintStart=function(cause){if(cause!=='zirhli')return _fs.apply(this,arguments);
+  KH.faintUsed=1;G.state='dnDie';G.cause=cause;KH.dieT=0;KH.dieDone=false;KH.faintSeq=1;KH.zrDie=1;STATS.caught++;useHeld=false;document.exitPointerLock?.();
+  zrAttackStart();$('tip').classList.remove('on');netLog('cx','fn',1);chFaintHud(true);};}
+{const _ft=chFaintTick;chFaintTick=function(dt){if(!(KH.zrDie&&G.cause==='zirhli'))return _ft.apply(this,arguments);
+  KH.dieT+=dt;const t=KH.dieT;zrAttackFx(t,dt);
+  if(t>ZRK.T){$('fade').style.opacity=1;sfx('heart',.8);KH.faintSeq=0;KH.zrDie=0;KH.dieCam=null;KH.zrJ=null;KH.zrFall=0;const H=!NET.started||NET.host;const e=ZRL.e;if(e&&H){e.st='retreat';e.stT=0;e.path=null;}
+    KH.faint={t:0,yaw:pl.yaw+(Math.random()<.5?1.2:-1.2),pitch:-.25,roll:(Math.random()<.5?1:-1)*1.25,up:0};G.state='faint';chFaintHud(true);}};}
+// ---- yükleme: bölümün yüzeyleri ve eşyaları hazır olmadan oyun başlamasın (yavaş bağlantıda eski görünüm/eksik model görünmesin) ----
+function chLdReady(){if(!ENV.lib)return true;const L=ENV_FS[(CHD().surf||CHD().look+1)-1]||[];for(const id of L.slice(0,4)){if(!id)continue;envSurf(id);const q=ENV.S[id];if(q&&!q.ready&&!q.bad)return false;}
+  if(!ENV.props)return true;const ids=new Set(typeof CAGE_P!=='undefined'?CAGE_P:[]);for(const d of KH.decor||[])for(const p of chParts(d.a))ids.add(p);for(const it of KH.items||[])if(it.a)for(const p of chParts(it.a))ids.add(p);
+  if(RUN.floor===6)for(const id of['k_bell','k_rope','k_link','k_lock','k_slab','k_doorF','k_doorL','k_doorR','k_bench','k_lantch_m0','k_cand2_m2','k_cand2_m3','k_statue','k_table'])ids.add(id);
+  for(const id of ids){if(!ENV.byId[id])continue;envAsset(id);const q=ENV.A[id];if(q&&!q.ready&&!q.bad)return false;}return true;}
 // ==== HİKÂYE END ====
 // ================= Çok oyunculu: claude.ai "room" yeteneği (oda kodu, 4 kişi, botlar boşluğu doldurur) =================
 // Taşıma: her oyuncunun "presence" nesnesi (4 KiB, ~30/sn birleştirilerek gönderilir). Herkes kendi durumunu ve son olaylarını
@@ -9289,7 +9327,7 @@ function cageHang(m,Ht,L){const D=[.1,.1,.095],S=[.16,.15,.13];draw(MB,X(m,M4.T(
     const yaw=Math.atan2(dx,dz),pit=Math.acos(dy/l);draw(MC,X(m,M4.T(mid[0],mid[1],mid[2]),M4.RY(yaw),M4.RX(pit),M4.S(.018,l,.018)),S,Z3,3);}
   draw(MS,X(m,M4.T(0,Ht+.44,0),M4.S(.1,.12,.06)),S,Z3,3);draw(MC,X(m,M4.T(0,Ht+.56,0),M4.S(.07,.14,.07)),D,Z3,3);
   const LL=Math.max(.05,L||1);draw(MC,X(m,M4.T(0,Ht+.63+LL/2,0),M4.S(.03,LL,.03)),[.07,.068,.064],Z3,3);}
-function cageDraw(m,o){m=X(m,M4.S(CGS,KH.on?CGY:1,CGS));if(cageEnvOK()){const W=.95,Ht=2.75;try{const u=envBegin(),PL=envPlanes();const one=(id,M,v)=>envDrawGroup(u,{a:id,v:v||'',far:60},[{m:M,x:M[12],z:M[14],cell:-1}],PL);
+function cageDraw(m,o){m=X(m,M4.S(CGS,KH.on?CGY:1,CGS));if(KH.on&&!cageEnvOK()){try{cageRails(m,o);}catch(e){}return;}if(cageEnvOK()){const W=.95,Ht=2.75;try{const u=envBegin(),PL=envPlanes();const one=(id,M,v)=>envDrawGroup(u,{a:id,v:v||'',far:60},[{m:M,x:M[12],z:M[14],cell:-1}],PL);
       for(const id of(KH.on?['cage_floor']:['cage_frame','cage_floor','cage_roof','cage_mesh','cage_stripe']))one(id,m,KH.on&&id==='cage_frame'?'cageRed':'');
       const gk=.12+.88*clamp(o.gate==null?0:o.gate,0,1);if(!KH.on)one('cage_gate',X(m,M4.T(-W,0,-W-.03),M4.S(gk,1,1)));}catch(e){}
     gl.useProgram(PR.p);gl.bindVertexArray(null);if(KH.on)try{cageRails(m,o);}catch(e){frameErr('korkuluk',e);}
@@ -9446,7 +9484,7 @@ function render0(){
   else if((G.state==='dragged'||G.state==='dying')&&G.dragBy==='pale'&&pale){eye=[pl.x,floorY(pl.x,pl.z)+.42+Math.abs(Math.sin(t*7))*.08,pl.z];yaw=Math.atan2(-(pale.x-pl.x),-(pale.z-pl.z));pitch=.55+Math.sin(t*3)*.06;roll=Math.sin(t*6)*.22;}
   else if(G.state==='dragged'||(G.state==='dying'&&cr.victim===pl)){eye=[pl.x,floorY(pl.x,pl.z)+.42+Math.abs(Math.sin(t*9))*.1,pl.z];yaw=Math.atan2(-(cr.x-pl.x),-(cr.z-pl.z));pitch=.42+Math.sin(t*3)*.08;roll=Math.sin(t*7)*.28;}
   else if(G.state==='buried'){eye=[pl.x,floorY(pl.x,pl.z)+.7,pl.z];pitch=-.2;roll=.35;}
-  else if(G.state==='dnDie'&&KH.dieCam){const C=KH.dieCam,e=KH.zrDie&&ZRL.e?ZRL.e:DNL.e,k=Math.min(1,KH.dieT/1.1);eye=[C.x,C.y-k*.25,C.z];const hp=e&&e.headPos||[C.x-Math.sin(C.yaw),C.y+.5,C.z-Math.cos(C.yaw)];yaw=Math.atan2(-(hp[0]-C.x),-(hp[2]-C.z));pitch=Math.atan2(hp[1]-eye[1],Math.hypot(hp[0]-C.x,hp[2]-C.z))*k+C.pitch*(1-k);roll=Math.sin(KH.dieT*7)*.05*k;}
+  else if(G.state==='dnDie'&&KH.dieCam){const C=KH.dieCam,e=KH.zrDie&&ZRL.e?ZRL.e:DNL.e,k=Math.min(1,KH.dieT/1.1);eye=[C.x,C.y-k*.25,C.z];const hp=e&&e.headPos||[C.x-Math.sin(C.yaw),C.y+.5,C.z-Math.cos(C.yaw)];yaw=Math.atan2(-(hp[0]-C.x),-(hp[2]-C.z));pitch=Math.atan2(hp[1]-eye[1],Math.hypot(hp[0]-C.x,hp[2]-C.z))*k+C.pitch*(1-k);roll=Math.sin(KH.dieT*7)*.05*k;if(KH.zrDie&&KH.zrJ){yaw+=KH.zrJ[0];pitch+=KH.zrJ[1];roll+=KH.zrJ[2]+(KH.zrFall||0)*.9;eye[1]-=(KH.zrFall||0)*1.15;}}
   else if(G.state==='faint'&&KH.faint){const F=KH.faint,u=F.up||0;eye=[pl.x,floorY(pl.x,pl.z)+.24+u*1.36,pl.z];yaw=F.yaw;pitch=F.pitch*(1-u);roll=F.roll*(1-u)+Math.sin(G.time*1.1)*.025*(1-u);}
   else if(G.state==='chAsc'){eye=[ASC.x+Math.sin(G.time*1.7)*.02,floorY(ASC.x,ASC.z)+1.6+ASC.y+Math.sin(G.time*9)*.012,ASC.z];}
   else{eye=[pl.x,floorY(pl.x,pl.z)+1.6-(pl.crouchK||0)*.55+Math.sin(pl.bob)*.035+(G.arrive||(KH.on&&(KH.dep||(typeof K6!=='undefined'&&K6.wake)))?arriveOff():0),pl.z];const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll+=R[2];pitch+=R[3];}
@@ -9890,20 +9928,20 @@ function ldSurface(g,cw,ch,Y,L0,R0){const gy=ch*.72-Y;if(gy<=-10)return -1;const
   return top-14;}
 function loadShow(floor,o){o=o||{};try{if(floor===1&&o.surface)sfPreload();}catch(e){}const F=KH.on?(CH_F[floor-1]||CH_F[0]):FLOORS[floor-1]||FLOORS[0];$('ldK').textContent=o.title?o.title[0]:KH.on?'BÖLÜM '+floor:'KAT -'+floor;$('ldN').textContent=o.title?o.title[1]:F.ad;$('ldH').textContent=o.title?o.title[2]:F.hint||'';{const hl=!KH.on&&!o.title&&HK[floor]&&HK[floor].load;const TP=KH.on?KH_TIPS:LD_TIPS;$('ldT').textContent=hl||TP[Math.floor(Math.random()*TP.length)];$('ldT').classList.toggle('hk',!!hl);}
   let pp='';for(let i=1;i<=(KH.on?CH_DEF.length-1:FLOORS.length);i++)pp+=`<i class="${i<floor?'d':i===floor?'c':''}"></i>`;$('ldP').innerHTML=pp;
-  Object.assign(LD,{on:true,t:0,t0:performance.now(),tl:0,surf:floor===1&&!!o.surface,hold:floor===1&&o.surface?1e9:0,min:o.min||1.6,max:floor===1&&o.surface?26:9,work:o.work,done:o.done,worked:false,floor,d0:o.title?0:ldDepth(floor-1),d1:o.title?0:ldDepth(floor),fin:0,shown:0,bounce:0,
+  Object.assign(LD,{on:true,t:0,t0:performance.now(),tl:0,surf:floor===1&&!!o.surface,hold:floor===1&&o.surface?1e9:0,min:o.min||1.6,max:floor===1&&o.surface?26:(KH.on?32:9),work:o.work,done:o.done,worked:false,floor,d0:o.title?0:ldDepth(floor-1),d1:o.title?0:ldDepth(floor),fin:0,shown:0,bounce:0,
     miners:Math.max(1,Math.min(4,1+((RUN.alive&&RUN.alive.length)||0)+(NET.started?Math.max(0,(NET.humans||1)-1):0)))});
   const el=$('load');el.classList.remove('out');el.hidden=false;$('hud').hidden=true;$('ldF').style.width='0%';$('ldM').textContent=LD.d0+' m';
   try{ldInitCanvas();}catch(e){console.warn('ld canvas',e);}
   if(o.sfx)liftSfx();
   // iki kare bekle: yükleme ekranı görünsün, sonra ağır iş (harita üretimi) çalışsın
-  const id=LD.id=(LD.id||0)+1;requestAnimationFrame(()=>requestAnimationFrame(()=>{if(LD.id!==id||LD.worked)return;ldWork();}));}
+  const id=LD.id=(LD.id||0)+1;const go=()=>{if(LD.id!==id||LD.worked)return;if(!ENV.libDone&&performance.now()-LD.t0<60000){setTimeout(go,150);return;}LD.tw=(performance.now()-LD.t0)/1000;LD.max+=LD.tw;ldWork();};requestAnimationFrame(()=>requestAnimationFrame(go));}
 function ldWork(){LD.worked=true;try{if(LD.work)LD.work();}catch(e){console.error('yükleme',e);}if(LD.on)G.state='load';}
 // testler ve acil durum: beklemeden bitir
 function ldFinishNow(){if(!LD.on)return;if(!LD.worked)ldWork();$('load').hidden=true;LD.on=false;LD.cx=null;$('hud').hidden=false;if(G.state==='load')G.state='play';const d=LD.done;LD.done=null;if(d)d();}
 function ldNeeds(){const F=FLOORS[LD.floor-1]||{};const L=[['Mağara kazılıyor',LD.worked],['Madenciler',typeof MN==='undefined'||!!MN.ready],['Yaratık',KH.on?(typeof DN==='undefined'||!!DN.ready):(typeof HX==='undefined'||!!HX.ready)]];
   if(F.pale&&!F.roots)L.push(['Derisiz',!!DZ.ready]);if(F.roots)L.push(['Öcü',!!OC.ready]);
   let au=true;if(AC){if(!AUD.ready)au=false;else{const k=Object.keys(AUD.load);au=!k.length||k.filter(u=>AUD.buf[u]).length>=k.length*.8;}}L.push(['Sesler',au]);
-  if(ENV.lib&&ENV.groups&&LD.worked&&!LD.surf){let n=0,r=0;for(const g of ENV.groups.values()){n++;const a=ENV.A[g.a];if(a&&(a.ready||a.bad))r++;}const sf=(ENV_FS[LD.floor-1]||ENV_FS[0]||[]).slice(0,2).every(id=>{const q=ENV.S[id];return !q||q.ready||q.bad;})&&(!ENV.props||(PROP_FLOOR[LD.floor]||[]).concat(typeof CAGE_P!=='undefined'?CAGE_P:[]).every(id=>{envAsset(id);const q=ENV.A[id];return !q||q.ready||q.bad;}));L.push(['Maden donanımı',(!n||r>=n)&&sf||LD.t>14]);}
+  if(ENV.lib&&ENV.groups&&LD.worked&&!LD.surf){let n=0,r=0;for(const g of ENV.groups.values()){n++;const a=ENV.A[g.a];if(a&&(a.ready||a.bad))r++;}const sf=(ENV_FS[LD.floor-1]||ENV_FS[0]||[]).slice(0,2).every(id=>{const q=ENV.S[id];return !q||q.ready||q.bad;})&&(!ENV.props||(PROP_FLOOR[LD.floor]||[]).concat(typeof CAGE_P!=='undefined'?CAGE_P:[]).every(id=>{envAsset(id);const q=ENV.A[id];return !q||q.ready||q.bad;}));L.push(['Maden donanımı',(!n||r>=n)&&sf&&(!KH.on||chLdReady())||LD.t>(KH.on?30:14)+(LD.tw||0)]);}
   if(LD.surf)L.push(['Orman',sfPreOK()||LD.t>24]);
   return L;}
 function loadTick(dt0){if(!LD.on)return;const nw=performance.now();const dt=Math.min(.1,(nw-(LD.tl||nw))/1000);LD.tl=nw;LD.t=(nw-LD.t0)/1000;const L=ldNeeds(),ok=L.filter(x=>x[1]).length,all=ok===L.length;
@@ -9913,7 +9951,7 @@ function loadTick(dt0){if(!LD.on)return;const nw=performance.now();const dt=Math
   const fr=Math.min(ok/L.length,.2+.8*Math.min(1,LD.t/LD.min));LD.shown+=(fr-LD.shown)*Math.min(1,dt*6);$('ldF').style.width=(LD.shown*100).toFixed(1)+'%';
   const dm=LD.fin?LD.d1:Math.min(LD.d1-1,LD.d0+LD.y/12);$('ldM').textContent=Math.round(dm)+' m';$('ldV').textContent=(LD.v/70).toFixed(1);
   const cur=L.find(x=>!x[1]);$('ldList').innerHTML=L.map(x=>`<li class="${x[1]?'ok':x===cur?'now':''}">${x[0]}</li>`).join('');
-  if(!LD.fin&&((all&&LD.t>=LD.min)||LD.t>LD.max)){LD.fin=1e-3;$('ldF').style.width='100%';const id=LD.id;
+  if(!LD.fin&&((all&&LD.t>=LD.min)||(LD.worked&&LD.t>LD.max))){LD.fin=1e-3;$('ldF').style.width='100%';const id=LD.id;
     setTimeout(()=>{if(LD.id!==id)return;sfx('thump',.5);},380);
     setTimeout(()=>{if(LD.id!==id)return;$('load').classList.add('out');setTimeout(()=>{if(LD.id!==id)return;ldFinishNow();},450);},800);}}
 // ==== SURF BEGIN: maden girişi — oyun mağaranın içinde, ağzın hemen önünde başlar ====
