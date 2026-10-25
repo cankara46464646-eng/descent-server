@@ -2,7 +2,8 @@
 <html lang="tr">
 <meta charset="utf-8">
 <style id="kdBootCss">body::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#030303;pointer-events:none;opacity:1;transition:opacity .7s ease}html.kdReady body::before{opacity:0}html:not(.kdReady) body>*{visibility:hidden!important}</style>
-<script>setTimeout(function(){document.documentElement.classList.add("kdReady")},9000)</script>
+<script>setTimeout(function(){document.documentElement.classList.add("kdReady")},9000);(function(){try{if(matchMedia("(orientation:portrait) and (pointer:coarse)").matches)document.documentElement.classList.add("rot","r90","rotEarly");}catch(e){}})();</script>
+<style>html.rotEarly body{position:fixed;inset:auto;left:0;top:0;width:100vh;height:100vw;transform-origin:0 0;transform:translateX(100vw) rotate(90deg)}</style>
 <title>Descent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -694,7 +695,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v97</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v98</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -890,7 +891,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
 </div>
 <div id="spec" hidden><div class="spTop"><small>İZLEYİCİ MODU</small><b id="specT">SENİ GÖTÜRDÜ</b><span id="specN"></span></div><div class="spNav"><button id="specPrev" aria-label="Önceki arkadaş"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><div class="spWho"><small>İZLİYORSUN</small><b id="specWho"></b></div><button id="specNext" aria-label="Sonraki arkadaş"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div><button id="specRevive" class="spRev" hidden><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v5h5"/></svg>KALDIĞIN YERDEN DEVAM</button><button id="specSkip">GEÇ<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l6 6-6 6M13 6l6 6-6 6"/></svg></button></div>
 
-<div id="rotate"><i></i>Telefonu yan çevir</div>
+
 <div id="err">Bu cihaz WebGL2 desteklemiyor. Güncel bir Chrome veya Safari ile dene.</div>
 
 <script>
@@ -6045,7 +6046,7 @@ KH.fpT={A:[0,-.2,-.35],k:1.05,x:22.5,y:-26.1,z:43.8,hd:[-.32,.11,1],ha:[0,0,-1],
   th:[1,0,0,60,0,1,0,-60,0,0,1,-40],th2:[0,1,0,33],th3:[0,1,0,33],lx:-24,ly:-33,lz:30,lpalm:[8,-3,.5]};
 function chLag(){const now=performance.now();const dt=Math.min(.1,Math.max(0,(now-(KH.lagT||now))/1000));KH.lagT=now;
   if(KH.lY==null||!isFinite(KH.lY)){KH.lY=pl.yaw;KH.lP=pl.pitch;}let dy=pl.yaw-KH.lY;dy=Math.atan2(Math.sin(dy),Math.cos(dy));const k=1-Math.exp(-dt/.085);KH.lY+=dy*k;KH.lP+=(pl.pitch-KH.lP)*k;
-  let ry=KH.lY-pl.yaw;ry=Math.atan2(Math.sin(ry),Math.cos(ry));KH.lagY=clamp(ry,-.4,.4);KH.lagP=clamp(KH.lP-pl.pitch,-.3,.3);}
+  let ry=KH.lY-pl.yaw;ry=Math.atan2(Math.sin(ry),Math.cos(ry));KH.lagY=clamp(ry,-.4,.4);KH.lagP=clamp(KH.lP-pl.pitch,-.3,.3);try{chSway(dt);}catch(e){}}
 // poz çözümü (model uzayı, cm): sağ el feneri yumruk gibi kavrar. Fener ekseni parmak eklemlerine uydurulan çemberin merkezinden geçer,
 // kalınlığı o çembere göre ayarlanır (parmaklar gövdeye gömülmez); başparmak gövdenin üstüne yatar (KH.fpT.th*)
 function chFPPose(P0,T,torch,left,br,boneM){const ey=FPA.ey,dz=FPA.dz,dy=FPA.dy;const cm=(x,y,z)=>({x:ey[0]-x,y:ey[1]+y-dy,z:ey[2]+z-dz});
@@ -6094,7 +6095,7 @@ function chFPArms(camW,bx,by,torch,left){if(typeof MN==='undefined'||!MN.ready)r
   if(left){const hp=r.Pp[bi['hand.l']],hq=r.Dq[bi['hand.l']];const palm=v3(hp,qRot(hq,T.lpalm));out.palmL=M4.mul(e.mnE,new Float32Array([100,0,0,0,0,100,0,0,0,0,100,0,palm[0],palm[1],palm[2],1]));}
   return out;}
 function chFPDraw(camW,bobx,boby){if(!ENV.lib||!ENV.props||pl.hideIn||KH.noFP)return;chLag();const L=[];const add=(a,m)=>L.push({a,m,x:m[12],z:m[14],cell:-1});
-  const camL=X(camW,M4.RY(KH.lagY||0),M4.RX(KH.lagP||0));const tid=TOOLS&&TOOLS[pl.tool]?TOOLS[pl.tool].id:'';KH.fpTool=tid;
+  const SO=KH.swO||[0,0,0],SP0=[.18,-.3,.05];const camL=X(camW,M4.RY(KH.lagY||0),M4.RX(KH.lagP||0),M4.T(SO[0]+SP0[0],SO[1]+SP0[1],SO[2]+SP0[2]),M4.RY(KH.swY||0),M4.RX(KH.swP||0),M4.RZ(KH.swR||0),M4.T(-SP0[0],-SP0[1],-SP0[2]));const tid=TOOLS&&TOOLS[pl.tool]?TOOLS[pl.tool].id:'';KH.fpTool=tid;
   const torch=pl.hasLamp&&tid!=='kazma'&&chAssetOK(KH.fpTorch||'torch');const rock=false,beam=tid==='beam'&&toolCount(pl.tool)>0&&!pl.can;
   // elde tutulan fener ve kol görünür olsun: yalnız bu çizim için hafif dolgu ışığı + ortam (dünyayı aydınlatmaz)
   const sc=SCN,a0=sc.amb,P0=sc.SP,D0=sc.SD,C0=sc.SC;let A=null;
@@ -6412,7 +6413,7 @@ function chFinaleTick(dt){if(!KH.final||!SF.on)return;if(pl.z>SFK.zm+14&&!KH.ev.
 // ---------------- yardımcılar ----------------
 function chToolShow(id){if(id==='rock')return false;if(id==='kazma')return !!KH.pick;if(id==='beam')return RUN.floor===2;return false;}
 // el feneri: elden çıkan dar, sıcak huzme (kenarı yumuşak), arkasında hafif dolgu
-function chLampSpot(SP,SD,SC,eye,yaw,pitch,fwd){chLag();const ly=yaw+(KH.lagY||0),lp=pitch+(KH.lagP||0);const rx=Math.cos(yaw),rz=-Math.sin(yaw);const k=pl.bat<.25?.55+pl.bat*1.8:1;const sw=Math.sin(pl.bob||0)*.012;
+function chLampSpot(SP,SD,SC,eye,yaw,pitch,fwd){chLag();const ly=yaw+(KH.lagY||0)+(KH.swY||0),lp=pitch+(KH.lagP||0)+(KH.swP||0);const rx=Math.cos(yaw),rz=-Math.sin(yaw);const k=pl.bat<.25?.55+pl.bat*1.8:1;const sw=Math.sin(pl.bob||0)*.012;
   const f=[-Math.sin(ly)*Math.cos(lp),Math.sin(lp),-Math.cos(ly)*Math.cos(lp)];const tw=KH.fpTool==='kazma',sd=tw?.16:.21,dn=tw?.06:.26;
   // ışık fenerin camından çıkar (elde görünen fener nerede ise): kamera eksenlerinde saklanan cam konumu
   const LC=!tw&&KH.fpLensC&&performance.now()-(KH.fpLensT||0)<500?KH.fpLensC:null;let o0;
@@ -7622,10 +7623,37 @@ function cageRails(m,o){const m0=X(m,M4.S(1/CGS,1/CGY,1/CGS)),r=.95*CGS-.1,y0=.2
       for(const yy of[y0+.08,y0+2.55])put('gshoe',X(m0,M4.T(sx*(R2+.1),yy,sz*R2),M4.RY(sx*Math.PI/2)),'iron');}}
     // arka sol dikmede eski kafesli lamba
     put('lamp',X(m0,M4.T(-R2+.17,y0+2.28,R2-.17),M4.RY(Math.PI*.75),M4.S(1.3,1.3,1.3)),'lamp');
+    try{cageTop(put,m0,R2,y0,o);}catch(e){frameErr('kafes tavanı',e);}
     const u=envBegin(),PL=envPlanes();for(const g of GR.values())envDrawGroup(u,{a:g.a,v:g.v,far:60},g.L,PL);gl.useProgram(PR.p);gl.bindVertexArray(null);}
   // lambanın camı: soluk, sıcak bir ışık (parıltı)
   draw(MS,X(m0,M4.T(-R2+.25,y0+2.3,R2-.25),M4.S(.045,.06,.045)),[.3,.26,.18],[1.1,.78,.38],3);
   try{cagePanel(m0,r,y0);}catch(e){frameErr('asansör paneli',e);}}
+// v98: kafes tavanı — köşelerde tepeden tabana paslı demir köşebent, üstte I profil çerçeve, ortada çift askı kirişi,
+// iki yanda baklavalı sac çatı (ortada halat aralığı), askı başlığından yukarı çelik halat. Hepsi gerçek dokulu modeller.
+const CAGE_TOP=['grail','giron','gshoe','clpost','cage_floor'];
+function cageTop(put,m0,R2,y0,o){const yT=y0+3.06,PI=Math.PI;
+  // a→b arası çubuk; model boyu yerel Y ekseninde L0 m
+  // (modellerin başlangıcı tabanda: a noktasına konur, yerel +Y b'ye çevrilir)
+  const rod=(id,L0,a,b,k,v,spin)=>{const dx=b[0]-a[0],dy=b[1]-a[1],dz=b[2]-a[2],h=Math.hypot(dx,dz),L=Math.hypot(h,dy);if(L<.01)return;
+    put(id,X(m0,M4.T(a[0],a[1],a[2]),M4.RY(Math.atan2(-dz,dx)),M4.RZ(Math.atan2(dy,h)-PI/2),M4.RY(spin||0),M4.S(k,L/L0,k)),v);};
+  // uzun kirişler ~2 m'lik parçalar (doku uzamasın)
+  const beam=(a,b,k,spin)=>{const L=Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2]),n=Math.max(1,Math.round(L/2));for(let i=0;i<n;i++){const t0=i/n,t1=(i+1)/n,p=t=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];rod('grail',2,p(t0),p(t1),k,'iron',spin);}};
+  // köşebentler: dikmenin dış köşesini tabandan tepeye sarar
+  for(const sx of[-1,1])for(const sz of[-1,1]){const th=Math.atan2(sx,sz)+PI*.75;put('giron',X(m0,M4.T(sx*(R2+.085),y0-.14,sz*(R2+.085)),M4.RY(th),M4.S(1.5,3.34/2,1.5)),'iron');}
+  // üst çerçeve (dört yan) + sac birleşimlerinin altındaki ara kirişler
+  const c=R2;beam([-c,yT,-c],[c,yT,-c],1.15,PI/2);beam([-c,yT,c],[c,yT,c],1.15,PI/2);beam([-c,yT,-c],[-c,yT,c],1.15,PI/2);beam([c,yT,-c],[c,yT,c],1.15,PI/2);
+  const sl=.34,tw=2*c/3;for(const sz of[-1,1])for(const sx of[-1,1])beam([sx*c/3,yT,sz*sl],[sx*c/3,yT,sz*c],.85,PI/2);
+  // askı başlığı: ortada iki paralel kiriş
+  for(const sz of[-1,1])beam([-c,yT+.02,sz*.2],[c,yT+.02,sz*.2],1.3,PI/2);
+  // baklavalı sac çatı: iki yanda üçer levha (ortada halat aralığı)
+  const dz=c-sl;for(const sz of[-1,1])for(let i=0;i<3;i++){const cx=-c+tw*(i+.5),cz=sz*(sl+dz/2);put('cage_floor',X(m0,M4.T(cx,yT+.1,cz),M4.RY(i*PI),M4.S(tw/1.98*1.01,.2,dz/1.98*1.01)),'roof');}
+  // askı: başlığın ortasından kalkan kısa dikme + iki yandan eğik köşebent (üçgen), tepede halat pabucu
+  const yA=yT+.95;rod('grail',2,[0,yT+.08,0],[0,yA,0],1,'iron');for(const sx of[-1,1])rod('giron',2,[sx*1.15,yT+.1,0],[0,yA-.06,0],1.6,'iron',sx>0?0:PI/2);
+  put('gshoe',X(m0,M4.T(0,yA+.05,0),M4.S(1.3,1.1,1.3)),'iron');
+  // çelik halat: yukarıda kuyunun karanlığına (yüzeyde kasnağa) kadar
+  if(o&&o.snap)return;// kopmuş halat (kilise bölümü): halat çizilmez
+  const RL=o&&o.cable?Math.max(1,o.cable+3.38-yA-.2):16;const n=Math.ceil(RL/2.5);for(let i=0;i<n;i++){const h=Math.min(2.5,RL-i*2.5);put('clpost',X(m0,M4.T(0,yA+.2+i*2.5,0),M4.S(.17,h/2.52,.17)),'rope');}}
+ENV_TINT.roof=()=>[.78,.74,.68];ENV_TINT.rope=()=>[.42,.4,.38];
 // kafes inip çıkarken raylar yerinde durur: aşağı/yukarı gittiği belli olur. yb..yt: rayların alt/üst ucu (dünya yüksekliği)
 function cageRailsW(x,z,yaw,yb,yt,collar){if(typeof ENV==='undefined'||!ENV.lib||!envAsset('grail'))return;const R2=.95*CGS-.1+.09,rx=R2+.1+.1;
   const M0=X(M4.T(x,0,z),M4.RY(yaw)),L=[],B=[],C=[];
@@ -7667,7 +7695,7 @@ function sfLiftPress(){KH.cpT=G.time+.35;try{sfx('switch',.7);sfx('click',.5);}c
 {const _gd=goDown;goDown=function(){if(KH.on&&!KH.dep&&!KH.depDone){KH.cpT=G.time+.35;try{sfx('switch',.7);}catch(e){}}return _gd.apply(this,arguments);};}
 window.__cpan=CPAN;window.__ctx=()=>context();
 // kafes ve ray modelleri bölüm/yüzey başlarken istenir: ilk inişte raylar eksik görünmesin
-function cageAssetsPre(){try{if(typeof ENV==='undefined'||!ENV.lib)return;for(const a of['grail','gshoe','beam_a','beam_c','post_a','lamp','elbox','vsi'])envAsset(a);}catch(e){}}
+function cageAssetsPre(){try{if(typeof ENV==='undefined'||!ENV.lib)return;for(const a of['grail','gshoe','giron','clpost','beam_a','beam_c','post_a','lamp','elbox','vsi'])envAsset(a);}catch(e){}}
 {const _s=sfStart;sfStart=function(){const r=_s.apply(this,arguments);cageAssetsPre();return r;};}
 {const _ci=chInit;chInit=function(){const r=_ci.apply(this,arguments);cageAssetsPre();return r;};}
 // ---------------- yükleme ekranı: kara tahta + tebeşir çizimi ----------------
@@ -8460,7 +8488,7 @@ function k6Dress(C){const{R,rr,pick,chance,add,col,fy,decal}=C;const ok=id=>!!EN
 {const _a=arriveStart;arriveStart=function(cb){if(KH.on&&RUN.floor===6){G.arrive=null;if(cb)setTimeout(cb,200);return;}return _a.apply(this,arguments);};}
 {const _o=arriveOff;arriveOff=function(){if(KH.on&&RUN.floor===6&&K6.wake){const k=clamp((K6.wake.t-.8)/3,0,1);return -1.28*(1-k*k*(3-2*k))+Math.sin(G.time*1.3)*.01*(1-k);}return _o.apply(this,arguments);};}
 // çakılmış kafes: eğik, kapısı yarı açık; raylar kopmuş (çizilmez)
-{const _dc=drawCage;drawCage=function(x,z,yaw,lampCol,gate,yoff){if(KH.on&&RUN.floor===6&&G.lift&&x===G.lift.x&&z===G.lift.z){const m=X(M4.T(x,floorY(x,z)-.12,z),M4.RY(yaw),M4.RZ(.075),M4.RX(-.05));cageDraw(m,{lamp:[.03,.02,.01],gate:.55,spin:0});return;}return _dc.apply(this,arguments);};}
+{const _dc=drawCage;drawCage=function(x,z,yaw,lampCol,gate,yoff){if(KH.on&&RUN.floor===6&&G.lift&&x===G.lift.x&&z===G.lift.z){const m=X(M4.T(x,floorY(x,z)-.12,z),M4.RY(yaw),M4.RZ(.075),M4.RX(-.05));cageDraw(m,{lamp:[.03,.02,.01],gate:.55,spin:0,snap:1});return;}return _dc.apply(this,arguments);};}
 {const _cr=cageRailsW;cageRailsW=function(){if(KH.on&&RUN.floor===6)return;return _cr.apply(this,arguments);};}
 // ---- ağ: durum eşitleme ----
 {const _o=chWorldOut;chWorldOut=function(w){_o.apply(this,arguments);if(RUN.floor===6&&K6.on)w.k6=[K6.key?1:0,K6.gate,K6.crow?1:0,K6.ringN,K6.chains.join(''),K6.door,Math.max(0,r2(K6.lureT-G.time)),K6.hunt?1:0,r2(K6.bellA)];};}
@@ -8564,8 +8592,134 @@ zrDieTick=function(dt){if(KH.faintSeq)return;KH.dieT+=dt;const t=KH.dieT;zrAttac
 // ---- yükleme: bölümün yüzeyleri ve eşyaları hazır olmadan oyun başlamasın (yavaş bağlantıda eski görünüm/eksik model görünmesin) ----
 function chLdReady(){if(!ENV.lib)return true;const L=ENV_FS[(CHD().surf||CHD().look+1)-1]||[];for(const id of L.slice(0,4)){if(!id)continue;envSurf(id);const q=ENV.S[id];if(q&&!q.ready&&!q.bad)return false;}
   if(!ENV.props)return true;const ids=new Set(typeof CAGE_P!=='undefined'?CAGE_P:[]);for(const d of KH.decor||[])for(const p of chParts(d.a))ids.add(p);for(const it of KH.items||[])if(it.a)for(const p of chParts(it.a))ids.add(p);
+  for(const id of['grail','gshoe','giron','clpost','beam_a','beam_c','post_a','lamp','elbox','vsi'])ids.add(id);// kafes parçaları (yeni tavan dahil)
   if(RUN.floor===6)for(const id of['k_bell','k_rope','k_link','k_lock','k_slab','k_doorF','k_doorL','k_doorR','k_bench','k_lantch_m0','k_cand2_m2','k_cand2_m3','k_statue','k_table'])ids.add(id);
   for(const id of ids){if(!ENV.byId[id])continue;envAsset(id);const q=ENV.A[id];if(q&&!q.ready&&!q.bad)return false;}return true;}
+// ---------------- v98: koşarken el feneri sallanır ve öne eğilir; Rıza Usta saldırısı yeniden ----------------
+// ---- birinci şahıs fener: koşu adımlarıyla salınım + öne eğilme (ışık da fenerle birlikte oynar); yürürken hafif ----
+function chSway(dt){const k=pl.runK||0;KH.swW=lerp(KH.swW||0,pl.mv?1:0,Math.min(1,dt*6));const a=Math.max(k,.3*(KH.swW||0)*(1-k));
+  KH.swTl=lerp(KH.swTl||0,k,Math.min(1,dt*3.5));const tl=KH.swTl;
+  if(SET.shakeOff||!(G.state==='play'||G.state==='surface')){KH.swY=KH.swP=KH.swR=0;KH.swO=[0,0,0];return;}
+  const ph=(pl.bob||0)*.87,s=Math.sin(ph),v=Math.abs(s);
+  // başın tersine: baş adımda inerken el bir an geride kalıp yükselir; iki adımda bir yana savrulur
+  KH.swY=.06*s*a;KH.swP=-.24*tl+(-.05*v+.022)*a;KH.swR=.1*s*a;
+  KH.swO=[-.04*s*a,(.05*v-.02)*a-.045*tl,-.05*tl];}
+// ---- Rıza Usta saldırısı (v98): yakalar, havaya kaldırır, yere çarpar; yerde üstüne eğilip böğürür, son darbeler ----
+// Kamera her an onun yüzüne kilitli (yumuşak takip); sarsıntılar yönlü ve yayla geri döner (rastgele kayma yok); parazit yok.
+const ZR2={D0:1.75};// yakalama animasyonu başını ~0.7 m öne getirir: yüzü ~1 m'de kalır
+const zrE1=(a,b,t)=>{t=clamp((t-a)/(b-a),0,1);return t*t*(3-2*t);},zrIn=(a,b,t)=>{t=clamp((t-a)/(b-a),0,1);return t*t;},zrOut=(a,b,t)=>{t=clamp((t-a)/(b-a),0,1);return 1-(1-t)*(1-t);};
+zrAttackStart=function(){const e=ZRL.e;DNL.stat=0;KH.zrJ=null;KH.zrFall=0;KH.flk=0;
+  const C=KH.dieCam={x:pl.x,z:pl.z,y:floorY(pl.x,pl.z)+1.55,yaw:pl.yaw,pitch:pl.pitch};const fx=-Math.sin(pl.yaw),fz=-Math.cos(pl.yaw);
+  if(e){let d=ZR2.D0;for(;d>1.05;d-=.1)if(!hits(C.x+fx*d,C.z+fz*d,.25))break;e.x=C.x+fx*d;e.z=C.z+fz*d;e.st='grab';e.stT=0;e.an=null;e.moving=false;e.path=null;dzPlay(e,'grab',1);e.face=Math.atan2(-(C.x-e.x),-(C.z-e.z));}
+  // geri savrulma: arkada duvar varsa kısa
+  let back=.8;for(;back>.2;back-=.1)if(!hits(C.x-fx*back,C.z-fz*back,.2))break;
+  KH.zrC={fx,fz,side:Math.random()<.5?-1:1,back,ly:C.yaw,lp:C.pitch,J:[0,0,0,0],V:[0,0,0,0],hit:0,ev:0,eye:[C.x,C.y,C.z],yaw:C.yaw,pitch:C.pitch,roll:0,e0:null};
+  sfx('zrRoar',1.25);G.shake=Math.max(G.shake,.22);try{chMusDie();}catch(er){}};
+zrAttackFx=function(t,dt){DNL.stat=0;KH.flk=0;const Z=KH.zrC,C=KH.dieCam;if(!Z||!C)return;const e=ZRL.e,sd=Z.side;dt=clamp(dt||0,0,.05);
+  const J=Z.J,V=Z.V,imp=(y,p,r,h)=>{J[0]+=y;J[1]+=p;J[2]+=r;J[3]+=h;};
+  // darbeler: anlık savrulma, yay geri toplar
+  const EV=[.55,1.5,2.42,2.68,2.9];
+  for(let i=0;i<EV.length;i++)if(t>=EV[i]&&Z.hit<=i){Z.hit=i+1;
+    if(i===0){imp(0,.06,.12*sd,.05);hitFx(.55);G.shake=Math.max(G.shake,.22);sfx('thump',.8);sfx('zrBreath',.95);}
+    else if(i===1){imp(.07*sd,-.34,.24*sd,-.07);hitFx(1);G.shake=Math.max(G.shake,.4);sfx('thump',1.1);sfx('clang',.6,sd*.4);}
+    else if(i===2){imp(.26*sd,-.09,.32*sd,-.04);hitFx(.9);G.shake=Math.max(G.shake,.35);sfx('thump',1.1);sfx('zrPain',.85);}
+    else if(i===3){imp(-.28*sd,-.07,-.34*sd,-.04);hitFx(.95);G.shake=Math.max(G.shake,.38);sfx('thump',1.15);sfx('clang',.55,-sd*.4);}
+    else{imp(.4*sd,.1,.5*sd,-.05);hitFx(1);G.shake=Math.max(G.shake,.45);sfx('thump',1.2);sfx('zrBreath',.8);}}
+  const n=Math.max(1,Math.ceil(dt/(1/120))),h=dt/n,K=170,Cd=2*Math.sqrt(K)*.62;
+  for(let s=0;s<n;s++)for(let k=0;k<4;k++){V[k]+=(-K*J[k]-Cd*V[k])*h;J[k]+=V[k]*h;}
+  // gövde yolu: irkilip geri adım → onun kollarına çekilip havaya kalkış → geriye fırlatılıp yere çarpma
+  const F=-.12*zrE1(0,.3,t)+.22*zrOut(.55,.78,t)-(.1+Z.back)*zrOut(1.15,1.45,t);
+  const Y=.22*zrOut(.6,.85,t)+(t>.85&&t<1.15?Math.sin(t*31)*.02:0)-(1.25+.22)*zrIn(1.18,1.5,t)+.07*Math.sin(Math.PI*clamp((t-1.5)/.18,0,1));
+  const Sd=sd*.25*zrE1(1.15,1.5,t);const sx=Z.fz,sz=-Z.fx;
+  const ex=C.x+Z.fx*F+sx*Sd,ez=C.z+Z.fz*F+sz*Sd;let ey=C.y+Y+J[3];ey=Math.max(ey,floorY(ex,ez)+.26);Z.eye=[ex,ey,ez];
+  // yaratık: kollarına alır (grab) → yerdeyken üstünde böğürür (roar) → üstüne atılıp vurur (grab)
+  if(e){if(t>=1.45&&Z.ev<1){Z.ev=1;e.st='roar';sfx('zrRoar',1.2);}
+    if(t>=2.2&&Z.ev<2){Z.ev=2;e.st='grab';e.an=null;dzPlay(e,'grab',1);Z.e0=[e.x,e.z];}
+    if(Z.e0){const k=zrE1(2.2,2.42,t),tx=ex+Z.fx*1.75,tz=ez+Z.fz*1.75;e.x=lerp(Z.e0[0],tx,k);e.z=lerp(Z.e0[1],tz,k);}
+    e.moving=false;e.face=Math.atan2(-(ex-e.x),-(ez-e.z));}
+  // bakış: yüzüne kilitli, yumuşak takip; fırlatılırken baş savrulur
+  const hp=e&&e.headPos||[ex+Z.fx*1.1,floorY(ex,ez)+1.75,ez+Z.fz*1.1];
+  const ty=Math.atan2(-(hp[0]-ex),-(hp[2]-ez)),tp=Math.atan2(hp[1]-ey,Math.hypot(hp[0]-ex,hp[2]-ez));
+  const rate=t<.3?16:(t>1.15&&t<1.6)?5:11,kk=1-Math.exp(-dt*rate);let dy=ty-Z.ly;dy=Math.atan2(Math.sin(dy),Math.cos(dy));Z.ly+=dy*kk;Z.lp+=(tp-Z.lp)*kk;
+  const whip=.38*zrE1(1.15,1.33,t)*(1-zrE1(1.45,1.75,t));
+  Z.yaw=Z.ly+J[0]+sd*.45*zrE1(2.88,3.0,t);Z.pitch=clamp(Z.lp+whip+J[1],-1.3,1.35);
+  Z.roll=sd*(.45*zrE1(1.15,1.45,t)-.22*zrE1(1.6,2.2,t))+J[2]+sd*.5*zrE1(2.88,3.0,t);
+  // son darbede kararır
+  const f=$('fade');if(f)f.style.opacity=String(t<2.84?0:Math.min(1,(t-2.84)/.2));};
+// ---- yükleme ekranı (v98): sinematik hikâye — eski film karanlığında el yazısı satırlar, arada sisli, boyanmış gibi sahneler ----
+// Her bölümün iki satır takımı ve kendi resim havuzu var; her girişte biri seçilir. Resimler 3 sayfada (2x2, her biri 960x540).
+const LDS={sheets:['cizim/st_a.jpg','cizim/st_b.jpg','cizim/st_c.jpg'],url:{},p:{},seen:{},
+  pool:{1:[0,1,2,3],2:[2,4,6],3:[5,6,4],4:[7,4,6],5:[8,9,7],6:[10,11,9]},
+  tx:{1:[[['Kara Damar\'ı','kırk yıl önce mühürlediler.'],['Kimse nedenini yazmadı.','Yazan da geri dönmedi.'],'Işığı yakarsan seni de görür mü?'],
+         [['Bu dağın altında','kara bir damar uzanır.'],['Derine indikçe','sesler yaklaşır.'],'Ne kadar derine inebilirsin?']],
+      2:[[['Tavan çöktüğünde','yirmi iki kişi içerideydi.'],['Kazdıkça onları duyacaksın.','Hepsi seninkine benziyor.'],'Kazmayı kaldır. Dinle.'],
+         [['Kereste çatırdar,','toprak nefes alır.'],['Göçüğün ardında','biri seni bekliyor.'],'Duvara vurursan… cevap verir.']],
+      3:[[['Rıza Usta her şeyi yazdı.','Sonra defterini yırttı.'],['Her sayfa bir uyarı.','Her uyarı biraz daha geç.'],'Okumaya devam edecek misin?'],
+         [['Sayfalar tünellere dağıldı,','kimisi kanla ıslandı.'],['Son satırda tek kelime var:','DUYUYOR.'],'Sessiz kal.']],
+      4:[[['Pompa istasyonunun kapısı','içeriden kilitlendi.'],['Ekranlar hâlâ yanıyor.','Biri hâlâ izliyor.'],'Rıza Usta artık o değil.'],
+         [['Saat durmadı.','Yalnızca geri saymayı unuttu.'],['Kodu bulduğunda','o da seni bulacak.'],'Gözlerine ışık tut.']],
+      5:[[['Vinç motoru son umut.','Kafes yukarı çıkabilir…'],['…ama halat','kimin ağırlığını taşıyacak?'],'Yukarısı hiç bu kadar uzak olmamıştı.'],
+         [['Kuyu nefes alıyor,','halat inliyor.'],['Yukarıda gün ışığı var.','Aşağıda o.'],'Arkana bakma.']],
+      6:[[['1888. Azize Barbara\'nın kapısı','içeriden zincirlendi.'],['Çan çaldığında','aşağıdaki her şey yukarı bakar.'],'Şafağa kadar dayan.'],
+         [['Madenciler burada dua etti.','Son kez.'],['Mumlar hâlâ yanıyor.','Onları kim yaktı?'],'Çanı çalma.']]}};
+function ldsGet(i){const u=LDS.sheets[i];if(LDS.url[u])return Promise.resolve(LDS.url[u]);if(LDS.p[u])return LDS.p[u];
+  return LDS.p[u]=fetch(u).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>LDS.url[u]=URL.createObjectURL(b)).catch(e=>{LDS.p[u]=null;throw e;});}
+try{for(let i=KYT_ALL.length-1;i>=0;i--)if(/^yukleme_/.test(KYT_ALL[i]))KYT_ALL.splice(i,1);}catch(e){}
+setTimeout(function pre(i){i=i||0;if(i>=LDS.sheets.length)return;ldsGet(i).catch(()=>{}).finally(()=>setTimeout(()=>pre(i+1),500));},2500);
+(function(){const css=`#load.kdS{background:#000}#load.kdS>*:not(#kdSt){opacity:0!important;pointer-events:none!important}
+#kdSt{position:absolute;inset:0;z-index:30;background:#000;overflow:hidden;opacity:0;transition:opacity .8s ease;font-family:KDHand,cursive;color:#d9d6cf;cursor:pointer}
+#load.kdS #kdSt{opacity:1}
+#kdSt .sI{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}#kdSt .sI.on{opacity:1}
+#kdSt .sI i{position:absolute;left:50%;top:50%;width:max(calc(100*var(--vw,1vw)),calc(100*var(--vh,1vh)*16/9));height:max(calc(100*var(--vh,1vh)),calc(100*var(--vw,1vw)*9/16));
+  transform:translate(-50%,-50%) scale(1.04);background-size:200% 200%;background-repeat:no-repeat;filter:brightness(.92) contrast(1.05)}
+#kdSt .sI.on i{animation:stKB 9s linear forwards}#kdSt .sI.on.r i{animation-name:stKB2}
+@keyframes stKB{from{transform:translate(-50%,-50%) scale(1.04)}to{transform:translate(-53%,-50.5%) scale(1.13)}}
+@keyframes stKB2{from{transform:translate(-50%,-50%) scale(1.12)}to{transform:translate(-47%,-49.5%) scale(1.04)}}
+#kdSt .sFog{position:absolute;inset:-20%;background:radial-gradient(ellipse 50% 40% at 30% 60%,rgba(170,176,178,.10),transparent 70%),radial-gradient(ellipse 45% 35% at 72% 42%,rgba(150,156,160,.08),transparent 70%);animation:stFog 14s ease-in-out infinite alternate;mix-blend-mode:screen;pointer-events:none}
+@keyframes stFog{from{transform:translate(-4%,1%)}to{transform:translate(5%,-2%)}}
+#kdSt .sLk{position:absolute;width:70%;height:90%;left:5%;top:-10%;background:radial-gradient(ellipse at center,rgba(220,214,200,.13),rgba(220,214,200,0) 62%);animation:stLk 11s ease-in-out infinite alternate;pointer-events:none}
+@keyframes stLk{from{transform:translate(0,0)}to{transform:translate(28%,18%)}}
+#kdSt .sGr{position:absolute;inset:-60px;opacity:.42;mix-blend-mode:screen;animation:kytGr .4s steps(6) infinite;pointer-events:none}
+#kdSt .sSc{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 31%,rgba(230,226,216,.2) 31.1%,transparent 31.25%),linear-gradient(90deg,transparent 0 77%,rgba(230,226,216,.13) 77.08%,transparent 77.2%);animation:stSc 1.7s steps(1) infinite}
+@keyframes stSc{0%{transform:translateX(0);opacity:.8}23%{transform:translateX(-9%);opacity:.2}41%{transform:translateX(6%);opacity:.9}64%{transform:translateX(-3%);opacity:0}82%{transform:translateX(12%);opacity:.6}}
+#kdSt .sVg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 75% 70% at 50% 50%,transparent 45%,rgba(0,0,0,.88) 100%)}
+#kdSt .sFl{position:absolute;inset:0;pointer-events:none;background:#000;opacity:0;animation:stFl 4.7s steps(1) infinite}
+@keyframes stFl{0%{opacity:0}37%{opacity:.18}38%{opacity:0}71%{opacity:.08}72%{opacity:0}90%{opacity:.25}91%{opacity:0}}
+#kdSt .sT{position:absolute;left:12%;right:12%;top:50%;transform:translateY(-50%);font-size:clamp(23px,calc(6.4*var(--vh,1vh)),48px);line-height:1.45;letter-spacing:.06em;text-shadow:0 0 10px rgba(0,0,0,.9),0 0 2px rgba(255,255,255,.25)}
+#kdSt .sT.l{text-align:left;left:16%}#kdSt .sT.c{text-align:center}
+#kdSt .sT span{display:block;opacity:0;filter:blur(7px);transform:translateY(4px);transition:opacity 1.3s ease,filter 1.6s ease,transform 1.6s ease}
+#kdSt .sT span.on{opacity:.92;filter:blur(0);transform:none}#kdSt .sT span.off{opacity:0;filter:blur(9px);transition:opacity 1s ease,filter 1.1s ease}
+#kdSt .sT.big{font-size:clamp(26px,calc(7.4*var(--vh,1vh)),58px)}
+#kdSt .sFt{position:absolute;left:0;right:0;bottom:calc(5*var(--vh,1vh));text-align:center;font:600 11px/1 "KDType",ui-monospace,monospace;letter-spacing:.32em;color:rgba(217,214,207,.55);opacity:0;transition:opacity 1.2s}
+#kdSt .sFt.on{opacity:1}#kdSt .sFt b{display:block;font:400 clamp(26px,calc(7*var(--vh,1vh)),60px)/1.1 KDHand,cursive;letter-spacing:.04em;color:#e6e2d8;margin:0 0 10px;text-transform:none}
+#kdSt .sBar{position:absolute;left:30%;right:30%;bottom:calc(3*var(--vh,1vh));height:1px;background:rgba(217,214,207,.12)}#kdSt .sBar i{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(217,214,207,.55);transition:width .4s}
+#kdSt .sSk{position:absolute;right:calc(4*var(--vw,1vw));bottom:calc(4*var(--vh,1vh));font:600 10px/1 "KDType",ui-monospace,monospace;letter-spacing:.3em;color:rgba(217,214,207,.5);opacity:0;transition:opacity .8s}#kdSt .sSk.on{opacity:1}`;
+  const st=document.createElement('style');st.id='kdStCSS';st.textContent=css;document.head.appendChild(st);})();
+function ldsEl(){let el=$('kdSt');if(el)return el;const L=$('load');el=document.createElement('div');el.id='kdSt';
+  el.innerHTML='<div class="sI"><i></i></div><div class="sI"><i></i></div><div class="sFog"></div><div class="sLk"></div><div class="sT"></div><div class="sFt"></div><div class="sBar"><i></i></div><div class="sSk">DOKUN · GEÇ</div><div class="sGr"></div><div class="sSc"></div><div class="sFl"></div><div class="sVg"></div>';
+  el.querySelector('.sGr').style.backgroundImage=`url(${kytNoise()})`;L.appendChild(el);
+  el.addEventListener('pointerdown',()=>{if(LDS.cur&&LDS.cur.ready){LDS.cur.skip=1;LD.min=0;}});return el;}
+function ldsStop(){const S=LDS.cur;if(!S)return;S.dead=1;for(const t of S.T)clearTimeout(t);LDS.cur=null;const L=$('load');if(L)L.classList.remove('kdS');}
+ldVidOn=function(floor){const L=$('load');if(!L)return;L.classList.remove('kdV','kdA');ldsStop();const v=$('ldVid');if(v){try{v.pause();}catch(e){}v.removeAttribute('src');}
+  const ch=clamp(floor|0,1,6),el=ldsEl(),first=!LDS.seen[ch];LDS.seen[ch]=1;
+  const V=LDS.tx[ch],tx=V[Math.random()*V.length|0],pool=(LDS.pool[ch]||[0]).slice();for(let i=pool.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[pool[i],pool[j]]=[pool[j],pool[i]];}
+  const S=LDS.cur={T:[],dead:0,ready:0,skip:0,id:LD.id};const at=(t,f)=>S.T.push(setTimeout(()=>{if(!S.dead)try{f();}catch(e){}},t*1000));
+  const I=[...el.querySelectorAll('.sI')],TX=el.querySelector('.sT'),FT=el.querySelector('.sFt'),SK=el.querySelector('.sSk');I.forEach(x=>x.classList.remove('on','r'));TX.innerHTML='';FT.classList.remove('on');SK.classList.remove('on');
+  let flip=0;const img=(k)=>{const si=Math.floor(k/4),q=k%4,lay=I[flip^=1];ldsGet(si).then(u=>{if(S.dead)return;const i2=lay.firstChild;i2.style.backgroundImage=`url(${u})`;i2.style.backgroundPosition=`${(q%2)*100}% ${(q>>1)*100}%`;
+      lay.classList.toggle('r',Math.random()<.5);lay.classList.remove('on');void lay.offsetWidth;lay.classList.add('on');I[flip^1].classList.remove('on');}).catch(()=>{});};
+  const imgOff=()=>I.forEach(x=>x.classList.remove('on'));
+  const text=(lines,cls,dur)=>{TX.className='sT '+(cls||'c');TX.innerHTML=lines.map(l=>`<span>${l.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>`).join('');const sp=[...TX.children];
+    sp.forEach((x,i)=>at(.15+i*.9,()=>x.classList.add('on')));at(dur-1.1,()=>sp.forEach(x=>x.classList.add('off')));};
+  // akış: satırlar → resim → satırlar → resim + son cümle → bölüm adı (yükleme bitene kadar)
+  let t=0;if(first){at(t,()=>{imgOff();text(tx[0],Math.random()<.5?'l':'c',4.6);});t+=4.6;at(t,()=>{img(pool[0]);TX.innerHTML='';});t+=5.2;
+    at(t,()=>{imgOff();text(tx[1],Math.random()<.5?'l':'c',4.6);});t+=4.6;}
+  at(t,()=>{img(pool[first?1:0]||pool[0]);text([tx[2]],'c big',4.8);});t+=4.8;
+  at(t,()=>{TX.innerHTML='';const d=CHD();FT.innerHTML=`<b>${(d.ad||'').replace(/</g,'&lt;')}</b>BÖLÜM ${ch}`;FT.classList.add('on');});
+  S.min=t+.8;LD.min=Math.max(LD.min||0,S.min);L.classList.add('kdS');};
+// ilerleme çubuğu ve "dokun · geç": yükleme biter bitmez geçilebilir
+{const _lt=loadTick;loadTick=function(dt0){_lt(dt0);const S=LDS.cur;if(!S)return;if(!LD.on){ldsStop();return;}try{const L=ldNeeds(),ok=L.filter(x=>x[1]).length;const el=$('kdSt');const b=el&&el.querySelector('.sBar i');if(b)b.style.width=(ok/L.length*100).toFixed(0)+'%';
+  const all=ok===L.length;if(all&&!S.ready){S.ready=1;const k=el&&el.querySelector('.sSk');if(k)k.classList.add('on');}}catch(e){}};}
+{const _f=ldFinishNow;ldFinishNow=function(){ldsStop();return _f.apply(this,arguments);};}
 // ==== HİKÂYE END ====
 // ================= Çok oyunculu: claude.ai "room" yeteneği (oda kodu, 4 kişi, botlar boşluğu doldurur) =================
 // Taşıma: her oyuncunun "presence" nesnesi (4 KiB, ~30/sn birleştirilerek gönderilir). Herkes kendi durumunu ve son olaylarını
@@ -9484,7 +9638,7 @@ function render0(){
   else if((G.state==='dragged'||G.state==='dying')&&G.dragBy==='pale'&&pale){eye=[pl.x,floorY(pl.x,pl.z)+.42+Math.abs(Math.sin(t*7))*.08,pl.z];yaw=Math.atan2(-(pale.x-pl.x),-(pale.z-pl.z));pitch=.55+Math.sin(t*3)*.06;roll=Math.sin(t*6)*.22;}
   else if(G.state==='dragged'||(G.state==='dying'&&cr.victim===pl)){eye=[pl.x,floorY(pl.x,pl.z)+.42+Math.abs(Math.sin(t*9))*.1,pl.z];yaw=Math.atan2(-(cr.x-pl.x),-(cr.z-pl.z));pitch=.42+Math.sin(t*3)*.08;roll=Math.sin(t*7)*.28;}
   else if(G.state==='buried'){eye=[pl.x,floorY(pl.x,pl.z)+.7,pl.z];pitch=-.2;roll=.35;}
-  else if(G.state==='dnDie'&&KH.dieCam){const C=KH.dieCam,e=KH.zrDie&&ZRL.e?ZRL.e:DNL.e,k=Math.min(1,KH.dieT/1.1);eye=[C.x,C.y-k*.25,C.z];const hp=e&&e.headPos||[C.x-Math.sin(C.yaw),C.y+.5,C.z-Math.cos(C.yaw)];yaw=Math.atan2(-(hp[0]-C.x),-(hp[2]-C.z));pitch=Math.atan2(hp[1]-eye[1],Math.hypot(hp[0]-C.x,hp[2]-C.z))*k+C.pitch*(1-k);roll=Math.sin(KH.dieT*7)*.05*k;if(KH.zrDie&&KH.zrJ){yaw+=KH.zrJ[0];pitch+=KH.zrJ[1];roll+=KH.zrJ[2]+(KH.zrFall||0)*.9;eye[1]-=(KH.zrFall||0)*1.15;}}
+  else if(G.state==='dnDie'&&KH.dieCam){const C=KH.dieCam,e=KH.zrDie&&ZRL.e?ZRL.e:DNL.e,k=Math.min(1,KH.dieT/1.1);eye=[C.x,C.y-k*.25,C.z];const hp=e&&e.headPos||[C.x-Math.sin(C.yaw),C.y+.5,C.z-Math.cos(C.yaw)];yaw=Math.atan2(-(hp[0]-C.x),-(hp[2]-C.z));pitch=Math.atan2(hp[1]-eye[1],Math.hypot(hp[0]-C.x,hp[2]-C.z))*k+C.pitch*(1-k);roll=Math.sin(KH.dieT*7)*.05*k;if(KH.zrDie&&KH.zrC){const Z=KH.zrC;eye=Z.eye.slice();yaw=Z.yaw;pitch=Z.pitch;roll=Z.roll;}else if(KH.zrDie&&KH.zrJ){yaw+=KH.zrJ[0];pitch+=KH.zrJ[1];roll+=KH.zrJ[2]+(KH.zrFall||0)*.9;eye[1]-=(KH.zrFall||0)*1.15;}}
   else if(G.state==='faint'&&KH.faint){const F=KH.faint,u=F.up||0;eye=[pl.x,floorY(pl.x,pl.z)+.24+u*1.36,pl.z];yaw=F.yaw;pitch=F.pitch*(1-u);roll=F.roll*(1-u)+Math.sin(G.time*1.1)*.025*(1-u);}
   else if(G.state==='chAsc'){eye=[ASC.x+Math.sin(G.time*1.7)*.02,floorY(ASC.x,ASC.z)+1.6+ASC.y+Math.sin(G.time*9)*.012,ASC.z];}
   else{eye=[pl.x,floorY(pl.x,pl.z)+1.6-(pl.crouchK||0)*.55+Math.sin(pl.bob)*.035+(G.arrive||(KH.on&&(KH.dep||(typeof K6!=='undefined'&&K6.wake)))?arriveOff():0),pl.z];const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll+=R[2];pitch+=R[3];}
@@ -9498,7 +9652,7 @@ function render0(){
   // ışıklar
   if(MN.ready)for(const b of bots)if(b.st!=='buried'&&b.ap)mnPrepare(b,b.ap);try{sysPrepare();}catch(e){}
   const SP=[],SD=[],SC=[];
-  let lampOn=KH.on?(pl.lamp&&pl.hasLamp&&pl.bat>0&&['play','chAsc','dnDie','faint'].includes(G.state)&&!(pl.bat<.15&&Math.random()<.22)&&!(G.state==='dnDie'&&Math.random()<.35)):(pl.lamp&&(G.state==='play'||(G.state==='dragged'&&Math.random()>.3)))||(G.state==='paleGrab'&&Math.random()>.12)||(G.state==='dragged'&&G.faceT>0&&Math.random()>.2);if(lampOn&&FL().drain>1&&Math.random()<.035)lampOn=false;if(lampOn&&pl.bat<.12&&Math.random()<.25)lampOn=false;if(KH.on&&KH.flk>0)lampOn=false;
+  let lampOn=KH.on?(pl.lamp&&pl.hasLamp&&pl.bat>0&&['play','chAsc','dnDie','faint'].includes(G.state)&&!(pl.bat<.15&&Math.random()<.22)&&!(G.state==='dnDie'&&!KH.zrDie&&Math.random()<.35)):(pl.lamp&&(G.state==='play'||(G.state==='dragged'&&Math.random()>.3)))||(G.state==='paleGrab'&&Math.random()>.12)||(G.state==='dragged'&&G.faceT>0&&Math.random()>.2);if(lampOn&&FL().drain>1&&Math.random()<.035)lampOn=false;if(lampOn&&pl.bat<.12&&Math.random()<.25)lampOn=false;if(KH.on&&KH.flk>0)lampOn=false;
   if(lampOn&&KH.on)chLampSpot(SP,SD,SC,eye,yaw,pitch,fwd);else if(lampOn){SP.push(eye[0]+Math.cos(yaw)*.12,eye[1]+.1,eye[2]-Math.sin(yaw)*.12,RUN.up.lamp?32:27);SD.push(...fwd,Math.cos(RUN.up.lamp?.72:.66));SC.push(.6,.6,.58);}// kızılötesi kafa projektörü: yalnızca gece görüşünde görünür
   if(KH.on)try{chMateSpots(SP,SD,SC);}catch(e){}
   const irV=CAM.nv;// arkadaşların kızılötesi ışığı çıplak gözle görünmez; sen gece görüşündeyken parlar
@@ -9525,10 +9679,11 @@ function render0(){
   for(const b of bots)if(b.carry)gpts.push([b.x-Math.sin(b.face)*.42,floorY(b.x,b.z)+1.1,b.z-Math.cos(b.face)*.42,GEMT[b.carry.type]]);
   gpts.sort((a,b)=>d2(a[0],a[2])-d2(b[0],b[2]));
   for(const q of gpts){if(PP.length>=40)break;PP.push(q[0],q[1],q[2],1.8);PC.push(...q[3].pl);}
+  if(KH.artL)for(const q of KH.artL){if(PP.length>=40)break;PP.push(q[0],q[1],q[2],q[3]);PC.push(q[4],q[5],q[6]);}
   if(PP.length>40){PP.length=40;PC.length=30;}
   const amb=(.0006+pl.adapt*.0045+(G.state==='dragged'?.004:0)+(G.state==='spectate'?.003:0))*SET.bright*SET.bright*(KH.dbgAmb||1)*(KH.flat?5:1);
   gl.useProgram(PR.p);gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);
-  gl.uniformMatrix4fv(U('uVP'),false,VP);gl.uniform3fv(U('uEye'),eye);gl.uniform1f(U('uAmb'),amb);const LKs=LK();const dz=G.dust||0;gl.uniform1f(U('uFog'),LKs.fd*(1+dz*5));gl.uniform3fv(U('uRA'),LKs.ra);gl.uniform3fv(U('uRB'),LKs.rb);gl.uniform3fv(U('uFA'),LKs.fa);gl.uniform3fv(U('uFB'),LKs.fb);{let fc=dz>0?LKs.fog.map((v,i)=>v+(([.09,.075,.06])[i]-v)*Math.min(1,dz)):LKs.fog;if(G.finale){const k=.5+.5*Math.sin(G.time*3.2);fc=[fc[0]+.05*k,fc[1]*.8,fc[2]*.8];}gl.uniform3fv(U('uFogC'),fc);}
+  gl.uniformMatrix4fv(U('uVP'),false,VP);gl.uniform3fv(U('uEye'),eye);gl.uniform1f(U('uAmb'),amb);const LKs=LK();const dz=G.dust||0;gl.uniform1f(U('uFog'),LKs.fd*(1+dz*5)*(KH.artFog||1));gl.uniform3fv(U('uRA'),LKs.ra);gl.uniform3fv(U('uRB'),LKs.rb);gl.uniform3fv(U('uFA'),LKs.fa);gl.uniform3fv(U('uFB'),LKs.fb);{let fc=KH.artFogC||(dz>0?LKs.fog.map((v,i)=>v+(([.09,.075,.06])[i]-v)*Math.min(1,dz)):LKs.fog);if(G.finale){const k=.5+.5*Math.sin(G.time*3.2);fc=[fc[0]+.05*k,fc[1]*.8,fc[2]*.8];}gl.uniform3fv(U('uFogC'),fc);}
   gl.uniform3fv(U('uHazeC'),LKs.hc);gl.uniform1f(U('uHaze'),LKs.haze);gl.uniform3fv(U('uVein'),LKs.vein||Z3);gl.uniform3fv(U('uWetT'),LKs.wt);gl.uniform1f(U('uWet'),LKs.wet);gl.uniform1f(U('uCrack'),LKs.crack||0);gl.uniform1f(U('uExp'),1.5*SET.bright);gl.uniform1f(U('uTime'),G.time);
   gl.uniform1i(U('uNS'),SP.length/4);if(SP.length){gl.uniform4fv(U('uSP'),SP);gl.uniform4fv(U('uSD'),SD);gl.uniform3fv(U('uSC'),SC);}
   gl.uniform1i(U('uNP'),PP.length/4);if(PP.length){gl.uniform4fv(U('uPP'),PP);gl.uniform3fv(U('uPC'),PC);}SCN={amb,LKs,SP,SD,SC,PP,PC};
@@ -9755,7 +9910,7 @@ addEventListener('mouseup',()=>{mouseDown=false;toolHeld=false;});
 addEventListener('mousemove',e=>{if(isTouch)return;if(document.pointerLockElement===cv)lookBy(e.movementX,e.movementY,.0022);else if(mouseDown&&lastM){lookBy(e.clientX-lastM[0],e.clientY-lastM[1],.004);lastM=[e.clientX,e.clientY];}});
 // dik tutulan telefonda oyun kendini yatay çizer: gövde 90° döndürülür, dokunuşlar mantıksal (yatay) koordinata çevrilir
 const ROT={on:false,dir:1,want:1,wT:0,perm:0,tip:false};
-function rotApply(){const p=matchMedia('(orientation:portrait) and (pointer:coarse)').matches;ROT.on=p;const D=document.documentElement,b=document.body;D.classList.toggle('rot',p);
+function rotApply(){const p=matchMedia('(orientation:portrait) and (pointer:coarse)').matches;ROT.on=p;const D=document.documentElement,b=document.body;D.classList.remove('rotEarly');D.classList.toggle('rot',p);
   D.classList.toggle('r90',p&&ROT.dir>0);D.classList.toggle('rm90',p&&ROT.dir<0);
   const w=p?innerHeight:innerWidth,h=p?innerWidth:innerHeight;D.style.setProperty('--vw',(w/100)+'px');D.style.setProperty('--vh',(h/100)+'px');
   if(p){Object.assign(b.style,{inset:'auto',left:'0px',top:'0px',width:w+'px',height:h+'px',transformOrigin:'0 0',transform:ROT.dir>0?`translateX(${innerWidth}px) rotate(90deg)`:`translateY(${innerHeight}px) rotate(-90deg)`});rotTipShow();}
@@ -9767,7 +9922,7 @@ function rotSense(e){if(e.gamma==null)return;const g=e.gamma;if(Math.abs(g)<42)r
 addEventListener('deviceorientation',rotSense);
 function rotPerm(){if(ROT.perm)return;ROT.perm=1;try{if(ROT.on&&typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function')DeviceOrientationEvent.requestPermission().catch(()=>{});}catch(e){}}
 addEventListener('touchend',()=>{if(ROT.on)rotPerm();},{capture:true,passive:true});
-function rotTipShow(){if(ROT.tip)return;ROT.tip=true;let seen=0;try{seen=+localStorage.getItem('kd_rotTip')||0;}catch(e){}if(seen>=2)return;try{localStorage.setItem('kd_rotTip',String(seen+1));}catch(e){}
+function rotTipShow(){return;if(ROT.tip)return;ROT.tip=true;let seen=0;try{seen=+localStorage.getItem('kd_rotTip')||0;}catch(e){}if(seen>=2)return;try{localStorage.setItem('kd_rotTip',String(seen+1));}catch(e){}
   setTimeout(()=>{if(!ROT.on)return;let el=document.getElementById('rotTip');if(!el){el=document.createElement('div');el.id='rotTip';document.body.appendChild(el);}
     el.innerHTML='Oyun <b>yatay</b> oynanır. Telefonu yan çevir. Telefonun kendi ekranı da dönsün istersen Denetim Merkezi’nden <b>dikey yön kilidini</b> kapat.';requestAnimationFrame(()=>el.classList.add('on'));setTimeout(()=>el.classList.remove('on'),6500);},900);}
 rotApply();
