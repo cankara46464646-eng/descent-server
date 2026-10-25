@@ -695,7 +695,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v98</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v99</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -6294,7 +6294,7 @@ function chForestMus(dt){if(!AC||!SF.on)return;mzInit();const t=AC.currentTime,z
   if(mDrone)mDrone.g.gain.setTargetAtTime(0,t,1.5);
   if(SF.dawn||KH.final){mz('cit',0,3);mz('magara',0,3);mz('cirsir',0,3);mz('orman_amb',.5,3);mz('sabah',.8,2.5);return;}
   mz('sabah',0,2);
-  if(!E.mzF&&z<SFK.gate-.5){E.mzF=1;mzOnce('cit');sfx('boom',.45,0,false,musBus);}
+  if(!E.mzF&&z<SFK.gate-.5){E.mzF=1;sfx('boom',.45,0,false,musBus);}
   const inC=z<SFK.zm+.4||!!SF.go;if(inC&&!E.mzC){E.mzC=1;mzOnce('magara');}
   mz('cit',E.mzF&&!E.mzC?.9:0,E.mzC?3.5:2);mz('magara',E.mzC?.9:0,2.5);}
 // ---------------- arayüz öğeleri ----------------
@@ -8700,26 +8700,98 @@ function ldsEl(){let el=$('kdSt');if(el)return el;const L=$('load');el=document.
   el.querySelector('.sGr').style.backgroundImage=`url(${kytNoise()})`;L.appendChild(el);
   el.addEventListener('pointerdown',()=>{if(LDS.cur&&LDS.cur.ready){LDS.cur.skip=1;LD.min=0;}});return el;}
 function ldsStop(){const S=LDS.cur;if(!S)return;S.dead=1;for(const t of S.T)clearTimeout(t);LDS.cur=null;const L=$('load');if(L)L.classList.remove('kdS');}
+// v99: yükleme ekranı hikâye anlatmaz: yalnız korku resimleri (bölümden bağımsız, karışık deste), sonda bölüm adı.
+// En az bir resim tam görünsün diye ~5.5 sn; yükleme uzarsa resimler sırayla değişir.
+function ldsDeck(){let D=null,last=-1;try{D=JSON.parse(localStorage.getItem('kd_stDeck')||'null');last=+(localStorage.getItem('kd_stLast')??-1);}catch(e){}
+  const N=LDS.sheets.length*4;if(!Array.isArray(D)||D.length<3||D.some(v=>!(v>=0&&v<N))){D=[...Array(N).keys()];for(let i=D.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[D[i],D[j]]=[D[j],D[i]];}if(D[0]===last)D.push(D.shift());}
+  const k=D.splice(0,3);try{localStorage.setItem('kd_stDeck',JSON.stringify(D));localStorage.setItem('kd_stLast',String(k[k.length-1]));}catch(e){}return k;}
 ldVidOn=function(floor){const L=$('load');if(!L)return;L.classList.remove('kdV','kdA');ldsStop();const v=$('ldVid');if(v){try{v.pause();}catch(e){}v.removeAttribute('src');}
-  const ch=clamp(floor|0,1,6),el=ldsEl(),first=!LDS.seen[ch];LDS.seen[ch]=1;
-  const V=LDS.tx[ch],tx=V[Math.random()*V.length|0],pool=(LDS.pool[ch]||[0]).slice();for(let i=pool.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[pool[i],pool[j]]=[pool[j],pool[i]];}
+  const ch=clamp(floor|0,1,6),el=ldsEl(),pics=ldsDeck();
   const S=LDS.cur={T:[],dead:0,ready:0,skip:0,id:LD.id};const at=(t,f)=>S.T.push(setTimeout(()=>{if(!S.dead)try{f();}catch(e){}},t*1000));
   const I=[...el.querySelectorAll('.sI')],TX=el.querySelector('.sT'),FT=el.querySelector('.sFt'),SK=el.querySelector('.sSk');I.forEach(x=>x.classList.remove('on','r'));TX.innerHTML='';FT.classList.remove('on');SK.classList.remove('on');
   let flip=0;const img=(k)=>{const si=Math.floor(k/4),q=k%4,lay=I[flip^=1];ldsGet(si).then(u=>{if(S.dead)return;const i2=lay.firstChild;i2.style.backgroundImage=`url(${u})`;i2.style.backgroundPosition=`${(q%2)*100}% ${(q>>1)*100}%`;
       lay.classList.toggle('r',Math.random()<.5);lay.classList.remove('on');void lay.offsetWidth;lay.classList.add('on');I[flip^1].classList.remove('on');}).catch(()=>{});};
-  const imgOff=()=>I.forEach(x=>x.classList.remove('on'));
-  const text=(lines,cls,dur)=>{TX.className='sT '+(cls||'c');TX.innerHTML=lines.map(l=>`<span>${l.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>`).join('');const sp=[...TX.children];
-    sp.forEach((x,i)=>at(.15+i*.9,()=>x.classList.add('on')));at(dur-1.1,()=>sp.forEach(x=>x.classList.add('off')));};
-  // akış: satırlar → resim → satırlar → resim + son cümle → bölüm adı (yükleme bitene kadar)
-  let t=0;if(first){at(t,()=>{imgOff();text(tx[0],Math.random()<.5?'l':'c',4.6);});t+=4.6;at(t,()=>{img(pool[0]);TX.innerHTML='';});t+=5.2;
-    at(t,()=>{imgOff();text(tx[1],Math.random()<.5?'l':'c',4.6);});t+=4.6;}
-  at(t,()=>{img(pool[first?1:0]||pool[0]);text([tx[2]],'c big',4.8);});t+=4.8;
-  at(t,()=>{TX.innerHTML='';const d=CHD();FT.innerHTML=`<b>${(d.ad||'').replace(/</g,'&lt;')}</b>BÖLÜM ${ch}`;FT.classList.add('on');});
-  S.min=t+.8;LD.min=Math.max(LD.min||0,S.min);L.classList.add('kdS');};
+  at(.1,()=>img(pics[0]));at(6.5,()=>img(pics[1]));at(13,()=>img(pics[2]));at(19.5,()=>img(pics[0]));
+  at(3.2,()=>{const d=CHD();FT.innerHTML=`<b>${(d.ad||'').replace(/</g,'&lt;')}</b>BÖLÜM ${ch}`;FT.classList.add('on');});
+  S.min=5.5;LD.min=Math.max(LD.min||0,S.min);L.classList.add('kdS');};
 // ilerleme çubuğu ve "dokun · geç": yükleme biter bitmez geçilebilir
 {const _lt=loadTick;loadTick=function(dt0){_lt(dt0);const S=LDS.cur;if(!S)return;if(!LD.on){ldsStop();return;}try{const L=ldNeeds(),ok=L.filter(x=>x[1]).length;const el=$('kdSt');const b=el&&el.querySelector('.sBar i');if(b)b.style.width=(ok/L.length*100).toFixed(0)+'%';
   const all=ok===L.length;if(all&&!S.ready){S.ready=1;const k=el&&el.querySelector('.sSk');if(k)k.classList.add('on');}}catch(e){}};}
 {const _f=ldFinishNow;ldFinishNow=function(){ldsStop();return _f.apply(this,arguments);};}
+// ---- v99: açılış hikâyesi de aynı tarzda — kayıt videoları yok (yaratık görünmez), kâğıt yok: kumlu karanlıkta el yazısı, arada sisli boyanmış sahneler ----
+LDS.sheets.push('cizim/st_d.jpg');
+kytCineFix=function(){KYT.cineOK=1;};
+try{for(let i=KYT_ALL.length-1;i>=0;i--)if(/^c_/.test(KYT_ALL[i]))KYT_ALL.splice(i,1);}catch(e){}
+{const IMG={p_forest:1,p_gate:2,p_truck:3,p_cage:8,p_sil:12,p_radio:13},FB={p_forest:'forest',p_gate:'gate',p_truck:'lane',p_cage:'cage',p_sil:'gate',p_radio:'raven'};
+  // (CINE ve CINE_IMG betiğin sonunda tanımlı: düzen ilk kullanımda kurulur)
+  let built=false;const build=()=>{if(built)return;built=true;
+  for(const k in FB)if(!CINE_IMG[k])CINE_IMG[k]=CINE_IMG[FB[k]];
+  const pg=CINE.filter(s=>s.page),P=i=>pg[i]||{page:''};
+  const NEW=[{img:'p_forest',d:6.5,a:[1.04,-1.2,.6],b:[1.14,1.2,-.6],cap:'KARA DAMAR ORMANI · 21 EKİM 2026'},P(0),
+    {img:'crowd',d:6,a:[1.14,1.2,0],b:[1.04,-.8,.8],cap:'GAZETE ARŞİVİ · KARA DAMAR, 1888'},P(1),
+    {img:'p_radio',d:5.5,a:[1.04,.8,.6],b:[1.14,-.8,-.6],cap:'DÜN GECE · 03:12'},P(2),
+    {img:'p_truck',d:6,a:[1.16,0,-.8],b:[1.05,0,1.2],cap:'ŞİRKETTEN HABERSİZ · 18:40'},P(3),
+    {img:'p_gate',d:6,a:[1.04,0,.8],b:[1.18,-.8,-1.2],cap:'KARA DAMAR OCAĞI · GİRİŞ'},P(4),
+    {img:'p_sil',d:5.2,a:[1.06,0,0],b:[1.22,0,-.5],cap:'KARA DAMAR · −480 M',sting:true},
+    {img:'p_cage',d:5.5,a:[1.16,-1,.8],b:[1.04,1,-.8],cap:'KAFES · İNİŞ'},P(5),{title:true,d:4.2}];
+  CINE.length=0;CINE.push(...NEW);};
+  // resimler: sayfalardan (2x2) kesilip veri adresine çevrilir (bir kez)
+  let prep=null;window.cineArtPrep=function(){build();if(prep)return prep;prep=Promise.all(Object.entries(IMG).map(([k,i])=>ldsGet(Math.floor(i/4)).then(u=>new Promise(res=>{const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=960;c.height=540;const q=i%4;
+      c.getContext('2d').drawImage(im,(q%2)*im.width/2,(q>>1)*im.height/2,im.width/2,im.height/2,0,0,960,540);CINE_IMG[k]=c.toDataURL('image/jpeg',.86);c.width=c.height=0;}catch(e){}im.src='';res();};im.onerror=()=>res();im.src=u;})).catch(()=>{})));return prep;};
+  let seen=false;try{seen=localStorage.getItem('kd_cine1')==='1';}catch(e){}
+  setTimeout(()=>{if(!seen)cineArtPrep();},5000);
+  const _cs=cineStart;cineStart=function(cb){try{build();}catch(e){console.warn('sinematik düzen',e);}const r=_cs.apply(this,arguments);try{cineArtPrep();const el=$('cine');if(el&&!el.querySelector('.cSc')){const add=c=>{const d=document.createElement('div');d.className=c;el.insertBefore(d,$('cnVig'));};add('cFog');add('cLk');add('cSc');add('cFl');}}catch(e){}return r;};
+  const css=`#cnPage{background-image:none!important;background:transparent!important}
+#cnTx{color:#d9d6cf!important;transform:none!important;letter-spacing:.05em;text-shadow:0 0 12px rgba(0,0,0,.95),0 0 2px rgba(255,255,255,.22)!important;text-align:left;max-width:min(78vw,900px)!important}
+#cnTx .w{filter:blur(4px)!important;transition:opacity .6s ease,filter .9s ease!important}#cnTx .w.on{filter:blur(0)!important;opacity:.9!important}
+#cine .cI{background-color:#000}#cnGr{opacity:.2!important}
+#cine .cFog{position:absolute;inset:-20%;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(ellipse 50% 40% at 30% 62%,rgba(170,176,178,.09),transparent 70%),radial-gradient(ellipse 45% 35% at 72% 40%,rgba(150,156,160,.07),transparent 70%);animation:stFog 14s ease-in-out infinite alternate}
+#cine .cLk{position:absolute;width:70%;height:90%;left:5%;top:-10%;pointer-events:none;background:radial-gradient(ellipse at center,rgba(220,214,200,.1),rgba(220,214,200,0) 62%);animation:stLk 11s ease-in-out infinite alternate}
+#cine .cSc{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 31%,rgba(230,226,216,.18) 31.1%,transparent 31.25%),linear-gradient(90deg,transparent 0 77%,rgba(230,226,216,.12) 77.08%,transparent 77.2%);animation:stSc 1.7s steps(1) infinite}
+#cine .cFl{position:absolute;inset:0;pointer-events:none;background:#000;opacity:0;animation:stFl 4.7s steps(1) infinite}`;
+  const st=document.createElement('style');st.id='kdCineSt';st.textContent=css;document.head.appendChild(st);}
+// ---- v99: 5. bölüm kuyu çıkışı: tekme yok, yaratık görünmez ----
+// Kafes yükselir → takılıp sarsılarak durur (motor susar, fener titrer) → bir kez kayar → halat kopar, serbest düşüş → 6. bölüm.
+{const _s=chAscendStart;chAscendStart=function(){const was=ASC.on;const r=_s.apply(this,arguments);
+  if(!was&&ASC.on&&KH.on&&RUN.floor===5){ASC.v5={ph:0,yb:0,v:0,bo:0,bv:0,rT:4,ev:{}};ASC.kicks=3;ASC.q=null;ASC.fallT=0;try{$('chQte').classList.remove('on');}catch(e){}toast('Kafes gıcırdayarak yükseliyor…',2.6);}return r;};}
+{const _a=chAscTick;chAscTick=function(dt){const V=ASC.v5;if(!(ASC.on&&V&&KH.on&&RUN.floor===5))return _a.apply(this,arguments);
+  ASC.t+=dt;G.time+=dt;const t=ASC.t,E=V.ev,once=(k,f)=>{if(!E[k]){E[k]=1;try{f();}catch(e){}}};ASC.q=null;
+  const TJ=9,TS=12.2,TN=14.2;
+  if(V.ph===0&&t>=TJ){V.ph=1;V.v=0;V.bv=-1.7;}
+  if(V.ph===1&&t>=TS){V.ph=2;V.v=-3.1;}
+  if(V.ph===2&&t>=TS+.3){V.ph=2.5;V.v=0;V.bv=-1.3;}
+  if(V.ph<3&&t>=TN){V.ph=3;V.f=0;V.y0=V.yb+V.bo;ASC.done=true;}
+  if(V.ph===0){const vt=t<.9?0:2.3;V.v+=(vt-V.v)*Math.min(1,dt*1.1);V.yb+=V.v*dt;G.shake=Math.max(G.shake,.04);
+    V.rT-=dt;if(t>3.5&&V.rT<=0){V.rT=3.3;sfx('liftRide',.75);}
+    if(t>3.1)once('c1',()=>sfx('creak',.5,-.4));
+    if(t>6.3)once('s1',()=>{sfx('scrapeM',.45,.3);G.shake=Math.max(G.shake,.18);});if(t>7.7)once('c2',()=>sfx('creak',.7,.5));}
+  else if(V.ph===2){V.yb+=V.v*dt;G.shake=Math.max(G.shake,.45);}
+  if(V.ph>=1&&V.ph<3){// halat esnemesi: ani duruşta kafes aşağı yaylanır, birkaç kez sallanıp oturur
+    const K=58,C=2*Math.sqrt(K)*.22;V.bv+=(-K*V.bo-C*V.bv)*dt;V.bo+=V.bv*dt;}
+  if(V.ph===1){once('j',()=>{sfx('clang',1);sfx('thump',1);sfx('scrapeM',.9);sfx('heavy',.7);G.shake=.85;KH.flk=.35;toast('Kafes takıldı… motor sustu.',2.6);});
+    if(t>TJ+.8)once('j2',()=>sfx('creak',.8,-.5));if(t>TJ+1.7)once('j3',()=>{sfx('creak',.9,.5);KH.flk=.12;});if(t>TJ+2.5)once('j4',()=>{sfx('k6Snap',.3);G.shake=Math.max(G.shake,.3);});}
+  if(V.ph===2)once('sl',()=>{sfx('scrapeM',1);sfx('rail',.8);KH.flk=.2;});
+  if(V.ph===2.5){once('sl2',()=>{sfx('clang',.85);G.shake=.7;});if(t>TS+1.1)once('sl3',()=>sfx('creak',1));}
+  if(V.ph<3)ASC.y=Math.max(0,V.yb+V.bo);
+  else{V.f+=dt;const f=V.f;once('sn',()=>{sfx('k6Snap',1);sfx('dnScare',.7,0,false,musBus);G.shake=.9;KH.flk=.15;});
+    if(f<.45){ASC.y=V.y0-f*.4;G.shake=Math.max(G.shake,.5);}else{const g=f-.45;ASC.y=V.y0-.18-4.9*g*g;G.shake=Math.max(G.shake,.35+g*.4);once('fl',()=>{sfx('liftRide',1);sfx('k6Wind',1);});}
+    if(ASC.y<6.5||f>2.6)once('bk',()=>{const F=$('fade');F.style.transition='none';F.style.opacity=1;sfx('collapse',1);sfx('thump',1);G.shake=1;setTimeout(()=>{F.style.transition='';},60);});
+    if(E.bk&&(V.bkT=(V.bkT||0)+dt)>1.4)once('go',()=>{ASC.on=false;ASC.snap=null;ASC.v5=null;$('chQte').classList.remove('on');KH.chase=false;DNL.e=null;DNL.on=false;
+      if(!NET.started){RUN.floor=6;RUN.lamp=true;RUN.noSurf=true;RUN.k6cp=null;G.state='descend';loadShow(6,{min:2.6,work:()=>{newGame();renderHotbar();},done:()=>arriveStart(()=>showFloorCard(''))});}
+      else if(NET.host){RUN.k6cp=null;G.state='descend';netHostStart(6);}else{G.state='descend';}});}
+  if(KH.flk>0)KH.flk-=dt;
+  DNL.stat=V.ph>=3?Math.min(1,(DNL.stat||0)*.9+.1+(V.f>.45?.25:0)):V.ph>=1?Math.max(.12,(DNL.stat||0)-dt):Math.max(0,(DNL.stat||0)-dt);
+  try{chStatAud(dt);}catch(e){}try{chMusic(dt);}catch(e){}};}
+// yaratık bu yolculukta hiç görünmez (eskiden kafesin kenarına tırmanıyordu)
+{const _d=chAscDraw;chAscDraw=function(){const r=_d.apply(this,arguments);if(ASC.v5&&DNL.e)DNL.e.y=-500;return r;};}
+// takılma ve kayma anında müzik susar: yalnız halat gıcırtısı duyulur
+{const _m=chMusic;chMusic=function(dt){const V=ASC.on&&ASC.v5;if(V&&V.ph>=1&&V.ph<3){try{mzInit();mz('yatak',0,.4);mz('gerilim',0,.4);mz('kova',0,.4);}catch(e){}return;}return _m.apply(this,arguments);};}
+{const _ci=chInit;chInit=function(){ASC.v5=null;return _ci.apply(this,arguments);};}
+// kuyu kafesi kayaya gömülmesin: kafesin durduğu 3×3 hücre tamamen açılır (köşelerdeki kaya kafesin içine taşıyordu)
+{const _pg=chPostGen;chPostGen=function(){const r=_pg.apply(this,arguments);try{if(G.shaft&&RUN.floor!==6){const i0=G.shaft.c%GW,j0=(G.shaft.c/GW)|0;for(let dj=-1;dj<=1;dj++)for(let di=-1;di<=1;di++){const c=(j0+dj)*GW+i0+di;if(!grid[c])chCarve(i0+di,j0+dj,-1);}}}catch(e){console.warn('kuyu açma',e);}return r;};}
+// açılan köşelerin arkasına (kafesin yanları ile kaya arası) girilmesin: kapı hizasında iki yanda görünmez korkuluk
+{const _cs=cageSetup;cageSetup=function(){const r=_cs.apply(this,arguments);try{const Q=G.shaft;if(KH.on&&Q&&Q.yaw!=null&&RUN.floor!==6){const fx=-Math.sin(Q.yaw),fz=-Math.cos(Q.yaw),rx=Math.cos(Q.yaw),rz=-Math.sin(Q.yaw),W2=.98*CGS;
+  for(const sd of[-1,1])for(let u=W2+.1;u<=1.56*S;u+=.12){const px=Q.x+fx*W2+sd*rx*u,pz=Q.z+fz*W2+sd*rz*u;const c={x:px,z:pz,r:.09,cage:1};ENV.cols.push(c);const k=cidx(px,pz);if(!ENV.colG.has(k))ENV.colG.set(k,[]);ENV.colG.get(k).push(c);}}}catch(e){console.warn('kafes kanat',e);}return r;};}
 // ==== HİKÂYE END ====
 // ================= Çok oyunculu: claude.ai "room" yeteneği (oda kodu, 4 kişi, botlar boşluğu doldurur) =================
 // Taşıma: her oyuncunun "presence" nesnesi (4 KiB, ~30/sn birleştirilerek gönderilir). Herkes kendi durumunu ve son olaylarını
