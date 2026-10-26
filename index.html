@@ -695,7 +695,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v101</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v102</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -8884,11 +8884,15 @@ const KR_TN={
   metal:{ra:[.34,.34,.34],rb:[.28,.28,.28],fa:[.3,.3,.3],fb:[.25,.25,.25],sat:.45,ts:.8,tex:['rust','corr','rust']},
   corr:{ra:[.4,.4,.39],rb:[.32,.32,.31],fa:[.3,.3,.3],fb:[.25,.25,.25],sat:.5,ts:.5,tex:['corr','rust','corr']},
   ceil:{ra:[.42,.41,.39],rb:[.36,.35,.34],fa:[.3,.3,.3],fb:[.3,.3,.3],sat:.4,ts:.5,tex:['plaster','plaster','plaster']}};
+// ---- orman: 3B ağaç çizim mesafesi, 2B katman sınırı, impostor kareleri (gtools/kr_imp.py: u0,v0,u1,v1, kare genişliği, yüksekliği, model boyu)
+const KR_FAR3D=46,KR_BBMAX=74;
+const KR_IMP=[[0,0,.25,.5,14.978,29.956,29.956],[.25,0,.5,.5,14.978,29.956,29.956],[.5,0,.75,.5,15.955,31.909,31.909],[.75,0,1,.5,15.955,31.909,31.909],[0,.5,.25,1,14.285,28.57,28.57],[.25,.5,.5,1,14.285,28.57,28.57],[.5,.5,.75,1,5.579,11.157,6.943],[.75,.5,1,1,6.079,12.158,6.943]];
 // ---- harita ----
 const KRM={shop:[24,-14,34,0],gar:[24,0,34,11],can:[7,-9,18,9],H:3.9,roof:4.25,fx:36.5,gz:[-19.4,-16.4],
   trail:[[36.5,-17.9],[44,-19.2],[52,-23.4],[61,-22],[70,-26.4],[80,-25.2],[90,-29],[98,-28.2],[103,-29]],sign:[100.6,-30.3]};
 // yürünebilir dikdörtgenler (x0,z0,x1,z1) — içlerinde duvarlar ve eşyalar engel
-const KR_WALK=[[-4.3,-82,4.3,82],[4.2,-21.2,24.1,16.2],[24,-21.2,36.2,-13.9],[33.9,-14.1,36.2,11.4],[24,-14,34,11]];
+// komşu dikdörtgenler en az 0.4 m örtüşür (eskiden aradaki ince şerit görünmez duvar gibi takılıyordu)
+const KR_WALK=[[-4.3,-46,4.7,60],[3.9,-21.2,24.45,16.2],[23.7,-21.2,36.2,-13.6],[33.6,-14.4,36.2,11.4],[23.7,-14,34,11]];
 function krRand(seed){let s=seed>>>0||1;return()=>{s=(Math.imul(s,1664525)+1013904223)>>>0;return s/4294967296;};}
 function krN(x,z){const h=(a,b)=>{const q=Math.sin(a*127.1+b*311.7)*43758.5453;return q-Math.floor(q);};const i=Math.floor(x),j=Math.floor(z),u=x-i,v=z-j,su=u*u*(3-2*u),sv=v*v*(3-2*v);
   return lerp(lerp(h(i,j),h(i+1,j),su),lerp(h(i,j+1),h(i+1,j+1),su),sv);}
@@ -8997,7 +9001,7 @@ void main(){vec2 q=vUV*2.-1.;vec3 d=normalize(uF+q.x*uR+q.y*uU);float e=d.y;
   gl.disable(gl.DEPTH_TEST);gl.depthMask(false);gl.bindVertexArray(KRK.vao);gl.drawArrays(gl.TRIANGLES,0,3);gl.bindVertexArray(null);gl.depthMask(true);gl.enable(gl.DEPTH_TEST);gl.useProgram(PR.p);}catch(e){if(!KR.skyErr){KR.skyErr=1;console.warn('kr gök',e);}}}
 // ---- sahne kurulumu ----
 function krBuild(){if(KR.mesh)return;const G0={wallP:kgeo(),shopF:kgeo(),conc:kgeo(),asph:kgeo(),grav:kgeo(),ground:kgeo(),metal:kgeo(),corr:kgeo(),ceil:kgeo(),fasW:kgeo(),fasR:kgeo(),water:kgeo(),dark:kgeo()};
-  KR.box=[];KR.col=[];KR.props=[];KR.quads=[];KR.glass=[];KR.L=[];KR.trees=[];
+  KR.box=[];KR.col=[];KR.steps=[];KR.props=[];KR.quads=[];KR.glass=[];KR.L=[];KR.trees=[];
   const g=G0;const W=KRM.shop,Gr=KRM.gar,H=KRM.H,th=.25;
   // zemin: orman toprağı (yükseklik alanı) — yolun, sahanın ve binanın altı düz
   {const x0=-70,x1=140,z0=-100,z1=100,st=2;const nx=(x1-x0)/st,nz=(z1-z0)/st;const Y=[];for(let j=0;j<=nz;j++){const row=[];for(let i=0;i<=nx;i++){const x=x0+i*st,z=z0+j*st;row.push(krH(x,z)-.03);}Y.push(row);}
@@ -9024,7 +9028,7 @@ function krBuild(){if(KR.mesh)return;const G0={wallP:kgeo(),shopF:kgeo(),conc:kg
   kwall(g.wallP,'z',34,-14,11,th,[[-3.4,-2.4,0,2.15],[-12.5,-11.3,1.5,2.3]]);// arka: depo kapısı, ofis penceresi
   kwall(g.wallP,'x',11,24,34,th,[]);
   kwall(g.wallP,'x',0,24,34,th,[[26,27.2,0,2.2]],{pl:.12});// dükkân–garaj arası kapı boşluğu
-  kwall(g.wallP,'z',30.5,-14,0,.15,[[-9.6,-8.6,0,2.1],[-4.6,-3.6,0,2.1]],{pl:.12});kwall(g.wallP,'x',-7.5,30.5,34,.15,[],{pl:.12});
+  kwall(g.wallP,'z',30.5,-14,0,.15,[[-9.75,-8.5,0,2.1],[-4.75,-3.5,0,2.1]],{pl:.12});kwall(g.wallP,'x',-7.5,30.5,34,.15,[],{pl:.12});
   // tavan + çatı döşemesi + parapet
   kbox(g.ceil,24,H,-14,34,KRM.roof,11,0);kbox(g.wallP,23.85,KRM.roof,-14.15,34.15,KRM.roof+.45,-13.9,0);kbox(g.wallP,23.85,KRM.roof,10.9,34.15,KRM.roof+.45,11.15,0);kbox(g.wallP,23.85,KRM.roof,-14.15,24.1,KRM.roof+.45,11.15,0);
   // vitrin / kapı / pencere kasaları (alüminyum), camlar
@@ -9038,7 +9042,7 @@ function krBuild(){if(KR.mesh)return;const G0={wallP:kgeo(),shopF:kgeo(),conc:kg
   // ---- kanopi: dört çelik kolon, beyaz saçak, kırmızı şerit; altında iki ada (pompalar sökülmüş) ----
   const C=KRM.can;for(const x of[8.6,16.4])for(const z of[-7.4,7.4]){kbox(g.metal,x-.17,0,z-.17,x+.17,4.62,z+.17,0);KR.col.push([x,z,.36]);kbox(g.conc,x-.35,0,z-.35,x+.35,.35,z+.35,1);}
   kbox(g.corr,C[0],4.62,C[1],C[2],4.7,C[3],0);kbox(g.fasW,C[0]-.05,4.7,C[1]-.05,C[2]+.05,5.05,C[3]+.05,0,{ny:1});kbox(g.fasR,C[0]-.06,5.05,C[1]-.06,C[2]+.06,5.25,C[3]+.06,0,{ny:1});kbox(g.corr,C[0],5.25,C[1],C[2],5.32,C[3],0,{ny:1});
-  for(const x of[10.6,14.4]){kbox(g.conc,x-.45,0,-4.8,x+.45,.2,4.8,1);KR.box.push([x-.45,-4.8,x+.45,4.8]);
+  for(const x of[10.6,14.4]){kbox(g.conc,x-.45,0,-4.8,x+.45,.2,4.8,1);KR.steps.push([x-.45,-4.8,x+.45,4.8,.2]);
     for(const z of[-2.2,2.2]){kbox(g.metal,x-.3,.2,z-.4,x+.3,.24,z+.4,0);for(const[bx,bz]of[[-.22,-.3],[.22,-.3],[-.22,.3],[.22,.3]])kbox(g.dark,x+bx-.02,.24,z+bz-.02,x+bx+.02,.3,z+bz+.02,0);}}
   // tabela direği (DERE PETROL): beton ayak, çelik direk, ışıklı kutu
   {const x=6.2,z=13.6;kbox(g.conc,x-.5,0,z-.5,x+.5,.6,z+.5,1);kbox(g.metal,x-.13,.6,z-.13,x+.13,6.3,z+.13,0);kbox(g.metal,x-.22,6.3,z-1.35,x+.22,8.1,z+1.35,0);KR.col.push([x,z,.65]);
@@ -9065,7 +9069,7 @@ function krBuild(){if(KR.mesh)return;const G0={wallP:kgeo(),shopF:kgeo(),conc:kg
   P('r_chest',33.3,9.6,-Math.PI/2,{box:[32.9,9.2,33.75,10]});KR.cutIt=P('r_cutter',33.05,10.35,-Math.PI/2+.25,{y:.02,rx:-1.35});KR.cutP={x:33.05,z:9.9};
   P('tyre',25.4,10.2,0,{rx:Math.PI/2,y:.08,r:.45});P('tyre',25.4,10.2,.4,{rx:Math.PI/2,y:.25});P('tyre',25.5,10.1,1.1,{rx:Math.PI/2,y:.42});P('r_tyre',26.3,9.8,2,{rx:1.2,y:.3,r:.35});
   P('barrel_r',33.4,7.6,.3,{r:.4});P('barrel_b',33.3,6.8,1.2,{r:.4});P('r_barrel',32.7,7.3,2.4,{r:.4});P('jerrycan',31.9,10.6,.2,{});P('oiltin',30.6,10.7,1,{});
-  P('r_shelf',29,10.55,Math.PI,{box:[28.4,10.25,29.6,10.9]});P('r_box',29.2,10.6,0,{y:.9});P('cbox',28.8,10.6,.2,{y:1.62});P('toolcart',26,1.2,.3,{box:[25.3,.7,26.7,1.7]});
+  P('r_shelf',29,10.55,Math.PI,{box:[28.4,10.25,29.6,10.9]});P('r_box',29.2,10.6,0,{y:.9});P('cbox',28.8,10.6,.2,{y:1.62});P('toolcart',26.4,8.45,.3,{box:[25.7,7.95,27.1,8.95]});
   P('r_fluo',27.5,5.6,0,{y:H-.05,rx:Math.PI});P('r_fluo',31.3,5.6,0,{y:H-.05,rx:Math.PI});
   P('r_shutter',23.85,5.2,-Math.PI/2,{y:1.9,sx:3.75,sy:.5});
   // dükkân: tezgâh (masa), yazar kasa, raflar, koliler, saat, ıslak zemin levhası
@@ -9098,14 +9102,39 @@ function krBuild(){if(KR.mesh)return;const G0={wallP:kgeo(),shopF:kgeo(),conc:kg
   KR.quads.push({key:'panelnot',W:256,H:320,fn:krPanelNotTex,x:32.75,y:1.45,z:.14,m:X(M4.T(32.78,1.45,.14),M4.S(.22,.28,1)),a:.5,tint:[.85,.82,.75],far:12});
   KR.quads.push({key:'takvim',W:256,H:360,fn:krTakvimTex,x:33.86,y:1.75,z:-10.4,m:X(M4.T(33.86,1.75,-10.4),M4.RY(-Math.PI/2),M4.S(.34,.48,1)),a:.5,tint:[.85,.83,.78],far:15});
   for(let k=0;k<7;k++){const x=26+k*1.15+Math.sin(k*3)*.3,z=2.5+Math.cos(k*2.3)*2.4+(k%3);KR.quads.push({key:'leke'+(k%3),W:128,H:128,fn:(c,w,h)=>krStainTex(c,w,h,k%3),x,y:.035,z,m:X(M4.T(x,.035+k*.001,z),M4.RX(-Math.PI/2),M4.RZ(k),M4.S(1.2+k%2,1+(k%3)*.3,1)),a:.02,tint:[.5,.5,.5],far:20});}
-  // ağaçlar: yolun iki yanı, binanın ardı, patika boyunca (tohumlu); sık kenar, seyrek iç
-  {const R=krRand(2026);const ok=(x,z)=>{if(krFlatD(x,z)<3.2)return false;if(x>35.5){const q=krTrailQ(x,z);if(q.d<2.6)return false;}if(x>35&&x<38&&z>-24&&z<16)return false;return true;};const T=['f_pine_a','f_pine_b','f_tree_tall','f_pine_a','f_pine_b','f_tree_small'];
-    let n=0;for(let tries=0;tries<5200&&n<330;tries++){const zone=R();let x,z;if(zone<.32){x=-6-R()*48;z=-95+R()*190;}else if(zone<.5){x=36.8+R()*30;z=-60+R()*90;}else if(zone<.83){const T2=KRM.trail,i=Math.floor(R()*(T2.length-1)),t=R(),a=T2[i],b=T2[i+1];x=lerp(a[0],b[0],t)+(R()-.5)*34;z=lerp(a[1],b[1],t)+(R()-.5)*34;}else{x=4+R()*40;z=(R()<.5?-1:1)*(23+R()*40);}
-      if(!ok(x,z))continue;if(KR.trees.some(t=>(t.x-x)**2+(t.z-z)**2<(n<200?5.5:3.8)))continue;const a=T[Math.floor(R()*T.length)];const Hh=a==='f_tree_small'?5+R()*3:13+R()*12;const sc=a==='f_tree_small'?Hh/6.87:Hh/(a==='f_pine_b'?31.6:a==='f_tree_tall'?28.3:29.7);
-      KR.trees.push({x,z,a,s:sc,yaw:R()*TAU});n++;}
-    for(const t of KR.trees){const y=krH(t.x,t.z)-.15;P(t.a,t.x,t.z,t.yaw,{s:t.s,y,far:SET.gfx<=1?55:75});if(t.x>34)KR.col.push([t.x,t.z,.45]);}
+  // ağaçlar: yürünen alanın (yol, saha, patika) çevresinde sık bir bant gerçek modellerle; ardında, sise doğru 2B (impostor) orman katmanı
+  {const R=krRand(2026),lo=SET.gfx<=1;KR.bb=[];
+    const wd=(x,z)=>{let d=krFlatD(x,z);if(x>33){const q=krTrailQ(x,z);d=Math.min(d,q.d);}return d;};
+    const inT=(x,z)=>x>-67&&x<137&&z>-97&&z<97;
+    const HG=new Map(),hk=(i,j)=>i*4096+j;
+    const near=(x,z,r)=>{const i=Math.floor(x/4),j=Math.floor(z/4),r2=r*r;for(let a=i-1;a<=i+1;a++)for(let b=j-1;b<=j+1;b++){const L=HG.get(hk(a,b));if(L)for(const t of L)if((t.x-x)**2+(t.z-z)**2<r2)return true;}return false;};
+    const put=t=>{const k=hk(Math.floor(t.x/4),Math.floor(t.z/4));let L=HG.get(k);if(!L)HG.set(k,L=[]);L.push(t);};
+    const PN=()=>R()<.5?'f_pine_a':'f_pine_b';
+    const pick=d=>{const r=R();if(d<7)return r<.5?'f_tree_small':r<.72?PN():r<.84?'f_tree_tall':r<.93?'f_pine_a_bare':'f_tree_tall_bare';return r<.6?PN():r<.76?'f_tree_tall':r<.94?'f_tree_small':'f_pine_b_bare';};
+    const HT={f_pine_a:29.66,f_pine_b:31.59,f_tree_tall:28.29,f_tree_small:6.87,f_pine_a_bare:29.66,f_pine_b_bare:31.59,f_tree_tall_bare:28.23};
+    const hgt=a=>a==='f_tree_small'?4.2+R()*4:/bare/.test(a)?9+R()*11:a==='f_tree_tall'?12+R()*12:10+R()*15;
+    // bant (yürünen alana 3–22 m): dart atışı, kenarda daha sık
+    const B0=3,B1=lo?18:22,MAX=lo?820:1300;let n=0;
+    // kenar alt dokusu: yürünen alanın hemen dışında, göz hizasını kapatan genç ağaçlar (2 m aralık)
+    for(let tries=0;tries<26000&&n<(lo?190:300);tries++){const x=-66+R()*202,z=-96+R()*192;if(!inT(x,z))continue;const d=wd(x,z);if(d<3.1||d>6.5)continue;if(x>35&&x<38.2&&z>-24&&z<16)continue;if(near(x,z,2.1))continue;
+      const Hh=3.6+R()*3.6;const t={x,z,a:'f_tree_small',s:Hh/6.87,yaw:R()*TAU,H:Hh,d};KR.trees.push(t);put(t);n++;}
+    for(let tries=0;tries<90000&&n<MAX;tries++){const x=-66+R()*202,z=-96+R()*192;if(!inT(x,z))continue;const d=wd(x,z);if(d<B0||d>B1)continue;if(x>35&&x<38.2&&z>-24&&z<16)continue;
+      if(near(x,z,d<8?2.5:3.1))continue;const a=pick(d),Hh=hgt(a);const t={x,z,a,s:Hh/HT[a],yaw:R()*TAU,H:Hh,d};KR.trees.push(t);put(t);n++;}
+    for(const t of KR.trees){const y=krH(t.x,t.z)-.15;P(t.a,t.x,t.z,t.yaw,{s:t.s,y,far:KR_FAR3D,v:t.a==='f_tree_small'||t.a==='f_tree_tall'?'krLeaf':''});if(t.d<4.6&&t.x>33)KR.col.push([t.x,t.z,.45]);}
+    // impostor kareleri: 0-1 çam A, 2-3 çam B, 4-5 uzun ağaç, 6-7 genç ağaç
+    const FRM={f_pine_a:[0,1],f_pine_b:[2,3],f_tree_tall:[4,5],f_tree_small:[6,7],f_pine_a_bare:[0,1],f_pine_b_bare:[2,3],f_tree_tall_bare:[4,5]};
+    const bb=(x,z,a,Hh,minD)=>{const f=FRM[a][R()<.5?0:1],F=KR_IMP[f],k=Hh/F[6];KR.bb.push(x,krH(x,z)-.25,z,k,F[0],F[1],F[2],F[3],F[4],F[5],minD,KR_BBMAX);};
+    // banttaki ağaçlar 3B çizim mesafesinin ötesinde 2B'ye geçer (pat diye kaybolmaz)
+    for(const t of KR.trees)bb(t.x,t.z,t.a,t.H,KR_FAR3D);
+    // dış katman: bantın ötesi, titreşimli ızgara; arada genç ağaçlarla alt doku
+    const st=lo?4.2:3.5;for(let gx=-66;gx<136;gx+=st)for(let gz=-96;gz<96;gz+=st){const x=gx+R()*st*.9,z=gz+R()*st*.9;if(!inT(x,z))continue;const d=wd(x,z);if(d<B1-2||d>(lo?62:78))continue;if(near(x,z,2.4))continue;
+      const a=pick(30);bb(x,z,a,hgt(a),0);if(R()<(lo?.3:.55)){const x2=x+(R()-.5)*st,z2=z+(R()-.5)*st;if(wd(x2,z2)>B1-2)bb(x2,z2,'f_tree_small',3+R()*4.5,0);}}
+    KR.bbN=KR.bb.length/12;
     const R2=krRand(77);for(let k=0;k<26;k++){const T2=KRM.trail,i=Math.floor(R2()*(T2.length-1)),t=R2(),a=T2[i],b=T2[i+1],sd=R2()<.5?-1:1,L=Math.hypot(b[0]-a[0],b[1]-a[1]),nx=-(b[1]-a[1])/L*sd,nz=(b[0]-a[0])/L*sd,d=2.4+R2()*6;const x=lerp(a[0],b[0],t)+nx*d,z=lerp(a[1],b[1],t)+nz*d;
       const id=['f_rock_med_a','f_rock_small_a','f_rock_small_b','f_log','f_snag','f_rock_small_c','f_root'][k%7];P(id,x,z,R2()*TAU,{s:id==='f_log'?.32:id==='f_snag'?.8:id==='f_rock_med_a'?.35:.9,y:krH(x,z)-.1,far:40});}
+    // yol kenarında devrik gövdeler, kökler, kırık kütükler (gözü kıran yer örtüsü)
+    const R3=krRand(91);for(let k=0;k<44;k++){const sd=R3()<.5?-1:1,x=sd*(6.5+R3()*9),z=-80+R3()*160;if(sd>0&&z>-25&&z<20)continue;const id=['f_log','f_snag','f_root','f_rock_small_a','f_branch_a','f_rock_med_b','f_branch_b','f_rock_small_c'][k%8];
+      P(id,x,z,R3()*TAU,{s:id==='f_log'?.26+R3()*.1:id==='f_snag'?.7+R3()*.4:id==='f_rock_med_b'?.3:id.startsWith('f_branch')?.45:.9,y:krH(x,z)-.12,far:34});}
     for(const[x,z,id,s]of[[-7,30,'f_log',.3],[-8.5,-18,'f_rock_med_b',.4],[-6.8,-48,'f_snag',.9],[20,24,'f_rock_small_c',1],[38.5,6,'f_log',.28]])P(id,x,z,x*.7,{s,y:krH(x,z)-.1});}
   // ---- ışıklar: kanopi (4), tabela, projektör, dükkân (3), ofis, depo, garaj (2), monitör ----
   const Lt=(grp,x,y,z,r,c,o)=>{const L={grp,p:[x,y,z],r,c,k:0,in:!!(o&&o.in),fx:o&&o.fx,ph:Math.random()*10,dead:!!(o&&o.dead)};KR.L.push(L);return L;};
@@ -9157,6 +9186,7 @@ function krTri(T){const L=T.tex.map(id=>krSurf(id));if(SET.gfx<1||L.some(s=>!s))
   gl.uniform3fv(U('uRA'),T.ra);gl.uniform3fv(U('uRB'),T.rb);gl.uniform3fv(U('uFA'),T.fa);gl.uniform3fv(U('uFB'),T.fb);if(PR.u.uF2!=null)gl.uniform1f(U('uF2'),0);return true;}
 function krReady(){if(!KR.mesh)return false;let ok=true;for(const id of KR_SURF){const s=krSurf(id);if(!s&&!(KRS[id]&&KRS[id].bad))ok=false;}
   if(ENV.lib&&ENV.props){const seen=new Set();for(const it of KR.props){if(seen.has(it.a))continue;seen.add(it.a);envAsset(it.a);const q=ENV.A[it.a];if(q&&!q.ready&&!q.bad)ok=false;}for(const id of['clfence_m0','clfence_m1','clpost','r_gateL','r_gateR','r_gateF','r_gateB']){envAsset(id);const q=ENV.A[id];if(q&&!q.ready&&!q.bad)ok=false;}}else ok=false;
+  if(KR.bbN&&!KRB.tex&&!KRB.bad){krbTex();ok=false;}
   return ok;}
 // ---- çizim ----
 function krIn(x,z){const W=KRM.shop,G2=KRM.gar;if(x>24.1&&x<33.9&&z>-13.9&&z<10.9){if(z>0.1)return'gar';if(x>30.5)return z<-7.5?'off':'sto';return'shop';}return null;}
@@ -9167,7 +9197,7 @@ function krRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.4,1
   const t=KR.t,sk=cam?0:(G.shake||0)*.4;KR.cam=cam||null;
   let yaw,pitch,roll=0;
   if(cam){eye=[cam.x,cam.y,cam.z];yaw=cam.yaw;pitch=cam.pitch;}
-  else{eye=[pl.x+(Math.random()-.5)*sk*.3,krH(pl.x,pl.z)+1.62+Math.sin(pl.bob)*.035+(KH.swO?KH.swO[1]||0:0)+(Math.random()-.5)*sk*.3,pl.z];yaw=pl.yaw+(KH.swY||0);pitch=pl.pitch+(KH.swP||0);roll=KH.swR||0;const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll+=R[2];pitch+=R[3];}
+  else{eye=[pl.x+(Math.random()-.5)*sk*.3,krH(pl.x,pl.z)+(pl.krSY||0)+1.62+Math.sin(pl.bob)*.035+(KH.swO?KH.swO[1]||0:0)+(Math.random()-.5)*sk*.3,pl.z];yaw=pl.yaw+(KH.swY||0);pitch=pl.pitch+(KH.swP||0);roll=KH.swR||0;const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll+=R[2];pitch+=R[3];}
   Pm=M4.persp(cam?(cam.fov||1.25):1.2,W/Hh,.05,180);Vm=X(M4.RZ(-roll),M4.RX(-pitch),M4.RY(-yaw),M4.T(-eye[0],-eye[1],-eye[2]));VP=M4.mul(Pm,Vm);
   const cp=Math.cos(pitch),fwd=[-Math.sin(yaw)*cp,Math.sin(pitch),-Math.cos(yaw)*cp];if(!cam){AUD.cam.eye=eye;AUD.cam.fwd=fwd;}
   const camW=X(M4.T(eye[0],eye[1],eye[2]),M4.RY(yaw),M4.RX(pitch),M4.RZ(roll));if(!cam)KH.camW=camW;
@@ -9197,6 +9227,7 @@ function krRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.4,1
     else if(L.in&&L.grp!=='tv'){const e=L.k*2.4;draw(MB,X(M4.T(L.p[0],KRM.H-.1,L.p[2]),M4.RY(L.grp==='shop'?Math.PI/2:0),M4.S(.85,.03,.05)),[.5,.5,.5],[e*.9,e,e],0);}}
   // eşyalar
   try{krDrawProps();}catch(e){if(!KR.pErr){KR.pErr=1;console.warn('kr eşya',e);}}gl.useProgram(PR.p);
+  try{krBBDraw();}catch(e){if(!KR.bErr){KR.bErr=1;console.warn('kr 2B orman',e);}}gl.useProgram(PR.p);
   // Gulyabani (sahnede ya da yalnız kamera görüntüsünde)
   for(const e of KR.gys||[]){if(e.hide||(e.camOnly&&!cam)||(e.liveOnly&&cam&&!cam.live))continue;if(GY.ready)try{drawSK(e,GY,{col:[.82,.8,.78],amb:2});}catch(er){}}
   // diğer oyuncular
@@ -9238,6 +9269,40 @@ function krDrawProps(){if(!ENV.lib)return;const u=envBegin(),PL=envPlanes();cons
   // zincir makası alındıysa gizle
   if(KR.cutIt)KR.cutIt.hide=!!KR.items.cutter;
   return 0;}
+// ---- 2B orman katmanı (impostor): gerçek ağaç modellerinden yandan çizilmiş kareler; tek örnekli çizim, sahnenin ışık/sis gölgelendiricisiyle ----
+const KRB={P:null,vao:null,n:0,tex:null,ld:false,bad:false};
+function krbProg(){if(KRB.P||KRB.bad)return KRB.P;try{
+  const VSB=`#version 300 es
+layout(location=0) in vec2 aQ; layout(location=6) in vec4 iP; layout(location=7) in vec4 iF; layout(location=8) in vec4 iS;
+uniform mat4 uVP; uniform vec3 uEye; uniform float uTime;
+out vec3 vW; out vec3 vN; out float vA; out vec2 vUV; out vec4 vT;
+void main(){ vec2 dv=uEye.xz-iP.xz; float d=length(dv); vA=1.; vT=vec4(0.); vUV=vec2(0.); vN=vec3(0.,1.,0.); vW=iP.xyz;
+  if(d<iS.z||d>iS.w){ gl_Position=vec4(2.,2.,2.,1.); return; }
+  vec2 f=dv/max(d,.001); vec3 R=vec3(f.y,0.,-f.x); float k=iP.w;
+  float sw=sin(uTime*.9+iP.x*.31+iP.z*.17)*.05*aQ.y*aQ.y*k;
+  vec3 w=iP.xyz+R*(aQ.x*iS.x*k+sw)+vec3(0.,aQ.y*iS.y*k,0.);
+  vW=w; vN=normalize(vec3(f.x,.45,f.y)); vUV=vec2(mix(iF.x,iF.z,aQ.x+.5),1.-mix(iF.w,iF.y,aQ.y)); gl_Position=uVP*vec4(w,1.); }`;
+  const a='vec4 alb4=texture(uAlb,tuv);';if(FS.split(a).length!==2)throw new Error('FS deseni');
+  let FSB=FS.replace(a,a+' if(uBB>.5){ vec2 dd=fwidth(tuv)*1024.; float lv=max(0.,log2(max(max(dd.x,dd.y),1.))); alb4.a=min(1.,alb4.a*(1.+lv*.36)); }').replace('precision highp float;','precision highp float;\nuniform float uBB;');
+  KRB.P=prog(VSB,FSB);const vao=gl.createVertexArray();gl.bindVertexArray(vao);
+  const qb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,qb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-.5,0,.5,0,.5,1,-.5,0,.5,1,-.5,1]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+  const ib=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,ib);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(KR.bb),gl.STATIC_DRAW);
+  for(let q=0;q<3;q++){gl.enableVertexAttribArray(6+q);gl.vertexAttribPointer(6+q,4,gl.FLOAT,false,48,q*16);gl.vertexAttribDivisor(6+q,1);}
+  for(let q=3;q<4;q++)gl.disableVertexAttribArray(6+q);
+  gl.bindVertexArray(null);KRB.vao=vao;KRB.n=KR.bbN;}catch(e){KRB.bad=true;console.warn('kr 2B orman',e);}return KRB.P;}
+function krbTex(){if(KRB.tex||KRB.bad)return KRB.tex;if(!KRB.ld){KRB.ld=true;loadImg(KR_B+'Trees/imp.png').then(im=>{KRB.tex=mnTex(im,true);gl.bindTexture(gl.TEXTURE_2D,KRB.tex);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAX_LEVEL,5);gl.bindTexture(gl.TEXTURE_2D,null);}).catch(e=>{KRB.bad=true;console.warn('kr impostor',e);});}return null;}
+function krBBDraw(){if(!KR.bbN)return;const t=krbTex();if(!t)return;const P=krbProg();if(!P)return;const u=P.u,sc=SCN,L=sc.LKs;
+  gl.useProgram(P.p);gl.uniformMatrix4fv(u.uVP,false,VP);gl.uniform3fv(u.uEye,eye);gl.uniform1f(u.uAmb,sc.amb);gl.uniform1f(u.uTime,KR.t);
+  gl.uniform1f(u.uFog,L.fd*KR_BBFOG);gl.uniform3fv(u.uFogC,L.fog);gl.uniform3fv(u.uHazeC,L.hc);gl.uniform1f(u.uHaze,L.haze);gl.uniform1f(u.uExp,1.5*SET.bright*(KR.cam?1.6:1));
+  gl.uniform1i(u.uNS,sc.SP.length/4);if(sc.SP.length){gl.uniform4fv(u.uSP,sc.SP);gl.uniform4fv(u.uSD,sc.SD);gl.uniform3fv(u.uSC,sc.SC);}
+  gl.uniform1i(u.uNP,sc.PP.length/4);if(sc.PP.length){gl.uniform4fv(u.uPP,sc.PP);gl.uniform3fv(u.uPC,sc.PC);}
+  gl.uniform3fv(u.uEmi,Z3);gl.uniform1f(u.uMat,7);gl.uniform1f(u.uHasN,0);gl.uniform1f(u.uHasRM,0);if(u.uHasAO)gl.uniform1f(u.uHasAO,0);gl.uniform1f(u.uAlphaT,1);if(u.uAlphaK)gl.uniform1f(u.uAlphaK,1);
+  gl.uniform3fv(u.uCol,KR_BBC);gl.uniform1f(u.uSpec,.03);gl.uniform1f(u.uGloss,14);gl.uniform1f(u.uWrap,.55);gl.uniform1f(u.uBB,1);
+  gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,t);gl.uniform1i(u.uAlb,3);gl.activeTexture(gl.TEXTURE0);
+  gl.disable(gl.CULL_FACE);gl.bindVertexArray(KRB.vao);gl.drawArraysInstanced(gl.TRIANGLES,0,6,KRB.n);gl.bindVertexArray(null);gl.useProgram(PR.p);}
+const KR_BBC=[1,1,1];let KR_BBFOG=.55;
+// yapraklı genç ağaçlar ışık altında fazla açık görünmesin (gece, ıslak yaprak)
+ENV_TINT.krLeaf=()=>[.6,.64,.58];
 function krQuads(cam){const L=KR.quads;krqProg();const u=KRQ.u;gl.useProgram(KRQ.p);gl.uniformMatrix4fv(u.uVP,false,VP);gl.uniform3fv(u.uEye,eye);gl.uniform3fv(u.uFogC,KR.fogC);gl.uniform1f(u.uFog,cam?.02:(KR.ins?.03:.05));gl.uniform1f(u.uTime,KR.t);
   gl.uniform1i(u.uT,0);gl.bindVertexArray(KRQ.vao);gl.activeTexture(gl.TEXTURE0);gl.uniform1f(u.uMode,0);
   const sg=KR.L.find(q=>q.grp==='sign');
@@ -9264,12 +9329,16 @@ function krMove(dt){if(G.mpPause||KR.lock)return;let mx=0,mz=0;if(keys.KeyW||key
   mx+=joy.vx;mz-=joy.vy;const ml=Math.hypot(mx,mz);if(ml>1){mx/=ml;mz/=ml;}const moving=ml>.2;pl.mv=moving;
   const running=(keys.ShiftLeft||keys.ShiftRight||runToggle)&&moving&&!pl.tired;pl.runN=running;pl.runK=lerp(pl.runK||0,running?1:0,Math.min(1,dt*5));const sp=(running?3.7:2.5)*(KR.ins?.9:1);const[fx,fz]=fwdXZ(),rx=Math.cos(pl.yaw),rz=-Math.sin(pl.yaw);
   if(moving){const vx=(fx*mz+rx*mx)*sp*dt,vz=(fz*mz+rz*mx)*sp*dt,r=.33;
-    if(krOK(pl.x+vx,pl.z+vz,r)){pl.x+=vx;pl.z+=vz;}else if(krOK(pl.x+vx,pl.z,r))pl.x+=vx;else if(krOK(pl.x,pl.z+vz,r))pl.z+=vz;else krEdge();
-    pl.bob+=dt*sp*2.4;pl.stepT-=dt;if(pl.stepT<=0){pl.stepT=running?.4:.55;const inn=krIn(pl.x,pl.z),wet=!inn&&KR.puds&&KR.puds.some(p=>(pl.x-p[0])**2+(pl.z-p[1])**2<p[2]*p[2]);
+    if(krOK(pl.x+vx,pl.z+vz,r)){pl.x+=vx;pl.z+=vz;}else if(Math.abs(vx)>sp*dt*.15&&krOK(pl.x+vx,pl.z,r))pl.x+=vx;else if(Math.abs(vz)>sp*dt*.15&&krOK(pl.x,pl.z+vz,r))pl.z+=vz;else{const L=Math.hypot(vx,vz)||1,px=-vz/L,pz=vx/L;let sd=0;
+      // kapı/aralık mıknatısı: yarım metre içinde yan tarafta ileri gidilebilen bir boşluk varsa oraya kay
+      for(const off of[.12,.24,.36,.5,.64,.78]){for(const q of[1,-1]){const ox=pl.x+px*off*q,oz=pl.z+pz*off*q;if(krOK(ox,oz,r)&&krOK(ox+vx*4,oz+vz*4,r)){sd=q;break;}}if(sd)break;}
+      const nx=pl.x+px*sd*sp*dt*.85,nz=pl.z+pz*sd*sp*dt*.85;if(sd&&krOK(nx,nz,r)){pl.x=nx;pl.z=nz;}else krEdge();}
+    pl.bob+=dt*sp*2.4;pl.stepT-=dt;pl.krSY=lerp(pl.krSY||0,krStepY(pl.x,pl.z),Math.min(1,dt*14));if(pl.stepT<=0){pl.stepT=running?.4:.55;const inn=krIn(pl.x,pl.z),wet=!inn&&KR.puds&&KR.puds.some(p=>(pl.x-p[0])**2+(pl.z-p[1])**2<p[2]*p[2]);
       const ty=inn?'step':pl.x>36||krFlatD(pl.x,pl.z)>.5?'fstep':wet?'krWet':'krStep';sfx(SMP.def[ty]?ty:'step',(running?.7:.42)*(inn?.75:1),(Math.random()-.5)*.25);}}}
+function krStepY(x,z){for(const b of KR.steps||[])if(x>b[0]-.05&&x<b[2]+.05&&z>b[1]-.05&&z<b[3]+.05)return b[4];return 0;}
 function krEdge(){if(KR.t<(KR.edgeT||0))return;KR.edgeT=KR.t+5;const x=pl.x,z=pl.z;
-  if(Math.abs(x)<5&&z>70)toast('Araç geride kaldı. Telefonlar çekmiyor; benzinliğe yürü.',2.6);
-  else if(Math.abs(x)<5&&z<-70)toast('Yol karanlığa uzanıyor. Önce benzinliği araştır.',2.4);
+  if(Math.abs(x)<5&&z>57)toast('Araç geride kaldı. Telefonlar çekmiyor; benzinliğe yürü.',2.6);
+  else if(Math.abs(x)<5&&z<-43)toast('Yol karanlığa uzanıyor. Önce benzinliği araştır.',2.4);
   else if(x<-4)toast('Orman çok sık. Yoldan ayrılma.',2);
   else if(Math.abs(x-KRM.fx)<1.5&&!KR.task.gecit&&z>KRM.gz[0]-1&&z<KRM.gz[1]+1)toast('Geçit zincirle kilitli.',1.8);}
 // ---- ana döngü kancaları ----
@@ -9336,7 +9405,7 @@ function krSay(who,txt,dur){let el=$('krSub');if(!el){el=document.createElement(
 function krStart(){KR.want=false;try{krBuild();}catch(e){console.error('kr sahne',e);return false;}
   KR.on=true;SF.on=true;KR.t=0;KR.ph='arrive';try{$('fade').style.opacity=0;}catch(e){}KR.ev={};KR.task={};KR.items={};KR.evd=[];KR.gys=[];KR.flash=0;KR.thT=9;KR.dogT=5;KR.ripT=0;KR.ripI=0;KR.ripA=new Float32Array(16);KR.pOpen=0;KR.gateK=0;KR.ended=false;KR.cctv=null;KR.lock=false;KR.hold=null;KR.holdT=0;KR.br=null;
   KR.backDoor.open=false;if(!KR.box.includes(KR.backDoor.box))KR.box.push(KR.backDoor.box);if(!KR.box.includes(KR.gateBox))KR.box.push(KR.gateBox);KRM.trailEnd=1e9;
-  const sp=bots.filter(b=>b.remote).length;pl.x=1.3+(NET.started?(Math.random()-.5)*2.6:0);pl.z=60+(NET.started?Math.random()*2.2:Math.random()*.6);pl.yaw=-.04;pl.pitch=.02;pl.hasLamp=true;pl.lamp=false;pl.bat=1;pl.carry=null;pl.sta=1;pl.tired=false;
+  const sp=bots.filter(b=>b.remote).length;pl.x=1.3+(NET.started?(Math.random()-.5)*2.6:0);pl.z=55.5+(NET.started?Math.random()*2.2:Math.random()*.6);pl.yaw=-.04;pl.pitch=.02;pl.hasLamp=true;pl.lamp=false;pl.bat=1;pl.carry=null;pl.sta=1;pl.tired=false;
   RUN.lamp=true;G.state='surface';document.body.classList.add('krOn');$('hud').classList.add('surf');$('hud').hidden=false;$('touch').hidden=!isTouch;try{chFocusUI();}catch(e){}
   try{mzAll(0,2);}catch(e){}HTL.k='';KR.hudK='';krHud(true);$('floorCard').classList.remove('on');
   setTimeout(()=>{if(!KR.on)return;const fc=$('floorCard');$('fcN').textContent='BÖLÜM 1';$('fcA').textContent='SON DURAK';$('fcH').textContent='Motor benzinliğe az kala sustu. Telefonlar çekmiyor.';fc.classList.add('on');setTimeout(()=>fc.classList.remove('on'),5000);},600);
