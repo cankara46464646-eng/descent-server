@@ -5218,6 +5218,1864 @@
     ]
    ],
    "texFile": "k_tex5.jpg"
+  },
+  {
+   "id": "r_cam",
+   "group": "r_cam",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:security_camera_01#security_camera_01",
+   "desc": "Güvenlik kamerası (duvara monte)",
+   "dims_m": [
+    0.17,
+    0.29,
+    0.55
+   ],
+   "tris": [
+    3934,
+    1630,
+    1423
+   ],
+   "verts": 3230,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     256,
+     256
+    ],
+    [
+     256,
+     1024,
+     256,
+     256
+    ],
+    [
+     512,
+     1024,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_lamp_m0",
+   "group": "r_lamp",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:street_lamp_01#street_lamp_01",
+   "desc": "Sokak lambası direği",
+   "dims_m": [
+    0.7,
+    3.87,
+    0.39
+   ],
+   "tris": [
+    3660,
+    1553,
+    1178
+   ],
+   "verts": 2400,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_lamp_m2",
+   "group": "r_lamp",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:street_lamp_01#street_lamp_01_bulb",
+   "desc": "Sokak lambası direği",
+   "dims_m": [
+    0.06,
+    0.07,
+    0.06
+   ],
+   "tris": [
+    224,
+    224,
+    224
+   ],
+   "verts": 123,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_fluo",
+   "group": "r_fluo",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:mounted_fluorescent_lights#mounted_fluorescent_lights",
+   "desc": "Tavana monte floresan armatür",
+   "dims_m": [
+    0.91,
+    0.04,
+    0.04
+   ],
+   "tris": [
+    1240,
+    141,
+    141
+   ],
+   "verts": 1038,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     1280,
+     256,
+     256
+    ],
+    [
+     256,
+     1280,
+     256,
+     256
+    ],
+    [
+     512,
+     1280,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_pbox",
+   "group": "r_pbox",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:power_box_01#power_box_01",
+   "desc": "Elektrik panosu: kasa",
+   "dims_m": [
+    0.35,
+    0.5,
+    0.09
+   ],
+   "tris": [
+    4646,
+    1848,
+    1312
+   ],
+   "verts": 5348,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_pdoor",
+   "group": "r_pdoor",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:power_box_01#power_box_01",
+   "desc": "Elektrik panosu: kapak",
+   "dims_m": [
+    0.13,
+    0.49,
+    0.31
+   ],
+   "tris": [
+    1416,
+    611,
+    204
+   ],
+   "verts": 1256,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_till",
+   "group": "r_till",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:CashRegister_01#CashRegister_01",
+   "desc": "Eski yazar kasa",
+   "dims_m": [
+    0.6,
+    0.62,
+    0.62
+   ],
+   "tris": [
+    2767,
+    1125,
+    1125
+   ],
+   "verts": 2895,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     1536,
+     256,
+     256
+    ],
+    [
+     256,
+     1536,
+     256,
+     256
+    ],
+    [
+     512,
+     1536,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_tv",
+   "group": "r_tv",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:Television_01#Television_01",
+   "desc": "Tüplü monitör (kamera kaydı)",
+   "dims_m": [
+    0.6,
+    0.46,
+    0.47
+   ],
+   "tris": [
+    1918,
+    775,
+    403
+   ],
+   "verts": 1976,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     1792,
+     256,
+     256
+    ],
+    [
+     256,
+     1792,
+     256,
+     256
+    ],
+    [
+     512,
+     1792,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_shelf",
+   "group": "r_shelf",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:steel_frame_shelves_01#steel_frame_shelves_01",
+   "desc": "Çelik raf",
+   "dims_m": [
+    1.1,
+    2.14,
+    0.5
+   ],
+   "tris": [
+    4348,
+    1226,
+    722
+   ],
+   "verts": 3632,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     512,
+     512
+    ],
+    [
+     512,
+     1024,
+     512,
+     512
+    ],
+    [
+     1024,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_chair",
+   "group": "r_chair",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:plastic_monobloc_chair_01#plastic_monobloc_chair_01",
+   "desc": "Plastik sandalye",
+   "dims_m": [
+    0.64,
+    0.88,
+    0.63
+   ],
+   "tris": [
+    3356,
+    1358,
+    505
+   ],
+   "verts": 3271,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     256,
+     256
+    ],
+    [
+     256,
+     0,
+     256,
+     256
+    ],
+    [
+     512,
+     0,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_car_m0",
+   "group": "r_car",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:covered_car#covered_car",
+   "desc": "Brandayla örtülü araç (kayıp aile)",
+   "dims_m": [
+    0.17,
+    0.6,
+    3.18
+   ],
+   "tris": [
+    4032,
+    1521,
+    717
+   ],
+   "verts": 3240,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex0.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1536,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_car_m1",
+   "group": "r_car",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:covered_car#covered_car",
+   "desc": "Brandayla örtülü araç (kayıp aile)",
+   "dims_m": [
+    1.79,
+    1.41,
+    4.38
+   ],
+   "tris": [
+    8560,
+    3248,
+    1043
+   ],
+   "verts": 7482,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex0.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     0,
+     512,
+     512
+    ],
+    [
+     1536,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_gateF",
+   "group": "r_gateF",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:large_iron_gate#large_iron_gate",
+   "desc": "Demir orman geçidi: kasa",
+   "dims_m": [
+    2.95,
+    0.03,
+    0.07
+   ],
+   "tris": [
+    576,
+    224,
+    108
+   ],
+   "verts": 346,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex0.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     1024,
+     512,
+     512
+    ],
+    [
+     1536,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_gateL",
+   "group": "r_gateL",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:large_iron_gate#large_iron_gate",
+   "desc": "Demir geçit: sol kanat",
+   "dims_m": [
+    1.43,
+    2.93,
+    0.06
+   ],
+   "tris": [
+    3809,
+    1622,
+    1291
+   ],
+   "verts": 2293,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex0.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     1024,
+     512,
+     512
+    ],
+    [
+     1536,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_gateR",
+   "group": "r_gateR",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:large_iron_gate#large_iron_gate",
+   "desc": "Demir geçit: sağ kanat",
+   "dims_m": [
+    1.47,
+    2.93,
+    0.09
+   ],
+   "tris": [
+    4109,
+    1686,
+    1317
+   ],
+   "verts": 2526,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex0.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     1024,
+     512,
+     512
+    ],
+    [
+     1536,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_gateB",
+   "group": "r_gateB",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:large_iron_gate#large_iron_gate",
+   "desc": "Demir geçit: sürgü",
+   "dims_m": [
+    0.24,
+    0.11,
+    0.01
+   ],
+   "tris": [
+    408,
+    166,
+    92
+   ],
+   "verts": 251,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 1024,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex0.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     1024,
+     1024
+    ],
+    [
+     1024,
+     1024,
+     512,
+     512
+    ],
+    [
+     1536,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_cutter",
+   "group": "r_cutter",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:bolt_cutters_01#bolt_cutters_01",
+   "desc": "Zincir makası",
+   "dims_m": [
+    0.15,
+    0.8,
+    0.04
+   ],
+   "tris": [
+    1704,
+    740,
+    669
+   ],
+   "verts": 1287,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     256,
+     256,
+     256
+    ],
+    [
+     256,
+     256,
+     256,
+     256
+    ],
+    [
+     512,
+     256,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_chest",
+   "group": "r_chest",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:metal_tool_chest#metal_tool_chest",
+   "desc": "Metal alet sandığı",
+   "dims_m": [
+    0.69,
+    0.65,
+    0.41
+   ],
+   "tris": [
+    4285,
+    1852,
+    1077
+   ],
+   "verts": 3967,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     256,
+     256
+    ],
+    [
+     768,
+     512,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_shutter",
+   "group": "r_shutter",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:rollershutter_door#rollershutter_door",
+   "desc": "Garaj kepengi",
+   "dims_m": [
+    1.08,
+    2.4,
+    0.3
+   ],
+   "tris": [
+    552,
+    142,
+    66
+   ],
+   "verts": 670,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex1.jpg",
+   "atlas": [
+    [
+     0,
+     1536,
+     512,
+     512
+    ],
+    [
+     512,
+     1536,
+     512,
+     512
+    ],
+    [
+     1024,
+     1536,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_shutwin",
+   "group": "r_shutwin",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:rollershutter_window_01#rollershutter_window_01",
+   "desc": "Pencere kepengi",
+   "dims_m": [
+    2.1,
+    1.85,
+    0.3
+   ],
+   "tris": [
+    552,
+    174,
+    91
+   ],
+   "verts": 747,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex2.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_barrier",
+   "group": "r_barrier",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:concrete_road_barrier#concrete_road_barrier",
+   "desc": "Beton yol bariyeri",
+   "dims_m": [
+    1.54,
+    0.83,
+    0.63
+   ],
+   "tris": [
+    13588,
+    4800,
+    2173
+   ],
+   "verts": 7062,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex2.jpg",
+   "atlas": [
+    [
+     0,
+     512,
+     512,
+     512
+    ],
+    [
+     512,
+     512,
+     512,
+     512
+    ],
+    [
+     1024,
+     512,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_tyre",
+   "group": "r_tyre",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:old_tyre#old_tyre",
+   "desc": "Eski lastik",
+   "dims_m": [
+    0.6,
+    0.6,
+    0.16
+   ],
+   "tris": [
+    2880,
+    1155,
+    793
+   ],
+   "verts": 2090,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     512,
+     256,
+     256
+    ],
+    [
+     256,
+     512,
+     256,
+     256
+    ],
+    [
+     512,
+     512,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_barrel",
+   "group": "r_barrel",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:Barrel_01#Barrel_01",
+   "desc": "Yağ varili",
+   "dims_m": [
+    0.56,
+    0.88,
+    0.56
+   ],
+   "tris": [
+    2682,
+    1196,
+    443
+   ],
+   "verts": 2052,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     768,
+     256,
+     256
+    ],
+    [
+     256,
+     768,
+     256,
+     256
+    ],
+    [
+     512,
+     768,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_wet",
+   "group": "r_wet",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:WetFloorSign_01#WetFloorSign_01",
+   "desc": "Islak zemin levhası",
+   "dims_m": [
+    0.3,
+    0.63,
+    0.36
+   ],
+   "tris": [
+    228,
+    114,
+    114
+   ],
+   "verts": 254,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     256,
+     256
+    ],
+    [
+     256,
+     1024,
+     256,
+     256
+    ],
+    [
+     512,
+     1024,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_clock",
+   "group": "r_clock",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:wall_clock#wall_clock",
+   "desc": "Duvar saati",
+   "dims_m": [
+    0.32,
+    0.32,
+    0.04
+   ],
+   "tris": [
+    3130,
+    988,
+    408
+   ],
+   "verts": 3139,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     1280,
+     256,
+     256
+    ],
+    [
+     256,
+     1280,
+     256,
+     256
+    ],
+    [
+     512,
+     1280,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_box",
+   "group": "r_box",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:cardboard_box_01#cardboard_box_01",
+   "desc": "Karton koli",
+   "dims_m": [
+    0.39,
+    0.34,
+    0.52
+   ],
+   "tris": [
+    3758,
+    1714,
+    1714
+   ],
+   "verts": 1915,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     1536,
+     256,
+     256
+    ],
+    [
+     256,
+     1536,
+     256,
+     256
+    ],
+    [
+     512,
+     1536,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_ubox",
+   "group": "r_ubox",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:utility_box_01#utility_box_01",
+   "desc": "Sayaç kutusu",
+   "dims_m": [
+    0.52,
+    1.12,
+    0.43
+   ],
+   "tris": [
+    4404,
+    1474,
+    702
+   ],
+   "verts": 3629,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex4.jpg",
+   "atlas": [
+    [
+     0,
+     1792,
+     256,
+     256
+    ],
+    [
+     256,
+     1792,
+     256,
+     256
+    ],
+    [
+     512,
+     1792,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_ac",
+   "group": "r_ac",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:exterior_aircon_unit#exterior_aircon_unit_rusted_01",
+   "desc": "Paslı klima dış ünitesi",
+   "dims_m": [
+    0.8,
+    0.93,
+    0.37
+   ],
+   "tris": [
+    4575,
+    2172,
+    2172
+   ],
+   "verts": 3355,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex2.jpg",
+   "atlas": [
+    [
+     0,
+     1024,
+     512,
+     512
+    ],
+    [
+     512,
+     1024,
+     512,
+     512
+    ],
+    [
+     1024,
+     1024,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_pole_m0",
+   "group": "r_pole",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:modular_electricity_poles#modular_electricity_poles_pieces",
+   "desc": "Ahşap elektrik direği",
+   "dims_m": [
+    1.2,
+    6.13,
+    0.85
+   ],
+   "tris": [
+    4525,
+    1891,
+    1616
+   ],
+   "verts": 5259,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex2.jpg",
+   "atlas": [
+    [
+     0,
+     1536,
+     512,
+     512
+    ],
+    [
+     512,
+     1536,
+     512,
+     512
+    ],
+    [
+     1024,
+     1536,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_pole_m1",
+   "group": "r_pole",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:modular_electricity_poles#modular_electricity_poles",
+   "desc": "Ahşap elektrik direği",
+   "dims_m": [
+    0.14,
+    6.0,
+    0.14
+   ],
+   "tris": [
+    108,
+    108,
+    108
+   ],
+   "verts": 120,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "prop"
+   ],
+   "tex": {
+    "albedo": 512,
+    "normal": 512,
+    "rma": 256,
+    "metal": false
+   },
+   "kb": 0,
+   "texFile": "r_tex3.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     512,
+     512
+    ],
+    [
+     512,
+     0,
+     512,
+     512
+    ],
+    [
+     1024,
+     0,
+     256,
+     256
+    ]
+   ]
+  },
+  {
+   "id": "r_trash_m1",
+   "group": "r_trash",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:metal_trash_can#metal_trash_can_rust",
+   "desc": "Paslı çöp kovası",
+   "dims_m": [
+    0.61,
+    0.91,
+    0.55
+   ],
+   "tris": [
+    2739,
+    989,
+    989
+   ],
+   "verts": 1906,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex5.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     256,
+     256
+    ],
+    [
+     256,
+     0,
+     256,
+     256
+    ],
+    [
+     512,
+     0,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_trash_m2",
+   "group": "r_trash",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:metal_trash_can#metal_trash_can_rust",
+   "desc": "Paslı çöp kovası",
+   "dims_m": [
+    0.77,
+    0.73,
+    0.54
+   ],
+   "tris": [
+    1447,
+    573,
+    573
+   ],
+   "verts": 871,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex5.jpg",
+   "atlas": [
+    [
+     0,
+     0,
+     256,
+     256
+    ],
+    [
+     256,
+     0,
+     256,
+     256
+    ],
+    [
+     512,
+     0,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_slight_m0",
+   "group": "r_slight",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:security_light#security_light",
+   "desc": "Projektör",
+   "dims_m": [
+    0.32,
+    0.34,
+    0.42
+   ],
+   "tris": [
+    4220,
+    1699,
+    1325
+   ],
+   "verts": 3223,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex5.jpg",
+   "atlas": [
+    [
+     0,
+     256,
+     256,
+     256
+    ],
+    [
+     256,
+     256,
+     256,
+     256
+    ],
+    [
+     512,
+     256,
+     128,
+     128
+    ]
+   ]
+  },
+  {
+   "id": "r_slight_m1",
+   "group": "r_slight",
+   "category": "Props",
+   "path": "karadere/",
+   "pack": "../Props/karadere/pack.json",
+   "texPath": "../Props/karadere/",
+   "source": "polyhaven:security_light#security_light_bulb",
+   "desc": "Projektör",
+   "dims_m": [
+    0.04,
+    0.16,
+    0.04
+   ],
+   "tris": [
+    320,
+    148,
+    148
+   ],
+   "verts": 220,
+   "lengthAxis": "x",
+   "collision": "box",
+   "tags": [
+    "metal",
+    "prop"
+   ],
+   "tex": {
+    "albedo": 256,
+    "normal": 256,
+    "rma": 128,
+    "metal": true
+   },
+   "kb": 0,
+   "texFile": "r_tex5.jpg",
+   "atlas": [
+    [
+     0,
+     256,
+     256,
+     256
+    ],
+    [
+     256,
+     256,
+     256,
+     256
+    ],
+    [
+     512,
+     256,
+     128,
+     128
+    ]
+   ]
   }
  ],
  "surfaces": [],
