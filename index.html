@@ -695,7 +695,7 @@ html.rot.rm90{--sal:env(safe-area-inset-bottom,0px);--sar:env(safe-area-inset-to
     <button class="mb main" id="mCont"><span><b>DEVAM ET</b><small id="mContL">KAT -2</small></span></button>
     <button class="mb" id="mNew"><span><b>YENİ OYUN</b><small>Kayıt silinir</small></span></button>
   </div>
-  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v102</span></div>
+  <div class="mFoot" aria-hidden="true"><span id="sndHint">Sesi açmak için ekrana dokun</span><span><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Kulaklıkla oyna</span><span id="kdVer">v103</span></div>
 </div>
 
 <div id="how" class="screen menuScr dScr" hidden>
@@ -9197,7 +9197,7 @@ function krRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.4,1
   const t=KR.t,sk=cam?0:(G.shake||0)*.4;KR.cam=cam||null;
   let yaw,pitch,roll=0;
   if(cam){eye=[cam.x,cam.y,cam.z];yaw=cam.yaw;pitch=cam.pitch;}
-  else{eye=[pl.x+(Math.random()-.5)*sk*.3,krH(pl.x,pl.z)+(pl.krSY||0)+1.62+Math.sin(pl.bob)*.035+(KH.swO?KH.swO[1]||0:0)+(Math.random()-.5)*sk*.3,pl.z];yaw=pl.yaw+(KH.swY||0);pitch=pl.pitch+(KH.swP||0);roll=KH.swR||0;const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll+=R[2];pitch+=R[3];}
+  else{eye=[pl.x+(Math.random()-.5)*sk*.3,krH(pl.x,pl.z)+(pl.krSY||0)+1.62+Math.sin(pl.bob)*.012+(KH.swO?KH.swO[1]||0:0)+(Math.random()-.5)*sk*.3,pl.z];yaw=pl.yaw+(KH.swY||0);pitch=pl.pitch+(KH.swP||0);roll=KH.swR||0;const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll+=R[2];pitch+=R[3];}
   Pm=M4.persp(cam?(cam.fov||1.25):1.2,W/Hh,.05,180);Vm=X(M4.RZ(-roll),M4.RX(-pitch),M4.RY(-yaw),M4.T(-eye[0],-eye[1],-eye[2]));VP=M4.mul(Pm,Vm);
   const cp=Math.cos(pitch),fwd=[-Math.sin(yaw)*cp,Math.sin(pitch),-Math.cos(yaw)*cp];if(!cam){AUD.cam.eye=eye;AUD.cam.fwd=fwd;}
   const camW=X(M4.T(eye[0],eye[1],eye[2]),M4.RY(yaw),M4.RX(pitch),M4.RZ(roll));if(!cam)KH.camW=camW;
@@ -9344,10 +9344,11 @@ function krEdge(){if(KR.t<(KR.edgeT||0))return;KR.edgeT=KR.t+5;const x=pl.x,z=pl
 // ---- ana döngü kancaları ----
 {const _t=sfTick;sfTick=function(dt){if(KR.on){try{krTick(dt);}catch(e){frameErr('kr',e);}return;}return _t.apply(this,arguments);};}
 {const _r=sfRender;sfRender=function(cam){if(KR.on){krRender(KR.cctv?KR.cctv.cam:null);return;}return _r.apply(this,arguments);};}
-{const _s=sfStart;sfStart=function(){if(KR.want)return krStart();return _s.apply(this,arguments);};}
+// v103: 1. bölüm artık eski orman sahnesinde (story24 KF); benzinlik (KR) sahnesi kullanılmıyor
+{const _s=sfStart;sfStart=function(){if(KR.want){KR.want=false;const r=_s.apply(this,arguments);if(r!==false)try{kfStart();}catch(e){console.error('kf',e);}return r;}return _s.apply(this,arguments);};}
 {const _x=sfReset;sfReset=function(){if(KR.on)krStop();return _x.apply(this,arguments);};}
 {const _c=context;context=function(){if(KR.on&&G.state==='surface')return krCtx();return _c.apply(this,arguments);};}
-{const _n=ldNeeds;ldNeeds=function(){if(KR.want&&LD.surf){krPre();return[['Benzinlik',krReady()||LD.t>40],['Gulyabani',GY.ready||!!GY.bad||LD.t>30],['Sesler',(()=>{if(!AC||!AUD.ready)return !AC;const k=Object.keys(AUD.load);return !k.length||k.filter(u=>AUD.buf[u]).length>=k.length*.8;})()]];}return _n.apply(this,arguments);};}
+{const _n=ldNeeds;ldNeeds=function(){if(KR.want&&LD.surf){kfPre();const L=_n.apply(this,arguments)||[];return L.concat([['Orman eşyaları',kfReady()||LD.t>40],['Gulyabani',GY.ready||!!GY.bad||LD.t>30]]);}return _n.apply(this,arguments);};}
 function krPre(){if(KR.preT)return;KR.preT=1;krLoadGY();try{krBuild();}catch(e){console.error('kr sahne',e);}for(const id of KR_SURF)krSurf(id);try{krAudLoad();}catch(e){}}
 // ---------------- v101: SON DURAK — görevler, etkileşim, olaylar, kamera kaydı, elektrik panosu, kanıtlar, final ----------------
 Object.assign(SMP.def,{
@@ -9495,7 +9496,7 @@ function krPaperDraw(c,kind){const W=c.width=kind==='foto'?960:620,H=c.height=ki
   // el yazısı not / defter: eski kâğıt
   try{chPaper(x,W,H,R,1);}catch(e){x.fillStyle='#e8e0cc';x.fillRect(0,0,W,H);}
   const L=kind==='not'?['Çocuklar arkada uyuyordu.','Farların içinde, yolun ortasında','biri duruyordu.','Çok uzundu. Sakalı yere','değiyordu sanki.','Kerem "baba o bizi biliyor" dedi.','Motor durdu. Işıklar söndü.','','Kim bulursa: KARADERE\'ye','gelmeyin.']:
-    ['VARDİYA — EKİM','11.10  Su motoru arızalı. Pompa hattı','kapalı, açmayın.','12.10  Gri bir araba geldi. Aile.','Çocuk ağlıyordu. Benzin aldılar,','Karadere yolunu sordular.','"Gitmeyin" dedim. Dinlemediler.','13.10  Sabah garajın kepengi açık.','Araba içeride. Brandayı ben örtmedim.','Kameraya bakmayacağım.'];
+    ['ARAMA EKİBİ — EKİM','13.10  Yılmaz ailesinin arabası','patikanın kenarında. İçi boş.','Brandayı biz örtmedik.','14.10  Kemal ile Sinan geçide gitti.','Geri dönmediler.','15.10  Gece telsizden çocuk sesi.','Kanal boş olmalıydı.','Geçidi zincirledim. Makas sandıkta.','Kimse o yola gitmesin.'];
   x.strokeStyle='rgba(28,30,48,.92)';x.fillStyle='rgba(28,30,48,.92)';let y=80;const b0=kind==='not'?33:29;for(const l of L){if(l){const w=chScrawlW(l,b0),sz=w>W-100?b0*(W-100)/w:b0;chScrawl(x,l,48,y,sz,R,{wild:1.05});}y+=kind==='not'?66:62;}
   try{chPaperAge(x,W,H,R,1);}catch(e){}}
 // ---- elektrik panosu bulmacası ----
@@ -9624,8 +9625,8 @@ function krArt(k){if(KRART.url[k])return Promise.resolve(KRART.url[k]);const a=K
 krArtSheet(0).then(u=>{const im=new Image();im.src=u;KRART.img=im;KRART.q.kr_photo=[1280*1+128,0+72,1280-256,720-144];}).catch(()=>{});
 // ---- ad: her yerde KARADERE ----
 document.title='KARADERE';
-try{CH_DEF[1].ad='Son Durak';CH_DEF[1].hint='Issız dağ yolundaki eski benzinlik.';}catch(e){}
-const KR_CH=[{no:1,ad:'Son Durak',yer:'Issız dağ yolu, eski benzinlik',img:'kr_station'},{no:2,ad:'Sessiz Evler',yer:'Uzak taş evler, ahırlar, muhtarlık',img:'kr_village'},{no:3,ad:'Yoklama',yer:'Eski ilkokul ve yatakhane',img:'kr_school'},
+try{CH_DEF[1].ad='Son Durak';CH_DEF[1].hint='Issız orman yolu, terk edilmiş arama noktası.';}catch(e){}
+const KR_CH=[{no:1,ad:'Son Durak',yer:'Issız orman yolu',img:'kr_station'},{no:2,ad:'Sessiz Evler',yer:'Uzak taş evler, ahırlar, muhtarlık',img:'kr_village'},{no:3,ad:'Yoklama',yer:'Eski ilkokul ve yatakhane',img:'kr_school'},
   {no:4,ad:'Çağrı',yer:'Avcı kulübesi, gözetleme kulesi',img:'kr_tower'},{no:5,ad:'Hasta Sıfır',yer:'Terk edilmiş sağlık ocağı',img:'kr_hosp'},{no:6,ad:'Yedinci Ev',yer:'Tepedeki eski konak',img:'kr_manor'},{no:7,ad:'Unutulanlar',yer:'Eski yerleşim, taş sarnıç',img:'kr_konak'}];
 const KR_DOCS=[{id:'zarf',ad:'İMZASIZ ZARF',t:'Haber merkezine gönderildi. İçinden 2004 tarihli bir fotoğraf, yedi çocuğun adı ve bir kaset çıktı.',pre:1},
   {id:'liste',ad:'İSİM LİSTESİ (2004)',t:'Kerem, Elif, Mert, Zeynep, Can, Defne… yedinci satır silinmiş.',pre:1},{id:'kaset',ad:'KASET',t:'Tek bir cümle: “Karadere\'ye gelmeyin.”',pre:1},
@@ -9732,8 +9733,8 @@ const KR_CINE=[{img:'kr_drive',d:6.5,a:[1.04,-1.2,.6],b:[1.14,1.2,-.6],cap:'KARA
   {page:'…Karadere yolunda kaybolan Yılmaz ailesinden\nhâlâ haber alınamıyor. Jandarma bölgeye\ngirilmemesi konusunda uyarıyor…\n…kkhh… buraya… gelmeyin…',radio:true},
   {img:'kr_sil',d:5.2,a:[1.06,0,0],b:[1.22,-1,-.5],cap:'KARADERE YOLU · 22:31',sting:true},
   {page:'Farlar onu yalnızca bir an yakaladı.\nYolun kenarında duruyordu. Çok uzundu.\nKimse bir şey söylemedi.'},
-  {img:'kr_station',d:6,a:[1.14,-.8,.5],b:[1.04,.8,-.5],cap:'DERE PETROL · 23:04'},
-  {page:'Motor benzinliğe az kala sustu.\nTelefonlar çekmiyor.\nSon yüz metreyi yürüyeceğiz.',last:true},{title:true,d:4.4}];
+  {img:'kr_station',d:6,a:[1.14,-.8,.5],b:[1.04,.8,-.5],cap:'KARADERE ORMANI · 19:58'},
+  {page:'Motor ormanın ortasında sustu.\nTelefonlar çekmiyor.\nKöye kadar yürüyeceğiz.',last:true},{title:true,d:4.4}];
 const KR_CIMG=['kr_drive','kr_photo','kr_radio','kr_sil','kr_station'];
 {const _cs=cineStart;cineStart=function(cb){try{if(window.cineArtPrep)window.cineArtPrep();}catch(e){}
   CINE.length=0;CINE.push(...KR_CINE.map(s=>({...s})));for(const k of KR_CIMG)if(KRART.url[k])CINE_IMG[k]=KRART.url[k];
@@ -9755,6 +9756,199 @@ function krHowRewrite(){const sec=k=>document.querySelector(`#how section[data-p
   const s3=sec('h3');if(s3)s3.innerHTML=KR_CH.map(c=>card(c.no+' · '+c.ad,c.yer+(c.no>1?' — yakında':''))).join('');
   const s4=sec('h4');if(s4)s4.innerHTML=s4.innerHTML.replace(/kazma, kereste/g,'').replace('eşya, jeneratör, kapı, saklan','eşya, kapı, kanıt, pano');}
 try{krHowRewrite();}catch(e){console.warn('kr how',e);}
+// ---------------- v103: SON DURAK — orman yolu (eski orman sahnesi üzerinde) ----------------
+// Araç ormanın ortasında sustu. Patika boyunca: kayıp ilanı, kayıp ailenin brandalı aracı, arama ekibinin terk edilmiş noktası,
+// zincirli orman geçidi ve KARADERE 3 KM tabelası. Sahne SF'nin (orman, alacakaranlık→gece) kendisi; mağara/kafes bölgesine inilmez.
+const KF={on:false,want:false,props:[],col:[],quads:[],clr:[],ev:{}};
+// yerleşim (patika z boyunca azalır: araç z≈208, gece z<98)
+const KFZ={ilan:197,car:158,camp:127,gate:104,sign:95,end:89};
+function kfPos(){const T=sfTX;const P={};
+  P.ilan=[T(KFZ.ilan)+2.55,KFZ.ilan];
+  P.car=[T(KFZ.car)+5.1,KFZ.car];P.carC=[T(KFZ.car)+4.4,KFZ.car,5.4];
+  P.camp=[T(KFZ.camp)-4.6,KFZ.camp];P.campC=[T(KFZ.camp)-4.2,KFZ.camp,4.8];
+  P.gate=[T(KFZ.gate),KFZ.gate];P.sign=[T(KFZ.sign)+2.9,KFZ.sign];return P;}
+// ağaç üretimi bu noktaları boş bırakır (sfForest'in clear() kontrolüne eklenir)
+function kfClear(x,z){if(!kfClear.P)kfClear.P=kfPos();const P=kfClear.P;
+  if(Math.hypot(x-P.carC[0],z-P.carC[1])<P.carC[2]+.6)return true;if(Math.hypot(x-P.campC[0],z-P.campC[1])<P.campC[2]+.6)return true;
+  if(Math.hypot(x-P.ilan[0],z-P.ilan[1])<1.4||Math.hypot(x-P.sign[0]-.6,z-P.sign[1])<2)return true;
+  if(Math.abs(z-P.gate[1])<1.3&&Math.abs(x-P.gate[0])<9.5)return true;return false;}
+function kfSlope(z){return (sfTX(z+.4)-sfTX(z-.4))/.8;}
+function kfBuild(){if(KF.built)return;KF.built=true;const P=KF.P=kfPos();KF.props=[];KF.col=[];KF.quads=[];
+  const A=(a,x,z,yaw,o)=>{o=o||{};const s=o.s||1,y=(o.y??0)+sfH(x,z);const m=X(M4.T(x,y,z),M4.RY(yaw||0),o.rx?M4.RX(o.rx):M4.id(),M4.S(o.sx||s,o.sy||s,o.sz||s));const it={a,m,x,z,cell:-1,far:o.far||45};KF.props.push(it);if(o.r)KF.col.push([x,z,o.r]);return it;};
+  // kayıp ilanı: yol kenarındaki ahşap elektrik direğine çakılmış
+  {const[x,z]=P.ilan;A('r_pole_m0',x,z,Math.PI/2,{y:-.2,r:.3});A('r_pole_m1',x,z,Math.PI/2,{y:-.2});
+    KF.quads.push({key:'kayip',W:360,H:512,fn:krKayipTex,x:x-.17,y:sfH(x,z)+1.55,z,m:X(M4.T(x-.165,sfH(x,z)+1.55,z),M4.RY(-Math.PI/2),M4.S(.36,.52,1)),a:.5,tint:[.92,.9,.86]});}
+  // kayıp ailenin aracı: patikanın kenarındaki açıklıkta, brandayla örtülü
+  {const[x,z]=P.car,yw=Math.atan(kfSlope(z))+.18;A('r_car_m1',x,z,yw,{y:-.05});A('r_car_m0',x,z,yw,{y:-.05});KF.car={x,z,yw};
+    const c=Math.cos(yw),s=Math.sin(yw);for(let k=-2;k<=2;k++)KF.col.push([x+s*k*.95*-1,z+c*k*.95*-1,1.05]);
+    A('f_branch_a',x-2.2,z+3.4,1.2,{s:.5});A('r_tyre',x+1.9,z-3.1,.4,{rx:1.3,y:.15});}
+  // arama ekibinin noktası: sandalye, alet sandığı (zincir makası), pano üstünde defter, telsiz, bidonlar, jeneratör
+  {const[x,z]=P.camp;A('r_chest',x-.6,z+.9,.3,{r:.55});KF.chest={x:x-.6,z:z+.9};KF.cutIt=A('r_cutter',x-.62,z+.92,.6,{y:.62,rx:-1.35,far:25});
+    A('r_chair',x+.9,z-.5,2.4,{});A('clipboard',x+.95,z-.55,.4,{y:.44,far:20});KF.def={x:x+.95,z:z-.55};
+    A('radio_m0',x-.1,z-1.4,-.4,{y:.02,far:20});KF.radio={x:x-.1,z:z-1.4};A('jerrycan',x+2.1,z+1.6,.2,{});A('barrel_b',x-2.3,z-.6,1.2,{r:.4});
+    A('gen_portable_m0',x-2.4,z+1.5,1.9,{r:.5});A('r_box',x-1.7,z+2.1,.6,{});A('r_barrier',x+.4,z+3.3,.1,{r:.9});}
+  // geçit: demir kanatlar + iki yanda tel örgü çit; zincir kesilince açılır
+  {const[gx,gz]=P.gate,th=Math.atan(kfSlope(gz));KF.gate={x:gx,z:gz,th};const ux=Math.cos(th),uz=-Math.sin(th);
+    KF.fence=[];const seg=(a0,a1)=>{const n=Math.round(Math.abs(a1-a0)/.93);for(let k=0;k<n;k++){const a=lerp(a0,a1,k/n),b=lerp(a0,a1,(k+1)/n),m=(a+b)/2;const xm=gx+ux*m,zm=gz+uz*m,xa=gx+ux*a,za=gz+uz*a;
+        KF.fence.push({x:xm,z:zm,yaw:th,y:sfH(xm,zm)-.03});KF.fence.push({x:xa,z:za,post:1,y:sfH(xa,za)-.05});}};
+    seg(-9.5,-1.6);seg(1.6,9.5);}
+  // tabela: iki metal direk üzerinde levha + altında kazınmış tahta
+  {const[sx,sz]=P.sign,sy=sfH(sx,sz),yw=Math.atan(kfSlope(sz));KF.sign={x:sx,z:sz,y:sy,yw};const ux=Math.cos(yw),uz=-Math.sin(yw);
+    for(const o of[-.62,.62])A('clpost',sx+ux*o,sz+uz*o,yw,{y:-.1,r:.12,far:40});
+    const M0=X(M4.T(sx,sy+2.05,sz+.02),M4.RY(yw));KF.quads.push({key:'sign',W:512,H:256,fn:krSignTex,x:sx,y:sy+2.05,z:sz,m:X(M0,M4.T(0,0,.03),M4.S(1.5,.75,1)),a:.5,tint:[.9,.9,.9],sign:1});
+    KF.quads.push({key:'sign',W:512,H:256,fn:krSignTex,x:sx,y:sy+2.05,z:sz,m:X(M0,M4.T(0,0,.01),M4.RY(Math.PI),M4.S(1.5,.75,1)),a:.5,tint:[.35,.35,.35]});
+    KF.quads.push({key:'geri',W:512,H:160,fn:krGeriTex,x:sx,y:sy+1.2,z:sz,m:X(M4.T(sx,sy+1.2,sz+.03),M4.RY(yw),M4.S(1.3,.4,1)),a:.5,tint:[.85,.82,.78]});}
+  KF.pg=null;}
+// ---- yükleme ----
+const KF_ASSETS=['r_pole_m0','r_pole_m1','r_car_m0','r_car_m1','f_branch_a','r_tyre','r_chest','r_cutter','r_chair','clipboard','radio_m0','jerrycan','barrel_b','gen_portable_m0','r_box','r_barrier','clpost','clfence_m0','clfence_m1','r_gateL','r_gateR','r_gateF','r_gateB'];
+function kfPre(){krLoadGY();try{krAudLoad();}catch(e){}if(ENV.lib)for(const id of KF_ASSETS)envAsset(id);}
+function kfReady(){if(!ENV.lib||!ENV.props)return false;for(const id of KF_ASSETS){envAsset(id);const q=ENV.A[id];if(q&&!q.ready&&!q.bad)return false;}return true;}
+// ---- görevler ve kanıtlar (Bölüm 1, orman) ----
+KR_TASKS.splice(0,KR_TASKS.length,
+  {k:'arastir',ad:'Patikayı izle, ormanı araştır'},
+  {k:'arac',ad:'Kayıp aileye ait aracı bul'},
+  {k:'kanit',ad:'Aracın içindeki fotoğrafı ve notu al'},
+  {k:'kamp',ad:'Arama ekibinin noktasını araştır'},
+  {k:'gecit',ad:'Kapalı orman geçidini aç'},
+  {k:'yol',ad:'Karadere\'ye giden yolu bul'});
+Object.assign(KR_EVD,{defter:['ARAMA EKİBİ DEFTERİ','“Kemal ile Sinan geçide gitti. Geri dönmediler.”'],kayit:['TELSİZ KAYDI','Boş kanaldan bir çocuk sesi: “…buraya… gelmeyin…”'],
+  plaka:['PLAKA: 06 KRD 412','Gri sedan, patikanın kenarında. İlandaki araç bu.']});
+try{KR_CH[0].yer='Issız orman yolu, terk edilmiş arama noktası';}catch(e){}
+// ---- başlat / bitir ----
+function kfStart(){kfBuild();kfPre();KF.on=true;KF.ev={};KR.t=0;KR.ev={};KR.task={};KR.items={};KR.evd=[];KR.gys=[];KR.flash=0;KR.gateK=0;KR.ended=false;KR.cctv=null;KR.lock=false;KR.hold=null;KR.holdT=0;KR.fin=null;KR.L=[];KR.cam=null;KR.hudK='';
+  pl.hasLamp=true;pl.lamp=false;pl.bat=1;pl.sta=1;pl.tired=false;RUN.lamp=true;SF.texOK=false;SF.signM=null;
+  document.body.classList.add('krOn');try{$('fade').style.opacity=0;}catch(e){}krHudVis(true);kfHud(true);$('floorCard').classList.remove('on');
+  setTimeout(()=>{if(!KF.on)return;const fc=$('floorCard');$('fcN').textContent='BÖLÜM 1';$('fcA').textContent='SON DURAK';$('fcH').textContent='Motor ormanın ortasında sustu. Telefonlar çekmiyor.';fc.classList.add('on');setTimeout(()=>fc.classList.remove('on'),5000);},600);
+  setTimeout(()=>{if(KF.on&&!KF.ev.radio0){KF.ev.radio0=1;sfx('krStatic',.6);krSay('TELSİZ','…kkhh… Karadere yolu… kapalı… kkhh…',3.4);}},6000);
+  setTimeout(()=>{if(KF.on)krSay('','Köye yürüyerek gideceğiz. Hava kararmadan.',3.4);}, 10500);
+  try{localStorage.setItem('kd_ch',localStorage.getItem('kd_ch')||'1');}catch(e){}}
+function kfStop(){if(!KF.on)return;KF.on=false;document.body.classList.remove('krOn');krHudVis(true);for(const id of['krPaper'])if($(id))$(id).hidden=true;G.chUI=null;const el=$('krSub');if(el)el.classList.remove('on');}
+// ---- hareket alanı: patika bandı + iki açıklık; geçit kapalıyken geçilmez; tabelanın ötesine gidilmez ----
+function kfOK(x,z,r){if(z>SFK.ze+5||z<KFZ.end)return false;const P=KF.P;let w=Math.abs(x-sfTX(z))<=SFK.rw-r;
+  if(!w)for(const c of[P.carC,P.campC])if(Math.hypot(x-c[0],z-c[1])<c[2]-r){w=true;break;}
+  if(!w)return false;
+  if(!KR.task.gecit&&Math.abs(z-KF.gate.z)<.22+r)return false;
+  const B=SF.ocB&&SF.ocB.get(Math.floor(z/4));if(B)for(const c of B)if(Math.hypot(x-c[0],z-c[1])<c[2]+r)return false;
+  for(const c of SF.cols)if(Math.hypot(x-c[0],z-c[1])<c[2]+r)return false;
+  for(const c of KF.col)if(Math.hypot(x-c[0],z-c[1])<c[2]+r)return false;return true;}
+// bir engelin içine sıkışmışsa dışarı it (takılma olmasın)
+function kfUnstick(){const r=.35;for(const c of KF.col.concat(SF.cols)){const dx=pl.x-c[0],dz=pl.z-c[1],d=Math.hypot(dx,dz),m=c[2]+r;if(d<m&&d>1e-4){const k=(m-d+.01)/d;pl.x+=dx*k;pl.z+=dz*k;}}}
+function kfEdgeMsg(){const z=pl.z;if(z>SFK.ze+2)return 'Araç geride kaldı. Telefonlar çekmiyor; patikayı izle.';if(!KR.task.gecit&&Math.abs(z-KF.gate.z)<2)return KR.items.cutter?'Geçit zincirli. Zinciri kes.':'Geçit zincirli. Kesecek bir şey bul.';
+  if(z<KFZ.end+2)return 'Karanlıkta yol kayboluyor. Tabelaya bak.';return 'Yoldan ayrılma. Ormanda kaybolursun.';}
+// ---- etkileşimler ----
+function kfCtx(){if(!KF.on||KR.ended||G.chUI||KR.lock)return null;const I=[],P=KF.P;const add=(k,x,z,r,label,o)=>{const f=krFacing(x,z,r);if(f>(o&&o.cone!=null?o.cone:.55))I.push({k,x,z,label,kind:'kr',f,d:Math.hypot(x-pl.x,z-pl.z),...(o||{})});};
+  if(!KR.evd.includes('ilan'))add('ilan',P.ilan[0]-.2,P.ilan[1],2.6,'Direkteki ilanı incele');
+  if(!KR.ev.tarp)add('car',KF.car.x,KF.car.z,3.6,'Brandayı kaldır',{cone:.3});else if(!KR.task.kanit)add('glove',KF.car.x-Math.cos(KF.car.yw)*.6,KF.car.z+Math.sin(KF.car.yw)*.6,3.2,'Torpidoyu aç',{cone:.3});
+  if(!KR.items.cutter)add('chest',KF.chest.x,KF.chest.z,2.3,'Alet sandığını aç');
+  if(!KR.evd.includes('defter'))add('defter',KF.def.x,KF.def.z,1.9,'Panodaki defteri oku');
+  if(!KR.evd.includes('kayit'))add('radio',KF.radio.x,KF.radio.z,1.9,'Telsizi dene');
+  if(!KR.task.gecit&&Math.abs(pl.z-KF.gate.z)<3.2)add('gate',KF.gate.x,KF.gate.z,2.8,KR.items.cutter?'Zinciri kes (basılı tut)':'Geçidin zincirine bak',{hold:KR.items.cutter?2.2:0,cone:.2});
+  if(!I.length)return null;I.sort((a,b)=>(a.d-a.f*1.5)-(b.d-b.f*1.5));return I[0];}
+function kfCampDone(){if(KR.items.cutter&&KR.evd.includes('defter'))krDone('kamp');}
+function kfUse(c){switch(c.k){
+  case 'ilan':krEvidence('ilan');krDone('arastir',true);krPaper('ilan');break;
+  case 'car':KR.ev.tarp=1;sfx('pick',.8);setTimeout(()=>sfx('paper',.4),200);krDone('arastir',true);krDone('arac');krEvidence('plaka');krSay('','Gri sedan… ilandaki araç. Biri brandayla örtmüş.',3.6);if(NET.started)netLog('kr','v','tarp');break;
+  case 'glove':sfx('capclk',.7);krDone('kanit');krEvidence('foto');setTimeout(()=>krEvidence('not'),1500);krPaper('foto',()=>krPaper('not'));break;
+  case 'chest':KR.items.cutter=1;sfx('capclk',.6);setTimeout(()=>sfx('toolUp',.7),250);krNote('ALINDI','Zincir makası','Geçidin zincirini kesebilir.');if(NET.started)netLog('kr','i','cutter');kfCampDone();KR.hudK='';break;
+  case 'defter':krEvidence('defter');krPaper('defter',()=>kfCampDone());break;
+  case 'radio':sfx('krStatic',.8);setTimeout(()=>{sfx('krStatic',.5);krSay('TELSİZ','…kkhh… buraya… gelmeyin…',3.2);krEvidence('kayit');},800);break;
+  case 'gate':if(!KR.items.cutter){sfx('clang',.4);krSay('','Kalın bir zincir, yeni bir asma kilit. Kesecek bir şey lazım.',3.2);}else{KR.hold={k:'gate',max:c.hold};KR.holdT=0;}break;}}
+function kfHoldTick(dt){const H=KR.hold;if(!H)return;const c=kfCtx();if(!useHeld||!c||c.k!==H.k){KR.hold=null;KR.holdT=0;KR.hudT=0;return;}
+  const p0=KR.holdT;KR.holdT+=dt;KR.hudT=0;if(Math.floor(p0/.7)!==Math.floor(KR.holdT/.7))sfx('clang',.18);if(KR.holdT>=H.max){KR.hold=null;KR.holdT=0;kfGateOpen(true);}}
+function kfGateOpen(me){if(KR.task.gecit)return;krDone('gecit');sfx('krChain',1);setTimeout(()=>{if(KF.on)sfx('krGate',.95);},700);if(me&&NET.started)netLog('kr','g',1);
+  setTimeout(()=>{if(KF.on)krSay('','Patika daha da karanlığa iniyor.',3);},2600);}
+// ---- HUD ----
+function kfHud(force){KR.hudT=(KR.hudT||0)-1;if(!force&&KR.hudT>0)return;KR.hudT=10;
+  const c=kfCtx(),ce=$('ctx');if(c){const lb=c.hold&&KR.holdT>0?c.label.replace(' (basılı tut)','')+' · '+Math.min(99,Math.round(KR.holdT/c.hold*100))+'%':c.label;if(ce._h!==lb){ce._h=lb;ce.innerHTML=`<span class="k">${isTouch?'KULLAN':'E'}</span>`;ce.append(lb);}ce.classList.add('on');}else{ce.classList.remove('on');ce._h='';}$('hud').classList.toggle('sfUse',!!c);
+  const cur=krCur(),n=KR_TASKS.filter(T=>KR.task[T.k]).length;let sub='';
+  if(cur){if(cur.k==='arastir')sub='Aracın farları arkada kaldı. Yol kenarına bak.';else if(cur.k==='arac')sub='İlandaki gri sedan bu yoldan geçmiş olmalı.';else if(cur.k==='kanit')sub='Torpidoyu aç.';
+    else if(cur.k==='kamp')sub=!KR.items.cutter&&!KR.evd.includes('defter')?'Patikanın ilerisinde birileri kamp kurmuş.':!KR.items.cutter?'Alet sandığına bak.':'Panodaki defteri oku.';
+    else if(cur.k==='gecit')sub=KR.items.cutter?'Zinciri zincir makasıyla kes.':'Geçit zincirli. Kesecek bir şey bul.';else if(cur.k==='yol')sub='Patikadan ilerle.';}
+  const key=(cur?cur.k:'-')+sub+n;if(key===KR.hudK)return;KR.hudK=key;
+  $('depN').textContent='1';$('nightL').textContent='SON DURAK';let pp='';for(let i=1;i<=7;i++)pp+=`<i class="${i===1?'c':''}"></i>`;$('depP').innerHTML=pp;
+  $('objL').textContent=cur?cur.ad:'Bölüm tamamlandı.';$('misF').textContent=n+'/'+KR_TASKS.length;$('misP').hidden=false;$('misPf').style.width=Math.round(n/KR_TASKS.length*100)+'%';$('misP').classList.toggle('done',!cur);
+  $('sqL').textContent=sub;$('sqL').style.display=sub?'':'none';}
+// ---- olaylar: siluetler, sesler, final ----
+function kfGy(x,z,o){const e={x,z,y:sfH(x,z)-.05,face:Math.atan2(-(pl.x-x),-(pl.z-z)),an:null,...(o||{})};dzPlay(e,'stare');KR.gys.push(e);return e;}
+function kfLooking(x,z,th){const dx=x-pl.x,dz=z-pl.z,d=Math.hypot(dx,dz)||1;return (dx*-Math.sin(pl.yaw)+dz*-Math.cos(pl.yaw))/d>(th||.93);}
+function kfEvents(dt){const E=KF.ev,z=pl.z,P=KF.P,t=KR.t;
+  if(!KR.task.arastir&&z<186)krDone('arastir');
+  if(!E.crow&&z<192){E.crow=1;sfx('crow',.45,-.6);setTimeout(()=>{try{sfx('flutter',.45,-.4);}catch(e){}},500);}
+  // 1) ağaçların arasında uzun bir siluet — bakınca ya da yaklaşınca yok olur
+  if(!E.g1&&z<176){E.g1=1;const gx=sfTX(152)-7.2,gz=152;KF.g1=kfGy(gx,gz);KF.g1.lk=0;sfx('twig',.6,-.5,true);}
+  if(KF.g1&&!KF.g1.hide){const g=KF.g1,d=Math.hypot(g.x-pl.x,g.z-pl.z);if(kfLooking(g.x,g.z))g.lk+=dt;if(g.lk>1.4||d<13||t>(E.g1T||(E.g1T=t+40))){g.hide=true;sfx('krStatic',.25);setTimeout(()=>{if(KF.on)krSay('','…orada biri vardı. Değil mi?',2.8);},700);}}
+  if(!E.vox&&z<142){E.vox=1;const h=hear(sfTX(130)-18,130,60);sfx('krVox',.9*h.vol+.15,h.pan,true);}
+  if(!E.dog&&z<172){E.dog=1;const h=hear(sfTX(150)+30,145,80);sfx('krDog',.5,h.pan||.6,true);}
+  // 2) makası aldıktan sonra arkada, patikanın üstünde: dönüp bakınca kayıt bozulur gibi kaybolur
+  if(KR.items.cutter&&!E.g2&&t>(E.g2W||(E.g2W=t+3))&&!kfLooking(pl.x,pl.z+20,.2)){E.g2=1;const gz=pl.z+24,gx=sfTX(gz);KF.g2=kfGy(gx,gz);KF.g2.lk=0;KF.g2.t0=t;}
+  if(KF.g2&&!KF.g2.hide){const g=KF.g2;if(kfLooking(g.x,g.z,.9))g.lk+=dt;if(g.lk>.9||t-g.t0>9){g.hide=true;sfx('krStatic',.55);G.shake=Math.max(G.shake||0,.08);}}
+  if(!E.howl&&z<112){E.howl=1;sfx('howl',.3,0,true);}
+  if(KR.task.gecit&&!E.fin&&Math.hypot(pl.x-KF.sign.x,pl.z-KF.sign.z)<4.6)kfFinale();}
+function kfFinale(){const E=KF.ev;if(E.fin)return;E.fin=1;krDone('yol');krEvidence('tabela');KR.lock=true;if(NET.started)netLog('kr','f',1);
+  const S=KF.sign,gz=S.z-9,gx=sfTX(gz)-4.2;const e=kfGy(gx,gz);KR.fin={t:0,e};krSay('','KARADERE… üç kilometre.',3);}
+function kfFinTick(dt){const F=KR.fin;if(!F)return;F.t+=dt;const S=KF.sign;const ty=Math.atan2(-(S.x-pl.x),-(S.z-pl.z)),k=Math.min(1,dt*2.2);
+  if(F.t<4.2){pl.yaw=turnTo(pl.yaw,ty,k);pl.pitch=lerp(pl.pitch,-.02,k);}
+  if(F.t>2.6&&!F.g){F.g=1;krSay('','Altına biri bir şey kazımış… “GERİ DÖN.”',3.4);}
+  if(F.t>6.2&&!F.s){F.s=1;try{sfx('sting',.85);}catch(e){}sfx('twig',.8,-.3,true);F.ty2=Math.atan2(-(F.e.x-pl.x),-(F.e.z-pl.z));}
+  if(F.t>6.2&&F.t<9){pl.yaw=turnTo(pl.yaw,F.ty2,Math.min(1,dt*1.7));pl.pitch=lerp(pl.pitch,.06,Math.min(1,dt*2));}
+  if(F.t>8.6&&!F.o){F.o=1;$('fade').style.opacity=1;}
+  if(F.t>10.4&&!F.r){F.r=1;krReport();}}
+// ---- ana tik (SF'nin yerine) ----
+function kfTick(dt){SF.t+=dt;KR.t+=dt;G.time+=dt;if(toastT>0){toastT-=dt;if(toastT<=0)$('toast').classList.remove('on');}G.shake=Math.max(0,(G.shake||0)-dt);
+  if(KR.ended)return;
+  if(!G.chUI&&!KR.lock){kfUnstick();sfMove(dt);}if(MN.ready)try{mnUpdateBots(dt);}catch(e){}
+  try{chStamina(dt);}catch(e){}kfEvents(dt);kfHoldTick(dt);kfFinTick(dt);
+  for(const e of KR.gys)if(!e.hide)dzTick(e,dt);
+  KR.gateK=lerp(KR.gateK||0,KR.task.gecit?1:0,Math.min(1,dt*.9));if(KF.cutIt)KF.cutIt.hide=!!KR.items.cutter;
+  for(const b of bots)b.mnY=sfH(b.x,b.z)-floorY(b.x,b.z);
+  try{sfAmbTick(dt);}catch(e){}kfHud(false);try{chHudExtra();}catch(e){}}
+// ---- çizim (sfRender içinden çağrılır): eşyalar, geçit, çit, zincir, Gulyabani, ilan/tabela ----
+function kfDraw(cam){if(!ENV.lib)return;const u=envBegin(),PL=envPlanes();
+  const G2=KF.pg||(KF.pg=(()=>{const M=new Map();for(const it of KF.props){const k=it.a;if(!M.has(k))M.set(k,{a:it.a,far:it.far,list:[]});M.get(k).list.push(it);}return M;})());
+  for(const g of G2.values())try{envDrawGroup(u,{a:g.a,v:'',far:g.far},g.list,PL);}catch(e){}
+  if(!KF.fg){KF.fg={p:[],m0:[],m1:[]};for(const f of KF.fence){const m=X(M4.T(f.x,f.y,f.z),M4.RY(f.yaw||0));const it={m,x:f.x,z:f.z,cell:-1};if(f.post)KF.fg.p.push(it);else{KF.fg.m0.push(it);KF.fg.m1.push({...it});}}}
+  envDrawGroup(u,{a:'clpost',v:'',far:45},KF.fg.p,PL);envDrawGroup(u,{a:'clfence_m0',v:'',far:45},KF.fg.m0,PL);envDrawGroup(u,{a:'clfence_m1',v:'',far:45},KF.fg.m1,PL);
+  const Gt=KF.gate,o=KR.gateK||0,gy=sfH(Gt.x,Gt.z)-.05;const gc=X(M4.T(Gt.x,gy,Gt.z),M4.RY(Gt.th)),L=X(gc,M4.T(-1.47,0,0),M4.RY(o*1.45),M4.T(1.47,0,0)),Rr=X(gc,M4.T(1.47,0,0),M4.RY(-o*1.4),M4.T(-1.47,0,0));
+  envDrawGroup(u,{a:'r_gateL',v:'',far:50},[{m:L,x:Gt.x,z:Gt.z,cell:-1}],PL);envDrawGroup(u,{a:'r_gateR',v:'',far:50},[{m:Rr,x:Gt.x,z:Gt.z,cell:-1}],PL);envDrawGroup(u,{a:'r_gateF',v:'',far:50},[{m:gc,x:Gt.x,z:Gt.z,cell:-1}],PL);
+  if(o<.05)envDrawGroup(u,{a:'r_gateB',v:'',far:20},[{m:gc,x:Gt.x,z:Gt.z,cell:-1}],PL);
+  gl.useProgram(PR.p);gl.uniform1f(U('uTri'),0);
+  if(!KR.task.gecit){const ux=Math.cos(Gt.th),uz=-Math.sin(Gt.th),y0=gy+1.15;for(let k=0;k<9;k++){const a=k/8,y=y0+Math.sin(a*Math.PI)*-.18+.08,s=-.36+a*.72;draw(MS,X(M4.T(Gt.x+ux*s,y,Gt.z+uz*s+.05),M4.RY(Gt.th+Math.PI/2),M4.RX(k%2?Math.PI/2:0),M4.S(.018,.05,.085)),[.2,.19,.18],Z3,3);}
+    draw(MB,X(M4.T(Gt.x+ux*.05,y0-.25,Gt.z+.09),M4.RY(Gt.th),M4.S(.07,.08,.05)),[.26,.2,.12],Z3,3);}
+  for(const e of KR.gys){if(e.hide)continue;if(GY.ready)try{drawSK(e,GY,{col:[.8,.78,.76],amb:2});}catch(er){}}
+  gl.useProgram(PR.p);try{kfQuads();}catch(e){if(!KF.qErr){KF.qErr=1;console.warn('kf yazı',e);}}gl.useProgram(PR.p);}
+function kfQuads(){krqProg();const u=KRQ.u,L=SCN.LKs;gl.useProgram(KRQ.p);gl.uniformMatrix4fv(u.uVP,false,VP);gl.uniform3fv(u.uEye,eye);gl.uniform3fv(u.uFogC,L.fog);gl.uniform1f(u.uFog,L.fd);gl.uniform1f(u.uTime,KR.t);
+  gl.uniform1i(u.uT,0);gl.bindVertexArray(KRQ.vao);gl.activeTexture(gl.TEXTURE0);gl.uniform1f(u.uMode,0);gl.uniform1f(u.uE,0);KR.amb=SCN.amb;
+  for(const q of KF.quads){if(Math.hypot(q.x-eye[0],q.z-eye[2])>35)continue;const t=krqTex(q.key,q.W,q.H,q.fn);gl.bindTexture(gl.TEXTURE_2D,t);gl.uniformMatrix4fv(u.uM,false,q.m);
+    const k=Math.min(1.3,krLit(q.x,q.y,q.z)*.75+(SF.k||0)*.28);gl.uniform1f(u.uK,k);gl.uniform1f(u.uA,q.a??.4);gl.uniform3fv(u.uTint,q.tint||[1,1,1]);gl.drawArrays(gl.TRIANGLES,0,6);}
+  gl.bindVertexArray(null);gl.useProgram(PR.p);}
+// birinci şahıs el + fener (sfRender'ın sonunda)
+function kfLate(eyeP,yaw,pitch,roll){if(!pl.hasLamp)return;gl.clear(gl.DEPTH_BUFFER_BIT);gl.useProgram(PR.p);const camW=X(M4.T(eyeP[0],eyeP[1],eyeP[2]),M4.RY(yaw),M4.RX(pitch),M4.RZ(roll));KH.camW=camW;
+  const bobx=Math.cos(pl.bob*.5)*.008,boby=Math.abs(Math.sin(pl.bob*.5))*.01;try{chFPDraw(camW,bobx,boby);}catch(e){}gl.useProgram(PR.p);}
+// ---- eski orman tabelaları: KARADERE'ye uygun ----
+{const _sc=sfSignCanvas;sfSignCanvas=function(k){const M={derinkaya:1,tehlike:1,yon:1};if(!M[k])return _sc.apply(this,arguments);
+  const c=document.createElement('canvas');c.width=512;c.height=k==='yon'?148:320;const x=c.getContext('2d'),W=c.width,H=c.height,R=envRand(k.length*131+9);
+  const txt=(t,y,sz,col,font)=>{x.fillStyle=col;x.font=`${font||'bold'} ${sz}px Arial, Helvetica, sans-serif`;x.textAlign='center';x.textBaseline='middle';x.fillText(t,W/2,y);};
+  const grime=(n,a)=>{for(let i=0;i<n;i++){const px=R()*W,py=R()*H,r=2+R()*18;const g=x.createRadialGradient(px,py,0,px,py,r);g.addColorStop(0,`rgba(${60+R()*40|0},${40+R()*20|0},20,${a*R()})`);g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(px-r,py-r,r*2,r*2);}};
+  if(k==='derinkaya'){x.fillStyle='#d6d0bf';x.fillRect(0,0,W,H);x.fillStyle='#2f5a34';x.fillRect(0,0,W,70);txt('ORMAN GENEL MÜDÜRLÜĞÜ',36,30,'#f1ede2');
+    txt('KARADERE ORMAN İŞLETME ŞEFLİĞİ',104,26,'#1d1c1a');txt('YANGIN VE GÜVENLİK BÖLGESİ',142,22,'#1d1c1a','600');txt('ARAÇ GİRİŞİ YASAKTIR',190,34,'#8a1d16');txt('Kayıp arama çalışması nedeniyle yol kapalıdır.',234,18,'#3a3733','500');txt('JANDARMA · 15.10.2026',264,18,'#3a3733','500');
+    x.strokeStyle='#1d1c1a';x.lineWidth=6;x.strokeRect(3,3,W-6,H-6);grime(70,.5);
+    x.save();x.translate(W*.5,H*.62);x.rotate(-.1);x.fillStyle='rgba(150,16,12,.85)';x.font='bold 70px "Comic Sans MS", "Marker Felt", cursive, sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText('GERİ DÖNÜN',0,0);for(let i=0;i<24;i++)x.fillRect(-200+R()*400,10+R()*20,2+R()*2,10+R()*40);x.restore();}
+  else if(k==='tehlike'){x.fillStyle='#d9a91c';x.fillRect(0,0,W,H);x.fillStyle='#16140f';x.font='bold 46px Arial, sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText('DİKKAT',W/2,70);
+    x.font='bold 34px Arial, sans-serif';x.fillText('YABAN HAYVANI ÇIKABİLİR',W/2,140);x.font='600 24px Arial, sans-serif';x.fillText('Gece patikadan ayrılmayınız',W/2,200);x.strokeStyle='#16140f';x.lineWidth=8;x.strokeRect(6,6,W-12,H-12);grime(50,.45);}
+  else{x.fillStyle='#e6e0d0';x.fillRect(0,0,W,H);x.fillStyle='#1d1c1a';x.font='bold 64px Arial, sans-serif';x.textAlign='left';x.textBaseline='middle';x.fillText('KARADERE',26,H/2+2);x.textAlign='right';x.fillText('12',W-90,H/2+2);
+    x.beginPath();x.moveTo(W-70,H/2-30);x.lineTo(W-22,H/2);x.lineTo(W-70,H/2+30);x.closePath();x.fill();grime(40,.5);}
+  return c;};}
+// ---- kancalar ----
+{const _t=sfTick;sfTick=function(dt){if(KF.on){try{kfTick(dt);}catch(e){frameErr('kf',e);}return;}return _t.apply(this,arguments);};}
+{const _r=sfReset;sfReset=function(){if(KF.on)kfStop();return _r.apply(this,arguments);};}
+{const _c=context;context=function(){if(KF.on&&G.state==='surface')return kfCtx();return _c.apply(this,arguments);};}
+{const _u=krUse;krUse=function(c){if(KF.on)return kfUse(c);return _u.apply(this,arguments);};}
+{const _o=sfOK;sfOK=function(x,z,r){if(KF.on)return kfOK(x,z,r);return _o.apply(this,arguments);};}
+{const _na=netApply;netApply=function(rec,a){if(a[0]==='kr'&&KF.on){const k=a[1],v=a[2];NET.applying=true;try{
+      if(k==='t')krDone(v,true);else if(k==='e')krEvidence(v,true);else if(k==='i')KR.items[v]=1;else if(k==='g')kfGateOpen(false);else if(k==='v')KR.ev.tarp=1;else if(k==='f'&&!KF.ev.fin)kfFinale();}finally{NET.applying=false;}return;}
+  return _na.apply(this,arguments);};}
+// rapor metni ormana göre
+{const _rp=krReport;krReport=function(){_rp.apply(this,arguments);try{const p=$('krRep').querySelector('.lead');if(p&&KF.on)p.textContent='Yılmaz ailesinin aracı ormanda, patikanın kenarında brandayla örtülü bulundu. Arama ekibinin noktası terk edilmiş; boş telsiz kanalından bir çocuk sesi geliyor. Zincirli geçidin ardındaki tabela Karadere\'yi gösteriyor.';}catch(e){}};}
 // ==== HİKÂYE END ====
 // ================= Çok oyunculu: claude.ai "room" yeteneği (oda kodu, 4 kişi, botlar boşluğu doldurur) =================
 // Taşıma: her oyuncunun "presence" nesnesi (4 KiB, ~30/sn birleştirilerek gönderilir). Herkes kendi durumunu ve son olaylarını
@@ -10653,7 +10847,7 @@ function adaptRes(dt){ftAcc+=dt;ftN++;if(ftAcc>1.2){const a=ftAcc/ftN,minR=SET.g
 function inView(x,y,z,r){const m=VP;const cx=m[0]*x+m[4]*y+m[8]*z+m[12],cy=m[1]*x+m[5]*y+m[9]*z+m[13],cw=m[3]*x+m[7]*y+m[11]*z+m[15];if(cw<-r)return false;const k=cw+r*2.2;return cx>=-k&&cx<=k&&cy>=-k&&cy<=k;}
 // koşu sallantısı: adım başına bir aşağı-yukarı vuruş, iki adımda bir yana salınım ve hafif yalpa; yürürken yok
 function runBob(){const k=pl&&pl.runK||0;if(k<.01||SET.shakeOff)return[0,0,0,0];const ph=pl.bob*.87;const s=Math.sin(ph),v=Math.abs(Math.sin(ph));
-  return[(.03-.07*v)*k,.028*s*k,.013*Math.sin(ph+.4)*k,(.012*Math.cos(2*ph))*k];}
+  const q=k*.4;return[(.03-.07*v)*q,.028*s*q,.013*Math.sin(ph+.4)*q,(.012*Math.cos(2*ph))*q];}
 function render(){const s0=G.state;if(s0==='pause')G.state=G.prevState||'play';try{render0();}finally{G.state=s0;postEnd();try{camFx(cv.width,cv.height);}catch(e){}if(KH.on)chStaticDraw(cv.width,cv.height);}}
 function render0(){
   const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.4,1.8][SET.gfx]??2)*RS;
@@ -11186,7 +11380,7 @@ function sfOK(x,z,r){if(z<1.3)return Math.abs(x)<=.95-r&&z>=-.95+r&&z<=1.3;
 // ---- orman planı: ağaçlar, çalılar, kayalar, kütükler, yaprak örtüsü, çarpışmalar (tohumlu, herkeste aynı) ----
 function sfForest(){if(SF.trees)return;const T=[],OC=[],U=[],R=[],LV=[];
   const tz0=SFK.ze+2.2,TK=SF.truck={x:sfTX(tz0)+.35,z:tz0};SF.gateX=sfTX(SFK.gate);
-  const clear=(x,z)=>(z<SFK.zm+4.5&&Math.abs(x)<7.5)||(z<SFK.zm+13&&Math.abs(x)<6+(z-SFK.zm)*.75)||Math.hypot(x-2.9,z-42.2)<4.2||Math.hypot(x-5.4,z-45.2)<3.4||Math.hypot(x-TK.x,z-TK.z)<6||(Math.abs(z-SFK.gate)<2.4&&Math.abs(x-SF.gateX)<4.5)||Math.hypot(x+2.6,z-39.6)<1.6;
+  const clear=(x,z)=>kfClear(x,z)||(z<SFK.zm+4.5&&Math.abs(x)<7.5)||(z<SFK.zm+13&&Math.abs(x)<6+(z-SFK.zm)*.75)||Math.hypot(x-2.9,z-42.2)<4.2||Math.hypot(x-5.4,z-45.2)<3.4||Math.hypot(x-TK.x,z-TK.z)<6||(Math.abs(z-SFK.gate)<2.4&&Math.abs(x-SF.gateX)<4.5)||Math.hypot(x+2.6,z-39.6)<1.6;
   const HT={f_pine_a:29.7,f_pine_b:31.6,f_tree_tall:28.3,f_tree_small:6.9,f_tree_gnarl:14.6,f_pine_a_bare:29.7,f_tree_tall_bare:28.2};
   let k=0;const step=4.3;for(let gz=SFK.zm+1.5;gz<SFK.ze+118;gz+=step)for(let gx=-98;gx<98;gx+=step){k++;
     const x=gx+(sfHash(k,201)-.5)*step*.86,z=gz+(sfHash(k,202)-.5)*step*.86;if(z<SFK.zm+1.2)continue;
@@ -11512,7 +11706,7 @@ function sfMove(dt){if((SF.go&&!KH.on)||G.mpPause)return;let mx=0,mz=0;if(keys.K
   if(moving){const vx=(fx*mz+rx*mx)*sp*dt,vz=(fz*mz+rz*mx)*sp*dt;const r=.35;
     const okF=SF.go?(x,z,rr)=>Math.abs(x)<.85*CGS-rr&&z>-.85*CGS+rr&&z<.72*CGS-rr:sfOK;
     if(okF(pl.x+vx,pl.z+vz,r)){pl.x+=vx;pl.z+=vz;}else if(okF(pl.x+vx,pl.z,r))pl.x+=vx;else if(okF(pl.x,pl.z+vz,r))pl.z+=vz;
-    else if(pl.z>SFK.zm+1&&SF.t>(SF.edgeT||0)){SF.edgeT=SF.t+6;toast(pl.z>SFK.ze+3?'Ekip mağarada. Yolu izle.':'Yoldan ayrılma. Ormanda kaybolursun; mağaraya bu yol gider.',2.4);}
+    else if(pl.z>SFK.zm+1&&SF.t>(SF.edgeT||0)){SF.edgeT=SF.t+6;toast(KF.on?kfEdgeMsg():(pl.z>SFK.ze+3?'Ekip mağarada. Yolu izle.':'Yoldan ayrılma. Ormanda kaybolursun; mağaraya bu yol gider.'),2.4);}
     pl.bob+=dt*sp*2.4;pl.stepT-=dt;if(pl.stepT<=0){pl.stepT=running?.42:.52;if(KH.on&&SF.go)sfx('cgstep',running?.6:.4,(Math.random()-.5)*.3);else if(pl.z>SFK.zm+.5)sfx('fstep',running?.75:.45,(Math.random()-.5)*.3);else sfx('step',running?.5:.26,(Math.random()-.5)*.3);}}
 }
 function sfInCount(){let n=sfInCage(pl.x,pl.z)?1:0,T=1;if(NET.started)for(const rec of NET.peers.values()){const p=rec.P&&rec.P.p;if(!Array.isArray(p)||!p[13])continue;if(performance.now()-(rec.seenT||0)>4000)continue;T++;if(p[13]===2)n++;}return[n,T];}
@@ -11741,7 +11935,7 @@ function sfRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.4,1
   const W=Math.floor(cv.clientWidth*dpr),Hh=Math.floor(cv.clientHeight*dpr);if(cv.width!==W||cv.height!==Hh){cv.width=W;cv.height=Hh;}
   POST.on=SET.gfx>=2;postBegin(W,Hh);gl.viewport(0,0,W,Hh);gl.clearColor(.01,.01,.012,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
   const t=cam?cam.t:SF.t,inC=!cam&&sfInCage(pl.x,pl.z),gy=inC?SF.cy:0;const sk=cam?0:(G.shake||0)*.4;
-  if(cam)eye=[cam.x,cam.y,cam.z];else eye=[pl.x+(Math.random()-.5)*sk*.3,gy+sfH(pl.x,pl.z)+1.6+Math.sin(pl.bob)*.035+(Math.random()-.5)*sk*.3,pl.z];let yaw=cam?cam.yaw:pl.yaw,pitch=cam?cam.pitch:pl.pitch,roll=0;if(!cam){const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll=R[2];pitch+=R[3];}
+  if(cam)eye=[cam.x,cam.y,cam.z];else eye=[pl.x+(Math.random()-.5)*sk*.3,gy+sfH(pl.x,pl.z)+1.6+Math.sin(pl.bob)*.012+(Math.random()-.5)*sk*.3,pl.z];let yaw=cam?cam.yaw:pl.yaw,pitch=cam?cam.pitch:pl.pitch,roll=0;if(!cam){const R=runBob();eye[0]+=Math.cos(yaw)*R[1];eye[2]-=Math.sin(yaw)*R[1];eye[1]+=R[0];roll=R[2];pitch+=R[3];}
   Pm=M4.persp(1.2,W/Hh,.05,230);Vm=X(M4.RZ(-roll),M4.RX(-pitch),M4.RY(-yaw),M4.T(-eye[0],-eye[1],-eye[2]));VP=M4.mul(Pm,Vm);
   const cp=Math.cos(pitch),fwd=[-Math.sin(yaw)*cp,Math.sin(pitch),-Math.cos(yaw)*cp];AUD.cam.eye=eye;AUD.cam.fwd=fwd;
   if(MN.ready&&!cam)for(const b of bots)if(b.ap)try{mnPrepare(b,b.ap);}catch(e){}
@@ -11806,7 +12000,7 @@ function sfRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.4,1
     if(m.sheave)draw(m.sheave,X(M4.T(sv[0],sv[1],sv[2]),M4.RZ(SF.cy/sv[3])),[.26,.075,.05],Z3,3);}
   // ekip (botlar ve diğer oyuncular)
   if(!cam)for(const b of bots){if(b.st==='buried'||b.away||(b.remote&&!b.sf))continue;if(MN.ready&&b.boneM&&b.ap){if(inView(b.x,(b.mnY||0)+floorY(b.x,b.z)+.9,b.z,1.3))drawMinerModel(b);}}
-  gl.useProgram(PR.p);
+  gl.useProgram(PR.p);if(KF.on&&!cam)try{kfDraw(cam);}catch(e){frameErr('kf çizim',e);}gl.useProgram(PR.p);
   // parıltılar: yıldızlar, ay, fenerler, köz, kamyonet farları
   gl.useProgram(PG.p);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE);gl.depthMask(false);gl.bindVertexArray(glowVAO);gl.uniformMatrix4fv(PG.u.uV,false,Vm);gl.uniformMatrix4fv(PG.u.uP,false,Pm);
   const glw=(p,sz,c)=>{gl.uniform3fv(PG.u.uCtr,p);gl.uniform1f(PG.u.uSz,sz);gl.uniform3f(PG.u.uCol,c[0],c[1],c[2]);gl.drawArrays(gl.TRIANGLES,0,6);};
@@ -11820,6 +12014,7 @@ function sfRender(cam){const dpr=Math.min(window.devicePixelRatio||1,[.7,1,1.4,1
     for(const d of SF.dust){const px=eye[0]+((d[0]+t*.03*d[3])%1-.5)*5,py=eye[1]+((d[1]-t*.02*d[3])%1+1)%1*2.6-1.2,pz=eye[2]+((d[2]+t*.025)%1-.5)*5;glw([px,py,pz],.014+d[3]*.012,[.22,.17,.11]);}
     if(cam.eyes>0){const e=cam.eyes,E2=cam.eyeP;glw([E2[0]-.11,E2[1],E2[2]],.09,[1.4*e,.08*e,.04*e]);glw([E2[0]+.11,E2[1],E2[2]],.09,[1.4*e,.08*e,.04*e]);glw(E2,.6,[.18*e,0,0]);}}
   gl.disable(gl.BLEND);gl.depthMask(true);gl.useProgram(PR.p);
+  if(KF.on&&!cam)try{kfLate(eye,yaw,pitch,roll);}catch(e){}
   postEnd();try{camFx(cv.width,cv.height);}catch(e){}}
 // ---- ana menü arka planı: giriş mağarasında yavaş sinematik çekimler (ağızdan orman, galeri boyunca iniş, kafes odası) ----
 const SFM={t:0,shot:0,st:0};
